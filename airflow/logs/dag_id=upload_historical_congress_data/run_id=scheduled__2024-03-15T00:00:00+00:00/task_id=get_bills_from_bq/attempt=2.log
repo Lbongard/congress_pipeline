@@ -1,0 +1,31 @@
+[2024-04-02T04:00:05.316+0000] {taskinstance.py:1979} INFO - Dependencies all met for dep_context=non-requeueable deps ti=<TaskInstance: upload_historical_congress_data.get_bills_from_bq scheduled__2024-03-15T00:00:00+00:00 [queued]>
+[2024-04-02T04:00:05.321+0000] {taskinstance.py:1979} INFO - Dependencies all met for dep_context=requeueable deps ti=<TaskInstance: upload_historical_congress_data.get_bills_from_bq scheduled__2024-03-15T00:00:00+00:00 [queued]>
+[2024-04-02T04:00:05.321+0000] {taskinstance.py:2193} INFO - Starting attempt 2 of 3
+[2024-04-02T04:00:05.326+0000] {taskinstance.py:2217} INFO - Executing <Task(PythonOperator): get_bills_from_bq> on 2024-03-15 00:00:00+00:00
+[2024-04-02T04:00:05.331+0000] {standard_task_runner.py:60} INFO - Started process 95 to run task
+[2024-04-02T04:00:05.334+0000] {standard_task_runner.py:87} INFO - Running: ['***', 'tasks', 'run', 'upload_historical_congress_data', 'get_bills_from_bq', 'scheduled__2024-03-15T00:00:00+00:00', '--job-id', '154', '--raw', '--subdir', 'DAGS_FOLDER/upload_historical_congress_data.py', '--cfg-path', '/tmp/tmpa7hvhos2']
+[2024-04-02T04:00:05.337+0000] {standard_task_runner.py:88} INFO - Job 154: Subtask get_bills_from_bq
+[2024-04-02T04:00:05.376+0000] {task_command.py:423} INFO - Running <TaskInstance: upload_historical_congress_data.get_bills_from_bq scheduled__2024-03-15T00:00:00+00:00 [running]> on host 308c9d5b795d
+[2024-04-02T04:00:05.418+0000] {taskinstance.py:2513} INFO - Exporting env vars: AIRFLOW_CTX_DAG_EMAIL='***@***.com' AIRFLOW_CTX_DAG_OWNER='***' AIRFLOW_CTX_DAG_ID='upload_historical_congress_data' AIRFLOW_CTX_TASK_ID='get_bills_from_bq' AIRFLOW_CTX_EXECUTION_DATE='2024-03-15T00:00:00+00:00' AIRFLOW_CTX_TRY_NUMBER='2' AIRFLOW_CTX_DAG_RUN_ID='scheduled__2024-03-15T00:00:00+00:00'
+[2024-04-02T04:00:07.017+0000] {taskinstance.py:2731} ERROR - Task failed with exception
+Traceback (most recent call last):
+  File "/home/airflow/.local/lib/python3.11/site-packages/airflow/models/taskinstance.py", line 444, in _execute_task
+    result = _execute_callable(context=context, **execute_callable_kwargs)
+             ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/airflow/.local/lib/python3.11/site-packages/airflow/models/taskinstance.py", line 414, in _execute_callable
+    return execute_callable(context=context, **execute_callable_kwargs)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/airflow/.local/lib/python3.11/site-packages/airflow/operators/python.py", line 200, in execute
+    return_value = self.execute_callable()
+                   ^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/airflow/.local/lib/python3.11/site-packages/airflow/operators/python.py", line 217, in execute_callable
+    return self.python_callable(*self.op_args, **self.op_kwargs)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/opt/airflow/dags/scripts/python/get_data.py", line 313, in get_bills_from_bq
+    ti.xcom_push(key='bills_list', value=bills_list)
+    ^^
+NameError: name 'ti' is not defined
+[2024-04-02T04:00:07.040+0000] {taskinstance.py:1149} INFO - Marking task as UP_FOR_RETRY. dag_id=upload_historical_congress_data, task_id=get_bills_from_bq, execution_date=20240315T000000, start_date=20240402T040005, end_date=20240402T040007
+[2024-04-02T04:00:07.055+0000] {standard_task_runner.py:107} ERROR - Failed to execute job 154 for task get_bills_from_bq (name 'ti' is not defined; 95)
+[2024-04-02T04:00:07.073+0000] {local_task_job_runner.py:234} INFO - Task exited with return code 1
+[2024-04-02T04:00:07.093+0000] {taskinstance.py:3312} INFO - 0 downstream tasks scheduled from follow-on schedule check

@@ -1,0 +1,28 @@
+[2024-04-02T04:06:42.780+0000] {taskinstance.py:1979} INFO - Dependencies all met for dep_context=non-requeueable deps ti=<TaskInstance: upload_historical_congress_data.upload_historical_bills manual__2024-04-02T04:05:39.728090+00:00 [queued]>
+[2024-04-02T04:06:42.807+0000] {taskinstance.py:1979} INFO - Dependencies all met for dep_context=requeueable deps ti=<TaskInstance: upload_historical_congress_data.upload_historical_bills manual__2024-04-02T04:05:39.728090+00:00 [queued]>
+[2024-04-02T04:06:42.808+0000] {taskinstance.py:2193} INFO - Starting attempt 2 of 4
+[2024-04-02T04:06:42.816+0000] {taskinstance.py:2217} INFO - Executing <Task(PythonOperator): upload_historical_bills> on 2024-04-02 04:05:39.728090+00:00
+[2024-04-02T04:06:42.821+0000] {standard_task_runner.py:60} INFO - Started process 102 to run task
+[2024-04-02T04:06:42.823+0000] {standard_task_runner.py:87} INFO - Running: ['***', 'tasks', 'run', 'upload_historical_congress_data', 'upload_historical_bills', 'manual__2024-04-02T04:05:39.728090+00:00', '--job-id', '173', '--raw', '--subdir', 'DAGS_FOLDER/upload_historical_congress_data.py', '--cfg-path', '/tmp/tmp9__bympd']
+[2024-04-02T04:06:42.826+0000] {standard_task_runner.py:88} INFO - Job 173: Subtask upload_historical_bills
+[2024-04-02T04:06:42.859+0000] {task_command.py:423} INFO - Running <TaskInstance: upload_historical_congress_data.upload_historical_bills manual__2024-04-02T04:05:39.728090+00:00 [running]> on host 308c9d5b795d
+[2024-04-02T04:06:42.908+0000] {taskinstance.py:2513} INFO - Exporting env vars: AIRFLOW_CTX_DAG_EMAIL='***@***.com' AIRFLOW_CTX_DAG_OWNER='***' AIRFLOW_CTX_DAG_ID='upload_historical_congress_data' AIRFLOW_CTX_TASK_ID='upload_historical_bills' AIRFLOW_CTX_EXECUTION_DATE='2024-04-02T04:05:39.728090+00:00' AIRFLOW_CTX_TRY_NUMBER='2' AIRFLOW_CTX_DAG_RUN_ID='manual__2024-04-02T04:05:39.728090+00:00'
+[2024-04-02T04:06:42.911+0000] {get_data.py:179} INFO - Max records passed as 1000
+[2024-04-02T04:06:42.911+0000] {get_data.py:269} INFO - executing API call for https://api.congress.gov/v3/bill?format=json&fromDateTime=2024-03-01T00:00:00Z&toDateTime=2024-04-02T00:00:00Z&offset=0&limit=250&congress=118&api_key=WNue8kCDCOIlewAsULgnN8j6SqSgAZjE2sYbPsBb
+[2024-04-02T04:06:43.535+0000] {get_data.py:192} INFO - About to start fetching 1000 records
+[2024-04-02T04:06:43.536+0000] {get_data.py:269} INFO - executing API call for https://api.congress.gov/v3/bill?format=json&fromDateTime=2024-03-01T00:00:00Z&toDateTime=2024-04-02T00:00:00Z&offset=0&limit=250&congress=118&api_key=WNue8kCDCOIlewAsULgnN8j6SqSgAZjE2sYbPsBb
+[2024-04-02T04:06:45.043+0000] {logging_mixin.py:188} INFO - Parquet data uploaded to gs://congress_data/bills/1_250_bills.parquet
+[2024-04-02T04:06:45.045+0000] {logging_mixin.py:188} INFO - 250 of 1000 bills records uploaded
+[2024-04-02T04:06:45.046+0000] {get_data.py:269} INFO - executing API call for https://api.congress.gov/v3/bill?format=json&fromDateTime=2024-03-01T00:00:00Z&toDateTime=2024-04-02T00:00:00Z&offset=250&limit=250&congress=118&api_key=WNue8kCDCOIlewAsULgnN8j6SqSgAZjE2sYbPsBb
+[2024-04-02T04:06:46.438+0000] {logging_mixin.py:188} INFO - Parquet data uploaded to gs://congress_data/bills/251_500_bills.parquet
+[2024-04-02T04:06:46.441+0000] {logging_mixin.py:188} INFO - 500 of 1000 bills records uploaded
+[2024-04-02T04:06:46.441+0000] {get_data.py:269} INFO - executing API call for https://api.congress.gov/v3/bill?format=json&fromDateTime=2024-03-01T00:00:00Z&toDateTime=2024-04-02T00:00:00Z&offset=500&limit=250&congress=118&api_key=WNue8kCDCOIlewAsULgnN8j6SqSgAZjE2sYbPsBb
+[2024-04-02T04:06:48.148+0000] {logging_mixin.py:188} INFO - Parquet data uploaded to gs://congress_data/bills/501_750_bills.parquet
+[2024-04-02T04:06:48.148+0000] {logging_mixin.py:188} INFO - 750 of 1000 bills records uploaded
+[2024-04-02T04:06:48.148+0000] {get_data.py:269} INFO - executing API call for https://api.congress.gov/v3/bill?format=json&fromDateTime=2024-03-01T00:00:00Z&toDateTime=2024-04-02T00:00:00Z&offset=750&limit=250&congress=118&api_key=WNue8kCDCOIlewAsULgnN8j6SqSgAZjE2sYbPsBb
+[2024-04-02T04:06:50.043+0000] {logging_mixin.py:188} INFO - Parquet data uploaded to gs://congress_data/bills/751_1000_bills.parquet
+[2024-04-02T04:06:50.043+0000] {logging_mixin.py:188} INFO - 1000 of 1000 bills records uploaded
+[2024-04-02T04:06:50.044+0000] {python.py:202} INFO - Done. Returned value was: None
+[2024-04-02T04:06:50.055+0000] {taskinstance.py:1149} INFO - Marking task as SUCCESS. dag_id=upload_historical_congress_data, task_id=upload_historical_bills, execution_date=20240402T040539, start_date=20240402T040642, end_date=20240402T040650
+[2024-04-02T04:06:50.078+0000] {local_task_job_runner.py:234} INFO - Task exited with return code 0
+[2024-04-02T04:06:50.110+0000] {taskinstance.py:3312} INFO - 1 downstream tasks scheduled from follow-on schedule check

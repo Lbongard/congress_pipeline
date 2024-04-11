@@ -1,0 +1,131 @@
+[2024-03-26T03:26:47.404+0000] {taskinstance.py:1979} INFO - Dependencies all met for dep_context=non-requeueable deps ti=<TaskInstance: upload_historical_congress_data.actions_external_table_task scheduled__2024-03-15T00:00:00+00:00 [queued]>
+[2024-03-26T03:26:47.419+0000] {taskinstance.py:1979} INFO - Dependencies all met for dep_context=requeueable deps ti=<TaskInstance: upload_historical_congress_data.actions_external_table_task scheduled__2024-03-15T00:00:00+00:00 [queued]>
+[2024-03-26T03:26:47.425+0000] {taskinstance.py:2193} INFO - Starting attempt 1 of 3
+[2024-03-26T03:26:47.454+0000] {taskinstance.py:2217} INFO - Executing <Task(BigQueryCreateExternalTableOperator): actions_external_table_task> on 2024-03-15 00:00:00+00:00
+[2024-03-26T03:26:47.466+0000] {standard_task_runner.py:60} INFO - Started process 83 to run task
+[2024-03-26T03:26:47.478+0000] {standard_task_runner.py:87} INFO - Running: ['***', 'tasks', 'run', 'upload_historical_congress_data', 'actions_external_table_task', 'scheduled__2024-03-15T00:00:00+00:00', '--job-id', '92', '--raw', '--subdir', 'DAGS_FOLDER/upload_historical_congress_data.py', '--cfg-path', '/tmp/tmp_ujnc4_8']
+[2024-03-26T03:26:47.485+0000] {standard_task_runner.py:88} INFO - Job 92: Subtask actions_external_table_task
+[2024-03-26T03:26:47.603+0000] {task_command.py:423} INFO - Running <TaskInstance: upload_historical_congress_data.actions_external_table_task scheduled__2024-03-15T00:00:00+00:00 [running]> on host cb295ecee912
+[2024-03-26T03:26:47.707+0000] {taskinstance.py:2513} INFO - Exporting env vars: AIRFLOW_CTX_DAG_EMAIL='***@***.com' AIRFLOW_CTX_DAG_OWNER='***' AIRFLOW_CTX_DAG_ID='upload_historical_congress_data' AIRFLOW_CTX_TASK_ID='actions_external_table_task' AIRFLOW_CTX_EXECUTION_DATE='2024-03-15T00:00:00+00:00' AIRFLOW_CTX_TRY_NUMBER='1' AIRFLOW_CTX_DAG_RUN_ID='scheduled__2024-03-15T00:00:00+00:00'
+[2024-03-26T03:26:47.715+0000] {crypto.py:82} WARNING - empty cryptography key - values will not be stored encrypted.
+[2024-03-26T03:26:47.717+0000] {connection.py:269} WARNING - Connection schemes (type: google_cloud_platform) shall not contain '_' according to RFC3986.
+[2024-03-26T03:26:47.718+0000] {base.py:83} INFO - Using connection ID 'google_cloud_default' for task execution.
+[2024-03-26T03:26:48.493+0000] {taskinstance.py:2731} ERROR - Task failed with exception
+Traceback (most recent call last):
+  File "/home/airflow/.local/lib/python3.8/site-packages/airflow/models/taskinstance.py", line 444, in _execute_task
+    result = _execute_callable(context=context, **execute_callable_kwargs)
+  File "/home/airflow/.local/lib/python3.8/site-packages/airflow/models/taskinstance.py", line 414, in _execute_callable
+    return execute_callable(context=context, **execute_callable_kwargs)
+  File "/home/airflow/.local/lib/python3.8/site-packages/airflow/providers/google/cloud/operators/bigquery.py", line 1783, in execute
+    table = bq_hook.create_empty_table(
+  File "/home/airflow/.local/lib/python3.8/site-packages/airflow/providers/google/common/hooks/base_google.py", line 485, in inner_wrapper
+    return func(self, *args, **kwargs)
+  File "/home/airflow/.local/lib/python3.8/site-packages/airflow/providers/google/cloud/hooks/bigquery.py", line 422, in create_empty_table
+    return self.get_client(project_id=project_id, location=location).create_table(
+  File "/home/airflow/.local/lib/python3.8/site-packages/google/cloud/bigquery/client.py", line 797, in create_table
+    api_response = self._call_api(
+  File "/home/airflow/.local/lib/python3.8/site-packages/google/cloud/bigquery/client.py", line 831, in _call_api
+    return call()
+  File "/home/airflow/.local/lib/python3.8/site-packages/google/api_core/retry/retry_unary.py", line 293, in retry_wrapped_func
+    return retry_target(
+  File "/home/airflow/.local/lib/python3.8/site-packages/google/api_core/retry/retry_unary.py", line 153, in retry_target
+    _retry_error_helper(
+  File "/home/airflow/.local/lib/python3.8/site-packages/google/api_core/retry/retry_base.py", line 212, in _retry_error_helper
+    raise final_exc from source_exc
+  File "/home/airflow/.local/lib/python3.8/site-packages/google/api_core/retry/retry_unary.py", line 144, in retry_target
+    result = target()
+  File "/home/airflow/.local/lib/python3.8/site-packages/google/cloud/_http/__init__.py", line 494, in api_request
+    raise exceptions.from_http_response(response)
+google.api_core.exceptions.NotFound: 404 POST https://bigquery.googleapis.com/bigquery/v2/projects/inbound-ship-412204/datasets/Conress/tables?prettyPrint=false: Not found: Dataset inbound-ship-412204:Conress
+[2024-03-26T03:26:48.506+0000] {taskinstance.py:1149} INFO - Marking task as UP_FOR_RETRY. dag_id=upload_historical_congress_data, task_id=actions_external_table_task, execution_date=20240315T000000, start_date=20240326T032647, end_date=20240326T032648
+[2024-03-26T03:26:48.516+0000] {standard_task_runner.py:107} ERROR - Failed to execute job 92 for task actions_external_table_task (404 POST https://bigquery.googleapis.com/bigquery/v2/projects/inbound-ship-412204/datasets/Conress/tables?prettyPrint=false: Not found: Dataset inbound-ship-412204:Conress; 83)
+[2024-03-26T03:26:48.558+0000] {local_task_job_runner.py:234} INFO - Task exited with return code 1
+[2024-03-26T03:26:48.578+0000] {taskinstance.py:3312} INFO - 0 downstream tasks scheduled from follow-on schedule check
+[2024-03-28T03:23:30.554+0000] {taskinstance.py:1979} INFO - Dependencies all met for dep_context=non-requeueable deps ti=<TaskInstance: upload_historical_congress_data.actions_external_table_task scheduled__2024-03-15T00:00:00+00:00 [queued]>
+[2024-03-28T03:23:30.563+0000] {taskinstance.py:1979} INFO - Dependencies all met for dep_context=requeueable deps ti=<TaskInstance: upload_historical_congress_data.actions_external_table_task scheduled__2024-03-15T00:00:00+00:00 [queued]>
+[2024-03-28T03:23:30.565+0000] {taskinstance.py:2193} INFO - Starting attempt 1 of 3
+[2024-03-28T03:23:30.575+0000] {taskinstance.py:2217} INFO - Executing <Task(BigQueryCreateExternalTableOperator): actions_external_table_task> on 2024-03-15 00:00:00+00:00
+[2024-03-28T03:23:30.583+0000] {standard_task_runner.py:60} INFO - Started process 140 to run task
+[2024-03-28T03:23:30.586+0000] {standard_task_runner.py:87} INFO - Running: ['***', 'tasks', 'run', 'upload_historical_congress_data', 'actions_external_table_task', 'scheduled__2024-03-15T00:00:00+00:00', '--job-id', '144', '--raw', '--subdir', 'DAGS_FOLDER/upload_historical_congress_data.py', '--cfg-path', '/tmp/tmptgff16rh']
+[2024-03-28T03:23:30.591+0000] {standard_task_runner.py:88} INFO - Job 144: Subtask actions_external_table_task
+[2024-03-28T03:23:30.658+0000] {task_command.py:423} INFO - Running <TaskInstance: upload_historical_congress_data.actions_external_table_task scheduled__2024-03-15T00:00:00+00:00 [running]> on host be5d54f7fe24
+[2024-03-28T03:23:30.725+0000] {taskinstance.py:2513} INFO - Exporting env vars: AIRFLOW_CTX_DAG_EMAIL='***@***.com' AIRFLOW_CTX_DAG_OWNER='***' AIRFLOW_CTX_DAG_ID='upload_historical_congress_data' AIRFLOW_CTX_TASK_ID='actions_external_table_task' AIRFLOW_CTX_EXECUTION_DATE='2024-03-15T00:00:00+00:00' AIRFLOW_CTX_TRY_NUMBER='1' AIRFLOW_CTX_DAG_RUN_ID='scheduled__2024-03-15T00:00:00+00:00'
+[2024-03-28T03:23:30.729+0000] {crypto.py:82} WARNING - empty cryptography key - values will not be stored encrypted.
+[2024-03-28T03:23:30.731+0000] {connection.py:269} WARNING - Connection schemes (type: google_cloud_platform) shall not contain '_' according to RFC3986.
+[2024-03-28T03:23:30.733+0000] {base.py:83} INFO - Using connection ID 'google_cloud_default' for task execution.
+[2024-03-28T03:23:31.378+0000] {taskinstance.py:2731} ERROR - Task failed with exception
+Traceback (most recent call last):
+  File "/home/airflow/.local/lib/python3.8/site-packages/airflow/models/taskinstance.py", line 444, in _execute_task
+    result = _execute_callable(context=context, **execute_callable_kwargs)
+  File "/home/airflow/.local/lib/python3.8/site-packages/airflow/models/taskinstance.py", line 414, in _execute_callable
+    return execute_callable(context=context, **execute_callable_kwargs)
+  File "/home/airflow/.local/lib/python3.8/site-packages/airflow/providers/google/cloud/operators/bigquery.py", line 1783, in execute
+    table = bq_hook.create_empty_table(
+  File "/home/airflow/.local/lib/python3.8/site-packages/airflow/providers/google/common/hooks/base_google.py", line 485, in inner_wrapper
+    return func(self, *args, **kwargs)
+  File "/home/airflow/.local/lib/python3.8/site-packages/airflow/providers/google/cloud/hooks/bigquery.py", line 422, in create_empty_table
+    return self.get_client(project_id=project_id, location=location).create_table(
+  File "/home/airflow/.local/lib/python3.8/site-packages/google/cloud/bigquery/client.py", line 797, in create_table
+    api_response = self._call_api(
+  File "/home/airflow/.local/lib/python3.8/site-packages/google/cloud/bigquery/client.py", line 831, in _call_api
+    return call()
+  File "/home/airflow/.local/lib/python3.8/site-packages/google/api_core/retry/retry_unary.py", line 293, in retry_wrapped_func
+    return retry_target(
+  File "/home/airflow/.local/lib/python3.8/site-packages/google/api_core/retry/retry_unary.py", line 153, in retry_target
+    _retry_error_helper(
+  File "/home/airflow/.local/lib/python3.8/site-packages/google/api_core/retry/retry_base.py", line 212, in _retry_error_helper
+    raise final_exc from source_exc
+  File "/home/airflow/.local/lib/python3.8/site-packages/google/api_core/retry/retry_unary.py", line 144, in retry_target
+    result = target()
+  File "/home/airflow/.local/lib/python3.8/site-packages/google/cloud/_http/__init__.py", line 494, in api_request
+    raise exceptions.from_http_response(response)
+google.api_core.exceptions.BadRequest: 400 POST https://bigquery.googleapis.com/bigquery/v2/projects/inbound-ship-412204/datasets/Congress/tables?prettyPrint=false: Invalid value for type: STRUCT<ACTIONDATE DATE, TEXT STRING> is not a valid value
+[2024-03-28T03:23:31.399+0000] {taskinstance.py:1149} INFO - Marking task as UP_FOR_RETRY. dag_id=upload_historical_congress_data, task_id=actions_external_table_task, execution_date=20240315T000000, start_date=20240328T032330, end_date=20240328T032331
+[2024-03-28T03:23:31.414+0000] {standard_task_runner.py:107} ERROR - Failed to execute job 144 for task actions_external_table_task (400 POST https://bigquery.googleapis.com/bigquery/v2/projects/inbound-ship-412204/datasets/Congress/tables?prettyPrint=false: Invalid value for type: STRUCT<ACTIONDATE DATE, TEXT STRING> is not a valid value; 140)
+[2024-03-28T03:23:31.444+0000] {local_task_job_runner.py:234} INFO - Task exited with return code 1
+[2024-03-28T03:23:31.479+0000] {taskinstance.py:3312} INFO - 0 downstream tasks scheduled from follow-on schedule check
+[2024-03-28T03:54:03.147+0000] {taskinstance.py:1979} INFO - Dependencies all met for dep_context=non-requeueable deps ti=<TaskInstance: upload_historical_congress_data.actions_external_table_task scheduled__2024-03-15T00:00:00+00:00 [queued]>
+[2024-03-28T03:54:03.161+0000] {taskinstance.py:1979} INFO - Dependencies all met for dep_context=requeueable deps ti=<TaskInstance: upload_historical_congress_data.actions_external_table_task scheduled__2024-03-15T00:00:00+00:00 [queued]>
+[2024-03-28T03:54:03.164+0000] {taskinstance.py:2193} INFO - Starting attempt 1 of 3
+[2024-03-28T03:54:03.177+0000] {taskinstance.py:2217} INFO - Executing <Task(BigQueryCreateExternalTableOperator): actions_external_table_task> on 2024-03-15 00:00:00+00:00
+[2024-03-28T03:54:03.186+0000] {standard_task_runner.py:60} INFO - Started process 296 to run task
+[2024-03-28T03:54:03.191+0000] {standard_task_runner.py:87} INFO - Running: ['***', 'tasks', 'run', 'upload_historical_congress_data', 'actions_external_table_task', 'scheduled__2024-03-15T00:00:00+00:00', '--job-id', '162', '--raw', '--subdir', 'DAGS_FOLDER/upload_historical_congress_data.py', '--cfg-path', '/tmp/tmpkcdh2aqy']
+[2024-03-28T03:54:03.197+0000] {standard_task_runner.py:88} INFO - Job 162: Subtask actions_external_table_task
+[2024-03-28T03:54:03.276+0000] {task_command.py:423} INFO - Running <TaskInstance: upload_historical_congress_data.actions_external_table_task scheduled__2024-03-15T00:00:00+00:00 [running]> on host be5d54f7fe24
+[2024-03-28T03:54:03.360+0000] {taskinstance.py:2513} INFO - Exporting env vars: AIRFLOW_CTX_DAG_EMAIL='***@***.com' AIRFLOW_CTX_DAG_OWNER='***' AIRFLOW_CTX_DAG_ID='upload_historical_congress_data' AIRFLOW_CTX_TASK_ID='actions_external_table_task' AIRFLOW_CTX_EXECUTION_DATE='2024-03-15T00:00:00+00:00' AIRFLOW_CTX_TRY_NUMBER='1' AIRFLOW_CTX_DAG_RUN_ID='scheduled__2024-03-15T00:00:00+00:00'
+[2024-03-28T03:54:03.366+0000] {crypto.py:82} WARNING - empty cryptography key - values will not be stored encrypted.
+[2024-03-28T03:54:03.368+0000] {connection.py:269} WARNING - Connection schemes (type: google_cloud_platform) shall not contain '_' according to RFC3986.
+[2024-03-28T03:54:03.370+0000] {base.py:83} INFO - Using connection ID 'google_cloud_default' for task execution.
+[2024-03-28T03:54:04.223+0000] {taskinstance.py:1149} INFO - Marking task as SUCCESS. dag_id=upload_historical_congress_data, task_id=actions_external_table_task, execution_date=20240315T000000, start_date=20240328T035403, end_date=20240328T035404
+[2024-03-28T03:54:04.252+0000] {local_task_job_runner.py:234} INFO - Task exited with return code 0
+[2024-03-28T03:54:04.281+0000] {taskinstance.py:3312} INFO - 1 downstream tasks scheduled from follow-on schedule check
+[2024-03-28T03:57:55.580+0000] {taskinstance.py:1979} INFO - Dependencies all met for dep_context=non-requeueable deps ti=<TaskInstance: upload_historical_congress_data.actions_external_table_task scheduled__2024-03-15T00:00:00+00:00 [queued]>
+[2024-03-28T03:57:55.602+0000] {taskinstance.py:1979} INFO - Dependencies all met for dep_context=requeueable deps ti=<TaskInstance: upload_historical_congress_data.actions_external_table_task scheduled__2024-03-15T00:00:00+00:00 [queued]>
+[2024-03-28T03:57:55.605+0000] {taskinstance.py:2193} INFO - Starting attempt 1 of 3
+[2024-03-28T03:57:55.646+0000] {taskinstance.py:2217} INFO - Executing <Task(BigQueryCreateExternalTableOperator): actions_external_table_task> on 2024-03-15 00:00:00+00:00
+[2024-03-28T03:57:55.666+0000] {standard_task_runner.py:60} INFO - Started process 85 to run task
+[2024-03-28T03:57:55.671+0000] {standard_task_runner.py:87} INFO - Running: ['***', 'tasks', 'run', 'upload_historical_congress_data', 'actions_external_table_task', 'scheduled__2024-03-15T00:00:00+00:00', '--job-id', '178', '--raw', '--subdir', 'DAGS_FOLDER/upload_historical_congress_data.py', '--cfg-path', '/tmp/tmpum2eikke']
+[2024-03-28T03:57:55.676+0000] {standard_task_runner.py:88} INFO - Job 178: Subtask actions_external_table_task
+[2024-03-28T03:57:55.735+0000] {task_command.py:423} INFO - Running <TaskInstance: upload_historical_congress_data.actions_external_table_task scheduled__2024-03-15T00:00:00+00:00 [running]> on host be5d54f7fe24
+[2024-03-28T03:57:55.808+0000] {taskinstance.py:2513} INFO - Exporting env vars: AIRFLOW_CTX_DAG_EMAIL='***@***.com' AIRFLOW_CTX_DAG_OWNER='***' AIRFLOW_CTX_DAG_ID='upload_historical_congress_data' AIRFLOW_CTX_TASK_ID='actions_external_table_task' AIRFLOW_CTX_EXECUTION_DATE='2024-03-15T00:00:00+00:00' AIRFLOW_CTX_TRY_NUMBER='1' AIRFLOW_CTX_DAG_RUN_ID='scheduled__2024-03-15T00:00:00+00:00'
+[2024-03-28T03:57:55.813+0000] {crypto.py:82} WARNING - empty cryptography key - values will not be stored encrypted.
+[2024-03-28T03:57:55.815+0000] {connection.py:269} WARNING - Connection schemes (type: google_cloud_platform) shall not contain '_' according to RFC3986.
+[2024-03-28T03:57:55.817+0000] {base.py:83} INFO - Using connection ID 'google_cloud_default' for task execution.
+[2024-03-28T03:57:56.810+0000] {taskinstance.py:1149} INFO - Marking task as SUCCESS. dag_id=upload_historical_congress_data, task_id=actions_external_table_task, execution_date=20240315T000000, start_date=20240328T035755, end_date=20240328T035756
+[2024-03-28T03:57:56.869+0000] {local_task_job_runner.py:234} INFO - Task exited with return code 0
+[2024-03-28T03:57:57.061+0000] {taskinstance.py:3312} INFO - 1 downstream tasks scheduled from follow-on schedule check
+[2024-03-28T04:08:03.988+0000] {taskinstance.py:1979} INFO - Dependencies all met for dep_context=non-requeueable deps ti=<TaskInstance: upload_historical_congress_data.actions_external_table_task scheduled__2024-03-15T00:00:00+00:00 [queued]>
+[2024-03-28T04:08:04.000+0000] {taskinstance.py:1979} INFO - Dependencies all met for dep_context=requeueable deps ti=<TaskInstance: upload_historical_congress_data.actions_external_table_task scheduled__2024-03-15T00:00:00+00:00 [queued]>
+[2024-03-28T04:08:04.002+0000] {taskinstance.py:2193} INFO - Starting attempt 1 of 3
+[2024-03-28T04:08:04.012+0000] {taskinstance.py:2217} INFO - Executing <Task(BigQueryCreateExternalTableOperator): actions_external_table_task> on 2024-03-15 00:00:00+00:00
+[2024-03-28T04:08:04.019+0000] {standard_task_runner.py:60} INFO - Started process 85 to run task
+[2024-03-28T04:08:04.024+0000] {standard_task_runner.py:87} INFO - Running: ['***', 'tasks', 'run', 'upload_historical_congress_data', 'actions_external_table_task', 'scheduled__2024-03-15T00:00:00+00:00', '--job-id', '199', '--raw', '--subdir', 'DAGS_FOLDER/upload_historical_congress_data.py', '--cfg-path', '/tmp/tmpbil8syqq']
+[2024-03-28T04:08:04.030+0000] {standard_task_runner.py:88} INFO - Job 199: Subtask actions_external_table_task
+[2024-03-28T04:08:04.096+0000] {task_command.py:423} INFO - Running <TaskInstance: upload_historical_congress_data.actions_external_table_task scheduled__2024-03-15T00:00:00+00:00 [running]> on host be5d54f7fe24
+[2024-03-28T04:08:04.167+0000] {taskinstance.py:2513} INFO - Exporting env vars: AIRFLOW_CTX_DAG_EMAIL='***@***.com' AIRFLOW_CTX_DAG_OWNER='***' AIRFLOW_CTX_DAG_ID='upload_historical_congress_data' AIRFLOW_CTX_TASK_ID='actions_external_table_task' AIRFLOW_CTX_EXECUTION_DATE='2024-03-15T00:00:00+00:00' AIRFLOW_CTX_TRY_NUMBER='1' AIRFLOW_CTX_DAG_RUN_ID='scheduled__2024-03-15T00:00:00+00:00'
+[2024-03-28T04:08:04.171+0000] {crypto.py:82} WARNING - empty cryptography key - values will not be stored encrypted.
+[2024-03-28T04:08:04.173+0000] {connection.py:269} WARNING - Connection schemes (type: google_cloud_platform) shall not contain '_' according to RFC3986.
+[2024-03-28T04:08:04.175+0000] {base.py:83} INFO - Using connection ID 'google_cloud_default' for task execution.
+[2024-03-28T04:08:04.961+0000] {taskinstance.py:1149} INFO - Marking task as SUCCESS. dag_id=upload_historical_congress_data, task_id=actions_external_table_task, execution_date=20240315T000000, start_date=20240328T040803, end_date=20240328T040804
+[2024-03-28T04:08:04.987+0000] {local_task_job_runner.py:234} INFO - Task exited with return code 0
+[2024-03-28T04:08:05.005+0000] {taskinstance.py:3312} INFO - 1 downstream tasks scheduled from follow-on schedule check

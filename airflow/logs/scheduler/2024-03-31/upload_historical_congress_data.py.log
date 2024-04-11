@@ -1,0 +1,306 @@
+[2024-03-31T01:17:36.421+0000] {processor.py:161} INFO - Started process (PID=2682) to work on /opt/airflow/dags/upload_historical_congress_data.py
+[2024-03-31T01:17:36.422+0000] {processor.py:830} INFO - Processing file /opt/airflow/dags/upload_historical_congress_data.py for tasks to queue
+[2024-03-31T01:17:36.425+0000] {logging_mixin.py:188} INFO - [2024-03-31T01:17:36.425+0000] {dagbag.py:540} INFO - Filling up the DagBag from /opt/airflow/dags/upload_historical_congress_data.py
+[2024-03-31T01:17:36.431+0000] {logging_mixin.py:188} INFO - [2024-03-31T01:17:36.430+0000] {dagbag.py:350} ERROR - Failed to import: /opt/airflow/dags/upload_historical_congress_data.py
+Traceback (most recent call last):
+  File "/home/airflow/.local/lib/python3.11/site-packages/airflow/models/dagbag.py", line 346, in parse
+    loader.exec_module(new_module)
+  File "<frozen importlib._bootstrap_external>", line 936, in exec_module
+  File "<frozen importlib._bootstrap_external>", line 1074, in get_code
+  File "<frozen importlib._bootstrap_external>", line 1004, in source_to_code
+  File "<frozen importlib._bootstrap>", line 241, in _call_with_frames_removed
+  File "/opt/airflow/dags/upload_historical_congress_data.py", line 25
+    'house_votes': {'schema': house_vote_schema 'format':'JSON'}}
+                                                ^^^^^^^^
+SyntaxError: invalid syntax
+[2024-03-31T01:17:36.432+0000] {processor.py:842} WARNING - No viable dags retrieved from /opt/airflow/dags/upload_historical_congress_data.py
+[2024-03-31T01:17:36.447+0000] {processor.py:183} INFO - Processing /opt/airflow/dags/upload_historical_congress_data.py took 0.030 seconds
+[2024-03-31T02:28:41.277+0000] {processor.py:161} INFO - Started process (PID=2689) to work on /opt/airflow/dags/upload_historical_congress_data.py
+[2024-03-31T02:28:41.279+0000] {processor.py:830} INFO - Processing file /opt/airflow/dags/upload_historical_congress_data.py for tasks to queue
+[2024-03-31T02:28:41.286+0000] {logging_mixin.py:188} INFO - [2024-03-31T02:28:41.285+0000] {dagbag.py:540} INFO - Filling up the DagBag from /opt/airflow/dags/upload_historical_congress_data.py
+[2024-03-31T02:28:41.303+0000] {logging_mixin.py:188} INFO - [2024-03-31T02:28:41.298+0000] {dagbag.py:350} ERROR - Failed to import: /opt/airflow/dags/upload_historical_congress_data.py
+Traceback (most recent call last):
+  File "/home/airflow/.local/lib/python3.11/site-packages/airflow/models/dagbag.py", line 346, in parse
+    loader.exec_module(new_module)
+  File "<frozen importlib._bootstrap_external>", line 936, in exec_module
+  File "<frozen importlib._bootstrap_external>", line 1074, in get_code
+  File "<frozen importlib._bootstrap_external>", line 1004, in source_to_code
+  File "<frozen importlib._bootstrap>", line 241, in _call_with_frames_removed
+  File "/opt/airflow/dags/upload_historical_congress_data.py", line 25
+    'house_votes': {'schema': house_vote_schema 'format':'JSON'}}
+                                                ^^^^^^^^
+SyntaxError: invalid syntax
+[2024-03-31T02:28:41.310+0000] {processor.py:842} WARNING - No viable dags retrieved from /opt/airflow/dags/upload_historical_congress_data.py
+[2024-03-31T02:28:41.358+0000] {processor.py:183} INFO - Processing /opt/airflow/dags/upload_historical_congress_data.py took 0.089 seconds
+[2024-03-31T04:03:33.921+0000] {processor.py:161} INFO - Started process (PID=2696) to work on /opt/airflow/dags/upload_historical_congress_data.py
+[2024-03-31T04:03:33.922+0000] {processor.py:830} INFO - Processing file /opt/airflow/dags/upload_historical_congress_data.py for tasks to queue
+[2024-03-31T04:03:33.929+0000] {logging_mixin.py:188} INFO - [2024-03-31T04:03:33.928+0000] {dagbag.py:540} INFO - Filling up the DagBag from /opt/airflow/dags/upload_historical_congress_data.py
+[2024-03-31T04:03:33.937+0000] {logging_mixin.py:188} INFO - [2024-03-31T04:03:33.935+0000] {dagbag.py:350} ERROR - Failed to import: /opt/airflow/dags/upload_historical_congress_data.py
+Traceback (most recent call last):
+  File "/home/airflow/.local/lib/python3.11/site-packages/airflow/models/dagbag.py", line 346, in parse
+    loader.exec_module(new_module)
+  File "<frozen importlib._bootstrap_external>", line 936, in exec_module
+  File "<frozen importlib._bootstrap_external>", line 1074, in get_code
+  File "<frozen importlib._bootstrap_external>", line 1004, in source_to_code
+  File "<frozen importlib._bootstrap>", line 241, in _call_with_frames_removed
+  File "/opt/airflow/dags/upload_historical_congress_data.py", line 25
+    'house_votes': {'schema': house_vote_schema 'format':'JSON'}}
+                                                ^^^^^^^^
+SyntaxError: invalid syntax
+[2024-03-31T04:03:33.940+0000] {processor.py:842} WARNING - No viable dags retrieved from /opt/airflow/dags/upload_historical_congress_data.py
+[2024-03-31T04:03:33.959+0000] {processor.py:183} INFO - Processing /opt/airflow/dags/upload_historical_congress_data.py took 0.044 seconds
+[2024-03-31T05:21:13.702+0000] {processor.py:161} INFO - Started process (PID=2703) to work on /opt/airflow/dags/upload_historical_congress_data.py
+[2024-03-31T05:21:13.705+0000] {processor.py:830} INFO - Processing file /opt/airflow/dags/upload_historical_congress_data.py for tasks to queue
+[2024-03-31T05:21:13.716+0000] {logging_mixin.py:188} INFO - [2024-03-31T05:21:13.714+0000] {dagbag.py:540} INFO - Filling up the DagBag from /opt/airflow/dags/upload_historical_congress_data.py
+[2024-03-31T05:21:13.732+0000] {logging_mixin.py:188} INFO - [2024-03-31T05:21:13.729+0000] {dagbag.py:350} ERROR - Failed to import: /opt/airflow/dags/upload_historical_congress_data.py
+Traceback (most recent call last):
+  File "/home/airflow/.local/lib/python3.11/site-packages/airflow/models/dagbag.py", line 346, in parse
+    loader.exec_module(new_module)
+  File "<frozen importlib._bootstrap_external>", line 936, in exec_module
+  File "<frozen importlib._bootstrap_external>", line 1074, in get_code
+  File "<frozen importlib._bootstrap_external>", line 1004, in source_to_code
+  File "<frozen importlib._bootstrap>", line 241, in _call_with_frames_removed
+  File "/opt/airflow/dags/upload_historical_congress_data.py", line 25
+    'house_votes': {'schema': house_vote_schema 'format':'JSON'}}
+                                                ^^^^^^^^
+SyntaxError: invalid syntax
+[2024-03-31T05:21:13.733+0000] {processor.py:842} WARNING - No viable dags retrieved from /opt/airflow/dags/upload_historical_congress_data.py
+[2024-03-31T05:21:13.773+0000] {processor.py:183} INFO - Processing /opt/airflow/dags/upload_historical_congress_data.py took 0.086 seconds
+[2024-03-31T06:39:35.591+0000] {processor.py:161} INFO - Started process (PID=2709) to work on /opt/airflow/dags/upload_historical_congress_data.py
+[2024-03-31T06:39:35.592+0000] {processor.py:830} INFO - Processing file /opt/airflow/dags/upload_historical_congress_data.py for tasks to queue
+[2024-03-31T06:39:35.595+0000] {logging_mixin.py:188} INFO - [2024-03-31T06:39:35.595+0000] {dagbag.py:540} INFO - Filling up the DagBag from /opt/airflow/dags/upload_historical_congress_data.py
+[2024-03-31T06:39:35.617+0000] {logging_mixin.py:188} INFO - [2024-03-31T06:39:35.616+0000] {dagbag.py:350} ERROR - Failed to import: /opt/airflow/dags/upload_historical_congress_data.py
+Traceback (most recent call last):
+  File "/home/airflow/.local/lib/python3.11/site-packages/airflow/models/dagbag.py", line 346, in parse
+    loader.exec_module(new_module)
+  File "<frozen importlib._bootstrap_external>", line 936, in exec_module
+  File "<frozen importlib._bootstrap_external>", line 1074, in get_code
+  File "<frozen importlib._bootstrap_external>", line 1004, in source_to_code
+  File "<frozen importlib._bootstrap>", line 241, in _call_with_frames_removed
+  File "/opt/airflow/dags/upload_historical_congress_data.py", line 25
+    'house_votes': {'schema': house_vote_schema 'format':'JSON'}}
+                                                ^^^^^^^^
+SyntaxError: invalid syntax
+[2024-03-31T06:39:35.618+0000] {processor.py:842} WARNING - No viable dags retrieved from /opt/airflow/dags/upload_historical_congress_data.py
+[2024-03-31T06:39:35.638+0000] {processor.py:183} INFO - Processing /opt/airflow/dags/upload_historical_congress_data.py took 0.050 seconds
+[2024-03-31T08:19:48.304+0000] {processor.py:161} INFO - Started process (PID=2716) to work on /opt/airflow/dags/upload_historical_congress_data.py
+[2024-03-31T08:19:48.308+0000] {processor.py:830} INFO - Processing file /opt/airflow/dags/upload_historical_congress_data.py for tasks to queue
+[2024-03-31T08:19:48.326+0000] {logging_mixin.py:188} INFO - [2024-03-31T08:19:48.324+0000] {dagbag.py:540} INFO - Filling up the DagBag from /opt/airflow/dags/upload_historical_congress_data.py
+[2024-03-31T08:19:48.342+0000] {logging_mixin.py:188} INFO - [2024-03-31T08:19:48.340+0000] {dagbag.py:350} ERROR - Failed to import: /opt/airflow/dags/upload_historical_congress_data.py
+Traceback (most recent call last):
+  File "/home/airflow/.local/lib/python3.11/site-packages/airflow/models/dagbag.py", line 346, in parse
+    loader.exec_module(new_module)
+  File "<frozen importlib._bootstrap_external>", line 936, in exec_module
+  File "<frozen importlib._bootstrap_external>", line 1074, in get_code
+  File "<frozen importlib._bootstrap_external>", line 1004, in source_to_code
+  File "<frozen importlib._bootstrap>", line 241, in _call_with_frames_removed
+  File "/opt/airflow/dags/upload_historical_congress_data.py", line 25
+    'house_votes': {'schema': house_vote_schema 'format':'JSON'}}
+                                                ^^^^^^^^
+SyntaxError: invalid syntax
+[2024-03-31T08:19:48.343+0000] {processor.py:842} WARNING - No viable dags retrieved from /opt/airflow/dags/upload_historical_congress_data.py
+[2024-03-31T08:19:48.399+0000] {processor.py:183} INFO - Processing /opt/airflow/dags/upload_historical_congress_data.py took 0.105 seconds
+[2024-03-31T09:55:45.035+0000] {processor.py:161} INFO - Started process (PID=2723) to work on /opt/airflow/dags/upload_historical_congress_data.py
+[2024-03-31T09:55:45.037+0000] {processor.py:830} INFO - Processing file /opt/airflow/dags/upload_historical_congress_data.py for tasks to queue
+[2024-03-31T09:55:45.040+0000] {logging_mixin.py:188} INFO - [2024-03-31T09:55:45.040+0000] {dagbag.py:540} INFO - Filling up the DagBag from /opt/airflow/dags/upload_historical_congress_data.py
+[2024-03-31T09:55:45.047+0000] {logging_mixin.py:188} INFO - [2024-03-31T09:55:45.046+0000] {dagbag.py:350} ERROR - Failed to import: /opt/airflow/dags/upload_historical_congress_data.py
+Traceback (most recent call last):
+  File "/home/airflow/.local/lib/python3.11/site-packages/airflow/models/dagbag.py", line 346, in parse
+    loader.exec_module(new_module)
+  File "<frozen importlib._bootstrap_external>", line 936, in exec_module
+  File "<frozen importlib._bootstrap_external>", line 1074, in get_code
+  File "<frozen importlib._bootstrap_external>", line 1004, in source_to_code
+  File "<frozen importlib._bootstrap>", line 241, in _call_with_frames_removed
+  File "/opt/airflow/dags/upload_historical_congress_data.py", line 25
+    'house_votes': {'schema': house_vote_schema 'format':'JSON'}}
+                                                ^^^^^^^^
+SyntaxError: invalid syntax
+[2024-03-31T09:55:45.048+0000] {processor.py:842} WARNING - No viable dags retrieved from /opt/airflow/dags/upload_historical_congress_data.py
+[2024-03-31T09:55:45.084+0000] {processor.py:183} INFO - Processing /opt/airflow/dags/upload_historical_congress_data.py took 0.053 seconds
+[2024-03-31T11:17:47.278+0000] {processor.py:161} INFO - Started process (PID=2729) to work on /opt/airflow/dags/upload_historical_congress_data.py
+[2024-03-31T11:17:47.281+0000] {processor.py:830} INFO - Processing file /opt/airflow/dags/upload_historical_congress_data.py for tasks to queue
+[2024-03-31T11:17:47.303+0000] {logging_mixin.py:188} INFO - [2024-03-31T11:17:47.302+0000] {dagbag.py:540} INFO - Filling up the DagBag from /opt/airflow/dags/upload_historical_congress_data.py
+[2024-03-31T11:17:47.319+0000] {logging_mixin.py:188} INFO - [2024-03-31T11:17:47.316+0000] {dagbag.py:350} ERROR - Failed to import: /opt/airflow/dags/upload_historical_congress_data.py
+Traceback (most recent call last):
+  File "/home/airflow/.local/lib/python3.11/site-packages/airflow/models/dagbag.py", line 346, in parse
+    loader.exec_module(new_module)
+  File "<frozen importlib._bootstrap_external>", line 936, in exec_module
+  File "<frozen importlib._bootstrap_external>", line 1074, in get_code
+  File "<frozen importlib._bootstrap_external>", line 1004, in source_to_code
+  File "<frozen importlib._bootstrap>", line 241, in _call_with_frames_removed
+  File "/opt/airflow/dags/upload_historical_congress_data.py", line 25
+    'house_votes': {'schema': house_vote_schema 'format':'JSON'}}
+                                                ^^^^^^^^
+SyntaxError: invalid syntax
+[2024-03-31T11:17:47.320+0000] {processor.py:842} WARNING - No viable dags retrieved from /opt/airflow/dags/upload_historical_congress_data.py
+[2024-03-31T11:17:47.377+0000] {processor.py:183} INFO - Processing /opt/airflow/dags/upload_historical_congress_data.py took 0.111 seconds
+[2024-03-31T12:38:25.958+0000] {processor.py:161} INFO - Started process (PID=2737) to work on /opt/airflow/dags/upload_historical_congress_data.py
+[2024-03-31T12:38:25.964+0000] {processor.py:830} INFO - Processing file /opt/airflow/dags/upload_historical_congress_data.py for tasks to queue
+[2024-03-31T12:38:25.974+0000] {logging_mixin.py:188} INFO - [2024-03-31T12:38:25.973+0000] {dagbag.py:540} INFO - Filling up the DagBag from /opt/airflow/dags/upload_historical_congress_data.py
+[2024-03-31T12:38:25.993+0000] {logging_mixin.py:188} INFO - [2024-03-31T12:38:25.990+0000] {dagbag.py:350} ERROR - Failed to import: /opt/airflow/dags/upload_historical_congress_data.py
+Traceback (most recent call last):
+  File "/home/airflow/.local/lib/python3.11/site-packages/airflow/models/dagbag.py", line 346, in parse
+    loader.exec_module(new_module)
+  File "<frozen importlib._bootstrap_external>", line 936, in exec_module
+  File "<frozen importlib._bootstrap_external>", line 1074, in get_code
+  File "<frozen importlib._bootstrap_external>", line 1004, in source_to_code
+  File "<frozen importlib._bootstrap>", line 241, in _call_with_frames_removed
+  File "/opt/airflow/dags/upload_historical_congress_data.py", line 25
+    'house_votes': {'schema': house_vote_schema 'format':'JSON'}}
+                                                ^^^^^^^^
+SyntaxError: invalid syntax
+[2024-03-31T12:38:25.995+0000] {processor.py:842} WARNING - No viable dags retrieved from /opt/airflow/dags/upload_historical_congress_data.py
+[2024-03-31T12:38:26.044+0000] {processor.py:183} INFO - Processing /opt/airflow/dags/upload_historical_congress_data.py took 0.097 seconds
+[2024-03-31T14:21:36.281+0000] {processor.py:161} INFO - Started process (PID=2744) to work on /opt/airflow/dags/upload_historical_congress_data.py
+[2024-03-31T14:21:36.283+0000] {processor.py:830} INFO - Processing file /opt/airflow/dags/upload_historical_congress_data.py for tasks to queue
+[2024-03-31T14:21:36.297+0000] {logging_mixin.py:188} INFO - [2024-03-31T14:21:36.296+0000] {dagbag.py:540} INFO - Filling up the DagBag from /opt/airflow/dags/upload_historical_congress_data.py
+[2024-03-31T14:21:36.324+0000] {logging_mixin.py:188} INFO - [2024-03-31T14:21:36.322+0000] {dagbag.py:350} ERROR - Failed to import: /opt/airflow/dags/upload_historical_congress_data.py
+Traceback (most recent call last):
+  File "/home/airflow/.local/lib/python3.11/site-packages/airflow/models/dagbag.py", line 346, in parse
+    loader.exec_module(new_module)
+  File "<frozen importlib._bootstrap_external>", line 936, in exec_module
+  File "<frozen importlib._bootstrap_external>", line 1074, in get_code
+  File "<frozen importlib._bootstrap_external>", line 1004, in source_to_code
+  File "<frozen importlib._bootstrap>", line 241, in _call_with_frames_removed
+  File "/opt/airflow/dags/upload_historical_congress_data.py", line 25
+    'house_votes': {'schema': house_vote_schema 'format':'JSON'}}
+                                                ^^^^^^^^
+SyntaxError: invalid syntax
+[2024-03-31T14:21:36.328+0000] {processor.py:842} WARNING - No viable dags retrieved from /opt/airflow/dags/upload_historical_congress_data.py
+[2024-03-31T14:21:36.378+0000] {processor.py:183} INFO - Processing /opt/airflow/dags/upload_historical_congress_data.py took 0.116 seconds
+[2024-03-31T15:39:27.676+0000] {processor.py:161} INFO - Started process (PID=2751) to work on /opt/airflow/dags/upload_historical_congress_data.py
+[2024-03-31T15:39:27.678+0000] {processor.py:830} INFO - Processing file /opt/airflow/dags/upload_historical_congress_data.py for tasks to queue
+[2024-03-31T15:39:27.683+0000] {logging_mixin.py:188} INFO - [2024-03-31T15:39:27.683+0000] {dagbag.py:540} INFO - Filling up the DagBag from /opt/airflow/dags/upload_historical_congress_data.py
+[2024-03-31T15:39:27.691+0000] {logging_mixin.py:188} INFO - [2024-03-31T15:39:27.690+0000] {dagbag.py:350} ERROR - Failed to import: /opt/airflow/dags/upload_historical_congress_data.py
+Traceback (most recent call last):
+  File "/home/airflow/.local/lib/python3.11/site-packages/airflow/models/dagbag.py", line 346, in parse
+    loader.exec_module(new_module)
+  File "<frozen importlib._bootstrap_external>", line 936, in exec_module
+  File "<frozen importlib._bootstrap_external>", line 1074, in get_code
+  File "<frozen importlib._bootstrap_external>", line 1004, in source_to_code
+  File "<frozen importlib._bootstrap>", line 241, in _call_with_frames_removed
+  File "/opt/airflow/dags/upload_historical_congress_data.py", line 25
+    'house_votes': {'schema': house_vote_schema 'format':'JSON'}}
+                                                ^^^^^^^^
+SyntaxError: invalid syntax
+[2024-03-31T15:39:27.691+0000] {processor.py:842} WARNING - No viable dags retrieved from /opt/airflow/dags/upload_historical_congress_data.py
+[2024-03-31T15:39:27.707+0000] {processor.py:183} INFO - Processing /opt/airflow/dags/upload_historical_congress_data.py took 0.037 seconds
+[2024-03-31T16:57:10.825+0000] {processor.py:161} INFO - Started process (PID=2758) to work on /opt/airflow/dags/upload_historical_congress_data.py
+[2024-03-31T16:57:10.829+0000] {processor.py:830} INFO - Processing file /opt/airflow/dags/upload_historical_congress_data.py for tasks to queue
+[2024-03-31T16:57:10.848+0000] {logging_mixin.py:188} INFO - [2024-03-31T16:57:10.845+0000] {dagbag.py:540} INFO - Filling up the DagBag from /opt/airflow/dags/upload_historical_congress_data.py
+[2024-03-31T16:57:10.862+0000] {logging_mixin.py:188} INFO - [2024-03-31T16:57:10.859+0000] {dagbag.py:350} ERROR - Failed to import: /opt/airflow/dags/upload_historical_congress_data.py
+Traceback (most recent call last):
+  File "/home/airflow/.local/lib/python3.11/site-packages/airflow/models/dagbag.py", line 346, in parse
+    loader.exec_module(new_module)
+  File "<frozen importlib._bootstrap_external>", line 936, in exec_module
+  File "<frozen importlib._bootstrap_external>", line 1074, in get_code
+  File "<frozen importlib._bootstrap_external>", line 1004, in source_to_code
+  File "<frozen importlib._bootstrap>", line 241, in _call_with_frames_removed
+  File "/opt/airflow/dags/upload_historical_congress_data.py", line 25
+    'house_votes': {'schema': house_vote_schema 'format':'JSON'}}
+                                                ^^^^^^^^
+SyntaxError: invalid syntax
+[2024-03-31T16:57:10.863+0000] {processor.py:842} WARNING - No viable dags retrieved from /opt/airflow/dags/upload_historical_congress_data.py
+[2024-03-31T16:57:10.898+0000] {processor.py:183} INFO - Processing /opt/airflow/dags/upload_historical_congress_data.py took 0.083 seconds
+[2024-03-31T18:13:03.849+0000] {processor.py:161} INFO - Started process (PID=2765) to work on /opt/airflow/dags/upload_historical_congress_data.py
+[2024-03-31T18:13:03.851+0000] {processor.py:830} INFO - Processing file /opt/airflow/dags/upload_historical_congress_data.py for tasks to queue
+[2024-03-31T18:13:03.858+0000] {logging_mixin.py:188} INFO - [2024-03-31T18:13:03.857+0000] {dagbag.py:540} INFO - Filling up the DagBag from /opt/airflow/dags/upload_historical_congress_data.py
+[2024-03-31T18:13:03.873+0000] {logging_mixin.py:188} INFO - [2024-03-31T18:13:03.870+0000] {dagbag.py:350} ERROR - Failed to import: /opt/airflow/dags/upload_historical_congress_data.py
+Traceback (most recent call last):
+  File "/home/airflow/.local/lib/python3.11/site-packages/airflow/models/dagbag.py", line 346, in parse
+    loader.exec_module(new_module)
+  File "<frozen importlib._bootstrap_external>", line 936, in exec_module
+  File "<frozen importlib._bootstrap_external>", line 1074, in get_code
+  File "<frozen importlib._bootstrap_external>", line 1004, in source_to_code
+  File "<frozen importlib._bootstrap>", line 241, in _call_with_frames_removed
+  File "/opt/airflow/dags/upload_historical_congress_data.py", line 25
+    'house_votes': {'schema': house_vote_schema 'format':'JSON'}}
+                                                ^^^^^^^^
+SyntaxError: invalid syntax
+[2024-03-31T18:13:03.874+0000] {processor.py:842} WARNING - No viable dags retrieved from /opt/airflow/dags/upload_historical_congress_data.py
+[2024-03-31T18:13:03.908+0000] {processor.py:183} INFO - Processing /opt/airflow/dags/upload_historical_congress_data.py took 0.065 seconds
+[2024-03-31T19:16:42.838+0000] {processor.py:161} INFO - Started process (PID=2772) to work on /opt/airflow/dags/upload_historical_congress_data.py
+[2024-03-31T19:16:42.838+0000] {processor.py:830} INFO - Processing file /opt/airflow/dags/upload_historical_congress_data.py for tasks to queue
+[2024-03-31T19:16:42.841+0000] {logging_mixin.py:188} INFO - [2024-03-31T19:16:42.841+0000] {dagbag.py:540} INFO - Filling up the DagBag from /opt/airflow/dags/upload_historical_congress_data.py
+[2024-03-31T19:16:42.853+0000] {logging_mixin.py:188} INFO - [2024-03-31T19:16:42.849+0000] {dagbag.py:350} ERROR - Failed to import: /opt/airflow/dags/upload_historical_congress_data.py
+Traceback (most recent call last):
+  File "/home/airflow/.local/lib/python3.11/site-packages/airflow/models/dagbag.py", line 346, in parse
+    loader.exec_module(new_module)
+  File "<frozen importlib._bootstrap_external>", line 936, in exec_module
+  File "<frozen importlib._bootstrap_external>", line 1074, in get_code
+  File "<frozen importlib._bootstrap_external>", line 1004, in source_to_code
+  File "<frozen importlib._bootstrap>", line 241, in _call_with_frames_removed
+  File "/opt/airflow/dags/upload_historical_congress_data.py", line 25
+    'house_votes': {'schema': house_vote_schema 'format':'JSON'}}
+                                                ^^^^^^^^
+SyntaxError: invalid syntax
+[2024-03-31T19:16:42.854+0000] {processor.py:842} WARNING - No viable dags retrieved from /opt/airflow/dags/upload_historical_congress_data.py
+[2024-03-31T19:16:42.885+0000] {processor.py:183} INFO - Processing /opt/airflow/dags/upload_historical_congress_data.py took 0.051 seconds
+[2024-03-31T20:16:04.257+0000] {processor.py:161} INFO - Started process (PID=2779) to work on /opt/airflow/dags/upload_historical_congress_data.py
+[2024-03-31T20:16:04.259+0000] {processor.py:830} INFO - Processing file /opt/airflow/dags/upload_historical_congress_data.py for tasks to queue
+[2024-03-31T20:16:04.270+0000] {logging_mixin.py:188} INFO - [2024-03-31T20:16:04.269+0000] {dagbag.py:540} INFO - Filling up the DagBag from /opt/airflow/dags/upload_historical_congress_data.py
+[2024-03-31T20:16:04.287+0000] {logging_mixin.py:188} INFO - [2024-03-31T20:16:04.283+0000] {dagbag.py:350} ERROR - Failed to import: /opt/airflow/dags/upload_historical_congress_data.py
+Traceback (most recent call last):
+  File "/home/airflow/.local/lib/python3.11/site-packages/airflow/models/dagbag.py", line 346, in parse
+    loader.exec_module(new_module)
+  File "<frozen importlib._bootstrap_external>", line 936, in exec_module
+  File "<frozen importlib._bootstrap_external>", line 1074, in get_code
+  File "<frozen importlib._bootstrap_external>", line 1004, in source_to_code
+  File "<frozen importlib._bootstrap>", line 241, in _call_with_frames_removed
+  File "/opt/airflow/dags/upload_historical_congress_data.py", line 25
+    'house_votes': {'schema': house_vote_schema 'format':'JSON'}}
+                                                ^^^^^^^^
+SyntaxError: invalid syntax
+[2024-03-31T20:16:04.290+0000] {processor.py:842} WARNING - No viable dags retrieved from /opt/airflow/dags/upload_historical_congress_data.py
+[2024-03-31T20:16:04.325+0000] {processor.py:183} INFO - Processing /opt/airflow/dags/upload_historical_congress_data.py took 0.076 seconds
+[2024-03-31T21:28:20.480+0000] {processor.py:161} INFO - Started process (PID=2786) to work on /opt/airflow/dags/upload_historical_congress_data.py
+[2024-03-31T21:28:20.481+0000] {processor.py:830} INFO - Processing file /opt/airflow/dags/upload_historical_congress_data.py for tasks to queue
+[2024-03-31T21:28:20.486+0000] {logging_mixin.py:188} INFO - [2024-03-31T21:28:20.486+0000] {dagbag.py:540} INFO - Filling up the DagBag from /opt/airflow/dags/upload_historical_congress_data.py
+[2024-03-31T21:28:20.493+0000] {logging_mixin.py:188} INFO - [2024-03-31T21:28:20.492+0000] {dagbag.py:350} ERROR - Failed to import: /opt/airflow/dags/upload_historical_congress_data.py
+Traceback (most recent call last):
+  File "/home/airflow/.local/lib/python3.11/site-packages/airflow/models/dagbag.py", line 346, in parse
+    loader.exec_module(new_module)
+  File "<frozen importlib._bootstrap_external>", line 936, in exec_module
+  File "<frozen importlib._bootstrap_external>", line 1074, in get_code
+  File "<frozen importlib._bootstrap_external>", line 1004, in source_to_code
+  File "<frozen importlib._bootstrap>", line 241, in _call_with_frames_removed
+  File "/opt/airflow/dags/upload_historical_congress_data.py", line 25
+    'house_votes': {'schema': house_vote_schema 'format':'JSON'}}
+                                                ^^^^^^^^
+SyntaxError: invalid syntax
+[2024-03-31T21:28:20.628+0000] {processor.py:842} WARNING - No viable dags retrieved from /opt/airflow/dags/upload_historical_congress_data.py
+[2024-03-31T21:28:20.719+0000] {processor.py:183} INFO - Processing /opt/airflow/dags/upload_historical_congress_data.py took 0.265 seconds
+[2024-03-31T22:49:39.452+0000] {processor.py:161} INFO - Started process (PID=2793) to work on /opt/airflow/dags/upload_historical_congress_data.py
+[2024-03-31T22:49:39.454+0000] {processor.py:830} INFO - Processing file /opt/airflow/dags/upload_historical_congress_data.py for tasks to queue
+[2024-03-31T22:49:39.461+0000] {logging_mixin.py:188} INFO - [2024-03-31T22:49:39.461+0000] {dagbag.py:540} INFO - Filling up the DagBag from /opt/airflow/dags/upload_historical_congress_data.py
+[2024-03-31T22:49:39.473+0000] {logging_mixin.py:188} INFO - [2024-03-31T22:49:39.471+0000] {dagbag.py:350} ERROR - Failed to import: /opt/airflow/dags/upload_historical_congress_data.py
+Traceback (most recent call last):
+  File "/home/airflow/.local/lib/python3.11/site-packages/airflow/models/dagbag.py", line 346, in parse
+    loader.exec_module(new_module)
+  File "<frozen importlib._bootstrap_external>", line 936, in exec_module
+  File "<frozen importlib._bootstrap_external>", line 1074, in get_code
+  File "<frozen importlib._bootstrap_external>", line 1004, in source_to_code
+  File "<frozen importlib._bootstrap>", line 241, in _call_with_frames_removed
+  File "/opt/airflow/dags/upload_historical_congress_data.py", line 25
+    'house_votes': {'schema': house_vote_schema 'format':'JSON'}}
+                                                ^^^^^^^^
+SyntaxError: invalid syntax
+[2024-03-31T22:49:39.478+0000] {processor.py:842} WARNING - No viable dags retrieved from /opt/airflow/dags/upload_historical_congress_data.py
+[2024-03-31T22:49:39.530+0000] {processor.py:183} INFO - Processing /opt/airflow/dags/upload_historical_congress_data.py took 0.082 seconds
+[2024-03-31T23:35:44.916+0000] {processor.py:161} INFO - Started process (PID=2800) to work on /opt/airflow/dags/upload_historical_congress_data.py
+[2024-03-31T23:35:44.918+0000] {processor.py:830} INFO - Processing file /opt/airflow/dags/upload_historical_congress_data.py for tasks to queue
+[2024-03-31T23:35:44.931+0000] {logging_mixin.py:188} INFO - [2024-03-31T23:35:44.929+0000] {dagbag.py:540} INFO - Filling up the DagBag from /opt/airflow/dags/upload_historical_congress_data.py
+[2024-03-31T23:35:44.958+0000] {logging_mixin.py:188} INFO - [2024-03-31T23:35:44.953+0000] {dagbag.py:350} ERROR - Failed to import: /opt/airflow/dags/upload_historical_congress_data.py
+Traceback (most recent call last):
+  File "/home/airflow/.local/lib/python3.11/site-packages/airflow/models/dagbag.py", line 346, in parse
+    loader.exec_module(new_module)
+  File "<frozen importlib._bootstrap_external>", line 936, in exec_module
+  File "<frozen importlib._bootstrap_external>", line 1074, in get_code
+  File "<frozen importlib._bootstrap_external>", line 1004, in source_to_code
+  File "<frozen importlib._bootstrap>", line 241, in _call_with_frames_removed
+  File "/opt/airflow/dags/upload_historical_congress_data.py", line 25
+    'house_votes': {'schema': house_vote_schema 'format':'JSON'}}
+                                                ^^^^^^^^
+SyntaxError: invalid syntax
+[2024-03-31T23:35:44.959+0000] {processor.py:842} WARNING - No viable dags retrieved from /opt/airflow/dags/upload_historical_congress_data.py
+[2024-03-31T23:35:44.997+0000] {processor.py:183} INFO - Processing /opt/airflow/dags/upload_historical_congress_data.py took 0.089 seconds

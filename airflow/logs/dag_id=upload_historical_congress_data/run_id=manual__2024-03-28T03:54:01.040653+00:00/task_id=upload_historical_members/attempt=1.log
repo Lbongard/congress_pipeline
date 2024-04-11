@@ -1,0 +1,23 @@
+[2024-03-28T03:55:03.469+0000] {taskinstance.py:1979} INFO - Dependencies all met for dep_context=non-requeueable deps ti=<TaskInstance: upload_historical_congress_data.upload_historical_members manual__2024-03-28T03:54:01.040653+00:00 [queued]>
+[2024-03-28T03:55:03.480+0000] {taskinstance.py:1979} INFO - Dependencies all met for dep_context=requeueable deps ti=<TaskInstance: upload_historical_congress_data.upload_historical_members manual__2024-03-28T03:54:01.040653+00:00 [queued]>
+[2024-03-28T03:55:03.483+0000] {taskinstance.py:2193} INFO - Starting attempt 1 of 3
+[2024-03-28T03:55:03.496+0000] {taskinstance.py:2217} INFO - Executing <Task(PythonOperator): upload_historical_members> on 2024-03-28 03:54:01.040653+00:00
+[2024-03-28T03:55:03.506+0000] {standard_task_runner.py:60} INFO - Started process 336 to run task
+[2024-03-28T03:55:03.513+0000] {standard_task_runner.py:87} INFO - Running: ['***', 'tasks', 'run', 'upload_historical_congress_data', 'upload_historical_members', 'manual__2024-03-28T03:54:01.040653+00:00', '--job-id', '170', '--raw', '--subdir', 'DAGS_FOLDER/upload_historical_congress_data.py', '--cfg-path', '/tmp/tmpjh55m064']
+[2024-03-28T03:55:03.521+0000] {standard_task_runner.py:88} INFO - Job 170: Subtask upload_historical_members
+[2024-03-28T03:55:03.592+0000] {task_command.py:423} INFO - Running <TaskInstance: upload_historical_congress_data.upload_historical_members manual__2024-03-28T03:54:01.040653+00:00 [running]> on host be5d54f7fe24
+[2024-03-28T03:55:03.688+0000] {taskinstance.py:2513} INFO - Exporting env vars: AIRFLOW_CTX_DAG_EMAIL='***@***.com' AIRFLOW_CTX_DAG_OWNER='***' AIRFLOW_CTX_DAG_ID='upload_historical_congress_data' AIRFLOW_CTX_TASK_ID='upload_historical_members' AIRFLOW_CTX_EXECUTION_DATE='2024-03-28T03:54:01.040653+00:00' AIRFLOW_CTX_TRY_NUMBER='1' AIRFLOW_CTX_DAG_RUN_ID='manual__2024-03-28T03:54:01.040653+00:00'
+[2024-03-28T03:55:03.696+0000] {get_data.py:202} INFO - executing API call for https://api.congress.gov/v3/member?format=json&fromDateTime=2023-01-01T00:00:00Z&toDateTime=2024-03-28T00:00:00Z&offset=0&limit=250&api_key=WNue8kCDCOIlewAsULgnN8j6SqSgAZjE2sYbPsBb
+[2024-03-28T03:55:08.146+0000] {get_data.py:202} INFO - executing API call for https://api.congress.gov/v3/member?format=json&fromDateTime=2023-01-01T00:00:00Z&toDateTime=2024-03-28T00:00:00Z&offset=0&limit=250&api_key=WNue8kCDCOIlewAsULgnN8j6SqSgAZjE2sYbPsBb
+[2024-03-28T03:55:09.937+0000] {logging_mixin.py:188} INFO - Parquet data uploaded to gs://congress_data/member/1_249_member.parquet
+[2024-03-28T03:55:09.941+0000] {logging_mixin.py:188} INFO - 249 of 683 member records uploaded
+[2024-03-28T03:55:09.943+0000] {get_data.py:202} INFO - executing API call for https://api.congress.gov/v3/member?format=json&fromDateTime=2023-01-01T00:00:00Z&toDateTime=2024-03-28T00:00:00Z&offset=250&limit=250&api_key=WNue8kCDCOIlewAsULgnN8j6SqSgAZjE2sYbPsBb
+[2024-03-28T03:55:15.919+0000] {logging_mixin.py:188} INFO - Parquet data uploaded to gs://congress_data/member/251_500_member.parquet
+[2024-03-28T03:55:15.921+0000] {logging_mixin.py:188} INFO - 500 of 683 member records uploaded
+[2024-03-28T03:55:15.922+0000] {get_data.py:202} INFO - executing API call for https://api.congress.gov/v3/member?format=json&fromDateTime=2023-01-01T00:00:00Z&toDateTime=2024-03-28T00:00:00Z&offset=500&limit=250&api_key=WNue8kCDCOIlewAsULgnN8j6SqSgAZjE2sYbPsBb
+[2024-03-28T03:55:20.627+0000] {logging_mixin.py:188} INFO - Parquet data uploaded to gs://congress_data/member/501_683_member.parquet
+[2024-03-28T03:55:20.629+0000] {logging_mixin.py:188} INFO - 683 of 683 member records uploaded
+[2024-03-28T03:55:20.631+0000] {python.py:202} INFO - Done. Returned value was: None
+[2024-03-28T03:55:20.645+0000] {taskinstance.py:1149} INFO - Marking task as SUCCESS. dag_id=upload_historical_congress_data, task_id=upload_historical_members, execution_date=20240328T035401, start_date=20240328T035503, end_date=20240328T035520
+[2024-03-28T03:55:20.681+0000] {local_task_job_runner.py:234} INFO - Task exited with return code 0
+[2024-03-28T03:55:20.711+0000] {taskinstance.py:3312} INFO - 1 downstream tasks scheduled from follow-on schedule check

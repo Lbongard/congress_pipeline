@@ -1,0 +1,23 @@
+# Create new storage bucket in the US multi-region
+# with standard storage
+
+# Define top-level bucket
+resource "google_storage_bucket" "static" {
+ name          = "congress_data"
+ location      = "US"
+ storage_class = "STANDARD"
+
+ uniform_bucket_level_access = true
+}
+
+# Define subdirectories (placeholders) by creating empty objects
+resource "google_storage_bucket_object" "bills_subdir" {
+  bucket = congress_data
+  name   = "bills/"
+  source = "/dev/null"  # Use /dev/null as the source to create an empty object
+}
+
+
+# Upload a text file as an object
+# to the storage bucket
+

@@ -1,0 +1,511 @@
+import requests
+import pandas
+from dotenv import load_dotenv
+import os
+import json
+import dataclasses
+from dataclasses import dataclass
+from typing import Dict, List, Optional
+import pandas as pd
+from google.cloud import storage, bigquery
+import pyarrow.parquet as pq
+import io
+from io import BytesIO
+import logging
+import itertools
+import xmltodict
+from airflow.operators.python import PythonOperator
+from airflow import DAG
+import subprocess
+import shutil
+from datetime import datetime
+
+# https://medium.com/@danilo.drobac/real-world-python-for-data-engineering-1-api-pagination-6b92fec2fc50
+
+@dataclass
+class BillSchema:
+    congress: int
+    latestAction: Dict[str, str] #Update to date for first item?
+    number: str
+    originChamber: str
+    originChamberCode: str
+    title: str
+    type: str
+    updateDate: str
+    updateDateIncludingText: str
+    url: str
+
+@dataclass
+class Committee:
+    url: str
+    systemCode: str
+    name: str
+
+@dataclass
+class RecordedVote:
+    roll_number: str
+    url: str
+    chamber: str
+    congress: str
+    date: str
+    sessionNumber: str
+
+@dataclass
+class ActionSchema:
+    actionDate: str
+    text: str
+    type: str
+    sourceSystem: Dict[int, str]
+    actionTime: Optional[str]=None
+    actionCode: Optional[str]=None
+    committees: Optional[List[Committee]]=None
+    recordedVotes: Optional[List[RecordedVote]]=None
+    calendar: Optional[str]=None
+    calendarNumber: Optional[str]=None
+
+@dataclass
+class TermsItem:
+    chamber: str
+    start_year: int
+    end_year: int
+
+@dataclass
+class MemberSchema:
+    bioguideId: str
+    state: str
+    partyName: str
+    name: str
+    terms: List[TermsItem]
+    updateDate: str
+    url: str
+    district: Optional[int]=None
+    depiction: Optional[Dict[str, str]]=None
+
+@dataclass
+class PaginationInfo:
+    count: int
+    next: Optional[str]=None
+    prev: Optional[str]=None
+
+@dataclass
+class RequestInfo:
+    format: str
+    billNumber: Optional[str]=None
+    billType: Optional[str]=None
+    billUrl: Optional[str]=None
+    congress: Optional[str]=None
+    contentType: Optional[str]=None
+
+@dataclass
+class ApiResponse:
+    pagination: PaginationInfo
+    request: RequestInfo
+    bills: Optional[List[BillSchema]]=None
+    actions: Optional[List[ActionSchema]]=None
+    members: Optional[List[MemberSchema]]=None
+
+    def __post_init__(self):
+        self.pagination = PaginationInfo(**self.pagination)
+        self.request = RequestInfo(**self.request)
+        if self.bills:
+            self.bills = [BillSchema(**bill) for bill in self.bills]
+        if self.actions:
+            self.actions = [ActionSchema(**action) for action in self.actions]
+        if self.members:
+            self.members = [MemberSchema(**member) for member in self.members]
+
+def get_votes_for_saved_bills(local_folder_path, save_folder):
+    # Iterate over files in the local folder
+    if os.path.exists(save_folder):
+        shutil.rmtree(save_folder)
+    os.makedirs(save_folder)
+
+    for root, dirs, files in os.walk(local_folder_path):
+        for file in files:
+            local_file_path = os.path.join(root, file)
+            get_votes(bill_json=local_file_path, save_folder=save_folder)
+
+
+def get_votes(bill_json, save_folder):
+    
+    f = open(bill_json, "r")
+    bill = dict(json.load(f))
+    logging.info(f"Opened bill from file {bill_json}")
+
+    bill_number = bill['bill']['number']
+    bill_type = bill['bill']['type']
+
+    bill_actions = [action for action in bill['bill']['actions']['item']]
+    recorded_votes = [vote for action in bill_actions for vote in action['recordedVotes']]
+    
+    # return recorded_votes
+    for vote in recorded_votes:
+        try:
+            vote_num = str(vote['rollNumber']).zfill(0)
+            if vote['chamber'] == 'Senate':
+                
+                xml_path = vote['url']
+                response = requests.get(xml_path)
+
+                response_dict = xmltodict.parse(response.content)
+                # votes_data = response_dict['roll_call_vote']['members']['member']
+
+            else:
+                vote_year = pd.to_datetime(vote['date']).year
+                # Add leading 0 for roll calls in the single or double digits
+                xml_path = f'https://clerk.house.gov/evs/{vote_year}/roll{vote_num}.xml'
+                response = requests.get(xml_path)
+
+                # Turning Response into a json
+                response_dict = xmltodict.parse(response.content)
+                # votes_data = response_dict['rollcall-vote']['vote-data']['recorded-vote']
+
+            votes_data = conform_votes(vote_data=response_dict, 
+                                           bill_type=bill_type, 
+                                           bill_number=bill_number, 
+                                           roll_call_number=vote_num, 
+                                           chamber=vote['chamber'])
+
+            save_dir = os.path.join(save_folder, bill_type)
+            
+            if not os.path.exists(save_dir):
+                os.makedirs(save_dir)
+
+            file_name = f'{save_dir}/{bill_type}_{bill_number}_voteNumber{vote_num}.json'
+            
+            with open(file_name, "w") as outfile:
+                json.dump(votes_data, outfile)
+
+        except Exception as e:
+            print(f"An exception occurred", e, "Failed to save one or more votes for {bill_type} {bill_number}")
+
+
+
+# def get_and_upload_votes(ti, **kwargs):
+    
+#     bills_list = ti.xcom_pull(key='bills_list', task_ids="get_bills_from_bq")
+#     params = kwargs['params']
+
+#     for bill in bills_list:
+#         params['congress'] = bill[0]
+#         logging.info(f'Congress = {bill[0]}')
+#         params['bill_number'] = bill[1]
+#         params['bill_type'] = bill[2].lower()
+
+#         # get_and_upload_data(params=params, data_type='actions')
+
+#         # Get Votes
+
+#         api_response = get_api_response(params, 'actions')
+
+#         actions_df = pd.DataFrame(api_response.actions)
+#         # print(actions_df)
+      
+#         roll_call_votes = actions_df[actions_df['recordedVotes'].isna() == False].recordedVotes
+#         # Some empty votes left in?
+#         if roll_call_votes.empty == False:
+#             try:
+#                 # print(roll_call_votes)
+#                 for roll_call in roll_call_votes:
+#                     # print(roll_call)
+#                     for vote in roll_call:
+#                         if vote['chamber'] == 'Senate':
+#                             xml_path = vote['url']
+#                             response = requests.get(xml_path)
+                            
+#                             # Turning Response into a json
+#                             response_dict = xmltodict.parse(response.content)
+#                             votes_data = response_dict['roll_call_vote']['members']['member']
+#                         else:
+#                             vote_year = pd.to_datetime(vote['date']).year
+#                             # Add leading 0 for roll calls in the single or double digits
+#                             vote_num = str(vote['rollNumber']).zfill(0)
+#                             xml_path = f'https://clerk.house.gov/evs/{vote_year}/roll{vote_num}.xml'
+#                             response = requests.get(xml_path)
+
+#                             # Turning Response into a json
+#                             response_dict = xmltodict.parse(response.content)
+#                             votes_data = response_dict['rollcall-vote']['vote-data']['recorded-vote']
+
+#                         # print(type(votes_data))
+
+#                         file_name = f'votes/{vote["chamber"]}/{params["bill_type"]}_{params["bill_number"]}_{vote["rollNumber"]}.parquet'
+
+#                         upload_to_gcs_as_parquet(obj_list=votes_data,
+#                                                 bucket_name='congress_data',
+#                                                 file_name=file_name,
+#                                                 data_type='votes')
+#             except:
+#                 logging.error(f'Actions not fully uploaded for bill {params["bill_type"]} {params["bill_number"]} in Congress {params["congress"]}')
+
+
+
+def get_and_upload_data(params, data_type):
+
+    load_dotenv()
+    api_key = os.getenv('congress_api_key')
+    limit = params.get('limit', None)
+    max_records = params.get('max_records', None)
+    logging.info(f'Max records passed as {max_records}')
+
+    # For referencing the object within the api response. 
+    if data_type == 'member':
+        attr_name = 'members'
+    else:
+        attr_name = data_type
+    
+    if not limit:
+        logging.error('No record limit provided for pagination')
+    
+    record_count = get_record_count(params=params, data_type=data_type)
+    records_to_fetch = max_records if max_records else record_count
+    logging.info(f'About to start fetching {records_to_fetch} records')
+    
+    for i in range(0, records_to_fetch, limit):
+        
+        params['offset'] = i
+        
+        data = get_api_response(params,
+                                 data_type)
+
+        file_name = f'{data_type}/{i+1}_{i+len(getattr(data, attr_name))}_{data_type}.parquet'
+
+        upload_to_gcs_as_parquet(obj_list=data,
+                                 bucket_name='congress_data',
+                                 file_name=file_name,
+                                 data_type=data_type)
+        
+        print(f'{i+len(getattr(data, attr_name))} of {records_to_fetch} {data_type} records uploaded')
+
+            
+            # try:    
+            #     for index, row in actions_df.iterrows():
+            #         if row.recordedVotes.isna() == False:
+            #             for vote in row.recordedVotes:
+            #                 pass
+            # except:
+            #         pass
+            # {'chamber': 'House', 'congress': 118, 'date': '2024-03-12T21:13:39Z', 'rollNumber': 84, 'sessionNumber': 1, 'url': 'https://clerk.house.gov/evs/2024/roll84.xml'}
+                            
+
+            #         record_count = get_record_count(params=actions_params, data_type='actions')
+
+            #         for i in range(0, record_count, limit):
+            #             actions_params['offset'] = i*limit
+            #             data = get_api_response(actions_params, 'actions')
+
+            #             file_name = f"actions/{actions_params['bill_type']}_{actions_params['bill_number']}_actions_{i*limit+1}_{i*limit+len(data.actions)}.parquet"
+
+            #             upload_to_gcs_as_parquet(obj_list=data,
+            #                      bucket_name='congress_data',
+            #                      file_name=file_name,
+            #                      data_type='actions')
+            #             print(f"Actions uploaded for bill {actions_params['bill_type']} {actions_params['bill_number']}")
+                        
+            # except:
+            #     logging.ERROR(f'Failed to upload all actions data for bills in file {file_name}')
+
+
+def get_record_count(params, data_type):
+        
+    api_response = get_api_response(params, data_type)
+    
+    pag_info = api_response.pagination
+    
+    record_count = pag_info.count
+
+    return record_count
+
+def get_api_response(params, data_type):
+        
+    start_date  = params.get('start_date', None)
+    end_date    = params.get('end_date', None)
+    limit       = params.get('limit', None)
+    congress    = params.get('congress', None)
+    bill_type   = params.get('bill_type', None)
+    bill_number = params.get('bill_number', None)
+    api_key     = params.get('api_key', None)
+    offset      = params.get('offset', None)
+
+    if data_type == 'bills':
+        path = f'https://api.congress.gov/v3/bill?format=json&fromDateTime={start_date}&toDateTime={end_date}&offset={offset}&limit={limit}&congress={congress}&api_key={api_key}'
+    
+    elif data_type == 'member':
+        path = f'https://api.congress.gov/v3/member?format=json&fromDateTime={start_date}&toDateTime={end_date}&offset={offset}&limit={limit}&api_key={api_key}'
+
+    elif data_type == 'actions':
+        path = f'https://api.congress.gov/v3/bill/{congress}/{bill_type}/{bill_number}/actions?offset={offset}&limit={limit}&api_key={api_key}'
+    
+    logging.info(f'executing API call for {path}')
+
+    response = requests.get(path)
+
+    api_response = ApiResponse(**response.json())
+
+    return api_response
+
+
+def upload_to_gcs_as_parquet(obj_list, bucket_name, file_name, data_type):
+    
+    # Object containing list of members in API response is plural. Why 'member' in endpoint is not also plural I could not tell you.
+    if data_type == 'member':
+        data_type = 'members'
+
+    # Convert Schema objects to a list of dictionaries
+    if data_type in ['bills', 'actions', 'members']:
+        data = [vars(obj) for obj in getattr(obj_list, data_type)]
+    else:
+        data = obj_list
+    
+    # Convert list of dictionaries to a Pandas DataFrame
+    df = pd.DataFrame(data)
+    
+    # Save DataFrame to Parquet file in memory
+    parquet_buffer = BytesIO()
+    df.to_parquet(parquet_buffer)
+    parquet_buffer.seek(0)  # Reset buffer position to the beginning
+    
+    # Upload Parquet file buffer to GCS
+    client = storage.Client()
+    bucket = client.bucket(bucket_name)
+    blob = bucket.blob(file_name)
+    blob.upload_from_file(parquet_buffer, content_type='application/octet-stream')
+    
+    print(f"Parquet data uploaded to gs://{bucket_name}/{file_name}")
+
+def get_bills_from_bq(ti):
+    # Fetch all bills from bigquery
+    client = bigquery.Client()
+    query = 'SELECT DISTINCT congress, number, type FROM Congress.bills'
+    query_job = client.query(query)
+    results = query_job.result()
+
+    bills_list = [(row.congress, row.number, row.type) for row in results]
+    ti.xcom_push(key='bills_list', value=bills_list)
+    # return bills_list
+
+def upload_folder_to_gcs(local_folder_path, bucket_name, destination_folder):
+    # Initialize a clientdock
+    client = storage.Client()
+
+    # Get the bucket
+    bucket = client.bucket(bucket_name)
+
+    # Iterate over files in the local folder
+    for root, dirs, files in os.walk(local_folder_path):
+        for file in files:
+            # Construct the full local path
+            local_file_path = os.path.join(root, file)
+            
+            # Determine the destination path in GCS
+            gcs_blob_name = os.path.join(destination_folder, os.path.relpath(local_file_path, local_folder_path))
+            
+            # Upload the file to GCS
+            blob = bucket.blob(gcs_blob_name)
+            
+            # Delete file if it exists
+            if blob.exists():
+                blob.delete()
+
+            blob.upload_from_filename(local_file_path)
+
+            print(f"Uploaded {local_file_path} to gs://{bucket_name}/{gcs_blob_name}")
+
+# def upload_folder_to_gcs(local_folder_path, bucket_name):
+#     # Get list of all directories in the source directory
+#     folders = [f.path for f in os.scandir(local_folder_path) if f.is_dir()]
+
+#     # Loop through each folder and upload to GCS
+#     for folder in folders:
+#         # Construct the command to upload the directory to GCS using gsutil
+#         command = ['gsutil', '-m', 'cp', '-r', folder, 'gs://' + bucket_name]
+
+#         # Run the command
+#         try:
+#             subprocess.run(command, check=True)
+#             print(f"Successfully uploaded {folder} to GCS bucket {bucket_name}.")
+#         except subprocess.CalledProcessError as e:
+#             print(f"Error: Failed to upload {folder} to GCS bucket {bucket_name}.")
+#             print(e)
+
+def conform_votes(vote_data, bill_type, bill_number, roll_call_number, chamber):
+    conform_data = {
+        'vote': get_vote_metadata(data=vote_data, chamber=chamber, bill_type=bill_type, bill_number=bill_number),
+        'legislator': [legislator_dict(item, chamber) for item in get_raw_votes(vote_data, chamber=chamber)]
+    }
+    
+    return conform_data
+
+def get_vote_metadata(data, chamber, bill_type, bill_number):
+    
+    if chamber == 'House':
+        vote_date = data['rollcall-vote']['vote-metadata']['action-date']
+        date_obj = datetime.strptime(vote_date, '%d-%b-%Y')
+        formatted_vote_date = date_obj.strftime('%Y/%m/%d')
+        
+        return {'date': formatted_vote_date,
+                'bill_type': bill_type,
+                'bill_number': bill_number,
+                'roll_call_number': data['rollcall-vote']['vote-metadata']['rollcall-num'],
+                'result': data['rollcall-vote']['vote-metadata']['vote-result'],
+                'totals': {'yea': data['rollcall-vote']['vote-metadata']['vote-totals']['totals-by-vote']['yea-total'],
+                           'nay': data['rollcall-vote']['vote-metadata']['vote-totals']['totals-by-vote']['nay-total'],
+                           'present': data['rollcall-vote']['vote-metadata']['vote-totals']['totals-by-vote']['present-total'],
+                           'not_voting': data['rollcall-vote']['vote-metadata']['vote-totals']['totals-by-vote']['not-voting-total']
+                          }
+                }
+        
+    elif chamber == 'Senate':
+        vote_date = data['roll_call_vote']['vote_date']
+        vote_date = vote_date.replace(': ', ':')
+        date_obj = datetime.strptime(vote_date, '%B %d, %Y, %I:%M %p')
+        formatted_vote_date = date_obj.strftime('%Y/%m/%d')
+        
+        return {'date': formatted_vote_date,
+                'bill_type': bill_type,
+                'bill_number': bill_number,
+                'roll_call_number': data['roll_call_vote']['vote_number'],
+                'result': data['roll_call_vote']['vote_result'],
+                'totals': {'yea': data['roll_call_vote']['count']['yeas'],
+                           'nay': data['roll_call_vote']['count']['nays'],
+                           'present': data['roll_call_vote']['count']['present'],
+                           'not_voting': data['roll_call_vote']['count']['absent']}
+               }
+                
+   
+    else:
+        return {}
+    
+def get_raw_votes(data, chamber):
+    if chamber == 'House':
+        return data['rollcall-vote']['vote-data']['recorded-vote']
+    if chamber == 'Senate':
+        return data['roll_call_vote']['members']['member']
+    return {}
+        
+
+def legislator_dict(item, chamber):
+        if chamber == 'House':
+            if isinstance(item, dict):
+                return {
+                    'id': item.get("legislator").get("@name-id"),
+                    'first_name': None,
+                    'last_name': item.get("legislator").get("@unaccented-name"),
+                    'party': item.get("legislator").get("@party"),
+                    'state': item.get("legislator").get("@state"),
+                    'vote' : item.get("vote")
+                    
+                }
+            return {}
+        
+        if chamber == 'Senate':
+            if isinstance(item, dict):
+                return {
+                    'id': item.get("lis_member_id"),
+                    'first_name': item.get("first_name"),
+                    'last_name': item.get("last_name"),
+                    'party': item.get("party"),
+                    'state': item.get("state"),
+                    'vote' : item.get("vote_cast")
+                }
+            return {}

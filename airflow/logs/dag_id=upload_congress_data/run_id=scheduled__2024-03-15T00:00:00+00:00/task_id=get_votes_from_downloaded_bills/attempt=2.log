@@ -1,0 +1,36 @@
+[2024-04-10T04:34:53.845+0000] {taskinstance.py:1979} INFO - Dependencies all met for dep_context=non-requeueable deps ti=<TaskInstance: upload_congress_data.get_votes_from_downloaded_bills scheduled__2024-03-15T00:00:00+00:00 [queued]>
+[2024-04-10T04:34:53.850+0000] {taskinstance.py:1979} INFO - Dependencies all met for dep_context=requeueable deps ti=<TaskInstance: upload_congress_data.get_votes_from_downloaded_bills scheduled__2024-03-15T00:00:00+00:00 [queued]>
+[2024-04-10T04:34:53.850+0000] {taskinstance.py:2193} INFO - Starting attempt 2 of 2
+[2024-04-10T04:34:53.856+0000] {taskinstance.py:2217} INFO - Executing <Task(PythonOperator): get_votes_from_downloaded_bills> on 2024-03-15 00:00:00+00:00
+[2024-04-10T04:34:53.871+0000] {standard_task_runner.py:60} INFO - Started process 209 to run task
+[2024-04-10T04:34:53.878+0000] {standard_task_runner.py:87} INFO - Running: ['***', 'tasks', 'run', 'upload_congress_data', 'get_votes_from_downloaded_bills', 'scheduled__2024-03-15T00:00:00+00:00', '--job-id', '9', '--raw', '--subdir', 'DAGS_FOLDER/upload_congress_data.py', '--cfg-path', '/tmp/tmpdtlb_7ja']
+[2024-04-10T04:34:53.881+0000] {standard_task_runner.py:88} INFO - Job 9: Subtask get_votes_from_downloaded_bills
+[2024-04-10T04:34:53.983+0000] {task_command.py:423} INFO - Running <TaskInstance: upload_congress_data.get_votes_from_downloaded_bills scheduled__2024-03-15T00:00:00+00:00 [running]> on host 82ce950841ce
+[2024-04-10T04:34:54.053+0000] {taskinstance.py:2513} INFO - Exporting env vars: AIRFLOW_CTX_DAG_OWNER='***' AIRFLOW_CTX_DAG_ID='upload_congress_data' AIRFLOW_CTX_TASK_ID='get_votes_from_downloaded_bills' AIRFLOW_CTX_EXECUTION_DATE='2024-03-15T00:00:00+00:00' AIRFLOW_CTX_TRY_NUMBER='2' AIRFLOW_CTX_DAG_RUN_ID='scheduled__2024-03-15T00:00:00+00:00'
+[2024-04-10T04:34:54.059+0000] {taskinstance.py:2731} ERROR - Task failed with exception
+Traceback (most recent call last):
+  File "/home/airflow/.local/lib/python3.11/site-packages/airflow/models/taskinstance.py", line 444, in _execute_task
+    result = _execute_callable(context=context, **execute_callable_kwargs)
+             ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/airflow/.local/lib/python3.11/site-packages/airflow/models/taskinstance.py", line 414, in _execute_callable
+    return execute_callable(context=context, **execute_callable_kwargs)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/airflow/.local/lib/python3.11/site-packages/airflow/operators/python.py", line 200, in execute
+    return_value = self.execute_callable()
+                   ^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/airflow/.local/lib/python3.11/site-packages/airflow/operators/python.py", line 217, in execute_callable
+    return self.python_callable(*self.op_args, **self.op_kwargs)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/opt/airflow/dags/scripts/python/get_data.py", line 119, in get_votes_for_saved_bills
+    get_votes(bill_json=file, save_folder=save_folder)
+  File "/opt/airflow/dags/scripts/python/get_data.py", line 124, in get_votes
+    bill = json.load(bill_json)
+           ^^^^^^^^^^^^^^^^^^^^
+  File "/usr/local/lib/python3.11/json/__init__.py", line 293, in load
+    return loads(fp.read(),
+                 ^^^^^^^
+AttributeError: 'str' object has no attribute 'read'
+[2024-04-10T04:34:54.068+0000] {taskinstance.py:1149} INFO - Marking task as FAILED. dag_id=upload_congress_data, task_id=get_votes_from_downloaded_bills, execution_date=20240315T000000, start_date=20240410T043453, end_date=20240410T043454
+[2024-04-10T04:34:54.081+0000] {standard_task_runner.py:107} ERROR - Failed to execute job 9 for task get_votes_from_downloaded_bills ('str' object has no attribute 'read'; 209)
+[2024-04-10T04:34:54.096+0000] {local_task_job_runner.py:234} INFO - Task exited with return code 1
+[2024-04-10T04:34:54.108+0000] {taskinstance.py:3312} INFO - 0 downstream tasks scheduled from follow-on schedule check

@@ -1,0 +1,35 @@
+[2024-04-03T04:30:11.570+0000] {processor.py:161} INFO - Started process (PID=582) to work on /opt/airflow/dags/data/BILLSTATUS-118-sres.zip
+[2024-04-03T04:30:11.571+0000] {processor.py:830} INFO - Processing file /opt/airflow/dags/data/BILLSTATUS-118-sres.zip for tasks to queue
+[2024-04-03T04:30:11.573+0000] {logging_mixin.py:188} INFO - [2024-04-03T04:30:11.572+0000] {dagbag.py:540} INFO - Filling up the DagBag from /opt/airflow/dags/data/BILLSTATUS-118-sres.zip
+[2024-04-03T04:30:11.581+0000] {processor.py:842} WARNING - No viable dags retrieved from /opt/airflow/dags/data/BILLSTATUS-118-sres.zip
+[2024-04-03T04:30:11.591+0000] {processor.py:183} INFO - Processing /opt/airflow/dags/data/BILLSTATUS-118-sres.zip took 0.023 seconds
+[2024-04-03T04:30:44.017+0000] {processor.py:161} INFO - Started process (PID=598) to work on /opt/airflow/dags/data/BILLSTATUS-118-sres.zip
+[2024-04-03T04:30:44.018+0000] {processor.py:830} INFO - Processing file /opt/airflow/dags/data/BILLSTATUS-118-sres.zip for tasks to queue
+[2024-04-03T04:30:44.019+0000] {logging_mixin.py:188} INFO - [2024-04-03T04:30:44.019+0000] {dagbag.py:540} INFO - Filling up the DagBag from /opt/airflow/dags/data/BILLSTATUS-118-sres.zip
+[2024-04-03T04:30:44.024+0000] {processor.py:842} WARNING - No viable dags retrieved from /opt/airflow/dags/data/BILLSTATUS-118-sres.zip
+[2024-04-03T04:30:44.034+0000] {processor.py:183} INFO - Processing /opt/airflow/dags/data/BILLSTATUS-118-sres.zip took 0.020 seconds
+[2024-04-03T04:31:16.025+0000] {processor.py:161} INFO - Started process (PID=614) to work on /opt/airflow/dags/data/BILLSTATUS-118-sres.zip
+[2024-04-03T04:31:16.026+0000] {processor.py:830} INFO - Processing file /opt/airflow/dags/data/BILLSTATUS-118-sres.zip for tasks to queue
+[2024-04-03T04:31:16.027+0000] {logging_mixin.py:188} INFO - [2024-04-03T04:31:16.027+0000] {dagbag.py:540} INFO - Filling up the DagBag from /opt/airflow/dags/data/BILLSTATUS-118-sres.zip
+[2024-04-03T04:31:16.032+0000] {processor.py:842} WARNING - No viable dags retrieved from /opt/airflow/dags/data/BILLSTATUS-118-sres.zip
+[2024-04-03T04:31:16.042+0000] {processor.py:183} INFO - Processing /opt/airflow/dags/data/BILLSTATUS-118-sres.zip took 0.020 seconds
+[2024-04-03T04:31:47.015+0000] {processor.py:161} INFO - Started process (PID=630) to work on /opt/airflow/dags/data/BILLSTATUS-118-sres.zip
+[2024-04-03T04:31:47.016+0000] {processor.py:830} INFO - Processing file /opt/airflow/dags/data/BILLSTATUS-118-sres.zip for tasks to queue
+[2024-04-03T04:31:47.017+0000] {logging_mixin.py:188} INFO - [2024-04-03T04:31:47.017+0000] {dagbag.py:540} INFO - Filling up the DagBag from /opt/airflow/dags/data/BILLSTATUS-118-sres.zip
+[2024-04-03T04:31:47.023+0000] {processor.py:842} WARNING - No viable dags retrieved from /opt/airflow/dags/data/BILLSTATUS-118-sres.zip
+[2024-04-03T04:31:47.034+0000] {processor.py:183} INFO - Processing /opt/airflow/dags/data/BILLSTATUS-118-sres.zip took 0.022 seconds
+[2024-04-03T04:32:17.663+0000] {processor.py:161} INFO - Started process (PID=645) to work on /opt/airflow/dags/data/BILLSTATUS-118-sres.zip
+[2024-04-03T04:32:17.663+0000] {processor.py:830} INFO - Processing file /opt/airflow/dags/data/BILLSTATUS-118-sres.zip for tasks to queue
+[2024-04-03T04:32:17.665+0000] {logging_mixin.py:188} INFO - [2024-04-03T04:32:17.665+0000] {dagbag.py:540} INFO - Filling up the DagBag from /opt/airflow/dags/data/BILLSTATUS-118-sres.zip
+[2024-04-03T04:32:17.670+0000] {processor.py:842} WARNING - No viable dags retrieved from /opt/airflow/dags/data/BILLSTATUS-118-sres.zip
+[2024-04-03T04:32:17.680+0000] {processor.py:183} INFO - Processing /opt/airflow/dags/data/BILLSTATUS-118-sres.zip took 0.020 seconds
+[2024-04-03T04:32:49.194+0000] {processor.py:161} INFO - Started process (PID=661) to work on /opt/airflow/dags/data/BILLSTATUS-118-sres.zip
+[2024-04-03T04:32:49.195+0000] {processor.py:830} INFO - Processing file /opt/airflow/dags/data/BILLSTATUS-118-sres.zip for tasks to queue
+[2024-04-03T04:32:49.196+0000] {logging_mixin.py:188} INFO - [2024-04-03T04:32:49.196+0000] {dagbag.py:540} INFO - Filling up the DagBag from /opt/airflow/dags/data/BILLSTATUS-118-sres.zip
+[2024-04-03T04:32:49.201+0000] {processor.py:842} WARNING - No viable dags retrieved from /opt/airflow/dags/data/BILLSTATUS-118-sres.zip
+[2024-04-03T04:32:49.211+0000] {processor.py:183} INFO - Processing /opt/airflow/dags/data/BILLSTATUS-118-sres.zip took 0.019 seconds
+[2024-04-03T04:33:20.818+0000] {processor.py:161} INFO - Started process (PID=677) to work on /opt/airflow/dags/data/BILLSTATUS-118-sres.zip
+[2024-04-03T04:33:20.819+0000] {processor.py:830} INFO - Processing file /opt/airflow/dags/data/BILLSTATUS-118-sres.zip for tasks to queue
+[2024-04-03T04:33:20.821+0000] {logging_mixin.py:188} INFO - [2024-04-03T04:33:20.820+0000] {dagbag.py:540} INFO - Filling up the DagBag from /opt/airflow/dags/data/BILLSTATUS-118-sres.zip
+[2024-04-03T04:33:20.827+0000] {processor.py:842} WARNING - No viable dags retrieved from /opt/airflow/dags/data/BILLSTATUS-118-sres.zip
+[2024-04-03T04:33:20.838+0000] {processor.py:183} INFO - Processing /opt/airflow/dags/data/BILLSTATUS-118-sres.zip took 0.022 seconds

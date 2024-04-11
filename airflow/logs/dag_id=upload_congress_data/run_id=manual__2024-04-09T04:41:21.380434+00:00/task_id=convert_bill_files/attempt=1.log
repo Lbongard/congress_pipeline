@@ -1,0 +1,255 @@
+[2024-04-09T04:46:00.117+0000] {taskinstance.py:1979} INFO - Dependencies all met for dep_context=non-requeueable deps ti=<TaskInstance: upload_congress_data.convert_bill_files manual__2024-04-09T04:41:21.380434+00:00 [queued]>
+[2024-04-09T04:46:00.127+0000] {taskinstance.py:1979} INFO - Dependencies all met for dep_context=requeueable deps ti=<TaskInstance: upload_congress_data.convert_bill_files manual__2024-04-09T04:41:21.380434+00:00 [queued]>
+[2024-04-09T04:46:00.128+0000] {taskinstance.py:2193} INFO - Starting attempt 1 of 1
+[2024-04-09T04:46:00.139+0000] {taskinstance.py:2217} INFO - Executing <Task(PythonOperator): convert_bill_files> on 2024-04-09 04:41:21.380434+00:00
+[2024-04-09T04:46:00.148+0000] {standard_task_runner.py:60} INFO - Started process 536 to run task
+[2024-04-09T04:46:00.151+0000] {standard_task_runner.py:87} INFO - Running: ['***', 'tasks', 'run', 'upload_congress_data', 'convert_bill_files', 'manual__2024-04-09T04:41:21.380434+00:00', '--job-id', '8', '--raw', '--subdir', 'DAGS_FOLDER/upload_congress_data.py', '--cfg-path', '/tmp/tmphozhxx9w']
+[2024-04-09T04:46:00.154+0000] {standard_task_runner.py:88} INFO - Job 8: Subtask convert_bill_files
+[2024-04-09T04:46:00.206+0000] {task_command.py:423} INFO - Running <TaskInstance: upload_congress_data.convert_bill_files manual__2024-04-09T04:41:21.380434+00:00 [running]> on host f811dc6f69ec
+[2024-04-09T04:46:00.278+0000] {taskinstance.py:2513} INFO - Exporting env vars: AIRFLOW_CTX_DAG_OWNER='***' AIRFLOW_CTX_DAG_ID='upload_congress_data' AIRFLOW_CTX_TASK_ID='convert_bill_files' AIRFLOW_CTX_EXECUTION_DATE='2024-04-09T04:41:21.380434+00:00' AIRFLOW_CTX_TRY_NUMBER='1' AIRFLOW_CTX_DAG_RUN_ID='manual__2024-04-09T04:41:21.380434+00:00'
+[2024-04-09T04:46:00.303+0000] {logging_mixin.py:188} INFO - Converted /opt/***/dags/data/hjres/BILLSTATUS-118hjres39.xml to /opt/***/dags/data/hjres/BILLSTATUS-118hjres39.json
+[2024-04-09T04:46:00.313+0000] {logging_mixin.py:188} INFO - Converted /opt/***/dags/data/hjres/BILLSTATUS-118hjres7.xml to /opt/***/dags/data/hjres/BILLSTATUS-118hjres7.json
+[2024-04-09T04:46:00.324+0000] {logging_mixin.py:188} INFO - Converted /opt/***/dags/data/hjres/BILLSTATUS-118hjres88.xml to /opt/***/dags/data/hjres/BILLSTATUS-118hjres88.json
+[2024-04-09T04:46:00.332+0000] {logging_mixin.py:188} INFO - Converted /opt/***/dags/data/hjres/BILLSTATUS-118hjres74.xml to /opt/***/dags/data/hjres/BILLSTATUS-118hjres74.json
+[2024-04-09T04:46:00.340+0000] {logging_mixin.py:188} INFO - Converted /opt/***/dags/data/hjres/BILLSTATUS-118hjres70.xml to /opt/***/dags/data/hjres/BILLSTATUS-118hjres70.json
+[2024-04-09T04:46:00.345+0000] {logging_mixin.py:188} INFO - Converted /opt/***/dags/data/hjres/BILLSTATUS-118hjres71.xml to /opt/***/dags/data/hjres/BILLSTATUS-118hjres71.json
+[2024-04-09T04:46:00.359+0000] {logging_mixin.py:188} INFO - Converted /opt/***/dags/data/hjres/BILLSTATUS-118hjres98.xml to /opt/***/dags/data/hjres/BILLSTATUS-118hjres98.json
+[2024-04-09T04:46:00.382+0000] {logging_mixin.py:188} INFO - Converted /opt/***/dags/data/hjres/BILLSTATUS-118hjres42.xml to /opt/***/dags/data/hjres/BILLSTATUS-118hjres42.json
+[2024-04-09T04:46:00.394+0000] {logging_mixin.py:188} INFO - Converted /opt/***/dags/data/hjres/BILLSTATUS-118hjres68.xml to /opt/***/dags/data/hjres/BILLSTATUS-118hjres68.json
+[2024-04-09T04:46:00.417+0000] {logging_mixin.py:188} INFO - Converted /opt/***/dags/data/hjres/BILLSTATUS-118hjres79.xml to /opt/***/dags/data/hjres/BILLSTATUS-118hjres79.json
+[2024-04-09T04:46:00.429+0000] {logging_mixin.py:188} INFO - Converted /opt/***/dags/data/hjres/BILLSTATUS-118hjres45.xml to /opt/***/dags/data/hjres/BILLSTATUS-118hjres45.json
+[2024-04-09T04:46:00.442+0000] {logging_mixin.py:188} INFO - Converted /opt/***/dags/data/hjres/BILLSTATUS-118hjres44.xml to /opt/***/dags/data/hjres/BILLSTATUS-118hjres44.json
+[2024-04-09T04:46:00.513+0000] {logging_mixin.py:188} INFO - Converted /opt/***/dags/data/hjres/BILLSTATUS-118hjres26.xml to /opt/***/dags/data/hjres/BILLSTATUS-118hjres26.json
+[2024-04-09T04:46:00.528+0000] {logging_mixin.py:188} INFO - Converted /opt/***/dags/data/hjres/BILLSTATUS-118hjres27.xml to /opt/***/dags/data/hjres/BILLSTATUS-118hjres27.json
+[2024-04-09T04:46:00.548+0000] {logging_mixin.py:188} INFO - Converted /opt/***/dags/data/hjres/BILLSTATUS-118hjres30.xml to /opt/***/dags/data/hjres/BILLSTATUS-118hjres30.json
+[2024-04-09T04:46:00.555+0000] {logging_mixin.py:188} INFO - Converted /opt/***/dags/data/hjres/BILLSTATUS-118hjres24.xml to /opt/***/dags/data/hjres/BILLSTATUS-118hjres24.json
+[2024-04-09T04:46:00.688+0000] {logging_mixin.py:188} INFO - Converted /opt/***/dags/data/hconres/BILLSTATUS-118hconres9.xml to /opt/***/dags/data/hconres/BILLSTATUS-118hconres9.json
+[2024-04-09T04:46:00.711+0000] {logging_mixin.py:188} INFO - Converted /opt/***/dags/data/hconres/BILLSTATUS-118hconres3.xml to /opt/***/dags/data/hconres/BILLSTATUS-118hconres3.json
+[2024-04-09T04:46:00.722+0000] {logging_mixin.py:188} INFO - Converted /opt/***/dags/data/hconres/BILLSTATUS-118hconres25.xml to /opt/***/dags/data/hconres/BILLSTATUS-118hconres25.json
+[2024-04-09T04:46:00.734+0000] {logging_mixin.py:188} INFO - Converted /opt/***/dags/data/hconres/BILLSTATUS-118hconres30.xml to /opt/***/dags/data/hconres/BILLSTATUS-118hconres30.json
+[2024-04-09T04:46:00.743+0000] {logging_mixin.py:188} INFO - Converted /opt/***/dags/data/hconres/BILLSTATUS-118hconres21.xml to /opt/***/dags/data/hconres/BILLSTATUS-118hconres21.json
+[2024-04-09T04:46:00.754+0000] {logging_mixin.py:188} INFO - Converted /opt/***/dags/data/hconres/BILLSTATUS-118hconres7.xml to /opt/***/dags/data/hconres/BILLSTATUS-118hconres7.json
+[2024-04-09T04:46:00.783+0000] {logging_mixin.py:188} INFO - Converted /opt/***/dags/data/hconres/BILLSTATUS-118hconres86.xml to /opt/***/dags/data/hconres/BILLSTATUS-118hconres86.json
+[2024-04-09T04:46:00.804+0000] {logging_mixin.py:188} INFO - Converted /opt/***/dags/data/hconres/BILLSTATUS-118hconres57.xml to /opt/***/dags/data/hconres/BILLSTATUS-118hconres57.json
+[2024-04-09T04:46:00.819+0000] {logging_mixin.py:188} INFO - Converted /opt/***/dags/data/hconres/BILLSTATUS-118hconres40.xml to /opt/***/dags/data/hconres/BILLSTATUS-118hconres40.json
+[2024-04-09T04:46:00.988+0000] {logging_mixin.py:188} INFO - Converted /opt/***/dags/data/s/BILLSTATUS-118s3250.xml to /opt/***/dags/data/s/BILLSTATUS-118s3250.json
+[2024-04-09T04:46:02.437+0000] {logging_mixin.py:188} INFO - Converted /opt/***/dags/data/s/BILLSTATUS-118s788.xml to /opt/***/dags/data/s/BILLSTATUS-118s788.json
+[2024-04-09T04:46:03.563+0000] {logging_mixin.py:188} INFO - Converted /opt/***/dags/data/s/BILLSTATUS-118s316.xml to /opt/***/dags/data/s/BILLSTATUS-118s316.json
+[2024-04-09T04:46:03.982+0000] {logging_mixin.py:188} INFO - Converted /opt/***/dags/data/s/BILLSTATUS-118s3427.xml to /opt/***/dags/data/s/BILLSTATUS-118s3427.json
+[2024-04-09T04:46:04.036+0000] {logging_mixin.py:188} INFO - Converted /opt/***/dags/data/s/BILLSTATUS-118s475.xml to /opt/***/dags/data/s/BILLSTATUS-118s475.json
+[2024-04-09T04:46:04.092+0000] {logging_mixin.py:188} INFO - Converted /opt/***/dags/data/s/BILLSTATUS-118s111.xml to /opt/***/dags/data/s/BILLSTATUS-118s111.json
+[2024-04-09T04:46:04.654+0000] {logging_mixin.py:188} INFO - Converted /opt/***/dags/data/s/BILLSTATUS-118s112.xml to /opt/***/dags/data/s/BILLSTATUS-118s112.json
+[2024-04-09T04:46:05.897+0000] {logging_mixin.py:188} INFO - Converted /opt/***/dags/data/s/BILLSTATUS-118s326.xml to /opt/***/dags/data/s/BILLSTATUS-118s326.json
+[2024-04-09T04:46:06.005+0000] {logging_mixin.py:188} INFO - Converted /opt/***/dags/data/s/BILLSTATUS-118s870.xml to /opt/***/dags/data/s/BILLSTATUS-118s870.json
+[2024-04-09T04:46:07.036+0000] {logging_mixin.py:188} INFO - Converted /opt/***/dags/data/s/BILLSTATUS-118s3853.xml to /opt/***/dags/data/s/BILLSTATUS-118s3853.json
+[2024-04-09T04:46:07.280+0000] {logging_mixin.py:188} INFO - Converted /opt/***/dags/data/s/BILLSTATUS-118s2226.xml to /opt/***/dags/data/s/BILLSTATUS-118s2226.json
+[2024-04-09T04:46:07.938+0000] {logging_mixin.py:188} INFO - Converted /opt/***/dags/data/s/BILLSTATUS-118s619.xml to /opt/***/dags/data/s/BILLSTATUS-118s619.json
+[2024-04-09T04:46:10.972+0000] {logging_mixin.py:188} INFO - Converted /opt/***/dags/data/sres/BILLSTATUS-118sres13.xml to /opt/***/dags/data/sres/BILLSTATUS-118sres13.json
+[2024-04-09T04:46:11.444+0000] {logging_mixin.py:188} INFO - Converted /opt/***/dags/data/sres/BILLSTATUS-118sres417.xml to /opt/***/dags/data/sres/BILLSTATUS-118sres417.json
+[2024-04-09T04:46:11.700+0000] {logging_mixin.py:188} INFO - Converted /opt/***/dags/data/sres/BILLSTATUS-118sres21.xml to /opt/***/dags/data/sres/BILLSTATUS-118sres21.json
+[2024-04-09T04:46:12.140+0000] {logging_mixin.py:188} INFO - Converted /opt/***/dags/data/sres/BILLSTATUS-118sres504.xml to /opt/***/dags/data/sres/BILLSTATUS-118sres504.json
+[2024-04-09T04:46:12.446+0000] {logging_mixin.py:188} INFO - Converted /opt/***/dags/data/hr/BILLSTATUS-118hr2766.xml to /opt/***/dags/data/hr/BILLSTATUS-118hr2766.json
+[2024-04-09T04:46:12.504+0000] {logging_mixin.py:188} INFO - Converted /opt/***/dags/data/hr/BILLSTATUS-118hr2799.xml to /opt/***/dags/data/hr/BILLSTATUS-118hr2799.json
+[2024-04-09T04:46:12.533+0000] {logging_mixin.py:188} INFO - Converted /opt/***/dags/data/hr/BILLSTATUS-118hr7024.xml to /opt/***/dags/data/hr/BILLSTATUS-118hr7024.json
+[2024-04-09T04:46:12.832+0000] {logging_mixin.py:188} INFO - Converted /opt/***/dags/data/hr/BILLSTATUS-118hr2.xml to /opt/***/dags/data/hr/BILLSTATUS-118hr2.json
+[2024-04-09T04:46:12.873+0000] {logging_mixin.py:188} INFO - Converted /opt/***/dags/data/hr/BILLSTATUS-118hr542.xml to /opt/***/dags/data/hr/BILLSTATUS-118hr542.json
+[2024-04-09T04:46:13.210+0000] {logging_mixin.py:188} INFO - Converted /opt/***/dags/data/hr/BILLSTATUS-118hr185.xml to /opt/***/dags/data/hr/BILLSTATUS-118hr185.json
+[2024-04-09T04:46:13.221+0000] {logging_mixin.py:188} INFO - Converted /opt/***/dags/data/hr/BILLSTATUS-118hr5961.xml to /opt/***/dags/data/hr/BILLSTATUS-118hr5961.json
+[2024-04-09T04:46:13.245+0000] {logging_mixin.py:188} INFO - Converted /opt/***/dags/data/hr/BILLSTATUS-118hr813.xml to /opt/***/dags/data/hr/BILLSTATUS-118hr813.json
+[2024-04-09T04:46:13.297+0000] {logging_mixin.py:188} INFO - Converted /opt/***/dags/data/hr/BILLSTATUS-118hr4470.xml to /opt/***/dags/data/hr/BILLSTATUS-118hr4470.json
+[2024-04-09T04:46:13.395+0000] {logging_mixin.py:188} INFO - Converted /opt/***/dags/data/hr/BILLSTATUS-118hr6918.xml to /opt/***/dags/data/hr/BILLSTATUS-118hr6918.json
+[2024-04-09T04:46:13.434+0000] {logging_mixin.py:188} INFO - Converted /opt/***/dags/data/hr/BILLSTATUS-118hr1093.xml to /opt/***/dags/data/hr/BILLSTATUS-118hr1093.json
+[2024-04-09T04:46:13.450+0000] {logging_mixin.py:188} INFO - Converted /opt/***/dags/data/hr/BILLSTATUS-118hr3848.xml to /opt/***/dags/data/hr/BILLSTATUS-118hr3848.json
+[2024-04-09T04:46:13.590+0000] {logging_mixin.py:188} INFO - Converted /opt/***/dags/data/hr/BILLSTATUS-118hr1734.xml to /opt/***/dags/data/hr/BILLSTATUS-118hr1734.json
+[2024-04-09T04:46:13.684+0000] {logging_mixin.py:188} INFO - Converted /opt/***/dags/data/hr/BILLSTATUS-118hr346.xml to /opt/***/dags/data/hr/BILLSTATUS-118hr346.json
+[2024-04-09T04:46:13.741+0000] {logging_mixin.py:188} INFO - Converted /opt/***/dags/data/hr/BILLSTATUS-118hr4664.xml to /opt/***/dags/data/hr/BILLSTATUS-118hr4664.json
+[2024-04-09T04:46:13.770+0000] {logging_mixin.py:188} INFO - Converted /opt/***/dags/data/hr/BILLSTATUS-118hr5585.xml to /opt/***/dags/data/hr/BILLSTATUS-118hr5585.json
+[2024-04-09T04:46:13.848+0000] {logging_mixin.py:188} INFO - Converted /opt/***/dags/data/hr/BILLSTATUS-118hr6503.xml to /opt/***/dags/data/hr/BILLSTATUS-118hr6503.json
+[2024-04-09T04:46:13.942+0000] {logging_mixin.py:188} INFO - Converted /opt/***/dags/data/hr/BILLSTATUS-118hr839.xml to /opt/***/dags/data/hr/BILLSTATUS-118hr839.json
+[2024-04-09T04:46:14.087+0000] {logging_mixin.py:188} INFO - Converted /opt/***/dags/data/hr/BILLSTATUS-118hr1640.xml to /opt/***/dags/data/hr/BILLSTATUS-118hr1640.json
+[2024-04-09T04:46:14.258+0000] {logging_mixin.py:188} INFO - Converted /opt/***/dags/data/hr/BILLSTATUS-118hr1.xml to /opt/***/dags/data/hr/BILLSTATUS-118hr1.json
+[2024-04-09T04:46:14.317+0000] {logging_mixin.py:188} INFO - Converted /opt/***/dags/data/hr/BILLSTATUS-118hr1669.xml to /opt/***/dags/data/hr/BILLSTATUS-118hr1669.json
+[2024-04-09T04:46:14.809+0000] {logging_mixin.py:188} INFO - Converted /opt/***/dags/data/hr/BILLSTATUS-118hr4665.xml to /opt/***/dags/data/hr/BILLSTATUS-118hr4665.json
+[2024-04-09T04:46:14.852+0000] {logging_mixin.py:188} INFO - Converted /opt/***/dags/data/hr/BILLSTATUS-118hr347.xml to /opt/***/dags/data/hr/BILLSTATUS-118hr347.json
+[2024-04-09T04:46:14.958+0000] {logging_mixin.py:188} INFO - Converted /opt/***/dags/data/hr/BILLSTATUS-118hr357.xml to /opt/***/dags/data/hr/BILLSTATUS-118hr357.json
+[2024-04-09T04:46:15.114+0000] {logging_mixin.py:188} INFO - Converted /opt/***/dags/data/hr/BILLSTATUS-118hr3324.xml to /opt/***/dags/data/hr/BILLSTATUS-118hr3324.json
+[2024-04-09T04:46:15.268+0000] {logging_mixin.py:188} INFO - Converted /opt/***/dags/data/hr/BILLSTATUS-118hr753.xml to /opt/***/dags/data/hr/BILLSTATUS-118hr753.json
+[2024-04-09T04:46:15.484+0000] {logging_mixin.py:188} INFO - Converted /opt/***/dags/data/hr/BILLSTATUS-118hr1123.xml to /opt/***/dags/data/hr/BILLSTATUS-118hr1123.json
+[2024-04-09T04:46:15.546+0000] {logging_mixin.py:188} INFO - Converted /opt/***/dags/data/hr/BILLSTATUS-118hr3091.xml to /opt/***/dags/data/hr/BILLSTATUS-118hr3091.json
+[2024-04-09T04:46:15.596+0000] {logging_mixin.py:188} INFO - Converted /opt/***/dags/data/hr/BILLSTATUS-118hr5.xml to /opt/***/dags/data/hr/BILLSTATUS-118hr5.json
+[2024-04-09T04:46:15.641+0000] {logging_mixin.py:188} INFO - Converted /opt/***/dags/data/hr/BILLSTATUS-118hr593.xml to /opt/***/dags/data/hr/BILLSTATUS-118hr593.json
+[2024-04-09T04:46:15.706+0000] {logging_mixin.py:188} INFO - Converted /opt/***/dags/data/hr/BILLSTATUS-118hr2365.xml to /opt/***/dags/data/hr/BILLSTATUS-118hr2365.json
+[2024-04-09T04:46:15.749+0000] {logging_mixin.py:188} INFO - Converted /opt/***/dags/data/hr/BILLSTATUS-118hr5378.xml to /opt/***/dags/data/hr/BILLSTATUS-118hr5378.json
+[2024-04-09T04:46:15.805+0000] {logging_mixin.py:188} INFO - Converted /opt/***/dags/data/hr/BILLSTATUS-118hr7023.xml to /opt/***/dags/data/hr/BILLSTATUS-118hr7023.json
+[2024-04-09T04:46:15.865+0000] {logging_mixin.py:188} INFO - Converted /opt/***/dags/data/hr/BILLSTATUS-118hr4502.xml to /opt/***/dags/data/hr/BILLSTATUS-118hr4502.json
+[2024-04-09T04:46:15.923+0000] {logging_mixin.py:188} INFO - Converted /opt/***/dags/data/hr/BILLSTATUS-118hr815.xml to /opt/***/dags/data/hr/BILLSTATUS-118hr815.json
+[2024-04-09T04:46:16.063+0000] {logging_mixin.py:188} INFO - Converted /opt/***/dags/data/hr/BILLSTATUS-118hr140.xml to /opt/***/dags/data/hr/BILLSTATUS-118hr140.json
+[2024-04-09T04:46:16.331+0000] {logging_mixin.py:188} INFO - Converted /opt/***/dags/data/hr/BILLSTATUS-118hr340.xml to /opt/***/dags/data/hr/BILLSTATUS-118hr340.json
+[2024-04-09T04:46:16.509+0000] {logging_mixin.py:188} INFO - Converted /opt/***/dags/data/hr/BILLSTATUS-118hr1530.xml to /opt/***/dags/data/hr/BILLSTATUS-118hr1530.json
+[2024-04-09T04:46:17.069+0000] {logging_mixin.py:188} INFO - Converted /opt/***/dags/data/hr/BILLSTATUS-118hr1121.xml to /opt/***/dags/data/hr/BILLSTATUS-118hr1121.json
+[2024-04-09T04:46:17.440+0000] {logging_mixin.py:188} INFO - Converted /opt/***/dags/data/hr/BILLSTATUS-118hr6276.xml to /opt/***/dags/data/hr/BILLSTATUS-118hr6276.json
+[2024-04-09T04:46:17.457+0000] {logging_mixin.py:188} INFO - Converted /opt/***/dags/data/hr/BILLSTATUS-118hr1096.xml to /opt/***/dags/data/hr/BILLSTATUS-118hr1096.json
+[2024-04-09T04:46:17.529+0000] {logging_mixin.py:188} INFO - Converted /opt/***/dags/data/hr/BILLSTATUS-118hr382.xml to /opt/***/dags/data/hr/BILLSTATUS-118hr382.json
+[2024-04-09T04:46:17.576+0000] {logging_mixin.py:188} INFO - Converted /opt/***/dags/data/hr/BILLSTATUS-118hr1727.xml to /opt/***/dags/data/hr/BILLSTATUS-118hr1727.json
+[2024-04-09T04:46:17.717+0000] {logging_mixin.py:188} INFO - Converted /opt/***/dags/data/hr/BILLSTATUS-118hr5283.xml to /opt/***/dags/data/hr/BILLSTATUS-118hr5283.json
+[2024-04-09T04:46:17.747+0000] {logging_mixin.py:188} INFO - Converted /opt/***/dags/data/hr/BILLSTATUS-118hr497.xml to /opt/***/dags/data/hr/BILLSTATUS-118hr497.json
+[2024-04-09T04:46:17.902+0000] {logging_mixin.py:188} INFO - Converted /opt/***/dags/data/hr/BILLSTATUS-118hr21.xml to /opt/***/dags/data/hr/BILLSTATUS-118hr21.json
+[2024-04-09T04:46:18.357+0000] {logging_mixin.py:188} INFO - Converted /opt/***/dags/data/hr/BILLSTATUS-118hr1147.xml to /opt/***/dags/data/hr/BILLSTATUS-118hr1147.json
+[2024-04-09T04:46:18.414+0000] {logging_mixin.py:188} INFO - Converted /opt/***/dags/data/hr/BILLSTATUS-118hr5862.xml to /opt/***/dags/data/hr/BILLSTATUS-118hr5862.json
+[2024-04-09T04:46:18.450+0000] {logging_mixin.py:188} INFO - Converted /opt/***/dags/data/hr/BILLSTATUS-118hr5692.xml to /opt/***/dags/data/hr/BILLSTATUS-118hr5692.json
+[2024-04-09T04:46:18.515+0000] {logging_mixin.py:188} INFO - Converted /opt/***/dags/data/hr/BILLSTATUS-118hr2670.xml to /opt/***/dags/data/hr/BILLSTATUS-118hr2670.json
+[2024-04-09T04:46:18.854+0000] {logging_mixin.py:188} INFO - Converted /opt/***/dags/data/hr/BILLSTATUS-118hr7454.xml to /opt/***/dags/data/hr/BILLSTATUS-118hr7454.json
+[2024-04-09T04:46:18.869+0000] {logging_mixin.py:188} INFO - Converted /opt/***/dags/data/hr/BILLSTATUS-118hr5525.xml to /opt/***/dags/data/hr/BILLSTATUS-118hr5525.json
+[2024-04-09T04:46:18.891+0000] {logging_mixin.py:188} INFO - Converted /opt/***/dags/data/hr/BILLSTATUS-118hr443.xml to /opt/***/dags/data/hr/BILLSTATUS-118hr443.json
+[2024-04-09T04:46:18.996+0000] {logging_mixin.py:188} INFO - Converted /opt/***/dags/data/hr/BILLSTATUS-118hr4820.xml to /opt/***/dags/data/hr/BILLSTATUS-118hr4820.json
+[2024-04-09T04:46:19.076+0000] {logging_mixin.py:188} INFO - Converted /opt/***/dags/data/hr/BILLSTATUS-118hr22.xml to /opt/***/dags/data/hr/BILLSTATUS-118hr22.json
+[2024-04-09T04:46:19.187+0000] {logging_mixin.py:188} INFO - Converted /opt/***/dags/data/hr/BILLSTATUS-118hr1435.xml to /opt/***/dags/data/hr/BILLSTATUS-118hr1435.json
+[2024-04-09T04:46:19.218+0000] {logging_mixin.py:188} INFO - Converted /opt/***/dags/data/hr/BILLSTATUS-118hr2882.xml to /opt/***/dags/data/hr/BILLSTATUS-118hr2882.json
+[2024-04-09T04:46:19.228+0000] {logging_mixin.py:188} INFO - Converted /opt/***/dags/data/hr/BILLSTATUS-118hr1353.xml to /opt/***/dags/data/hr/BILLSTATUS-118hr1353.json
+[2024-04-09T04:46:19.289+0000] {logging_mixin.py:188} INFO - Converted /opt/***/dags/data/hr/BILLSTATUS-118hr5860.xml to /opt/***/dags/data/hr/BILLSTATUS-118hr5860.json
+[2024-04-09T04:46:19.310+0000] {logging_mixin.py:188} INFO - Converted /opt/***/dags/data/hr/BILLSTATUS-118hr7520.xml to /opt/***/dags/data/hr/BILLSTATUS-118hr7520.json
+[2024-04-09T04:46:19.315+0000] {logging_mixin.py:188} INFO - Converted /opt/***/dags/data/hr/BILLSTATUS-118hr1151.xml to /opt/***/dags/data/hr/BILLSTATUS-118hr1151.json
+[2024-04-09T04:46:19.338+0000] {logging_mixin.py:188} INFO - Converted /opt/***/dags/data/hr/BILLSTATUS-118hr3746.xml to /opt/***/dags/data/hr/BILLSTATUS-118hr3746.json
+[2024-04-09T04:46:19.629+0000] {logging_mixin.py:188} INFO - Converted /opt/***/dags/data/hr/BILLSTATUS-118hr7521.xml to /opt/***/dags/data/hr/BILLSTATUS-118hr7521.json
+[2024-04-09T04:46:19.711+0000] {logging_mixin.py:188} INFO - Converted /opt/***/dags/data/hr/BILLSTATUS-118hr734.xml to /opt/***/dags/data/hr/BILLSTATUS-118hr734.json
+[2024-04-09T04:46:19.810+0000] {logging_mixin.py:188} INFO - Converted /opt/***/dags/data/hr/BILLSTATUS-118hr23.xml to /opt/***/dags/data/hr/BILLSTATUS-118hr23.json
+[2024-04-09T04:46:19.866+0000] {logging_mixin.py:188} INFO - Converted /opt/***/dags/data/hr/BILLSTATUS-118hr1226.xml to /opt/***/dags/data/hr/BILLSTATUS-118hr1226.json
+[2024-04-09T04:46:20.010+0000] {logging_mixin.py:188} INFO - Converted /opt/***/dags/data/hr/BILLSTATUS-118hr4821.xml to /opt/***/dags/data/hr/BILLSTATUS-118hr4821.json
+[2024-04-09T04:46:20.071+0000] {logging_mixin.py:188} INFO - Converted /opt/***/dags/data/hr/BILLSTATUS-118hr5524.xml to /opt/***/dags/data/hr/BILLSTATUS-118hr5524.json
+[2024-04-09T04:46:20.144+0000] {logging_mixin.py:188} INFO - Converted /opt/***/dags/data/hr/BILLSTATUS-118hr1752.xml to /opt/***/dags/data/hr/BILLSTATUS-118hr1752.json
+[2024-04-09T04:46:20.182+0000] {logging_mixin.py:188} INFO - Converted /opt/***/dags/data/hr/BILLSTATUS-118hr485.xml to /opt/***/dags/data/hr/BILLSTATUS-118hr485.json
+[2024-04-09T04:46:20.209+0000] {logging_mixin.py:188} INFO - Converted /opt/***/dags/data/hr/BILLSTATUS-118hr3838.xml to /opt/***/dags/data/hr/BILLSTATUS-118hr3838.json
+[2024-04-09T04:46:20.335+0000] {logging_mixin.py:188} INFO - Converted /opt/***/dags/data/hr/BILLSTATUS-118hr4366.xml to /opt/***/dags/data/hr/BILLSTATUS-118hr4366.json
+[2024-04-09T04:46:20.536+0000] {logging_mixin.py:188} INFO - Converted /opt/***/dags/data/hr/BILLSTATUS-118hr6363.xml to /opt/***/dags/data/hr/BILLSTATUS-118hr6363.json
+[2024-04-09T04:46:20.690+0000] {logging_mixin.py:188} INFO - Converted /opt/***/dags/data/hr/BILLSTATUS-118hr1154.xml to /opt/***/dags/data/hr/BILLSTATUS-118hr1154.json
+[2024-04-09T04:46:20.851+0000] {logging_mixin.py:188} INFO - Converted /opt/***/dags/data/hr/BILLSTATUS-118hr533.xml to /opt/***/dags/data/hr/BILLSTATUS-118hr533.json
+[2024-04-09T04:46:20.976+0000] {logging_mixin.py:188} INFO - Converted /opt/***/dags/data/hr/BILLSTATUS-118hr5119.xml to /opt/***/dags/data/hr/BILLSTATUS-118hr5119.json
+[2024-04-09T04:46:21.026+0000] {logging_mixin.py:188} INFO - Converted /opt/***/dags/data/hr/BILLSTATUS-118hr3391.xml to /opt/***/dags/data/hr/BILLSTATUS-118hr3391.json
+[2024-04-09T04:46:21.174+0000] {logging_mixin.py:188} INFO - Converted /opt/***/dags/data/hr/BILLSTATUS-118hr4367.xml to /opt/***/dags/data/hr/BILLSTATUS-118hr4367.json
+[2024-04-09T04:46:21.355+0000] {logging_mixin.py:188} INFO - Converted /opt/***/dags/data/hr/BILLSTATUS-118hr26.xml to /opt/***/dags/data/hr/BILLSTATUS-118hr26.json
+[2024-04-09T04:46:21.720+0000] {logging_mixin.py:188} INFO - Converted /opt/***/dags/data/hr/BILLSTATUS-118hr1023.xml to /opt/***/dags/data/hr/BILLSTATUS-118hr1023.json
+[2024-04-09T04:46:21.751+0000] {logging_mixin.py:188} INFO - Converted /opt/***/dags/data/hr/BILLSTATUS-118hr3152.xml to /opt/***/dags/data/hr/BILLSTATUS-118hr3152.json
+[2024-04-09T04:46:21.918+0000] {logging_mixin.py:188} INFO - Converted /opt/***/dags/data/hr/BILLSTATUS-118hr4365.xml to /opt/***/dags/data/hr/BILLSTATUS-118hr4365.json
+[2024-04-09T04:46:22.119+0000] {logging_mixin.py:188} INFO - Converted /opt/***/dags/data/hr/BILLSTATUS-118hr1547.xml to /opt/***/dags/data/hr/BILLSTATUS-118hr1547.json
+[2024-04-09T04:46:22.411+0000] {logging_mixin.py:188} INFO - Converted /opt/***/dags/data/hr/BILLSTATUS-118hr3224.xml to /opt/***/dags/data/hr/BILLSTATUS-118hr3224.json
+[2024-04-09T04:46:22.965+0000] {logging_mixin.py:188} INFO - Converted /opt/***/dags/data/hr/BILLSTATUS-118hr4984.xml to /opt/***/dags/data/hr/BILLSTATUS-118hr4984.json
+[2024-04-09T04:46:23.002+0000] {logging_mixin.py:188} INFO - Converted /opt/***/dags/data/hr/BILLSTATUS-118hr1156.xml to /opt/***/dags/data/hr/BILLSTATUS-118hr1156.json
+[2024-04-09T04:46:23.646+0000] {logging_mixin.py:188} INFO - Converted /opt/***/dags/data/hr/BILLSTATUS-118hr4364.xml to /opt/***/dags/data/hr/BILLSTATUS-118hr4364.json
+[2024-04-09T04:46:24.086+0000] {logging_mixin.py:188} INFO - Converted /opt/***/dags/data/hr/BILLSTATUS-118hr139.xml to /opt/***/dags/data/hr/BILLSTATUS-118hr139.json
+[2024-04-09T04:46:24.165+0000] {logging_mixin.py:188} INFO - Converted /opt/***/dags/data/hr/BILLSTATUS-118hr663.xml to /opt/***/dags/data/hr/BILLSTATUS-118hr663.json
+[2024-04-09T04:46:24.376+0000] {logging_mixin.py:188} INFO - Converted /opt/***/dags/data/hr/BILLSTATUS-118hr5856.xml to /opt/***/dags/data/hr/BILLSTATUS-118hr5856.json
+[2024-04-09T04:46:24.429+0000] {logging_mixin.py:188} INFO - Converted /opt/***/dags/data/hr/BILLSTATUS-118hr1615.xml to /opt/***/dags/data/hr/BILLSTATUS-118hr1615.json
+[2024-04-09T04:46:24.742+0000] {logging_mixin.py:188} INFO - Converted /opt/***/dags/data/hr/BILLSTATUS-118hr500.xml to /opt/***/dags/data/hr/BILLSTATUS-118hr500.json
+[2024-04-09T04:46:24.752+0000] {logging_mixin.py:188} INFO - Converted /opt/***/dags/data/hr/BILLSTATUS-118hr3981.xml to /opt/***/dags/data/hr/BILLSTATUS-118hr3981.json
+[2024-04-09T04:46:24.920+0000] {logging_mixin.py:188} INFO - Converted /opt/***/dags/data/hr/BILLSTATUS-118hr5894.xml to /opt/***/dags/data/hr/BILLSTATUS-118hr5894.json
+[2024-04-09T04:46:25.025+0000] {logging_mixin.py:188} INFO - Converted /opt/***/dags/data/hr/BILLSTATUS-118hr662.xml to /opt/***/dags/data/hr/BILLSTATUS-118hr662.json
+[2024-04-09T04:46:25.048+0000] {logging_mixin.py:188} INFO - Converted /opt/***/dags/data/hr/BILLSTATUS-118hr676.xml to /opt/***/dags/data/hr/BILLSTATUS-118hr676.json
+[2024-04-09T04:46:25.109+0000] {logging_mixin.py:188} INFO - Converted /opt/***/dags/data/hr/BILLSTATUS-118hr4368.xml to /opt/***/dags/data/hr/BILLSTATUS-118hr4368.json
+[2024-04-09T04:46:25.144+0000] {logging_mixin.py:188} INFO - Converted /opt/***/dags/data/hr/BILLSTATUS-118hr886.xml to /opt/***/dags/data/hr/BILLSTATUS-118hr886.json
+[2024-04-09T04:46:25.303+0000] {logging_mixin.py:188} INFO - Converted /opt/***/dags/data/hr/BILLSTATUS-118hr7463.xml to /opt/***/dags/data/hr/BILLSTATUS-118hr7463.json
+[2024-04-09T04:46:25.560+0000] {logging_mixin.py:188} INFO - Converted /opt/***/dags/data/hr/BILLSTATUS-118hr1548.xml to /opt/***/dags/data/hr/BILLSTATUS-118hr1548.json
+[2024-04-09T04:46:25.873+0000] {logging_mixin.py:188} INFO - Converted /opt/***/dags/data/hr/BILLSTATUS-118hr3941.xml to /opt/***/dags/data/hr/BILLSTATUS-118hr3941.json
+[2024-04-09T04:46:25.886+0000] {logging_mixin.py:188} INFO - Converted /opt/***/dags/data/hr/BILLSTATUS-118hr3799.xml to /opt/***/dags/data/hr/BILLSTATUS-118hr3799.json
+[2024-04-09T04:46:25.948+0000] {logging_mixin.py:188} INFO - Converted /opt/***/dags/data/hr/BILLSTATUS-118hr1159.xml to /opt/***/dags/data/hr/BILLSTATUS-118hr1159.json
+[2024-04-09T04:46:26.091+0000] {logging_mixin.py:188} INFO - Converted /opt/***/dags/data/hr/BILLSTATUS-118hr3202.xml to /opt/***/dags/data/hr/BILLSTATUS-118hr3202.json
+[2024-04-09T04:46:26.107+0000] {logging_mixin.py:188} INFO - Converted /opt/***/dags/data/hr/BILLSTATUS-118hr3564.xml to /opt/***/dags/data/hr/BILLSTATUS-118hr3564.json
+[2024-04-09T04:46:26.171+0000] {logging_mixin.py:188} INFO - Converted /opt/***/dags/data/hr/BILLSTATUS-118hr4394.xml to /opt/***/dags/data/hr/BILLSTATUS-118hr4394.json
+[2024-04-09T04:46:26.302+0000] {logging_mixin.py:188} INFO - Converted /opt/***/dags/data/hr/BILLSTATUS-118hr3821.xml to /opt/***/dags/data/hr/BILLSTATUS-118hr3821.json
+[2024-04-09T04:46:26.434+0000] {logging_mixin.py:188} INFO - Converted /opt/***/dags/data/hr/BILLSTATUS-118hr467.xml to /opt/***/dags/data/hr/BILLSTATUS-118hr467.json
+[2024-04-09T04:46:26.593+0000] {logging_mixin.py:188} INFO - Converted /opt/***/dags/data/hr/BILLSTATUS-118hr6544.xml to /opt/***/dags/data/hr/BILLSTATUS-118hr6544.json
+[2024-04-09T04:46:26.906+0000] {logging_mixin.py:188} INFO - Converted /opt/***/dags/data/hr/BILLSTATUS-118hr1149.xml to /opt/***/dags/data/hr/BILLSTATUS-118hr1149.json
+[2024-04-09T04:46:26.954+0000] {logging_mixin.py:188} INFO - Converted /opt/***/dags/data/hr/BILLSTATUS-118hr1607.xml to /opt/***/dags/data/hr/BILLSTATUS-118hr1607.json
+[2024-04-09T04:46:27.099+0000] {logging_mixin.py:188} INFO - Converted /opt/***/dags/data/hr/BILLSTATUS-118hr7511.xml to /opt/***/dags/data/hr/BILLSTATUS-118hr7511.json
+[2024-04-09T04:46:27.109+0000] {logging_mixin.py:188} INFO - Converted /opt/***/dags/data/hr/BILLSTATUS-118hr1606.xml to /opt/***/dags/data/hr/BILLSTATUS-118hr1606.json
+[2024-04-09T04:46:27.215+0000] {logging_mixin.py:188} INFO - Converted /opt/***/dags/data/hr/BILLSTATUS-118hr5110.xml to /opt/***/dags/data/hr/BILLSTATUS-118hr5110.json
+[2024-04-09T04:46:27.461+0000] {logging_mixin.py:188} INFO - Converted /opt/***/dags/data/hr/BILLSTATUS-118hr6009.xml to /opt/***/dags/data/hr/BILLSTATUS-118hr6009.json
+[2024-04-09T04:46:27.563+0000] {logging_mixin.py:188} INFO - Converted /opt/***/dags/data/hr/BILLSTATUS-118hr300.xml to /opt/***/dags/data/hr/BILLSTATUS-118hr300.json
+[2024-04-09T04:46:27.577+0000] {logging_mixin.py:188} INFO - Converted /opt/***/dags/data/hr/BILLSTATUS-118hr5528.xml to /opt/***/dags/data/hr/BILLSTATUS-118hr5528.json
+[2024-04-09T04:46:27.627+0000] {logging_mixin.py:188} INFO - Converted /opt/***/dags/data/hr/BILLSTATUS-118hr302.xml to /opt/***/dags/data/hr/BILLSTATUS-118hr302.json
+[2024-04-09T04:46:27.701+0000] {logging_mixin.py:188} INFO - Converted /opt/***/dags/data/hr/BILLSTATUS-118hr6976.xml to /opt/***/dags/data/hr/BILLSTATUS-118hr6976.json
+[2024-04-09T04:46:27.856+0000] {logging_mixin.py:188} INFO - Converted /opt/***/dags/data/hr/BILLSTATUS-118hr5933.xml to /opt/***/dags/data/hr/BILLSTATUS-118hr5933.json
+[2024-04-09T04:46:27.962+0000] {logging_mixin.py:188} INFO - Converted /opt/***/dags/data/hr/BILLSTATUS-118hr2872.xml to /opt/***/dags/data/hr/BILLSTATUS-118hr2872.json
+[2024-04-09T04:46:28.016+0000] {logging_mixin.py:188} INFO - Converted /opt/***/dags/data/hr/BILLSTATUS-118hr538.xml to /opt/***/dags/data/hr/BILLSTATUS-118hr538.json
+[2024-04-09T04:46:28.064+0000] {logging_mixin.py:188} INFO - Converted /opt/***/dags/data/hr/BILLSTATUS-118hr2494.xml to /opt/***/dags/data/hr/BILLSTATUS-118hr2494.json
+[2024-04-09T04:46:28.085+0000] {logging_mixin.py:188} INFO - Converted /opt/***/dags/data/hr/BILLSTATUS-118hr288.xml to /opt/***/dags/data/hr/BILLSTATUS-118hr288.json
+[2024-04-09T04:46:28.128+0000] {logging_mixin.py:188} INFO - Converted /opt/***/dags/data/hr/BILLSTATUS-118hr1836.xml to /opt/***/dags/data/hr/BILLSTATUS-118hr1836.json
+[2024-04-09T04:46:28.153+0000] {logging_mixin.py:188} INFO - Converted /opt/***/dags/data/hr/BILLSTATUS-118hr3774.xml to /opt/***/dags/data/hr/BILLSTATUS-118hr3774.json
+[2024-04-09T04:46:28.185+0000] {logging_mixin.py:188} INFO - Converted /opt/***/dags/data/hr/BILLSTATUS-118hr1163.xml to /opt/***/dags/data/hr/BILLSTATUS-118hr1163.json
+[2024-04-09T04:46:28.263+0000] {logging_mixin.py:188} INFO - Converted /opt/***/dags/data/hr/BILLSTATUS-118hr277.xml to /opt/***/dags/data/hr/BILLSTATUS-118hr277.json
+[2024-04-09T04:46:28.509+0000] {logging_mixin.py:188} INFO - Converted /opt/***/dags/data/hr/BILLSTATUS-118hr7102.xml to /opt/***/dags/data/hr/BILLSTATUS-118hr7102.json
+[2024-04-09T04:46:28.530+0000] {logging_mixin.py:188} INFO - Converted /opt/***/dags/data/hr/BILLSTATUS-118hr1567.xml to /opt/***/dags/data/hr/BILLSTATUS-118hr1567.json
+[2024-04-09T04:46:29.464+0000] {logging_mixin.py:188} INFO - Converted /opt/***/dags/data/hr/BILLSTATUS-118hr589.xml to /opt/***/dags/data/hr/BILLSTATUS-118hr589.json
+[2024-04-09T04:46:29.535+0000] {logging_mixin.py:188} INFO - Converted /opt/***/dags/data/hr/BILLSTATUS-118hr3935.xml to /opt/***/dags/data/hr/BILLSTATUS-118hr3935.json
+[2024-04-09T04:46:29.664+0000] {logging_mixin.py:188} INFO - Converted /opt/***/dags/data/hr/BILLSTATUS-118hr1105.xml to /opt/***/dags/data/hr/BILLSTATUS-118hr1105.json
+[2024-04-09T04:46:29.741+0000] {logging_mixin.py:188} INFO - Converted /opt/***/dags/data/hr/BILLSTATUS-118hr4531.xml to /opt/***/dags/data/hr/BILLSTATUS-118hr4531.json
+[2024-04-09T04:46:30.112+0000] {logging_mixin.py:188} INFO - Converted /opt/***/dags/data/hr/BILLSTATUS-118hr359.xml to /opt/***/dags/data/hr/BILLSTATUS-118hr359.json
+[2024-04-09T04:46:30.270+0000] {logging_mixin.py:188} INFO - Converted /opt/***/dags/data/hr/BILLSTATUS-118hr3672.xml to /opt/***/dags/data/hr/BILLSTATUS-118hr3672.json
+[2024-04-09T04:46:30.307+0000] {logging_mixin.py:188} INFO - Converted /opt/***/dags/data/hr/BILLSTATUS-118hr1715.xml to /opt/***/dags/data/hr/BILLSTATUS-118hr1715.json
+[2024-04-09T04:46:30.423+0000] {logging_mixin.py:188} INFO - Converted /opt/***/dags/data/hr/BILLSTATUS-118hr3843.xml to /opt/***/dags/data/hr/BILLSTATUS-118hr3843.json
+[2024-04-09T04:46:30.460+0000] {logging_mixin.py:188} INFO - Converted /opt/***/dags/data/hr/BILLSTATUS-118hr159.xml to /opt/***/dags/data/hr/BILLSTATUS-118hr159.json
+[2024-04-09T04:46:30.685+0000] {logging_mixin.py:188} INFO - Converted /opt/***/dags/data/hr/BILLSTATUS-118hr2793.xml to /opt/***/dags/data/hr/BILLSTATUS-118hr2793.json
+[2024-04-09T04:46:30.746+0000] {logging_mixin.py:188} INFO - Converted /opt/***/dags/data/hr/BILLSTATUS-118hr1339.xml to /opt/***/dags/data/hr/BILLSTATUS-118hr1339.json
+[2024-04-09T04:46:30.773+0000] {logging_mixin.py:188} INFO - Converted /opt/***/dags/data/hr/BILLSTATUS-118hr788.xml to /opt/***/dags/data/hr/BILLSTATUS-118hr788.json
+[2024-04-09T04:46:30.813+0000] {logging_mixin.py:188} INFO - Converted /opt/***/dags/data/hr/BILLSTATUS-118hr1107.xml to /opt/***/dags/data/hr/BILLSTATUS-118hr1107.json
+[2024-04-09T04:46:30.859+0000] {logging_mixin.py:188} INFO - Converted /opt/***/dags/data/hr/BILLSTATUS-118hr5375.xml to /opt/***/dags/data/hr/BILLSTATUS-118hr5375.json
+[2024-04-09T04:46:30.891+0000] {logging_mixin.py:188} INFO - Converted /opt/***/dags/data/hr/BILLSTATUS-118hr6126.xml to /opt/***/dags/data/hr/BILLSTATUS-118hr6126.json
+[2024-04-09T04:46:30.942+0000] {logging_mixin.py:188} INFO - Converted /opt/***/dags/data/hr/BILLSTATUS-118hr3089.xml to /opt/***/dags/data/hr/BILLSTATUS-118hr3089.json
+[2024-04-09T04:46:31.123+0000] {logging_mixin.py:188} INFO - Converted /opt/***/dags/data/hr/BILLSTATUS-118hr1338.xml to /opt/***/dags/data/hr/BILLSTATUS-118hr1338.json
+[2024-04-09T04:46:31.190+0000] {logging_mixin.py:188} INFO - Converted /opt/***/dags/data/hr/BILLSTATUS-118hr2792.xml to /opt/***/dags/data/hr/BILLSTATUS-118hr2792.json
+[2024-04-09T04:46:31.387+0000] {logging_mixin.py:188} INFO - Converted /opt/***/dags/data/hr/BILLSTATUS-118hr400.xml to /opt/***/dags/data/hr/BILLSTATUS-118hr400.json
+[2024-04-09T04:46:31.519+0000] {logging_mixin.py:188} INFO - Converted /opt/***/dags/data/hr/BILLSTATUS-118hr1076.xml to /opt/***/dags/data/hr/BILLSTATUS-118hr1076.json
+[2024-04-09T04:46:31.746+0000] {logging_mixin.py:188} INFO - Converted /opt/***/dags/data/hr/BILLSTATUS-118hr2796.xml to /opt/***/dags/data/hr/BILLSTATUS-118hr2796.json
+[2024-04-09T04:46:31.910+0000] {logging_mixin.py:188} INFO - Converted /opt/***/dags/data/hr/BILLSTATUS-118hr2812.xml to /opt/***/dags/data/hr/BILLSTATUS-118hr2812.json
+[2024-04-09T04:46:32.058+0000] {logging_mixin.py:188} INFO - Converted /opt/***/dags/data/hr/BILLSTATUS-118hr6679.xml to /opt/***/dags/data/hr/BILLSTATUS-118hr6679.json
+[2024-04-09T04:46:32.080+0000] {logging_mixin.py:188} INFO - Converted /opt/***/dags/data/hr/BILLSTATUS-118hr2379.xml to /opt/***/dags/data/hr/BILLSTATUS-118hr2379.json
+[2024-04-09T04:46:32.141+0000] {logging_mixin.py:188} INFO - Converted /opt/***/dags/data/hr/BILLSTATUS-118hr3099.xml to /opt/***/dags/data/hr/BILLSTATUS-118hr3099.json
+[2024-04-09T04:46:32.166+0000] {logging_mixin.py:188} INFO - Converted /opt/***/dags/data/hr/BILLSTATUS-118hr6678.xml to /opt/***/dags/data/hr/BILLSTATUS-118hr6678.json
+[2024-04-09T04:46:32.425+0000] {logging_mixin.py:188} INFO - Converted /opt/***/dags/data/hr/BILLSTATUS-118hr2797.xml to /opt/***/dags/data/hr/BILLSTATUS-118hr2797.json
+[2024-04-09T04:46:32.449+0000] {logging_mixin.py:188} INFO - Converted /opt/***/dags/data/hr/BILLSTATUS-118hr7176.xml to /opt/***/dags/data/hr/BILLSTATUS-118hr7176.json
+[2024-04-09T04:46:32.517+0000] {logging_mixin.py:188} INFO - Converted /opt/***/dags/data/hr/BILLSTATUS-118hr2754.xml to /opt/***/dags/data/hr/BILLSTATUS-118hr2754.json
+[2024-04-09T04:46:32.911+0000] {logging_mixin.py:188} INFO - Converted /opt/***/dags/data/hr/BILLSTATUS-118hr2795.xml to /opt/***/dags/data/hr/BILLSTATUS-118hr2795.json
+[2024-04-09T04:46:33.086+0000] {logging_mixin.py:188} INFO - Converted /opt/***/dags/data/hr/BILLSTATUS-118hr2811.xml to /opt/***/dags/data/hr/BILLSTATUS-118hr2811.json
+[2024-04-09T04:46:33.140+0000] {logging_mixin.py:188} INFO - Converted /opt/***/dags/data/hr/BILLSTATUS-118hr4723.xml to /opt/***/dags/data/hr/BILLSTATUS-118hr4723.json
+[2024-04-09T04:46:33.303+0000] {logging_mixin.py:188} INFO - Converted /opt/***/dags/data/hr/BILLSTATUS-118hr7217.xml to /opt/***/dags/data/hr/BILLSTATUS-118hr7217.json
+[2024-04-09T04:46:33.526+0000] {logging_mixin.py:188} INFO - Converted /opt/***/dags/data/hr/BILLSTATUS-118hr4468.xml to /opt/***/dags/data/hr/BILLSTATUS-118hr4468.json
+[2024-04-09T04:46:33.618+0000] {logging_mixin.py:188} INFO - Converted /opt/***/dags/data/hr/BILLSTATUS-118hr6914.xml to /opt/***/dags/data/hr/BILLSTATUS-118hr6914.json
+[2024-04-09T04:46:33.713+0000] {logging_mixin.py:188} INFO - Converted /opt/***/dags/data/hr/BILLSTATUS-118hr406.xml to /opt/***/dags/data/hr/BILLSTATUS-118hr406.json
+[2024-04-09T04:46:33.761+0000] {logging_mixin.py:188} INFO - Converted /opt/***/dags/data/sjres/BILLSTATUS-118sjres23.xml to /opt/***/dags/data/sjres/BILLSTATUS-118sjres23.json
+[2024-04-09T04:46:33.784+0000] {logging_mixin.py:188} INFO - Converted /opt/***/dags/data/sjres/BILLSTATUS-118sjres18.xml to /opt/***/dags/data/sjres/BILLSTATUS-118sjres18.json
+[2024-04-09T04:46:33.792+0000] {logging_mixin.py:188} INFO - Converted /opt/***/dags/data/sjres/BILLSTATUS-118sjres24.xml to /opt/***/dags/data/sjres/BILLSTATUS-118sjres24.json
+[2024-04-09T04:46:33.799+0000] {logging_mixin.py:188} INFO - Converted /opt/***/dags/data/sjres/BILLSTATUS-118sjres32.xml to /opt/***/dags/data/sjres/BILLSTATUS-118sjres32.json
+[2024-04-09T04:46:33.810+0000] {logging_mixin.py:188} INFO - Converted /opt/***/dags/data/sjres/BILLSTATUS-118sjres9.xml to /opt/***/dags/data/sjres/BILLSTATUS-118sjres9.json
+[2024-04-09T04:46:33.822+0000] {logging_mixin.py:188} INFO - Converted /opt/***/dags/data/sjres/BILLSTATUS-118sjres43.xml to /opt/***/dags/data/sjres/BILLSTATUS-118sjres43.json
+[2024-04-09T04:46:33.830+0000] {logging_mixin.py:188} INFO - Converted /opt/***/dags/data/sjres/BILLSTATUS-118sjres42.xml to /opt/***/dags/data/sjres/BILLSTATUS-118sjres42.json
+[2024-04-09T04:46:33.840+0000] {taskinstance.py:2731} ERROR - Task failed with exception
+Traceback (most recent call last):
+  File "/opt/airflow/dags/scripts/python/xmlConvert.py", line 27, in convert_folder_xml_to_newline_json
+    json_data = enforce_schema(json_data=json_data['billStatus'])
+                ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/opt/airflow/dags/scripts/python/xmlConvert.py", line 97, in enforce_schema
+    "item": [subject_dict(subject) for subject in ensure_list(json_data.get("bill", {}).get("subjects", {}).get("legislativeSubjects", {}).get("item", []))]
+                                                              ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+AttributeError: 'NoneType' object has no attribute 'get'
+
+During handling of the above exception, another exception occurred:
+
+Traceback (most recent call last):
+  File "/home/airflow/.local/lib/python3.11/site-packages/airflow/models/taskinstance.py", line 444, in _execute_task
+    result = _execute_callable(context=context, **execute_callable_kwargs)
+             ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/airflow/.local/lib/python3.11/site-packages/airflow/models/taskinstance.py", line 414, in _execute_callable
+    return execute_callable(context=context, **execute_callable_kwargs)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/airflow/.local/lib/python3.11/site-packages/airflow/operators/python.py", line 200, in execute
+    return_value = self.execute_callable()
+                   ^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/airflow/.local/lib/python3.11/site-packages/airflow/operators/python.py", line 217, in execute_callable
+    return self.python_callable(*self.op_args, **self.op_kwargs)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/opt/airflow/dags/scripts/python/xmlConvert.py", line 41, in convert_folder_xml_to_newline_json
+    raise Exception(f'failed to convert data for {xml_file}')
+Exception: failed to convert data for /opt/***/dags/data/sjres/BILLSTATUS-118sjres51.xml
+[2024-04-09T04:46:33.860+0000] {taskinstance.py:1149} INFO - Marking task as FAILED. dag_id=upload_congress_data, task_id=convert_bill_files, execution_date=20240409T044121, start_date=20240409T044600, end_date=20240409T044633
+[2024-04-09T04:46:33.877+0000] {standard_task_runner.py:107} ERROR - Failed to execute job 8 for task convert_bill_files (failed to convert data for /opt/***/dags/data/sjres/BILLSTATUS-118sjres51.xml; 536)
+[2024-04-09T04:46:33.905+0000] {local_task_job_runner.py:234} INFO - Task exited with return code 1
+[2024-04-09T04:46:33.961+0000] {taskinstance.py:3312} INFO - 0 downstream tasks scheduled from follow-on schedule check

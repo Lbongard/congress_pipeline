@@ -67,7 +67,12 @@ class ActionSchema:
 class TermsItem:
     chamber: str
     start_year: int
-    end_year: int
+    end_year: Optional[int]=None
+
+@dataclass
+class DepictionItem:
+    attribution: Optional[str]=None
+    imageUrl: Optional[str]=None
 
 @dataclass
 class MemberSchema:
@@ -100,19 +105,12 @@ class RequestInfo:
 class ApiResponse:
     pagination: PaginationInfo
     request: RequestInfo
-    bills: Optional[List[BillSchema]]=None
-    actions: Optional[List[ActionSchema]]=None
     members: Optional[List[MemberSchema]]=None
 
     def __post_init__(self):
         self.pagination = PaginationInfo(**self.pagination)
         self.request = RequestInfo(**self.request)
-        if self.bills:
-            self.bills = [BillSchema(**bill) for bill in self.bills]
-        if self.actions:
-            self.actions = [ActionSchema(**action) for action in self.actions]
-        if self.members:
-            self.members = [MemberSchema(**member) for member in self.members]
+        self.members = [MemberSchema(**member) for member in self.members]
 
 def get_votes_for_saved_bills(local_folder_path, save_folder):
     # Iterate over files in the local folder
@@ -240,24 +238,22 @@ def get_votes(bill_json, save_folder):
 
 
 
-def get_and_upload_data(params, data_type):
+def get_members(params, save_folder):
 
     load_dotenv()
     api_key = os.getenv('congress_api_key')
+    if os.path.exists(save_folder):
+            shutil.rmtree(save_folder)
+    os.makedirs(save_folder)
+
     limit = params.get('limit', None)
     max_records = params.get('max_records', None)
     logging.info(f'Max records passed as {max_records}')
-
-    # For referencing the object within the api response. 
-    if data_type == 'member':
-        attr_name = 'members'
-    else:
-        attr_name = data_type
     
     if not limit:
         logging.error('No record limit provided for pagination')
     
-    record_count = get_record_count(params=params, data_type=data_type)
+    record_count = get_member_record_count(params=params)
     records_to_fetch = max_records if max_records else record_count
     logging.info(f'About to start fetching {records_to_fetch} records')
     
@@ -265,50 +261,20 @@ def get_and_upload_data(params, data_type):
         
         params['offset'] = i
         
-        data = get_api_response(params,
-                                 data_type)
+        data = get_members_api_call(params)
 
-        file_name = f'{data_type}/{i+1}_{i+len(getattr(data, attr_name))}_{data_type}.parquet'
+        members_df = pd.DataFrame(data.members)
 
-        upload_to_gcs_as_parquet(obj_list=data,
-                                 bucket_name='congress_data',
-                                 file_name=file_name,
-                                 data_type=data_type)
+        for i in members_df.index:
+            bio_guide_id = members_df.loc[i]['bioguideId']
+            members_df.loc[i].to_json(f'{save_folder}/member_{bio_guide_id}.json')
+
+
+        print(f'{i+len(data.members)} of {records_to_fetch} member records saved')
+
+def get_member_record_count(params):
         
-        print(f'{i+len(getattr(data, attr_name))} of {records_to_fetch} {data_type} records uploaded')
-
-            
-            # try:    
-            #     for index, row in actions_df.iterrows():
-            #         if row.recordedVotes.isna() == False:
-            #             for vote in row.recordedVotes:
-            #                 pass
-            # except:
-            #         pass
-            # {'chamber': 'House', 'congress': 118, 'date': '2024-03-12T21:13:39Z', 'rollNumber': 84, 'sessionNumber': 1, 'url': 'https://clerk.house.gov/evs/2024/roll84.xml'}
-                            
-
-            #         record_count = get_record_count(params=actions_params, data_type='actions')
-
-            #         for i in range(0, record_count, limit):
-            #             actions_params['offset'] = i*limit
-            #             data = get_api_response(actions_params, 'actions')
-
-            #             file_name = f"actions/{actions_params['bill_type']}_{actions_params['bill_number']}_actions_{i*limit+1}_{i*limit+len(data.actions)}.parquet"
-
-            #             upload_to_gcs_as_parquet(obj_list=data,
-            #                      bucket_name='congress_data',
-            #                      file_name=file_name,
-            #                      data_type='actions')
-            #             print(f"Actions uploaded for bill {actions_params['bill_type']} {actions_params['bill_number']}")
-                        
-            # except:
-            #     logging.ERROR(f'Failed to upload all actions data for bills in file {file_name}')
-
-
-def get_record_count(params, data_type):
-        
-    api_response = get_api_response(params, data_type)
+    api_response = get_members_api_call(params)
     
     pag_info = api_response.pagination
     
@@ -316,25 +282,15 @@ def get_record_count(params, data_type):
 
     return record_count
 
-def get_api_response(params, data_type):
+def get_members_api_call(params):
         
     start_date  = params.get('start_date', None)
     end_date    = params.get('end_date', None)
     limit       = params.get('limit', None)
-    congress    = params.get('congress', None)
-    bill_type   = params.get('bill_type', None)
-    bill_number = params.get('bill_number', None)
     api_key     = params.get('api_key', None)
     offset      = params.get('offset', None)
 
-    if data_type == 'bills':
-        path = f'https://api.congress.gov/v3/bill?format=json&fromDateTime={start_date}&toDateTime={end_date}&offset={offset}&limit={limit}&congress={congress}&api_key={api_key}'
-    
-    elif data_type == 'member':
-        path = f'https://api.congress.gov/v3/member?format=json&fromDateTime={start_date}&toDateTime={end_date}&offset={offset}&limit={limit}&api_key={api_key}'
-
-    elif data_type == 'actions':
-        path = f'https://api.congress.gov/v3/bill/{congress}/{bill_type}/{bill_number}/actions?offset={offset}&limit={limit}&api_key={api_key}'
+    path = f'https://api.congress.gov/v3/member?format=json&fromDateTime={start_date}&toDateTime={end_date}&offset={offset}&limit={limit}&api_key={api_key}'
     
     logging.info(f'executing API call for {path}')
 
@@ -343,6 +299,27 @@ def get_api_response(params, data_type):
     api_response = ApiResponse(**response.json())
 
     return api_response
+
+
+
+
+# def get_member_api_response(params):
+        
+#     start_date  = params.get('start_date', None)
+#     end_date    = params.get('end_date', None)
+#     limit       = params.get('limit', None)
+#     api_key     = params.get('api_key', None)
+#     offset      = params.get('offset', None)
+
+#     path = f'https://api.congress.gov/v3/member?format=json&fromDateTime={start_date}&toDateTime={end_date}&offset={offset}&limit={limit}&api_key={api_key}'
+    
+#     logging.info(f'executing API call for {path}')
+
+#     response = requests.get(path)
+
+#     api_response = ApiResponse(**response.json())
+
+#     return api_response
 
 
 def upload_to_gcs_as_parquet(obj_list, bucket_name, file_name, data_type):

@@ -7,7 +7,7 @@ from airflow.providers.google.cloud.transfers.gcs_to_bigquery import GCSToBigQue
 from airflow.providers.google.cloud.operators.bigquery import BigQueryCreateExternalTableOperator, BigQueryInsertJobOperator
 from airflow import DAG
 
-from scripts.python.get_data import get_and_upload_data, get_bills_from_bq, upload_folder_to_gcs, get_votes_for_saved_bills
+from scripts.python.get_data import *
 from scripts.python.xmlConvert import convert_folder_xml_to_newline_json
 from schemas.external_schemas import *
 
@@ -19,11 +19,16 @@ load_dotenv()
 
 PROJECT_ID = os.getenv("GCP_PROJECT_ID")
 BIGQUERY_DATASET= 'Congress'
-data_types = ['bills', 'votes']
-# schemas = {'bills':bill_status_ddl,
-#            'votes':vote_schema}
-# date_cols = {'bills':bill_status_ddl,
-#            'votes':vote_schema}
+DATA_TYPES = {'bill_status':{'table_struct':bill_status_ddl,
+                             'date_col':'bill.introducedDate',
+                             'local_folder_path':'/opt/airflow/dags/data/bills'},
+              'votes':      {'table_struct':vote_ddl,
+                             'date_col':'vote.date',
+                             'local_folder_path':'/opt/airflow/dags/data/votes'},
+              'members':    {'table_struct':member_ddl,
+                             'date_col':'updateDate',
+                             'local_folder_path':'/opt/airflow/dags/data/members'}
+                             }
 
 # DAG definition
 default_args = {
@@ -83,7 +88,7 @@ get_bills = BashOperator(
     dag=dag
 )
 
-get_votes = PythonOperator(
+get_votes_from_bills = PythonOperator(
     task_id = 'get_votes_from_downloaded_bills',
     python_callable = get_votes_for_saved_bills,
     op_kwargs={'local_folder_path':'/opt/airflow/dags/data/bills',
@@ -96,43 +101,92 @@ convert_to_json = PythonOperator(
     op_kwargs={'folder':'/opt/airflow/dags/data/bills'}
 )
 
-upload_to_gcs = PythonOperator(
-    task_id = 'upload_bills_to_gcs',
-    python_callable=upload_folder_to_gcs,
-    op_kwargs={'local_folder_path':'/opt/airflow/dags/data/bills', 
-               'bucket_name':'congress_data', 
-               'destination_folder':'bills'}
+def format_end_date(**kwargs):
+    execution_date = kwargs['execution_date']
+    end_date = execution_date.strftime('%Y-%m-%dT00:00:00Z')
+
+    logging.info("Formatted execution date: %s", end_date)
+    return end_date
+
+params_members = {
+    'limit': 250,
+    'offset': 0,
+    # Beginning of 118th Congress
+    'start_date': "2023-01-01T00:00:00Z",
+    "end_date":"{{ task_instance.xcom_pull(task_ids='format_execution_date_task') }}",
+    'api_key': "WNue8kCDCOIlewAsULgnN8j6SqSgAZjE2sYbPsBb"
+}
+
+format_date_task = PythonOperator(
+    task_id='format_execution_date_task',
+    python_callable=format_end_date,
+    provide_context=True,
+    dag=dag
 )
 
-bigquery_external_table_task = BigQueryInsertJobOperator(
-        task_id=f"bq_create_bill_status_external_table_task",
+get_members_data = PythonOperator(
+    task_id = 'get_members_data',
+    python_callable=get_members,
+    op_kwargs= {'params':params_members,
+                'save_folder':'/opt/airflow/dags/data/members'},
+    dag=dag
+)
+
+
+for data_type in DATA_TYPES.keys():
+
+    upload_to_gcs = PythonOperator(
+    task_id = f'upload_{data_type}_to_gcs',
+    python_callable=upload_folder_to_gcs,
+    op_kwargs={'local_folder_path':DATA_TYPES[data_type]['local_folder_path'], 
+               'bucket_name':'congress_data', 
+               'destination_folder':f'{data_type}'}
+)
+    
+    bigquery_external_table_task = BigQueryInsertJobOperator(
+            task_id=f"bq_create_{data_type}_external_table_task",
+            configuration={
+                "query": {
+                    "query": DATA_TYPES[data_type]['table_struct'],
+                    "useLegacySql": False,
+                }
+            },
+            dag=dag  
+        )
+    
+    date_col = DATA_TYPES[data_type]['date_col']
+    new_date_col = date_col.split('.')[-1] + '_formatted'
+    
+    CREATE_BQ_TBL_QUERY = (
+        f"DROP TABLE IF EXISTS {BIGQUERY_DATASET}.{data_type}; \
+        CREATE TABLE {BIGQUERY_DATASET}.{data_type} \
+        PARTITION BY {new_date_col} \
+        AS \
+        SELECT *, DATE({date_col}) {new_date_col} \
+        FROM {BIGQUERY_DATASET}.{data_type}_external_table;"
+    )
+
+    bq_create_partitioned_table_job = BigQueryInsertJobOperator(
+        task_id=f"bq_create_{BIGQUERY_DATASET}_{data_type}_partitioned_table_task",
         configuration={
             "query": {
-                "query": bill_status_ddl,
+                "query": CREATE_BQ_TBL_QUERY,
                 "useLegacySql": False,
             }
         },
         dag=dag  
     )
+    
+    upload_to_gcs >> bigquery_external_table_task >> bq_create_partitioned_table_job
 
-CREATE_BQ_TBL_QUERY = (
-        f"CREATE OR REPLACE TABLE {BIGQUERY_DATASET}.bill_status \
-        PARTITION BY latestActionDate_formatted \
-        AS \
-        SELECT *, DATE(bill.latestAction.actionDate) latestActionDate_formatted \
-        FROM {BIGQUERY_DATASET}.bill_status_external_table;"
-    )
+    if data_type == 'bill_status':
+        upload_to_gcs.set_upstream(convert_to_json)
+    elif data_type == 'votes':
+        upload_to_gcs.set_upstream(get_votes_from_bills)
+    elif data_type == 'members':
+        upload_to_gcs.set_upstream(get_members_data)
 
-bq_create_partitioned_table_job = BigQueryInsertJobOperator(
-    task_id=f"bq_create_bills_{BIGQUERY_DATASET}_partitioned_table_task",
-    configuration={
-        "query": {
-            "query": CREATE_BQ_TBL_QUERY,
-            "useLegacySql": False,
-        }
-    },
-    dag=dag  
-)
+
 
 # bigquery_external_table_task = BigQueryCreateExternalTableOperator(
 #         task_id = "bill_status_external_table_task",
@@ -161,5 +215,9 @@ bq_create_partitioned_table_job = BigQueryInsertJobOperator(
 
 get_bills >> convert_to_json >> upload_to_gcs >> bigquery_external_table_task >> bq_create_partitioned_table_job
 
-convert_to_json >> get_votes
+convert_to_json >> get_votes_from_bills
+
+format_date_task >> get_members_data
+
+# convert_to_json.downstream_task_ids.remove('upload_members_to_gcs')
 

@@ -1,0 +1,5 @@
+[2024-04-12T17:31:25.106+0000] {processor.py:161} INFO - Started process (PID=3491) to work on /opt/airflow/dags/upload_historical_congress_data.py
+[2024-04-12T17:31:25.108+0000] {processor.py:830} INFO - Processing file /opt/airflow/dags/upload_historical_congress_data.py for tasks to queue
+[2024-04-12T17:31:25.111+0000] {logging_mixin.py:188} INFO - [2024-04-12T17:31:25.110+0000] {dagbag.py:540} INFO - Filling up the DagBag from /opt/airflow/dags/upload_historical_congress_data.py
+[2024-04-12T17:31:25.116+0000] {processor.py:842} WARNING - No viable dags retrieved from /opt/airflow/dags/upload_historical_congress_data.py
+[2024-04-12T17:31:25.131+0000] {processor.py:183} INFO - Processing /opt/airflow/dags/upload_historical_congress_data.py took 0.030 seconds

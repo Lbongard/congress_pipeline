@@ -1,0 +1,859 @@
+[2024-04-12T17:18:40.654+0000] {taskinstance.py:1979} INFO - Dependencies all met for dep_context=non-requeueable deps ti=<TaskInstance: upload_congress_data.download_bill_statuses manual__2024-04-12T17:14:18.064138+00:00 [queued]>
+[2024-04-12T17:18:40.675+0000] {taskinstance.py:1979} INFO - Dependencies all met for dep_context=requeueable deps ti=<TaskInstance: upload_congress_data.download_bill_statuses manual__2024-04-12T17:14:18.064138+00:00 [queued]>
+[2024-04-12T17:18:40.676+0000] {taskinstance.py:2193} INFO - Starting attempt 2 of 4
+[2024-04-12T17:18:40.696+0000] {taskinstance.py:2217} INFO - Executing <Task(BashOperator): download_bill_statuses> on 2024-04-12 17:14:18.064138+00:00
+[2024-04-12T17:18:40.715+0000] {standard_task_runner.py:60} INFO - Started process 2840 to run task
+[2024-04-12T17:18:40.728+0000] {standard_task_runner.py:87} INFO - Running: ['***', 'tasks', 'run', 'upload_congress_data', 'download_bill_statuses', 'manual__2024-04-12T17:14:18.064138+00:00', '--job-id', '84', '--raw', '--subdir', 'DAGS_FOLDER/upload_congress_data.py', '--cfg-path', '/tmp/tmpevnx_f7g']
+[2024-04-12T17:18:40.740+0000] {standard_task_runner.py:88} INFO - Job 84: Subtask download_bill_statuses
+[2024-04-12T17:18:40.860+0000] {task_command.py:423} INFO - Running <TaskInstance: upload_congress_data.download_bill_statuses manual__2024-04-12T17:14:18.064138+00:00 [running]> on host f0ccf278d1a7
+[2024-04-12T17:18:41.097+0000] {taskinstance.py:2513} INFO - Exporting env vars: AIRFLOW_CTX_DAG_EMAIL='***@***.com' AIRFLOW_CTX_DAG_OWNER='***' AIRFLOW_CTX_DAG_ID='upload_congress_data' AIRFLOW_CTX_TASK_ID='download_bill_statuses' AIRFLOW_CTX_EXECUTION_DATE='2024-04-12T17:14:18.064138+00:00' AIRFLOW_CTX_TRY_NUMBER='2' AIRFLOW_CTX_DAG_RUN_ID='manual__2024-04-12T17:14:18.064138+00:00'
+[2024-04-12T17:18:41.099+0000] {subprocess.py:63} INFO - Tmp dir root location: /tmp
+[2024-04-12T17:18:41.100+0000] {subprocess.py:75} INFO - Running command: ['/usr/bin/bash', '-c', 'rm -rf /opt/***/dags/data/bills/sres     && mkdir -p /opt/***/dags/data/bills/sres     && wget -P /opt/***/dags/data/bills/sres "https://www.govinfo.gov/bulkdata/BILLSTATUS/118/sres/BILLSTATUS-118-sres.zip"     && unzip /opt/***/dags/data/bills/sres/BILLSTATUS-118-sres.zip -d /opt/***/dags/data/bills/sres     && rm /opt/***/dags/data/bills/sres/BILLSTATUS-118-sres.zip     || echo "Failed to download or unzip https://www.govinfo.gov/bulkdata/BILLSTATUS/118/sres/BILLSTATUS-118-sres.zip" && rm -rf /opt/***/dags/data/bills/hr     && mkdir -p /opt/***/dags/data/bills/hr     && wget -P /opt/***/dags/data/bills/hr "https://www.govinfo.gov/bulkdata/BILLSTATUS/118/hr/BILLSTATUS-118-hr.zip"     && unzip /opt/***/dags/data/bills/hr/BILLSTATUS-118-hr.zip -d /opt/***/dags/data/bills/hr     && rm /opt/***/dags/data/bills/hr/BILLSTATUS-118-hr.zip     || echo "Failed to download or unzip https://www.govinfo.gov/bulkdata/BILLSTATUS/118/hr/BILLSTATUS-118-hr.zip" && rm -rf /opt/***/dags/data/bills/hconres     && mkdir -p /opt/***/dags/data/bills/hconres     && wget -P /opt/***/dags/data/bills/hconres "https://www.govinfo.gov/bulkdata/BILLSTATUS/118/hconres/BILLSTATUS-118-hconres.zip"     && unzip /opt/***/dags/data/bills/hconres/BILLSTATUS-118-hconres.zip -d /opt/***/dags/data/bills/hconres     && rm /opt/***/dags/data/bills/hconres/BILLSTATUS-118-hconres.zip     || echo "Failed to download or unzip https://www.govinfo.gov/bulkdata/BILLSTATUS/118/hconres/BILLSTATUS-118-hconres.zip" && rm -rf /opt/***/dags/data/bills/hjres     && mkdir -p /opt/***/dags/data/bills/hjres     && wget -P /opt/***/dags/data/bills/hjres "https://www.govinfo.gov/bulkdata/BILLSTATUS/118/hjres/BILLSTATUS-118-hjres.zip"     && unzip /opt/***/dags/data/bills/hjres/BILLSTATUS-118-hjres.zip -d /opt/***/dags/data/bills/hjres     && rm /opt/***/dags/data/bills/hjres/BILLSTATUS-118-hjres.zip     || echo "Failed to download or unzip https://www.govinfo.gov/bulkdata/BILLSTATUS/118/hjres/BILLSTATUS-118-hjres.zip" && rm -rf /opt/***/dags/data/bills/s     && mkdir -p /opt/***/dags/data/bills/s     && wget -P /opt/***/dags/data/bills/s "https://www.govinfo.gov/bulkdata/BILLSTATUS/118/s/BILLSTATUS-118-s.zip"     && unzip /opt/***/dags/data/bills/s/BILLSTATUS-118-s.zip -d /opt/***/dags/data/bills/s     && rm /opt/***/dags/data/bills/s/BILLSTATUS-118-s.zip     || echo "Failed to download or unzip https://www.govinfo.gov/bulkdata/BILLSTATUS/118/s/BILLSTATUS-118-s.zip" && rm -rf /opt/***/dags/data/bills/sjres     && mkdir -p /opt/***/dags/data/bills/sjres     && wget -P /opt/***/dags/data/bills/sjres "https://www.govinfo.gov/bulkdata/BILLSTATUS/118/sjres/BILLSTATUS-118-sjres.zip"     && unzip /opt/***/dags/data/bills/sjres/BILLSTATUS-118-sjres.zip -d /opt/***/dags/data/bills/sjres     && rm /opt/***/dags/data/bills/sjres/BILLSTATUS-118-sjres.zip     || echo "Failed to download or unzip https://www.govinfo.gov/bulkdata/BILLSTATUS/118/sjres/BILLSTATUS-118-sjres.zip" && rm -rf /opt/***/dags/data/bills/sconres     && mkdir -p /opt/***/dags/data/bills/sconres     && wget -P /opt/***/dags/data/bills/sconres "https://www.govinfo.gov/bulkdata/BILLSTATUS/118/sconres/BILLSTATUS-118-sconres.zip"     && unzip /opt/***/dags/data/bills/sconres/BILLSTATUS-118-sconres.zip -d /opt/***/dags/data/bills/sconres     && rm /opt/***/dags/data/bills/sconres/BILLSTATUS-118-sconres.zip     || echo "Failed to download or unzip https://www.govinfo.gov/bulkdata/BILLSTATUS/118/sconres/BILLSTATUS-118-sconres.zip"']
+[2024-04-12T17:18:41.112+0000] {subprocess.py:86} INFO - Output:
+[2024-04-12T17:18:41.144+0000] {subprocess.py:93} INFO - --2024-04-12 17:18:41--  https://www.govinfo.gov/bulkdata/BILLSTATUS/118/sres/BILLSTATUS-118-sres.zip
+[2024-04-12T17:18:41.154+0000] {subprocess.py:93} INFO - Resolving www.govinfo.gov (www.govinfo.gov)... 172.64.146.68, 104.18.41.188, 2606:4700:4400::6812:29bc, ...
+[2024-04-12T17:18:41.169+0000] {subprocess.py:93} INFO - Connecting to www.govinfo.gov (www.govinfo.gov)|172.64.146.68|:443... connected.
+[2024-04-12T17:18:41.633+0000] {subprocess.py:93} INFO - HTTP request sent, awaiting response... 200 OK
+[2024-04-12T17:18:41.636+0000] {subprocess.py:93} INFO - Length: 1464451 (1.4M) [application/zip]
+[2024-04-12T17:18:41.637+0000] {subprocess.py:93} INFO - Saving to: ‘/opt/***/dags/data/bills/sres/BILLSTATUS-118-sres.zip’
+[2024-04-12T17:18:41.637+0000] {subprocess.py:93} INFO - 
+[2024-04-12T17:18:41.947+0000] {subprocess.py:93} INFO -      0K .......... .......... .......... .......... ..........  3%  161K 9s
+[2024-04-12T17:18:42.017+0000] {subprocess.py:93} INFO -     50K .......... .......... .......... .......... ..........  6%  708K 5s
+[2024-04-12T17:18:42.099+0000] {subprocess.py:93} INFO -    100K .......... .......... .......... .......... .......... 10%  618K 4s
+[2024-04-12T17:18:42.163+0000] {subprocess.py:93} INFO -    150K .......... .......... .......... .......... .......... 13%  773K 3s
+[2024-04-12T17:18:42.239+0000] {subprocess.py:93} INFO -    200K .......... .......... .......... .......... .......... 17%  655K 3s
+[2024-04-12T17:18:42.330+0000] {subprocess.py:93} INFO -    250K .......... .......... .......... .......... .......... 20%  566K 3s
+[2024-04-12T17:18:42.334+0000] {subprocess.py:93} INFO -    300K .......... .......... .......... .......... .......... 24% 8.30M 2s
+[2024-04-12T17:18:42.412+0000] {subprocess.py:93} INFO -    350K .......... .......... .......... .......... .......... 27%  636K 2s
+[2024-04-12T17:18:42.564+0000] {subprocess.py:93} INFO -    400K .......... .......... .......... .......... .......... 31%  331K 2s
+[2024-04-12T17:18:42.907+0000] {subprocess.py:93} INFO -    450K .......... .......... .......... .......... .......... 34%  145K 2s
+[2024-04-12T17:18:43.123+0000] {subprocess.py:93} INFO -    500K .......... .......... .......... .......... .......... 38%  240K 2s
+[2024-04-12T17:18:43.185+0000] {subprocess.py:93} INFO -    550K .......... .......... .......... .......... .......... 41%  718K 2s
+[2024-04-12T17:18:43.327+0000] {subprocess.py:93} INFO -    600K .......... .......... .......... .......... .......... 45%  354K 2s
+[2024-04-12T17:18:43.398+0000] {subprocess.py:93} INFO -    650K .......... .......... .......... .......... .......... 48%  708K 2s
+[2024-04-12T17:18:43.675+0000] {subprocess.py:93} INFO -    700K .......... .......... .......... .......... .......... 52%  238K 2s
+[2024-04-12T17:18:43.822+0000] {subprocess.py:93} INFO -    750K .......... .......... .......... .......... .......... 55%  233K 2s
+[2024-04-12T17:18:43.959+0000] {subprocess.py:93} INFO -    800K .......... .......... .......... .......... .......... 59%  367K 2s
+[2024-04-12T17:18:44.112+0000] {subprocess.py:93} INFO -    850K .......... .......... .......... .......... .......... 62%  325K 1s
+[2024-04-12T17:18:44.237+0000] {subprocess.py:93} INFO -    900K .......... .......... .......... .......... .......... 66%  399K 1s
+[2024-04-12T17:18:44.376+0000] {subprocess.py:93} INFO -    950K .......... .......... .......... .......... .......... 69%  362K 1s
+[2024-04-12T17:18:44.445+0000] {subprocess.py:93} INFO -   1000K .......... .......... .......... .......... .......... 73%  717K 1s
+[2024-04-12T17:18:44.603+0000] {subprocess.py:93} INFO -   1050K .......... .......... .......... .......... .......... 76%  316K 1s
+[2024-04-12T17:18:44.694+0000] {subprocess.py:93} INFO -   1100K .......... .......... .......... .......... .......... 80%  550K 1s
+[2024-04-12T17:18:44.783+0000] {subprocess.py:93} INFO -   1150K .......... .......... .......... .......... .......... 83%  566K 1s
+[2024-04-12T17:18:44.925+0000] {subprocess.py:93} INFO -   1200K .......... .......... .......... .......... .......... 87%  352K 0s
+[2024-04-12T17:18:44.988+0000] {subprocess.py:93} INFO -   1250K .......... .......... .......... .......... .......... 90% 20.1M 0s
+[2024-04-12T17:18:45.062+0000] {subprocess.py:93} INFO -   1300K .......... .......... .......... .......... .......... 94%  371K 0s
+[2024-04-12T17:18:45.129+0000] {subprocess.py:93} INFO -   1350K .......... .......... .......... .......... .......... 97%  738K 0s
+[2024-04-12T17:18:45.131+0000] {subprocess.py:93} INFO -   1400K .......... .......... ..........                      100% 13.8M=3.5s
+[2024-04-12T17:18:45.133+0000] {subprocess.py:93} INFO - 
+[2024-04-12T17:18:45.134+0000] {subprocess.py:93} INFO - 2024-04-12 17:18:45 (409 KB/s) - ‘/opt/***/dags/data/bills/sres/BILLSTATUS-118-sres.zip’ saved [1464451/1464451]
+[2024-04-12T17:18:45.137+0000] {subprocess.py:93} INFO - 
+[2024-04-12T17:18:45.138+0000] {subprocess.py:93} INFO - Archive:  /opt/***/dags/data/bills/sres/BILLSTATUS-118-sres.zip
+[2024-04-12T17:18:45.144+0000] {subprocess.py:93} INFO -   inflating: /opt/***/dags/data/bills/sres/BILLSTATUS-118sres3.xml
+[2024-04-12T17:18:45.149+0000] {subprocess.py:93} INFO -   inflating: /opt/***/dags/data/bills/sres/BILLSTATUS-118sres10.xml
+[2024-04-12T17:18:45.155+0000] {subprocess.py:93} INFO -   inflating: /opt/***/dags/data/bills/sres/BILLSTATUS-118sres15.xml
+[2024-04-12T17:18:45.167+0000] {subprocess.py:93} INFO -   inflating: /opt/***/dags/data/bills/sres/BILLSTATUS-118sres2.xml
+[2024-04-12T17:18:45.177+0000] {subprocess.py:93} INFO -   inflating: /opt/***/dags/data/bills/sres/BILLSTATUS-118sres1.xml
+[2024-04-12T17:18:45.181+0000] {subprocess.py:93} INFO -   inflating: /opt/***/dags/data/bills/sres/BILLSTATUS-118sres30.xml
+[2024-04-12T17:18:45.192+0000] {subprocess.py:93} INFO -   inflating: /opt/***/dags/data/bills/sres/BILLSTATUS-118sres89.xml
+[2024-04-12T17:18:45.196+0000] {subprocess.py:93} INFO -   inflating: /opt/***/dags/data/bills/sres/BILLSTATUS-118sres7.xml
+[2024-04-12T17:18:45.200+0000] {subprocess.py:93} INFO -   inflating: /opt/***/dags/data/bills/sres/BILLSTATUS-118sres6.xml
+[2024-04-12T17:18:45.204+0000] {subprocess.py:93} INFO -   inflating: /opt/***/dags/data/bills/sres/BILLSTATUS-118sres20.xml
+[2024-04-12T17:18:45.206+0000] {subprocess.py:93} INFO -   inflating: /opt/***/dags/data/bills/sres/BILLSTATUS-118sres14.xml
+[2024-04-12T17:18:45.209+0000] {subprocess.py:93} INFO -   inflating: /opt/***/dags/data/bills/sres/BILLSTATUS-118sres22.xml
+[2024-04-12T17:18:45.213+0000] {subprocess.py:93} INFO -   inflating: /opt/***/dags/data/bills/sres/BILLSTATUS-118sres13.xml
+[2024-04-12T17:18:45.217+0000] {subprocess.py:93} INFO -   inflating: /opt/***/dags/data/bills/sres/BILLSTATUS-118sres35.xml
+[2024-04-12T17:18:45.219+0000] {subprocess.py:93} INFO -   inflating: /opt/***/dags/data/bills/sres/BILLSTATUS-118sres21.xml
+[2024-04-12T17:18:45.222+0000] {subprocess.py:93} INFO -   inflating: /opt/***/dags/data/bills/sres/BILLSTATUS-118sres28.xml
+[2024-04-12T17:18:45.225+0000] {subprocess.py:93} INFO -   inflating: /opt/***/dags/data/bills/sres/BILLSTATUS-118sres12.xml
+[2024-04-12T17:18:45.228+0000] {subprocess.py:93} INFO -   inflating: /opt/***/dags/data/bills/sres/BILLSTATUS-118sres25.xml
+[2024-04-12T17:18:45.234+0000] {subprocess.py:93} INFO -   inflating: /opt/***/dags/data/bills/sres/BILLSTATUS-118sres18.xml
+[2024-04-12T17:18:45.243+0000] {subprocess.py:93} INFO -   inflating: /opt/***/dags/data/bills/sres/BILLSTATUS-118sres9.xml
+[2024-04-12T17:18:45.246+0000] {subprocess.py:93} INFO -   inflating: /opt/***/dags/data/bills/sres/BILLSTATUS-118sres23.xml
+[2024-04-12T17:18:45.257+0000] {subprocess.py:93} INFO -   inflating: /opt/***/dags/data/bills/sres/BILLSTATUS-118sres27.xml
+[2024-04-12T17:18:45.266+0000] {subprocess.py:93} INFO -   inflating: /opt/***/dags/data/bills/sres/BILLSTATUS-118sres24.xml
+[2024-04-12T17:18:45.280+0000] {subprocess.py:93} INFO -   inflating: /opt/***/dags/data/bills/sres/BILLSTATUS-118sres11.xml
+[2024-04-12T17:18:45.288+0000] {subprocess.py:93} INFO -   inflating: /opt/***/dags/data/bills/sres/BILLSTATUS-118sres43.xml
+[2024-04-12T17:18:45.292+0000] {subprocess.py:93} INFO -   inflating: /opt/***/dags/data/bills/sres/BILLSTATUS-118sres57.xml
+[2024-04-12T17:18:45.298+0000] {subprocess.py:93} INFO -   inflating: /opt/***/dags/data/bills/sres/BILLSTATUS-118sres38.xml
+[2024-04-12T17:18:45.307+0000] {subprocess.py:93} INFO -   inflating: /opt/***/dags/data/bills/sres/BILLSTATUS-118sres19.xml
+[2024-04-12T17:18:45.315+0000] {subprocess.py:93} INFO -   inflating: /opt/***/dags/data/bills/sres/BILLSTATUS-118sres32.xml
+[2024-04-12T17:18:45.321+0000] {subprocess.py:93} INFO -   inflating: /opt/***/dags/data/bills/sres/BILLSTATUS-118sres39.xml
+[2024-04-12T17:18:45.326+0000] {subprocess.py:93} INFO -   inflating: /opt/***/dags/data/bills/sres/BILLSTATUS-118sres31.xml
+[2024-04-12T17:18:45.331+0000] {subprocess.py:93} INFO -   inflating: /opt/***/dags/data/bills/sres/BILLSTATUS-118sres56.xml
+[2024-04-12T17:18:45.344+0000] {subprocess.py:93} INFO -   inflating: /opt/***/dags/data/bills/sres/BILLSTATUS-118sres52.xml
+[2024-04-12T17:18:45.349+0000] {subprocess.py:93} INFO -   inflating: /opt/***/dags/data/bills/sres/BILLSTATUS-118sres36.xml
+[2024-04-12T17:18:45.359+0000] {subprocess.py:93} INFO -   inflating: /opt/***/dags/data/bills/sres/BILLSTATUS-118sres55.xml
+[2024-04-12T17:18:45.363+0000] {subprocess.py:93} INFO -   inflating: /opt/***/dags/data/bills/sres/BILLSTATUS-118sres45.xml
+[2024-04-12T17:18:45.374+0000] {subprocess.py:93} INFO -   inflating: /opt/***/dags/data/bills/sres/BILLSTATUS-118sres41.xml
+[2024-04-12T17:18:45.378+0000] {subprocess.py:93} INFO -   inflating: /opt/***/dags/data/bills/sres/BILLSTATUS-118sres44.xml
+[2024-04-12T17:18:45.387+0000] {subprocess.py:93} INFO -   inflating: /opt/***/dags/data/bills/sres/BILLSTATUS-118sres63.xml
+[2024-04-12T17:18:45.391+0000] {subprocess.py:93} INFO -   inflating: /opt/***/dags/data/bills/sres/BILLSTATUS-118sres50.xml
+[2024-04-12T17:18:45.395+0000] {subprocess.py:93} INFO -   inflating: /opt/***/dags/data/bills/sres/BILLSTATUS-118sres42.xml
+[2024-04-12T17:18:45.399+0000] {subprocess.py:93} INFO -   inflating: /opt/***/dags/data/bills/sres/BILLSTATUS-118sres53.xml
+[2024-04-12T17:18:45.408+0000] {subprocess.py:93} INFO -   inflating: /opt/***/dags/data/bills/sres/BILLSTATUS-118sres54.xml
+[2024-04-12T17:18:45.410+0000] {subprocess.py:93} INFO -   inflating: /opt/***/dags/data/bills/sres/BILLSTATUS-118sres47.xml
+[2024-04-12T17:18:45.412+0000] {subprocess.py:93} INFO -   inflating: /opt/***/dags/data/bills/sres/BILLSTATUS-118sres46.xml
+[2024-04-12T17:18:45.414+0000] {subprocess.py:93} INFO -   inflating: /opt/***/dags/data/bills/sres/BILLSTATUS-118sres61.xml
+[2024-04-12T17:18:45.416+0000] {subprocess.py:93} INFO -   inflating: /opt/***/dags/data/bills/sres/BILLSTATUS-118sres33.xml
+[2024-04-12T17:18:45.425+0000] {subprocess.py:93} INFO -   inflating: /opt/***/dags/data/bills/sres/BILLSTATUS-118sres49.xml
+[2024-04-12T17:18:45.429+0000] {subprocess.py:93} INFO -   inflating: /opt/***/dags/data/bills/sres/BILLSTATUS-118sres51.xml
+[2024-04-12T17:18:45.432+0000] {subprocess.py:93} INFO -   inflating: /opt/***/dags/data/bills/sres/BILLSTATUS-118sres142.xml
+[2024-04-12T17:18:45.435+0000] {subprocess.py:93} INFO -   inflating: /opt/***/dags/data/bills/sres/BILLSTATUS-118sres75.xml
+[2024-04-12T17:18:45.440+0000] {subprocess.py:93} INFO -   inflating: /opt/***/dags/data/bills/sres/BILLSTATUS-118sres189.xml
+[2024-04-12T17:18:45.444+0000] {subprocess.py:93} INFO -   inflating: /opt/***/dags/data/bills/sres/BILLSTATUS-118sres104.xml
+[2024-04-12T17:18:45.455+0000] {subprocess.py:93} INFO -   inflating: /opt/***/dags/data/bills/sres/BILLSTATUS-118sres127.xml
+[2024-04-12T17:18:45.472+0000] {subprocess.py:93} INFO -   inflating: /opt/***/dags/data/bills/sres/BILLSTATUS-118sres339.xml
+[2024-04-12T17:18:45.483+0000] {subprocess.py:93} INFO -   inflating: /opt/***/dags/data/bills/sres/BILLSTATUS-118sres159.xml
+[2024-04-12T17:18:45.491+0000] {subprocess.py:93} INFO -   inflating: /opt/***/dags/data/bills/sres/BILLSTATUS-118sres101.xml
+[2024-04-12T17:18:45.499+0000] {subprocess.py:93} INFO -   inflating: /opt/***/dags/data/bills/sres/BILLSTATUS-118sres125.xml
+[2024-04-12T17:18:45.524+0000] {subprocess.py:93} INFO -   inflating: /opt/***/dags/data/bills/sres/BILLSTATUS-118sres103.xml
+[2024-04-12T17:18:45.531+0000] {subprocess.py:93} INFO -   inflating: /opt/***/dags/data/bills/sres/BILLSTATUS-118sres368.xml
+[2024-04-12T17:18:45.539+0000] {subprocess.py:93} INFO -   inflating: /opt/***/dags/data/bills/sres/BILLSTATUS-118sres178.xml
+[2024-04-12T17:18:45.544+0000] {subprocess.py:93} INFO -   inflating: /opt/***/dags/data/bills/sres/BILLSTATUS-118sres114.xml
+[2024-04-12T17:18:45.551+0000] {subprocess.py:93} INFO -   inflating: /opt/***/dags/data/bills/sres/BILLSTATUS-118sres108.xml
+[2024-04-12T17:18:45.565+0000] {subprocess.py:93} INFO -   inflating: /opt/***/dags/data/bills/sres/BILLSTATUS-118sres121.xml
+[2024-04-12T17:18:45.575+0000] {subprocess.py:93} INFO -   inflating: /opt/***/dags/data/bills/sres/BILLSTATUS-118sres102.xml
+[2024-04-12T17:18:45.582+0000] {subprocess.py:93} INFO -   inflating: /opt/***/dags/data/bills/sres/BILLSTATUS-118sres87.xml
+[2024-04-12T17:18:45.590+0000] {subprocess.py:93} INFO -   inflating: /opt/***/dags/data/bills/sres/BILLSTATUS-118sres208.xml
+[2024-04-12T17:18:45.595+0000] {subprocess.py:93} INFO -   inflating: /opt/***/dags/data/bills/sres/BILLSTATUS-118sres84.xml
+[2024-04-12T17:18:45.597+0000] {subprocess.py:93} INFO -   inflating: /opt/***/dags/data/bills/sres/BILLSTATUS-118sres26.xml
+[2024-04-12T17:18:45.601+0000] {subprocess.py:93} INFO -   inflating: /opt/***/dags/data/bills/sres/BILLSTATUS-118sres181.xml
+[2024-04-12T17:18:45.604+0000] {subprocess.py:93} INFO -   inflating: /opt/***/dags/data/bills/sres/BILLSTATUS-118sres387.xml
+[2024-04-12T17:18:45.608+0000] {subprocess.py:93} INFO -   inflating: /opt/***/dags/data/bills/sres/BILLSTATUS-118sres248.xml
+[2024-04-12T17:18:45.611+0000] {subprocess.py:93} INFO -   inflating: /opt/***/dags/data/bills/sres/BILLSTATUS-118sres252.xml
+[2024-04-12T17:18:45.614+0000] {subprocess.py:93} INFO -   inflating: /opt/***/dags/data/bills/sres/BILLSTATUS-118sres451.xml
+[2024-04-12T17:18:45.617+0000] {subprocess.py:93} INFO -   inflating: /opt/***/dags/data/bills/sres/BILLSTATUS-118sres424.xml
+[2024-04-12T17:18:45.619+0000] {subprocess.py:93} INFO -   inflating: /opt/***/dags/data/bills/sres/BILLSTATUS-118sres68.xml
+[2024-04-12T17:18:45.623+0000] {subprocess.py:93} INFO -   inflating: /opt/***/dags/data/bills/sres/BILLSTATUS-118sres495.xml
+[2024-04-12T17:18:45.627+0000] {subprocess.py:93} INFO -   inflating: /opt/***/dags/data/bills/sres/BILLSTATUS-118sres140.xml
+[2024-04-12T17:18:45.629+0000] {subprocess.py:93} INFO -   inflating: /opt/***/dags/data/bills/sres/BILLSTATUS-118sres243.xml
+[2024-04-12T17:18:45.631+0000] {subprocess.py:93} INFO -   inflating: /opt/***/dags/data/bills/sres/BILLSTATUS-118sres93.xml
+[2024-04-12T17:18:45.634+0000] {subprocess.py:93} INFO -   inflating: /opt/***/dags/data/bills/sres/BILLSTATUS-118sres225.xml
+[2024-04-12T17:18:45.640+0000] {subprocess.py:93} INFO -   inflating: /opt/***/dags/data/bills/sres/BILLSTATUS-118sres498.xml
+[2024-04-12T17:18:45.643+0000] {subprocess.py:93} INFO -   inflating: /opt/***/dags/data/bills/sres/BILLSTATUS-118sres481.xml
+[2024-04-12T17:18:45.645+0000] {subprocess.py:93} INFO -   inflating: /opt/***/dags/data/bills/sres/BILLSTATUS-118sres287.xml
+[2024-04-12T17:18:45.647+0000] {subprocess.py:93} INFO -   inflating: /opt/***/dags/data/bills/sres/BILLSTATUS-118sres167.xml
+[2024-04-12T17:18:45.651+0000] {subprocess.py:93} INFO -   inflating: /opt/***/dags/data/bills/sres/BILLSTATUS-118sres154.xml
+[2024-04-12T17:18:45.658+0000] {subprocess.py:93} INFO -   inflating: /opt/***/dags/data/bills/sres/BILLSTATUS-118sres67.xml
+[2024-04-12T17:18:45.664+0000] {subprocess.py:93} INFO -   inflating: /opt/***/dags/data/bills/sres/BILLSTATUS-118sres150.xml
+[2024-04-12T17:18:45.673+0000] {subprocess.py:93} INFO -   inflating: /opt/***/dags/data/bills/sres/BILLSTATUS-118sres111.xml
+[2024-04-12T17:18:45.680+0000] {subprocess.py:93} INFO -   inflating: /opt/***/dags/data/bills/sres/BILLSTATUS-118sres509.xml
+[2024-04-12T17:18:45.692+0000] {subprocess.py:93} INFO -   inflating: /opt/***/dags/data/bills/sres/BILLSTATUS-118sres207.xml
+[2024-04-12T17:18:45.697+0000] {subprocess.py:93} INFO -   inflating: /opt/***/dags/data/bills/sres/BILLSTATUS-118sres525.xml
+[2024-04-12T17:18:45.700+0000] {subprocess.py:93} INFO -   inflating: /opt/***/dags/data/bills/sres/BILLSTATUS-118sres547.xml
+[2024-04-12T17:18:45.707+0000] {subprocess.py:93} INFO -   inflating: /opt/***/dags/data/bills/sres/BILLSTATUS-118sres100.xml
+[2024-04-12T17:18:45.711+0000] {subprocess.py:93} INFO -   inflating: /opt/***/dags/data/bills/sres/BILLSTATUS-118sres83.xml
+[2024-04-12T17:18:45.715+0000] {subprocess.py:93} INFO -   inflating: /opt/***/dags/data/bills/sres/BILLSTATUS-118sres80.xml
+[2024-04-12T17:18:45.723+0000] {subprocess.py:93} INFO -   inflating: /opt/***/dags/data/bills/sres/BILLSTATUS-118sres486.xml
+[2024-04-12T17:18:45.741+0000] {subprocess.py:93} INFO -   inflating: /opt/***/dags/data/bills/sres/BILLSTATUS-118sres361.xml
+[2024-04-12T17:18:45.746+0000] {subprocess.py:93} INFO -   inflating: /opt/***/dags/data/bills/sres/BILLSTATUS-118sres115.xml
+[2024-04-12T17:18:45.751+0000] {subprocess.py:93} INFO -   inflating: /opt/***/dags/data/bills/sres/BILLSTATUS-118sres71.xml
+[2024-04-12T17:18:45.762+0000] {subprocess.py:93} INFO -   inflating: /opt/***/dags/data/bills/sres/BILLSTATUS-118sres62.xml
+[2024-04-12T17:18:45.779+0000] {subprocess.py:93} INFO -   inflating: /opt/***/dags/data/bills/sres/BILLSTATUS-118sres157.xml
+[2024-04-12T17:18:45.801+0000] {subprocess.py:93} INFO -   inflating: /opt/***/dags/data/bills/sres/BILLSTATUS-118sres156.xml
+[2024-04-12T17:18:45.812+0000] {subprocess.py:93} INFO -   inflating: /opt/***/dags/data/bills/sres/BILLSTATUS-118sres229.xml
+[2024-04-12T17:18:45.817+0000] {subprocess.py:93} INFO -   inflating: /opt/***/dags/data/bills/sres/BILLSTATUS-118sres582.xml
+[2024-04-12T17:18:45.825+0000] {subprocess.py:93} INFO -   inflating: /opt/***/dags/data/bills/sres/BILLSTATUS-118sres91.xml
+[2024-04-12T17:18:45.829+0000] {subprocess.py:93} INFO -   inflating: /opt/***/dags/data/bills/sres/BILLSTATUS-118sres346.xml
+[2024-04-12T17:18:45.832+0000] {subprocess.py:93} INFO -   inflating: /opt/***/dags/data/bills/sres/BILLSTATUS-118sres390.xml
+[2024-04-12T17:18:45.848+0000] {subprocess.py:93} INFO -   inflating: /opt/***/dags/data/bills/sres/BILLSTATUS-118sres81.xml
+[2024-04-12T17:18:45.869+0000] {subprocess.py:93} INFO -   inflating: /opt/***/dags/data/bills/sres/BILLSTATUS-118sres136.xml
+[2024-04-12T17:18:45.873+0000] {subprocess.py:93} INFO -   inflating: /opt/***/dags/data/bills/sres/BILLSTATUS-118sres587.xml
+[2024-04-12T17:18:45.877+0000] {subprocess.py:93} INFO -   inflating: /opt/***/dags/data/bills/sres/BILLSTATUS-118sres135.xml
+[2024-04-12T17:18:45.895+0000] {subprocess.py:93} INFO -   inflating: /opt/***/dags/data/bills/sres/BILLSTATUS-118sres234.xml
+[2024-04-12T17:18:45.898+0000] {subprocess.py:93} INFO -   inflating: /opt/***/dags/data/bills/sres/BILLSTATUS-118sres465.xml
+[2024-04-12T17:18:45.912+0000] {subprocess.py:93} INFO -   inflating: /opt/***/dags/data/bills/sres/BILLSTATUS-118sres129.xml
+[2024-04-12T17:18:45.929+0000] {subprocess.py:93} INFO -   inflating: /opt/***/dags/data/bills/sres/BILLSTATUS-118sres155.xml
+[2024-04-12T17:18:45.937+0000] {subprocess.py:93} INFO -   inflating: /opt/***/dags/data/bills/sres/BILLSTATUS-118sres126.xml
+[2024-04-12T17:18:45.952+0000] {subprocess.py:93} INFO -   inflating: /opt/***/dags/data/bills/sres/BILLSTATUS-118sres118.xml
+[2024-04-12T17:18:45.967+0000] {subprocess.py:93} INFO -   inflating: /opt/***/dags/data/bills/sres/BILLSTATUS-118sres137.xml
+[2024-04-12T17:18:45.972+0000] {subprocess.py:93} INFO -   inflating: /opt/***/dags/data/bills/sres/BILLSTATUS-118sres78.xml
+[2024-04-12T17:18:45.975+0000] {subprocess.py:93} INFO -   inflating: /opt/***/dags/data/bills/sres/BILLSTATUS-118sres164.xml
+[2024-04-12T17:18:45.977+0000] {subprocess.py:93} INFO -   inflating: /opt/***/dags/data/bills/sres/BILLSTATUS-118sres151.xml
+[2024-04-12T17:18:45.982+0000] {subprocess.py:93} INFO -   inflating: /opt/***/dags/data/bills/sres/BILLSTATUS-118sres398.xml
+[2024-04-12T17:18:45.991+0000] {subprocess.py:93} INFO -   inflating: /opt/***/dags/data/bills/sres/BILLSTATUS-118sres94.xml
+[2024-04-12T17:18:46.006+0000] {subprocess.py:93} INFO -   inflating: /opt/***/dags/data/bills/sres/BILLSTATUS-118sres162.xml
+[2024-04-12T17:18:46.009+0000] {subprocess.py:93} INFO -   inflating: /opt/***/dags/data/bills/sres/BILLSTATUS-118sres497.xml
+[2024-04-12T17:18:46.012+0000] {subprocess.py:93} INFO -   inflating: /opt/***/dags/data/bills/sres/BILLSTATUS-118sres199.xml
+[2024-04-12T17:18:46.014+0000] {subprocess.py:93} INFO -   inflating: /opt/***/dags/data/bills/sres/BILLSTATUS-118sres124.xml
+[2024-04-12T17:18:46.017+0000] {subprocess.py:93} INFO -   inflating: /opt/***/dags/data/bills/sres/BILLSTATUS-118sres247.xml
+[2024-04-12T17:18:46.025+0000] {subprocess.py:93} INFO -   inflating: /opt/***/dags/data/bills/sres/BILLSTATUS-118sres223.xml
+[2024-04-12T17:18:46.059+0000] {subprocess.py:93} INFO -   inflating: /opt/***/dags/data/bills/sres/BILLSTATUS-118sres109.xml
+[2024-04-12T17:18:46.079+0000] {subprocess.py:93} INFO -   inflating: /opt/***/dags/data/bills/sres/BILLSTATUS-118sres384.xml
+[2024-04-12T17:18:46.094+0000] {subprocess.py:93} INFO -   inflating: /opt/***/dags/data/bills/sres/BILLSTATUS-118sres90.xml
+[2024-04-12T17:18:46.096+0000] {subprocess.py:93} INFO -   inflating: /opt/***/dags/data/bills/sres/BILLSTATUS-118sres527.xml
+[2024-04-12T17:18:46.099+0000] {subprocess.py:93} INFO -   inflating: /opt/***/dags/data/bills/sres/BILLSTATUS-118sres66.xml
+[2024-04-12T17:18:46.117+0000] {subprocess.py:93} INFO -   inflating: /opt/***/dags/data/bills/sres/BILLSTATUS-118sres574.xml
+[2024-04-12T17:18:46.158+0000] {subprocess.py:93} INFO -   inflating: /opt/***/dags/data/bills/sres/BILLSTATUS-118sres146.xml
+[2024-04-12T17:18:46.161+0000] {subprocess.py:93} INFO -   inflating: /opt/***/dags/data/bills/sres/BILLSTATUS-118sres201.xml
+[2024-04-12T17:18:46.177+0000] {subprocess.py:93} INFO -   inflating: /opt/***/dags/data/bills/sres/BILLSTATUS-118sres139.xml
+[2024-04-12T17:18:46.180+0000] {subprocess.py:93} INFO -   inflating: /opt/***/dags/data/bills/sres/BILLSTATUS-118sres144.xml
+[2024-04-12T17:18:46.183+0000] {subprocess.py:93} INFO -   inflating: /opt/***/dags/data/bills/sres/BILLSTATUS-118sres34.xml
+[2024-04-12T17:18:46.192+0000] {subprocess.py:93} INFO -   inflating: /opt/***/dags/data/bills/sres/BILLSTATUS-118sres143.xml
+[2024-04-12T17:18:46.194+0000] {subprocess.py:93} INFO -   inflating: /opt/***/dags/data/bills/sres/BILLSTATUS-118sres175.xml
+[2024-04-12T17:18:46.197+0000] {subprocess.py:93} INFO -   inflating: /opt/***/dags/data/bills/sres/BILLSTATUS-118sres147.xml
+[2024-04-12T17:18:46.199+0000] {subprocess.py:93} INFO -   inflating: /opt/***/dags/data/bills/sres/BILLSTATUS-118sres573.xml
+[2024-04-12T17:18:46.208+0000] {subprocess.py:93} INFO -   inflating: /opt/***/dags/data/bills/sres/BILLSTATUS-118sres145.xml
+[2024-04-12T17:18:46.211+0000] {subprocess.py:93} INFO -   inflating: /opt/***/dags/data/bills/sres/BILLSTATUS-118sres152.xml
+[2024-04-12T17:18:46.216+0000] {subprocess.py:93} INFO -   inflating: /opt/***/dags/data/bills/sres/BILLSTATUS-118sres452.xml
+[2024-04-12T17:18:46.236+0000] {subprocess.py:93} INFO -   inflating: /opt/***/dags/data/bills/sres/BILLSTATUS-118sres295.xml
+[2024-04-12T17:18:46.251+0000] {subprocess.py:93} INFO -   inflating: /opt/***/dags/data/bills/sres/BILLSTATUS-118sres148.xml
+[2024-04-12T17:18:46.260+0000] {subprocess.py:93} INFO -   inflating: /opt/***/dags/data/bills/sres/BILLSTATUS-118sres177.xml
+[2024-04-12T17:18:46.291+0000] {subprocess.py:93} INFO -   inflating: /opt/***/dags/data/bills/sres/BILLSTATUS-118sres198.xml
+[2024-04-12T17:18:46.295+0000] {subprocess.py:93} INFO -   inflating: /opt/***/dags/data/bills/sres/BILLSTATUS-118sres113.xml
+[2024-04-12T17:18:46.298+0000] {subprocess.py:93} INFO -   inflating: /opt/***/dags/data/bills/sres/BILLSTATUS-118sres174.xml
+[2024-04-12T17:18:46.310+0000] {subprocess.py:93} INFO -   inflating: /opt/***/dags/data/bills/sres/BILLSTATUS-118sres364.xml
+[2024-04-12T17:18:46.314+0000] {subprocess.py:93} INFO -   inflating: /opt/***/dags/data/bills/sres/BILLSTATUS-118sres123.xml
+[2024-04-12T17:18:46.318+0000] {subprocess.py:93} INFO -   inflating: /opt/***/dags/data/bills/sres/BILLSTATUS-118sres138.xml
+[2024-04-12T17:18:46.331+0000] {subprocess.py:93} INFO -   inflating: /opt/***/dags/data/bills/sres/BILLSTATUS-118sres232.xml
+[2024-04-12T17:18:46.353+0000] {subprocess.py:93} INFO -   inflating: /opt/***/dags/data/bills/sres/BILLSTATUS-118sres235.xml
+[2024-04-12T17:18:46.375+0000] {subprocess.py:93} INFO -   inflating: /opt/***/dags/data/bills/sres/BILLSTATUS-118sres185.xml
+[2024-04-12T17:18:46.378+0000] {subprocess.py:93} INFO -   inflating: /opt/***/dags/data/bills/sres/BILLSTATUS-118sres205.xml
+[2024-04-12T17:18:46.381+0000] {subprocess.py:93} INFO -   inflating: /opt/***/dags/data/bills/sres/BILLSTATUS-118sres494.xml
+[2024-04-12T17:18:46.390+0000] {subprocess.py:93} INFO -   inflating: /opt/***/dags/data/bills/sres/BILLSTATUS-118sres166.xml
+[2024-04-12T17:18:46.397+0000] {subprocess.py:93} INFO -   inflating: /opt/***/dags/data/bills/sres/BILLSTATUS-118sres254.xml
+[2024-04-12T17:18:46.425+0000] {subprocess.py:93} INFO -   inflating: /opt/***/dags/data/bills/sres/BILLSTATUS-118sres401.xml
+[2024-04-12T17:18:46.483+0000] {subprocess.py:93} INFO -   inflating: /opt/***/dags/data/bills/sres/BILLSTATUS-118sres190.xml
+[2024-04-12T17:18:46.487+0000] {subprocess.py:93} INFO -   inflating: /opt/***/dags/data/bills/sres/BILLSTATUS-118sres231.xml
+[2024-04-12T17:18:46.509+0000] {subprocess.py:93} INFO -   inflating: /opt/***/dags/data/bills/sres/BILLSTATUS-118sres211.xml
+[2024-04-12T17:18:46.523+0000] {subprocess.py:93} INFO -   inflating: /opt/***/dags/data/bills/sres/BILLSTATUS-118sres512.xml
+[2024-04-12T17:18:46.527+0000] {subprocess.py:93} INFO -   inflating: /opt/***/dags/data/bills/sres/BILLSTATUS-118sres179.xml
+[2024-04-12T17:18:46.529+0000] {subprocess.py:93} INFO -   inflating: /opt/***/dags/data/bills/sres/BILLSTATUS-118sres335.xml
+[2024-04-12T17:18:46.530+0000] {subprocess.py:93} INFO -   inflating: /opt/***/dags/data/bills/sres/BILLSTATUS-118sres502.xml
+[2024-04-12T17:18:46.534+0000] {subprocess.py:93} INFO -   inflating: /opt/***/dags/data/bills/sres/BILLSTATUS-118sres180.xml
+[2024-04-12T17:18:46.541+0000] {subprocess.py:93} INFO -   inflating: /opt/***/dags/data/bills/sres/BILLSTATUS-118sres313.xml
+[2024-04-12T17:18:46.543+0000] {subprocess.py:93} INFO -   inflating: /opt/***/dags/data/bills/sres/BILLSTATUS-118sres249.xml
+[2024-04-12T17:18:46.548+0000] {subprocess.py:93} INFO -   inflating: /opt/***/dags/data/bills/sres/BILLSTATUS-118sres537.xml
+[2024-04-12T17:18:46.554+0000] {subprocess.py:93} INFO -   inflating: /opt/***/dags/data/bills/sres/BILLSTATUS-118sres183.xml
+[2024-04-12T17:18:46.559+0000] {subprocess.py:93} INFO -   inflating: /opt/***/dags/data/bills/sres/BILLSTATUS-118sres131.xml
+[2024-04-12T17:18:46.564+0000] {subprocess.py:93} INFO -   inflating: /opt/***/dags/data/bills/sres/BILLSTATUS-118sres330.xml
+[2024-04-12T17:18:46.580+0000] {subprocess.py:93} INFO -   inflating: /opt/***/dags/data/bills/sres/BILLSTATUS-118sres132.xml
+[2024-04-12T17:18:46.596+0000] {subprocess.py:93} INFO -   inflating: /opt/***/dags/data/bills/sres/BILLSTATUS-118sres460.xml
+[2024-04-12T17:18:46.614+0000] {subprocess.py:93} INFO -   inflating: /opt/***/dags/data/bills/sres/BILLSTATUS-118sres134.xml
+[2024-04-12T17:18:46.636+0000] {subprocess.py:93} INFO -   inflating: /opt/***/dags/data/bills/sres/BILLSTATUS-118sres158.xml
+[2024-04-12T17:18:46.638+0000] {subprocess.py:93} INFO -   inflating: /opt/***/dags/data/bills/sres/BILLSTATUS-118sres434.xml
+[2024-04-12T17:18:46.640+0000] {subprocess.py:93} INFO -   inflating: /opt/***/dags/data/bills/sres/BILLSTATUS-118sres4.xml
+[2024-04-12T17:18:46.642+0000] {subprocess.py:93} INFO -   inflating: /opt/***/dags/data/bills/sres/BILLSTATUS-118sres260.xml
+[2024-04-12T17:18:46.644+0000] {subprocess.py:93} INFO -   inflating: /opt/***/dags/data/bills/sres/BILLSTATUS-118sres284.xml
+[2024-04-12T17:18:46.648+0000] {subprocess.py:93} INFO -   inflating: /opt/***/dags/data/bills/sres/BILLSTATUS-118sres418.xml
+[2024-04-12T17:18:46.651+0000] {subprocess.py:93} INFO -   inflating: /opt/***/dags/data/bills/sres/BILLSTATUS-118sres228.xml
+[2024-04-12T17:18:46.669+0000] {subprocess.py:93} INFO -   inflating: /opt/***/dags/data/bills/sres/BILLSTATUS-118sres230.xml
+[2024-04-12T17:18:46.688+0000] {subprocess.py:93} INFO -   inflating: /opt/***/dags/data/bills/sres/BILLSTATUS-118sres302.xml
+[2024-04-12T17:18:46.692+0000] {subprocess.py:93} INFO -   inflating: /opt/***/dags/data/bills/sres/BILLSTATUS-118sres202.xml
+[2024-04-12T17:18:46.695+0000] {subprocess.py:93} INFO -   inflating: /opt/***/dags/data/bills/sres/BILLSTATUS-118sres222.xml
+[2024-04-12T17:18:46.724+0000] {subprocess.py:93} INFO -   inflating: /opt/***/dags/data/bills/sres/BILLSTATUS-118sres58.xml
+[2024-04-12T17:18:46.726+0000] {subprocess.py:93} INFO -   inflating: /opt/***/dags/data/bills/sres/BILLSTATUS-118sres246.xml
+[2024-04-12T17:18:46.728+0000] {subprocess.py:93} INFO -   inflating: /opt/***/dags/data/bills/sres/BILLSTATUS-118sres315.xml
+[2024-04-12T17:18:46.729+0000] {subprocess.py:93} INFO -   inflating: /opt/***/dags/data/bills/sres/BILLSTATUS-118sres523.xml
+[2024-04-12T17:18:46.731+0000] {subprocess.py:93} INFO -   inflating: /opt/***/dags/data/bills/sres/BILLSTATUS-118sres226.xml
+[2024-04-12T17:18:46.734+0000] {subprocess.py:93} INFO -   inflating: /opt/***/dags/data/bills/sres/BILLSTATUS-118sres169.xml
+[2024-04-12T17:18:46.740+0000] {subprocess.py:93} INFO -   inflating: /opt/***/dags/data/bills/sres/BILLSTATUS-118sres218.xml
+[2024-04-12T17:18:46.746+0000] {subprocess.py:93} INFO -   inflating: /opt/***/dags/data/bills/sres/BILLSTATUS-118sres88.xml
+[2024-04-12T17:18:46.748+0000] {subprocess.py:93} INFO -   inflating: /opt/***/dags/data/bills/sres/BILLSTATUS-118sres184.xml
+[2024-04-12T17:18:46.759+0000] {subprocess.py:93} INFO -   inflating: /opt/***/dags/data/bills/sres/BILLSTATUS-118sres107.xml
+[2024-04-12T17:18:46.762+0000] {subprocess.py:93} INFO -   inflating: /opt/***/dags/data/bills/sres/BILLSTATUS-118sres193.xml
+[2024-04-12T17:18:46.766+0000] {subprocess.py:93} INFO -   inflating: /opt/***/dags/data/bills/sres/BILLSTATUS-118sres345.xml
+[2024-04-12T17:18:46.780+0000] {subprocess.py:93} INFO -   inflating: /opt/***/dags/data/bills/sres/BILLSTATUS-118sres245.xml
+[2024-04-12T17:18:46.784+0000] {subprocess.py:93} INFO -   inflating: /opt/***/dags/data/bills/sres/BILLSTATUS-118sres227.xml
+[2024-04-12T17:18:46.790+0000] {subprocess.py:93} INFO -   inflating: /opt/***/dags/data/bills/sres/BILLSTATUS-118sres242.xml
+[2024-04-12T17:18:46.796+0000] {subprocess.py:93} INFO -   inflating: /opt/***/dags/data/bills/sres/BILLSTATUS-118sres216.xml
+[2024-04-12T17:18:46.798+0000] {subprocess.py:93} INFO -   inflating: /opt/***/dags/data/bills/sres/BILLSTATUS-118sres194.xml
+[2024-04-12T17:18:46.803+0000] {subprocess.py:93} INFO -   inflating: /opt/***/dags/data/bills/sres/BILLSTATUS-118sres262.xml
+[2024-04-12T17:18:46.806+0000] {subprocess.py:93} INFO -   inflating: /opt/***/dags/data/bills/sres/BILLSTATUS-118sres472.xml
+[2024-04-12T17:18:46.809+0000] {subprocess.py:93} INFO -   inflating: /opt/***/dags/data/bills/sres/BILLSTATUS-118sres293.xml
+[2024-04-12T17:18:46.811+0000] {subprocess.py:93} INFO -   inflating: /opt/***/dags/data/bills/sres/BILLSTATUS-118sres133.xml
+[2024-04-12T17:18:46.813+0000] {subprocess.py:93} INFO -   inflating: /opt/***/dags/data/bills/sres/BILLSTATUS-118sres265.xml
+[2024-04-12T17:18:46.817+0000] {subprocess.py:93} INFO -   inflating: /opt/***/dags/data/bills/sres/BILLSTATUS-118sres170.xml
+[2024-04-12T17:18:46.819+0000] {subprocess.py:93} INFO -   inflating: /opt/***/dags/data/bills/sres/BILLSTATUS-118sres76.xml
+[2024-04-12T17:18:46.821+0000] {subprocess.py:93} INFO -   inflating: /opt/***/dags/data/bills/sres/BILLSTATUS-118sres40.xml
+[2024-04-12T17:18:46.823+0000] {subprocess.py:93} INFO -   inflating: /opt/***/dags/data/bills/sres/BILLSTATUS-118sres160.xml
+[2024-04-12T17:18:46.827+0000] {subprocess.py:93} INFO -   inflating: /opt/***/dags/data/bills/sres/BILLSTATUS-118sres264.xml
+[2024-04-12T17:18:46.829+0000] {subprocess.py:93} INFO -   inflating: /opt/***/dags/data/bills/sres/BILLSTATUS-118sres224.xml
+[2024-04-12T17:18:46.832+0000] {subprocess.py:93} INFO -   inflating: /opt/***/dags/data/bills/sres/BILLSTATUS-118sres539.xml
+[2024-04-12T17:18:46.833+0000] {subprocess.py:93} INFO -   inflating: /opt/***/dags/data/bills/sres/BILLSTATUS-118sres250.xml
+[2024-04-12T17:18:46.836+0000] {subprocess.py:93} INFO -   inflating: /opt/***/dags/data/bills/sres/BILLSTATUS-118sres400.xml
+[2024-04-12T17:18:46.839+0000] {subprocess.py:93} INFO -   inflating: /opt/***/dags/data/bills/sres/BILLSTATUS-118sres261.xml
+[2024-04-12T17:18:46.841+0000] {subprocess.py:93} INFO -   inflating: /opt/***/dags/data/bills/sres/BILLSTATUS-118sres422.xml
+[2024-04-12T17:18:46.843+0000] {subprocess.py:93} INFO -   inflating: /opt/***/dags/data/bills/sres/BILLSTATUS-118sres272.xml
+[2024-04-12T17:18:46.845+0000] {subprocess.py:93} INFO -   inflating: /opt/***/dags/data/bills/sres/BILLSTATUS-118sres305.xml
+[2024-04-12T17:18:46.849+0000] {subprocess.py:93} INFO -   inflating: /opt/***/dags/data/bills/sres/BILLSTATUS-118sres274.xml
+[2024-04-12T17:18:46.851+0000] {subprocess.py:93} INFO -   inflating: /opt/***/dags/data/bills/sres/BILLSTATUS-118sres237.xml
+[2024-04-12T17:18:46.855+0000] {subprocess.py:93} INFO -   inflating: /opt/***/dags/data/bills/sres/BILLSTATUS-118sres173.xml
+[2024-04-12T17:18:46.858+0000] {subprocess.py:93} INFO -   inflating: /opt/***/dags/data/bills/sres/BILLSTATUS-118sres277.xml
+[2024-04-12T17:18:46.861+0000] {subprocess.py:93} INFO -   inflating: /opt/***/dags/data/bills/sres/BILLSTATUS-118sres122.xml
+[2024-04-12T17:18:46.864+0000] {subprocess.py:93} INFO -   inflating: /opt/***/dags/data/bills/sres/BILLSTATUS-118sres282.xml
+[2024-04-12T17:18:46.867+0000] {subprocess.py:93} INFO -   inflating: /opt/***/dags/data/bills/sres/BILLSTATUS-118sres241.xml
+[2024-04-12T17:18:46.873+0000] {subprocess.py:93} INFO -   inflating: /opt/***/dags/data/bills/sres/BILLSTATUS-118sres516.xml
+[2024-04-12T17:18:46.876+0000] {subprocess.py:93} INFO -   inflating: /opt/***/dags/data/bills/sres/BILLSTATUS-118sres466.xml
+[2024-04-12T17:18:46.880+0000] {subprocess.py:93} INFO -   inflating: /opt/***/dags/data/bills/sres/BILLSTATUS-118sres263.xml
+[2024-04-12T17:18:46.890+0000] {subprocess.py:93} INFO -   inflating: /opt/***/dags/data/bills/sres/BILLSTATUS-118sres431.xml
+[2024-04-12T17:18:46.893+0000] {subprocess.py:93} INFO -   inflating: /opt/***/dags/data/bills/sres/BILLSTATUS-118sres323.xml
+[2024-04-12T17:18:46.896+0000] {subprocess.py:93} INFO -   inflating: /opt/***/dags/data/bills/sres/BILLSTATUS-118sres212.xml
+[2024-04-12T17:18:46.901+0000] {subprocess.py:93} INFO -   inflating: /opt/***/dags/data/bills/sres/BILLSTATUS-118sres297.xml
+[2024-04-12T17:18:46.907+0000] {subprocess.py:93} INFO -   inflating: /opt/***/dags/data/bills/sres/BILLSTATUS-118sres479.xml
+[2024-04-12T17:18:46.915+0000] {subprocess.py:93} INFO -   inflating: /opt/***/dags/data/bills/sres/BILLSTATUS-118sres256.xml
+[2024-04-12T17:18:46.920+0000] {subprocess.py:93} INFO -   inflating: /opt/***/dags/data/bills/sres/BILLSTATUS-118sres311.xml
+[2024-04-12T17:18:46.924+0000] {subprocess.py:93} INFO -   inflating: /opt/***/dags/data/bills/sres/BILLSTATUS-118sres197.xml
+[2024-04-12T17:18:46.926+0000] {subprocess.py:93} INFO -   inflating: /opt/***/dags/data/bills/sres/BILLSTATUS-118sres565.xml
+[2024-04-12T17:18:46.928+0000] {subprocess.py:93} INFO -   inflating: /opt/***/dags/data/bills/sres/BILLSTATUS-118sres221.xml
+[2024-04-12T17:18:46.930+0000] {subprocess.py:93} INFO -   inflating: /opt/***/dags/data/bills/sres/BILLSTATUS-118sres267.xml
+[2024-04-12T17:18:46.937+0000] {subprocess.py:93} INFO -   inflating: /opt/***/dags/data/bills/sres/BILLSTATUS-118sres72.xml
+[2024-04-12T17:18:46.944+0000] {subprocess.py:93} INFO -   inflating: /opt/***/dags/data/bills/sres/BILLSTATUS-118sres236.xml
+[2024-04-12T17:18:46.947+0000] {subprocess.py:93} INFO -   inflating: /opt/***/dags/data/bills/sres/BILLSTATUS-118sres279.xml
+[2024-04-12T17:18:46.949+0000] {subprocess.py:93} INFO -   inflating: /opt/***/dags/data/bills/sres/BILLSTATUS-118sres105.xml
+[2024-04-12T17:18:46.951+0000] {subprocess.py:93} INFO -   inflating: /opt/***/dags/data/bills/sres/BILLSTATUS-118sres391.xml
+[2024-04-12T17:18:46.955+0000] {subprocess.py:93} INFO -   inflating: /opt/***/dags/data/bills/sres/BILLSTATUS-118sres270.xml
+[2024-04-12T17:18:46.958+0000] {subprocess.py:93} INFO -   inflating: /opt/***/dags/data/bills/sres/BILLSTATUS-118sres389.xml
+[2024-04-12T17:18:46.961+0000] {subprocess.py:93} INFO -   inflating: /opt/***/dags/data/bills/sres/BILLSTATUS-118sres96.xml
+[2024-04-12T17:18:46.967+0000] {subprocess.py:93} INFO -   inflating: /opt/***/dags/data/bills/sres/BILLSTATUS-118sres281.xml
+[2024-04-12T17:18:46.972+0000] {subprocess.py:93} INFO -   inflating: /opt/***/dags/data/bills/sres/BILLSTATUS-118sres396.xml
+[2024-04-12T17:18:46.977+0000] {subprocess.py:93} INFO -   inflating: /opt/***/dags/data/bills/sres/BILLSTATUS-118sres528.xml
+[2024-04-12T17:18:46.980+0000] {subprocess.py:93} INFO -   inflating: /opt/***/dags/data/bills/sres/BILLSTATUS-118sres303.xml
+[2024-04-12T17:18:46.993+0000] {subprocess.py:93} INFO -   inflating: /opt/***/dags/data/bills/sres/BILLSTATUS-118sres266.xml
+[2024-04-12T17:18:46.996+0000] {subprocess.py:93} INFO -   inflating: /opt/***/dags/data/bills/sres/BILLSTATUS-118sres383.xml
+[2024-04-12T17:18:47.002+0000] {subprocess.py:93} INFO -   inflating: /opt/***/dags/data/bills/sres/BILLSTATUS-118sres331.xml
+[2024-04-12T17:18:47.008+0000] {subprocess.py:93} INFO -   inflating: /opt/***/dags/data/bills/sres/BILLSTATUS-118sres97.xml
+[2024-04-12T17:18:47.010+0000] {subprocess.py:93} INFO -   inflating: /opt/***/dags/data/bills/sres/BILLSTATUS-118sres290.xml
+[2024-04-12T17:18:47.012+0000] {subprocess.py:93} INFO -   inflating: /opt/***/dags/data/bills/sres/BILLSTATUS-118sres251.xml
+[2024-04-12T17:18:47.014+0000] {subprocess.py:93} INFO -   inflating: /opt/***/dags/data/bills/sres/BILLSTATUS-118sres464.xml
+[2024-04-12T17:18:47.016+0000] {subprocess.py:93} INFO -   inflating: /opt/***/dags/data/bills/sres/BILLSTATUS-118sres141.xml
+[2024-04-12T17:18:47.021+0000] {subprocess.py:93} INFO -   inflating: /opt/***/dags/data/bills/sres/BILLSTATUS-118sres191.xml
+[2024-04-12T17:18:47.023+0000] {subprocess.py:93} INFO -   inflating: /opt/***/dags/data/bills/sres/BILLSTATUS-118sres301.xml
+[2024-04-12T17:18:47.025+0000] {subprocess.py:93} INFO -   inflating: /opt/***/dags/data/bills/sres/BILLSTATUS-118sres292.xml
+[2024-04-12T17:18:47.027+0000] {subprocess.py:93} INFO -   inflating: /opt/***/dags/data/bills/sres/BILLSTATUS-118sres344.xml
+[2024-04-12T17:18:47.030+0000] {subprocess.py:93} INFO -   inflating: /opt/***/dags/data/bills/sres/BILLSTATUS-118sres342.xml
+[2024-04-12T17:18:47.032+0000] {subprocess.py:93} INFO -   inflating: /opt/***/dags/data/bills/sres/BILLSTATUS-118sres296.xml
+[2024-04-12T17:18:47.034+0000] {subprocess.py:93} INFO -   inflating: /opt/***/dags/data/bills/sres/BILLSTATUS-118sres538.xml
+[2024-04-12T17:18:47.036+0000] {subprocess.py:93} INFO -   inflating: /opt/***/dags/data/bills/sres/BILLSTATUS-118sres192.xml
+[2024-04-12T17:18:47.043+0000] {subprocess.py:93} INFO -   inflating: /opt/***/dags/data/bills/sres/BILLSTATUS-118sres312.xml
+[2024-04-12T17:18:47.045+0000] {subprocess.py:93} INFO -   inflating: /opt/***/dags/data/bills/sres/BILLSTATUS-118sres445.xml
+[2024-04-12T17:18:47.049+0000] {subprocess.py:93} INFO -   inflating: /opt/***/dags/data/bills/sres/BILLSTATUS-118sres310.xml
+[2024-04-12T17:18:47.058+0000] {subprocess.py:93} INFO -   inflating: /opt/***/dags/data/bills/sres/BILLSTATUS-118sres309.xml
+[2024-04-12T17:18:47.062+0000] {subprocess.py:93} INFO -   inflating: /opt/***/dags/data/bills/sres/BILLSTATUS-118sres289.xml
+[2024-04-12T17:18:47.065+0000] {subprocess.py:93} INFO -   inflating: /opt/***/dags/data/bills/sres/BILLSTATUS-118sres320.xml
+[2024-04-12T17:18:47.097+0000] {subprocess.py:93} INFO -   inflating: /opt/***/dags/data/bills/sres/BILLSTATUS-118sres273.xml
+[2024-04-12T17:18:47.102+0000] {subprocess.py:93} INFO -   inflating: /opt/***/dags/data/bills/sres/BILLSTATUS-118sres280.xml
+[2024-04-12T17:18:47.110+0000] {subprocess.py:93} INFO -   inflating: /opt/***/dags/data/bills/sres/BILLSTATUS-118sres363.xml
+[2024-04-12T17:18:47.119+0000] {subprocess.py:93} INFO -   inflating: /opt/***/dags/data/bills/sres/BILLSTATUS-118sres278.xml
+[2024-04-12T17:18:47.137+0000] {subprocess.py:93} INFO -   inflating: /opt/***/dags/data/bills/sres/BILLSTATUS-118sres271.xml
+[2024-04-12T17:18:47.147+0000] {subprocess.py:93} INFO -   inflating: /opt/***/dags/data/bills/sres/BILLSTATUS-118sres304.xml
+[2024-04-12T17:18:47.151+0000] {subprocess.py:93} INFO -   inflating: /opt/***/dags/data/bills/sres/BILLSTATUS-118sres285.xml
+[2024-04-12T17:18:47.157+0000] {subprocess.py:93} INFO -   inflating: /opt/***/dags/data/bills/sres/BILLSTATUS-118sres220.xml
+[2024-04-12T17:18:47.161+0000] {subprocess.py:93} INFO -   inflating: /opt/***/dags/data/bills/sres/BILLSTATUS-118sres253.xml
+[2024-04-12T17:18:47.164+0000] {subprocess.py:93} INFO -   inflating: /opt/***/dags/data/bills/sres/BILLSTATUS-118sres106.xml
+[2024-04-12T17:18:47.166+0000] {subprocess.py:93} INFO -   inflating: /opt/***/dags/data/bills/sres/BILLSTATUS-118sres318.xml
+[2024-04-12T17:18:47.169+0000] {subprocess.py:93} INFO -   inflating: /opt/***/dags/data/bills/sres/BILLSTATUS-118sres269.xml
+[2024-04-12T17:18:47.172+0000] {subprocess.py:93} INFO -   inflating: /opt/***/dags/data/bills/sres/BILLSTATUS-118sres307.xml
+[2024-04-12T17:18:47.176+0000] {subprocess.py:93} INFO -   inflating: /opt/***/dags/data/bills/sres/BILLSTATUS-118sres300.xml
+[2024-04-12T17:18:47.178+0000] {subprocess.py:93} INFO -   inflating: /opt/***/dags/data/bills/sres/BILLSTATUS-118sres341.xml
+[2024-04-12T17:18:47.180+0000] {subprocess.py:93} INFO -   inflating: /opt/***/dags/data/bills/sres/BILLSTATUS-118sres298.xml
+[2024-04-12T17:18:47.182+0000] {subprocess.py:93} INFO -   inflating: /opt/***/dags/data/bills/sres/BILLSTATUS-118sres328.xml
+[2024-04-12T17:18:47.185+0000] {subprocess.py:93} INFO -   inflating: /opt/***/dags/data/bills/sres/BILLSTATUS-118sres334.xml
+[2024-04-12T17:18:47.190+0000] {subprocess.py:93} INFO -   inflating: /opt/***/dags/data/bills/sres/BILLSTATUS-118sres351.xml
+[2024-04-12T17:18:47.191+0000] {subprocess.py:93} INFO -   inflating: /opt/***/dags/data/bills/sres/BILLSTATUS-118sres336.xml
+[2024-04-12T17:18:47.193+0000] {subprocess.py:93} INFO -   inflating: /opt/***/dags/data/bills/sres/BILLSTATUS-118sres276.xml
+[2024-04-12T17:18:47.196+0000] {subprocess.py:93} INFO -   inflating: /opt/***/dags/data/bills/sres/BILLSTATUS-118sres186.xml
+[2024-04-12T17:18:47.197+0000] {subprocess.py:93} INFO -   inflating: /opt/***/dags/data/bills/sres/BILLSTATUS-118sres324.xml
+[2024-04-12T17:18:47.198+0000] {subprocess.py:93} INFO -   inflating: /opt/***/dags/data/bills/sres/BILLSTATUS-118sres372.xml
+[2024-04-12T17:18:47.201+0000] {subprocess.py:93} INFO -   inflating: /opt/***/dags/data/bills/sres/BILLSTATUS-118sres149.xml
+[2024-04-12T17:18:47.202+0000] {subprocess.py:93} INFO -   inflating: /opt/***/dags/data/bills/sres/BILLSTATUS-118sres360.xml
+[2024-04-12T17:18:47.205+0000] {subprocess.py:93} INFO -   inflating: /opt/***/dags/data/bills/sres/BILLSTATUS-118sres209.xml
+[2024-04-12T17:18:47.207+0000] {subprocess.py:93} INFO -   inflating: /opt/***/dags/data/bills/sres/BILLSTATUS-118sres117.xml
+[2024-04-12T17:18:47.209+0000] {subprocess.py:93} INFO -   inflating: /opt/***/dags/data/bills/sres/BILLSTATUS-118sres299.xml
+[2024-04-12T17:18:47.210+0000] {subprocess.py:93} INFO -   inflating: /opt/***/dags/data/bills/sres/BILLSTATUS-118sres316.xml
+[2024-04-12T17:18:47.212+0000] {subprocess.py:93} INFO -   inflating: /opt/***/dags/data/bills/sres/BILLSTATUS-118sres325.xml
+[2024-04-12T17:18:47.213+0000] {subprocess.py:93} INFO -   inflating: /opt/***/dags/data/bills/sres/BILLSTATUS-118sres475.xml
+[2024-04-12T17:18:47.215+0000] {subprocess.py:93} INFO -   inflating: /opt/***/dags/data/bills/sres/BILLSTATUS-118sres367.xml
+[2024-04-12T17:18:47.219+0000] {subprocess.py:93} INFO -   inflating: /opt/***/dags/data/bills/sres/BILLSTATUS-118sres319.xml
+[2024-04-12T17:18:47.221+0000] {subprocess.py:93} INFO -   inflating: /opt/***/dags/data/bills/sres/BILLSTATUS-118sres268.xml
+[2024-04-12T17:18:47.222+0000] {subprocess.py:93} INFO -   inflating: /opt/***/dags/data/bills/sres/BILLSTATUS-118sres130.xml
+[2024-04-12T17:18:47.224+0000] {subprocess.py:93} INFO -   inflating: /opt/***/dags/data/bills/sres/BILLSTATUS-118sres440.xml
+[2024-04-12T17:18:47.227+0000] {subprocess.py:93} INFO -   inflating: /opt/***/dags/data/bills/sres/BILLSTATUS-118sres347.xml
+[2024-04-12T17:18:47.228+0000] {subprocess.py:93} INFO -   inflating: /opt/***/dags/data/bills/sres/BILLSTATUS-118sres348.xml
+[2024-04-12T17:18:47.230+0000] {subprocess.py:93} INFO -   inflating: /opt/***/dags/data/bills/sres/BILLSTATUS-118sres206.xml
+[2024-04-12T17:18:47.232+0000] {subprocess.py:93} INFO -   inflating: /opt/***/dags/data/bills/sres/BILLSTATUS-118sres343.xml
+[2024-04-12T17:18:47.233+0000] {subprocess.py:93} INFO -   inflating: /opt/***/dags/data/bills/sres/BILLSTATUS-118sres255.xml
+[2024-04-12T17:18:47.237+0000] {subprocess.py:93} INFO -   inflating: /opt/***/dags/data/bills/sres/BILLSTATUS-118sres200.xml
+[2024-04-12T17:18:47.241+0000] {subprocess.py:93} INFO -   inflating: /opt/***/dags/data/bills/sres/BILLSTATUS-118sres288.xml
+[2024-04-12T17:18:47.242+0000] {subprocess.py:93} INFO -   inflating: /opt/***/dags/data/bills/sres/BILLSTATUS-118sres412.xml
+[2024-04-12T17:18:47.244+0000] {subprocess.py:93} INFO -   inflating: /opt/***/dags/data/bills/sres/BILLSTATUS-118sres317.xml
+[2024-04-12T17:18:47.246+0000] {subprocess.py:93} INFO -   inflating: /opt/***/dags/data/bills/sres/BILLSTATUS-118sres238.xml
+[2024-04-12T17:18:47.248+0000] {subprocess.py:93} INFO -   inflating: /opt/***/dags/data/bills/sres/BILLSTATUS-118sres435.xml
+[2024-04-12T17:18:47.250+0000] {subprocess.py:93} INFO -   inflating: /opt/***/dags/data/bills/sres/BILLSTATUS-118sres362.xml
+[2024-04-12T17:18:47.252+0000] {subprocess.py:93} INFO -   inflating: /opt/***/dags/data/bills/sres/BILLSTATUS-118sres326.xml
+[2024-04-12T17:18:47.255+0000] {subprocess.py:93} INFO -   inflating: /opt/***/dags/data/bills/sres/BILLSTATUS-118sres349.xml
+[2024-04-12T17:18:47.258+0000] {subprocess.py:93} INFO -   inflating: /opt/***/dags/data/bills/sres/BILLSTATUS-118sres378.xml
+[2024-04-12T17:18:47.261+0000] {subprocess.py:93} INFO -   inflating: /opt/***/dags/data/bills/sres/BILLSTATUS-118sres437.xml
+[2024-04-12T17:18:47.263+0000] {subprocess.py:93} INFO -   inflating: /opt/***/dags/data/bills/sres/BILLSTATUS-118sres275.xml
+[2024-04-12T17:18:47.266+0000] {subprocess.py:93} INFO -   inflating: /opt/***/dags/data/bills/sres/BILLSTATUS-118sres74.xml
+[2024-04-12T17:18:47.271+0000] {subprocess.py:93} INFO -   inflating: /opt/***/dags/data/bills/sres/BILLSTATUS-118sres195.xml
+[2024-04-12T17:18:47.274+0000] {subprocess.py:93} INFO -   inflating: /opt/***/dags/data/bills/sres/BILLSTATUS-118sres392.xml
+[2024-04-12T17:18:47.277+0000] {subprocess.py:93} INFO -   inflating: /opt/***/dags/data/bills/sres/BILLSTATUS-118sres259.xml
+[2024-04-12T17:18:47.281+0000] {subprocess.py:93} INFO -   inflating: /opt/***/dags/data/bills/sres/BILLSTATUS-118sres327.xml
+[2024-04-12T17:18:47.283+0000] {subprocess.py:93} INFO -   inflating: /opt/***/dags/data/bills/sres/BILLSTATUS-118sres365.xml
+[2024-04-12T17:18:47.286+0000] {subprocess.py:93} INFO -   inflating: /opt/***/dags/data/bills/sres/BILLSTATUS-118sres350.xml
+[2024-04-12T17:18:47.289+0000] {subprocess.py:93} INFO -   inflating: /opt/***/dags/data/bills/sres/BILLSTATUS-118sres356.xml
+[2024-04-12T17:18:47.291+0000] {subprocess.py:93} INFO -   inflating: /opt/***/dags/data/bills/sres/BILLSTATUS-118sres86.xml
+[2024-04-12T17:18:47.293+0000] {subprocess.py:93} INFO -   inflating: /opt/***/dags/data/bills/sres/BILLSTATUS-118sres399.xml
+[2024-04-12T17:18:47.295+0000] {subprocess.py:93} INFO -   inflating: /opt/***/dags/data/bills/sres/BILLSTATUS-118sres580.xml
+[2024-04-12T17:18:47.297+0000] {subprocess.py:93} INFO -   inflating: /opt/***/dags/data/bills/sres/BILLSTATUS-118sres371.xml
+[2024-04-12T17:18:47.301+0000] {subprocess.py:93} INFO -   inflating: /opt/***/dags/data/bills/sres/BILLSTATUS-118sres163.xml
+[2024-04-12T17:18:47.304+0000] {subprocess.py:93} INFO -   inflating: /opt/***/dags/data/bills/sres/BILLSTATUS-118sres98.xml
+[2024-04-12T17:18:47.307+0000] {subprocess.py:93} INFO -   inflating: /opt/***/dags/data/bills/sres/BILLSTATUS-118sres408.xml
+[2024-04-12T17:18:47.310+0000] {subprocess.py:93} INFO -   inflating: /opt/***/dags/data/bills/sres/BILLSTATUS-118sres187.xml
+[2024-04-12T17:18:47.313+0000] {subprocess.py:93} INFO -   inflating: /opt/***/dags/data/bills/sres/BILLSTATUS-118sres332.xml
+[2024-04-12T17:18:47.315+0000] {subprocess.py:93} INFO -   inflating: /opt/***/dags/data/bills/sres/BILLSTATUS-118sres439.xml
+[2024-04-12T17:18:47.316+0000] {subprocess.py:93} INFO -   inflating: /opt/***/dags/data/bills/sres/BILLSTATUS-118sres329.xml
+[2024-04-12T17:18:47.320+0000] {subprocess.py:93} INFO -   inflating: /opt/***/dags/data/bills/sres/BILLSTATUS-118sres436.xml
+[2024-04-12T17:18:47.323+0000] {subprocess.py:93} INFO -   inflating: /opt/***/dags/data/bills/sres/BILLSTATUS-118sres478.xml
+[2024-04-12T17:18:47.325+0000] {subprocess.py:93} INFO -   inflating: /opt/***/dags/data/bills/sres/BILLSTATUS-118sres376.xml
+[2024-04-12T17:18:47.327+0000] {subprocess.py:93} INFO -   inflating: /opt/***/dags/data/bills/sres/BILLSTATUS-118sres375.xml
+[2024-04-12T17:18:47.330+0000] {subprocess.py:93} INFO -   inflating: /opt/***/dags/data/bills/sres/BILLSTATUS-118sres388.xml
+[2024-04-12T17:18:47.333+0000] {subprocess.py:93} INFO -   inflating: /opt/***/dags/data/bills/sres/BILLSTATUS-118sres308.xml
+[2024-04-12T17:18:47.334+0000] {subprocess.py:93} INFO -   inflating: /opt/***/dags/data/bills/sres/BILLSTATUS-118sres403.xml
+[2024-04-12T17:18:47.338+0000] {subprocess.py:93} INFO -   inflating: /opt/***/dags/data/bills/sres/BILLSTATUS-118sres369.xml
+[2024-04-12T17:18:47.341+0000] {subprocess.py:93} INFO -   inflating: /opt/***/dags/data/bills/sres/BILLSTATUS-118sres421.xml
+[2024-04-12T17:18:47.342+0000] {subprocess.py:93} INFO -   inflating: /opt/***/dags/data/bills/sres/BILLSTATUS-118sres518.xml
+[2024-04-12T17:18:47.344+0000] {subprocess.py:93} INFO -   inflating: /opt/***/dags/data/bills/sres/BILLSTATUS-118sres294.xml
+[2024-04-12T17:18:47.346+0000] {subprocess.py:93} INFO -   inflating: /opt/***/dags/data/bills/sres/BILLSTATUS-118sres355.xml
+[2024-04-12T17:18:47.349+0000] {subprocess.py:93} INFO -   inflating: /opt/***/dags/data/bills/sres/BILLSTATUS-118sres426.xml
+[2024-04-12T17:18:47.358+0000] {subprocess.py:93} INFO -   inflating: /opt/***/dags/data/bills/sres/BILLSTATUS-118sres416.xml
+[2024-04-12T17:18:47.362+0000] {subprocess.py:93} INFO -   inflating: /opt/***/dags/data/bills/sres/BILLSTATUS-118sres393.xml
+[2024-04-12T17:18:47.397+0000] {subprocess.py:93} INFO -   inflating: /opt/***/dags/data/bills/sres/BILLSTATUS-118sres404.xml
+[2024-04-12T17:18:47.419+0000] {subprocess.py:93} INFO -   inflating: /opt/***/dags/data/bills/sres/BILLSTATUS-118sres480.xml
+[2024-04-12T17:18:47.432+0000] {subprocess.py:93} INFO -   inflating: /opt/***/dags/data/bills/sres/BILLSTATUS-118sres379.xml
+[2024-04-12T17:18:47.450+0000] {subprocess.py:93} INFO -   inflating: /opt/***/dags/data/bills/sres/BILLSTATUS-118sres406.xml
+[2024-04-12T17:18:47.474+0000] {subprocess.py:93} INFO -   inflating: /opt/***/dags/data/bills/sres/BILLSTATUS-118sres366.xml
+[2024-04-12T17:18:47.479+0000] {subprocess.py:93} INFO -   inflating: /opt/***/dags/data/bills/sres/BILLSTATUS-118sres385.xml
+[2024-04-12T17:18:47.484+0000] {subprocess.py:93} INFO -   inflating: /opt/***/dags/data/bills/sres/BILLSTATUS-118sres370.xml
+[2024-04-12T17:18:47.495+0000] {subprocess.py:93} INFO -   inflating: /opt/***/dags/data/bills/sres/BILLSTATUS-118sres382.xml
+[2024-04-12T17:18:47.506+0000] {subprocess.py:93} INFO -   inflating: /opt/***/dags/data/bills/sres/BILLSTATUS-118sres394.xml
+[2024-04-12T17:18:47.531+0000] {subprocess.py:93} INFO -   inflating: /opt/***/dags/data/bills/sres/BILLSTATUS-118sres407.xml
+[2024-04-12T17:18:47.545+0000] {subprocess.py:93} INFO -   inflating: /opt/***/dags/data/bills/sres/BILLSTATUS-118sres213.xml
+[2024-04-12T17:18:47.553+0000] {subprocess.py:93} INFO -   inflating: /opt/***/dags/data/bills/sres/BILLSTATUS-118sres444.xml
+[2024-04-12T17:18:47.557+0000] {subprocess.py:93} INFO -   inflating: /opt/***/dags/data/bills/sres/BILLSTATUS-118sres409.xml
+[2024-04-12T17:18:47.561+0000] {subprocess.py:93} INFO -   inflating: /opt/***/dags/data/bills/sres/BILLSTATUS-118sres423.xml
+[2024-04-12T17:18:47.565+0000] {subprocess.py:93} INFO -   inflating: /opt/***/dags/data/bills/sres/BILLSTATUS-118sres373.xml
+[2024-04-12T17:18:47.572+0000] {subprocess.py:93} INFO -   inflating: /opt/***/dags/data/bills/sres/BILLSTATUS-118sres402.xml
+[2024-04-12T17:18:47.575+0000] {subprocess.py:93} INFO -   inflating: /opt/***/dags/data/bills/sres/BILLSTATUS-118sres413.xml
+[2024-04-12T17:18:47.580+0000] {subprocess.py:93} INFO -   inflating: /opt/***/dags/data/bills/sres/BILLSTATUS-118sres482.xml
+[2024-04-12T17:18:47.588+0000] {subprocess.py:93} INFO -   inflating: /opt/***/dags/data/bills/sres/BILLSTATUS-118sres485.xml
+[2024-04-12T17:18:47.593+0000] {subprocess.py:93} INFO -   inflating: /opt/***/dags/data/bills/sres/BILLSTATUS-118sres411.xml
+[2024-04-12T17:18:47.597+0000] {subprocess.py:93} INFO -   inflating: /opt/***/dags/data/bills/sres/BILLSTATUS-118sres322.xml
+[2024-04-12T17:18:47.600+0000] {subprocess.py:93} INFO -   inflating: /opt/***/dags/data/bills/sres/BILLSTATUS-118sres546.xml
+[2024-04-12T17:18:47.614+0000] {subprocess.py:93} INFO -   inflating: /opt/***/dags/data/bills/sres/BILLSTATUS-118sres204.xml
+[2024-04-12T17:18:47.624+0000] {subprocess.py:93} INFO -   inflating: /opt/***/dags/data/bills/sres/BILLSTATUS-118sres417.xml
+[2024-04-12T17:18:47.628+0000] {subprocess.py:93} INFO -   inflating: /opt/***/dags/data/bills/sres/BILLSTATUS-118sres16.xml
+[2024-04-12T17:18:47.631+0000] {subprocess.py:93} INFO -   inflating: /opt/***/dags/data/bills/sres/BILLSTATUS-118sres29.xml
+[2024-04-12T17:18:47.635+0000] {subprocess.py:93} INFO -   inflating: /opt/***/dags/data/bills/sres/BILLSTATUS-118sres410.xml
+[2024-04-12T17:18:47.639+0000] {subprocess.py:93} INFO -   inflating: /opt/***/dags/data/bills/sres/BILLSTATUS-118sres420.xml
+[2024-04-12T17:18:47.643+0000] {subprocess.py:93} INFO -   inflating: /opt/***/dags/data/bills/sres/BILLSTATUS-118sres291.xml
+[2024-04-12T17:18:47.650+0000] {subprocess.py:93} INFO -   inflating: /opt/***/dags/data/bills/sres/BILLSTATUS-118sres487.xml
+[2024-04-12T17:18:47.659+0000] {subprocess.py:93} INFO -   inflating: /opt/***/dags/data/bills/sres/BILLSTATUS-118sres425.xml
+[2024-04-12T17:18:47.675+0000] {subprocess.py:93} INFO -   inflating: /opt/***/dags/data/bills/sres/BILLSTATUS-118sres484.xml
+[2024-04-12T17:18:47.679+0000] {subprocess.py:93} INFO -   inflating: /opt/***/dags/data/bills/sres/BILLSTATUS-118sres128.xml
+[2024-04-12T17:18:47.680+0000] {subprocess.py:93} INFO -   inflating: /opt/***/dags/data/bills/sres/BILLSTATUS-118sres414.xml
+[2024-04-12T17:18:47.682+0000] {subprocess.py:93} INFO -   inflating: /opt/***/dags/data/bills/sres/BILLSTATUS-118sres429.xml
+[2024-04-12T17:18:47.687+0000] {subprocess.py:93} INFO -   inflating: /opt/***/dags/data/bills/sres/BILLSTATUS-118sres438.xml
+[2024-04-12T17:18:47.691+0000] {subprocess.py:93} INFO -   inflating: /opt/***/dags/data/bills/sres/BILLSTATUS-118sres461.xml
+[2024-04-12T17:18:47.694+0000] {subprocess.py:93} INFO -   inflating: /opt/***/dags/data/bills/sres/BILLSTATUS-118sres338.xml
+[2024-04-12T17:18:47.697+0000] {subprocess.py:93} INFO -   inflating: /opt/***/dags/data/bills/sres/BILLSTATUS-118sres405.xml
+[2024-04-12T17:18:47.701+0000] {subprocess.py:93} INFO -   inflating: /opt/***/dags/data/bills/sres/BILLSTATUS-118sres447.xml
+[2024-04-12T17:18:47.705+0000] {subprocess.py:93} INFO -   inflating: /opt/***/dags/data/bills/sres/BILLSTATUS-118sres459.xml
+[2024-04-12T17:18:47.711+0000] {subprocess.py:93} INFO -   inflating: /opt/***/dags/data/bills/sres/BILLSTATUS-118sres449.xml
+[2024-04-12T17:18:47.713+0000] {subprocess.py:93} INFO -   inflating: /opt/***/dags/data/bills/sres/BILLSTATUS-118sres415.xml
+[2024-04-12T17:18:47.715+0000] {subprocess.py:93} INFO -   inflating: /opt/***/dags/data/bills/sres/BILLSTATUS-118sres419.xml
+[2024-04-12T17:18:47.718+0000] {subprocess.py:93} INFO -   inflating: /opt/***/dags/data/bills/sres/BILLSTATUS-118sres456.xml
+[2024-04-12T17:18:47.721+0000] {subprocess.py:93} INFO -   inflating: /opt/***/dags/data/bills/sres/BILLSTATUS-118sres69.xml
+[2024-04-12T17:18:47.723+0000] {subprocess.py:93} INFO -   inflating: /opt/***/dags/data/bills/sres/BILLSTATUS-118sres333.xml
+[2024-04-12T17:18:47.731+0000] {subprocess.py:93} INFO -   inflating: /opt/***/dags/data/bills/sres/BILLSTATUS-118sres119.xml
+[2024-04-12T17:18:47.737+0000] {subprocess.py:93} INFO -   inflating: /opt/***/dags/data/bills/sres/BILLSTATUS-118sres428.xml
+[2024-04-12T17:18:47.738+0000] {subprocess.py:93} INFO -   inflating: /opt/***/dags/data/bills/sres/BILLSTATUS-118sres462.xml
+[2024-04-12T17:18:47.740+0000] {subprocess.py:93} INFO -   inflating: /opt/***/dags/data/bills/sres/BILLSTATUS-118sres493.xml
+[2024-04-12T17:18:47.741+0000] {subprocess.py:93} INFO -   inflating: /opt/***/dags/data/bills/sres/BILLSTATUS-118sres433.xml
+[2024-04-12T17:18:47.745+0000] {subprocess.py:93} INFO -   inflating: /opt/***/dags/data/bills/sres/BILLSTATUS-118sres358.xml
+[2024-04-12T17:18:47.747+0000] {subprocess.py:93} INFO -   inflating: /opt/***/dags/data/bills/sres/BILLSTATUS-118sres432.xml
+[2024-04-12T17:18:47.749+0000] {subprocess.py:93} INFO -   inflating: /opt/***/dags/data/bills/sres/BILLSTATUS-118sres92.xml
+[2024-04-12T17:18:47.750+0000] {subprocess.py:93} INFO -   inflating: /opt/***/dags/data/bills/sres/BILLSTATUS-118sres215.xml
+[2024-04-12T17:18:47.752+0000] {subprocess.py:93} INFO -   inflating: /opt/***/dags/data/bills/sres/BILLSTATUS-118sres353.xml
+[2024-04-12T17:18:47.756+0000] {subprocess.py:93} INFO -   inflating: /opt/***/dags/data/bills/sres/BILLSTATUS-118sres17.xml
+[2024-04-12T17:18:47.758+0000] {subprocess.py:93} INFO -   inflating: /opt/***/dags/data/bills/sres/BILLSTATUS-118sres454.xml
+[2024-04-12T17:18:47.759+0000] {subprocess.py:93} INFO -   inflating: /opt/***/dags/data/bills/sres/BILLSTATUS-118sres442.xml
+[2024-04-12T17:18:47.760+0000] {subprocess.py:93} INFO -   inflating: /opt/***/dags/data/bills/sres/BILLSTATUS-118sres381.xml
+[2024-04-12T17:18:47.763+0000] {subprocess.py:93} INFO -   inflating: /opt/***/dags/data/bills/sres/BILLSTATUS-118sres474.xml
+[2024-04-12T17:18:47.767+0000] {subprocess.py:93} INFO -   inflating: /opt/***/dags/data/bills/sres/BILLSTATUS-118sres176.xml
+[2024-04-12T17:18:47.768+0000] {subprocess.py:93} INFO -   inflating: /opt/***/dags/data/bills/sres/BILLSTATUS-118sres467.xml
+[2024-04-12T17:18:47.769+0000] {subprocess.py:93} INFO -   inflating: /opt/***/dags/data/bills/sres/BILLSTATUS-118sres77.xml
+[2024-04-12T17:18:47.772+0000] {subprocess.py:93} INFO -   inflating: /opt/***/dags/data/bills/sres/BILLSTATUS-118sres314.xml
+[2024-04-12T17:18:47.775+0000] {subprocess.py:93} INFO -   inflating: /opt/***/dags/data/bills/sres/BILLSTATUS-118sres217.xml
+[2024-04-12T17:18:47.778+0000] {subprocess.py:93} INFO -   inflating: /opt/***/dags/data/bills/sres/BILLSTATUS-118sres359.xml
+[2024-04-12T17:18:47.780+0000] {subprocess.py:93} INFO -   inflating: /opt/***/dags/data/bills/sres/BILLSTATUS-118sres120.xml
+[2024-04-12T17:18:47.781+0000] {subprocess.py:93} INFO -   inflating: /opt/***/dags/data/bills/sres/BILLSTATUS-118sres95.xml
+[2024-04-12T17:18:47.783+0000] {subprocess.py:93} INFO -   inflating: /opt/***/dags/data/bills/sres/BILLSTATUS-118sres321.xml
+[2024-04-12T17:18:47.789+0000] {subprocess.py:93} INFO -   inflating: /opt/***/dags/data/bills/sres/BILLSTATUS-118sres441.xml
+[2024-04-12T17:18:47.792+0000] {subprocess.py:93} INFO -   inflating: /opt/***/dags/data/bills/sres/BILLSTATUS-118sres286.xml
+[2024-04-12T17:18:47.796+0000] {subprocess.py:93} INFO -   inflating: /opt/***/dags/data/bills/sres/BILLSTATUS-118sres430.xml
+[2024-04-12T17:18:47.798+0000] {subprocess.py:93} INFO -   inflating: /opt/***/dags/data/bills/sres/BILLSTATUS-118sres491.xml
+[2024-04-12T17:18:47.800+0000] {subprocess.py:93} INFO -   inflating: /opt/***/dags/data/bills/sres/BILLSTATUS-118sres453.xml
+[2024-04-12T17:18:47.801+0000] {subprocess.py:93} INFO -   inflating: /opt/***/dags/data/bills/sres/BILLSTATUS-118sres64.xml
+[2024-04-12T17:18:47.808+0000] {subprocess.py:93} INFO -   inflating: /opt/***/dags/data/bills/sres/BILLSTATUS-118sres606.xml
+[2024-04-12T17:18:47.811+0000] {subprocess.py:93} INFO -   inflating: /opt/***/dags/data/bills/sres/BILLSTATUS-118sres470.xml
+[2024-04-12T17:18:47.813+0000] {subprocess.py:93} INFO -   inflating: /opt/***/dags/data/bills/sres/BILLSTATUS-118sres59.xml
+[2024-04-12T17:18:47.817+0000] {subprocess.py:93} INFO -   inflating: /opt/***/dags/data/bills/sres/BILLSTATUS-118sres514.xml
+[2024-04-12T17:18:47.819+0000] {subprocess.py:93} INFO -   inflating: /opt/***/dags/data/bills/sres/BILLSTATUS-118sres239.xml
+[2024-04-12T17:18:47.823+0000] {subprocess.py:93} INFO -   inflating: /opt/***/dags/data/bills/sres/BILLSTATUS-118sres507.xml
+[2024-04-12T17:18:47.825+0000] {subprocess.py:93} INFO -   inflating: /opt/***/dags/data/bills/sres/BILLSTATUS-118sres70.xml
+[2024-04-12T17:18:47.829+0000] {subprocess.py:93} INFO -   inflating: /opt/***/dags/data/bills/sres/BILLSTATUS-118sres340.xml
+[2024-04-12T17:18:47.832+0000] {subprocess.py:93} INFO -   inflating: /opt/***/dags/data/bills/sres/BILLSTATUS-118sres48.xml
+[2024-04-12T17:18:47.843+0000] {subprocess.py:93} INFO -   inflating: /opt/***/dags/data/bills/sres/BILLSTATUS-118sres469.xml
+[2024-04-12T17:18:47.845+0000] {subprocess.py:93} INFO -   inflating: /opt/***/dags/data/bills/sres/BILLSTATUS-118sres488.xml
+[2024-04-12T17:18:47.864+0000] {subprocess.py:93} INFO -   inflating: /opt/***/dags/data/bills/sres/BILLSTATUS-118sres60.xml
+[2024-04-12T17:18:47.875+0000] {subprocess.py:93} INFO -   inflating: /opt/***/dags/data/bills/sres/BILLSTATUS-118sres182.xml
+[2024-04-12T17:18:47.878+0000] {subprocess.py:93} INFO -   inflating: /opt/***/dags/data/bills/sres/BILLSTATUS-118sres529.xml
+[2024-04-12T17:18:47.879+0000] {subprocess.py:93} INFO -   inflating: /opt/***/dags/data/bills/sres/BILLSTATUS-118sres569.xml
+[2024-04-12T17:18:47.881+0000] {subprocess.py:93} INFO -   inflating: /opt/***/dags/data/bills/sres/BILLSTATUS-118sres337.xml
+[2024-04-12T17:18:47.882+0000] {subprocess.py:93} INFO -   inflating: /opt/***/dags/data/bills/sres/BILLSTATUS-118sres443.xml
+[2024-04-12T17:18:47.888+0000] {subprocess.py:93} INFO -   inflating: /opt/***/dags/data/bills/sres/BILLSTATUS-118sres374.xml
+[2024-04-12T17:18:47.889+0000] {subprocess.py:93} INFO -   inflating: /opt/***/dags/data/bills/sres/BILLSTATUS-118sres471.xml
+[2024-04-12T17:18:47.896+0000] {subprocess.py:93} INFO -   inflating: /opt/***/dags/data/bills/sres/BILLSTATUS-118sres489.xml
+[2024-04-12T17:18:47.898+0000] {subprocess.py:93} INFO -   inflating: /opt/***/dags/data/bills/sres/BILLSTATUS-118sres500.xml
+[2024-04-12T17:18:47.899+0000] {subprocess.py:93} INFO -   inflating: /opt/***/dags/data/bills/sres/BILLSTATUS-118sres513.xml
+[2024-04-12T17:18:47.902+0000] {subprocess.py:93} INFO -   inflating: /opt/***/dags/data/bills/sres/BILLSTATUS-118sres377.xml
+[2024-04-12T17:18:47.904+0000] {subprocess.py:93} INFO -   inflating: /opt/***/dags/data/bills/sres/BILLSTATUS-118sres397.xml
+[2024-04-12T17:18:47.910+0000] {subprocess.py:93} INFO -   inflating: /opt/***/dags/data/bills/sres/BILLSTATUS-118sres532.xml
+[2024-04-12T17:18:47.911+0000] {subprocess.py:93} INFO -   inflating: /opt/***/dags/data/bills/sres/BILLSTATUS-118sres473.xml
+[2024-04-12T17:18:47.913+0000] {subprocess.py:93} INFO -   inflating: /opt/***/dags/data/bills/sres/BILLSTATUS-118sres510.xml
+[2024-04-12T17:18:47.914+0000] {subprocess.py:93} INFO -   inflating: /opt/***/dags/data/bills/sres/BILLSTATUS-118sres543.xml
+[2024-04-12T17:18:47.919+0000] {subprocess.py:93} INFO -   inflating: /opt/***/dags/data/bills/sres/BILLSTATUS-118sres354.xml
+[2024-04-12T17:18:47.921+0000] {subprocess.py:93} INFO -   inflating: /opt/***/dags/data/bills/sres/BILLSTATUS-118sres446.xml
+[2024-04-12T17:18:47.922+0000] {subprocess.py:93} INFO -   inflating: /opt/***/dags/data/bills/sres/BILLSTATUS-118sres477.xml
+[2024-04-12T17:18:47.925+0000] {subprocess.py:93} INFO -   inflating: /opt/***/dags/data/bills/sres/BILLSTATUS-118sres504.xml
+[2024-04-12T17:18:47.928+0000] {subprocess.py:93} INFO -   inflating: /opt/***/dags/data/bills/sres/BILLSTATUS-118sres492.xml
+[2024-04-12T17:18:47.930+0000] {subprocess.py:93} INFO -   inflating: /opt/***/dags/data/bills/sres/BILLSTATUS-118sres306.xml
+[2024-04-12T17:18:47.932+0000] {subprocess.py:93} INFO -   inflating: /opt/***/dags/data/bills/sres/BILLSTATUS-118sres499.xml
+[2024-04-12T17:18:47.934+0000] {subprocess.py:93} INFO -   inflating: /opt/***/dags/data/bills/sres/BILLSTATUS-118sres562.xml
+[2024-04-12T17:18:47.935+0000] {subprocess.py:93} INFO -   inflating: /opt/***/dags/data/bills/sres/BILLSTATUS-118sres448.xml
+[2024-04-12T17:18:47.937+0000] {subprocess.py:93} INFO -   inflating: /opt/***/dags/data/bills/sres/BILLSTATUS-118sres386.xml
+[2024-04-12T17:18:47.939+0000] {subprocess.py:93} INFO -   inflating: /opt/***/dags/data/bills/sres/BILLSTATUS-118sres490.xml
+[2024-04-12T17:18:47.941+0000] {subprocess.py:93} INFO -   inflating: /opt/***/dags/data/bills/sres/BILLSTATUS-118sres99.xml
+[2024-04-12T17:18:47.944+0000] {subprocess.py:93} INFO -   inflating: /opt/***/dags/data/bills/sres/BILLSTATUS-118sres85.xml
+[2024-04-12T17:18:47.945+0000] {subprocess.py:93} INFO -   inflating: /opt/***/dags/data/bills/sres/BILLSTATUS-118sres258.xml
+[2024-04-12T17:18:47.948+0000] {subprocess.py:93} INFO -   inflating: /opt/***/dags/data/bills/sres/BILLSTATUS-118sres531.xml
+[2024-04-12T17:18:47.951+0000] {subprocess.py:93} INFO -   inflating: /opt/***/dags/data/bills/sres/BILLSTATUS-118sres395.xml
+[2024-04-12T17:18:47.952+0000] {subprocess.py:93} INFO -   inflating: /opt/***/dags/data/bills/sres/BILLSTATUS-118sres427.xml
+[2024-04-12T17:18:47.954+0000] {subprocess.py:93} INFO -   inflating: /opt/***/dags/data/bills/sres/BILLSTATUS-118sres37.xml
+[2024-04-12T17:18:47.956+0000] {subprocess.py:93} INFO -   inflating: /opt/***/dags/data/bills/sres/BILLSTATUS-118sres110.xml
+[2024-04-12T17:18:47.959+0000] {subprocess.py:93} INFO -   inflating: /opt/***/dags/data/bills/sres/BILLSTATUS-118sres65.xml
+[2024-04-12T17:18:47.962+0000] {subprocess.py:93} INFO -   inflating: /opt/***/dags/data/bills/sres/BILLSTATUS-118sres165.xml
+[2024-04-12T17:18:47.964+0000] {subprocess.py:93} INFO -   inflating: /opt/***/dags/data/bills/sres/BILLSTATUS-118sres505.xml
+[2024-04-12T17:18:47.966+0000] {subprocess.py:93} INFO -   inflating: /opt/***/dags/data/bills/sres/BILLSTATUS-118sres501.xml
+[2024-04-12T17:18:47.969+0000] {subprocess.py:93} INFO -   inflating: /opt/***/dags/data/bills/sres/BILLSTATUS-118sres455.xml
+[2024-04-12T17:18:47.971+0000] {subprocess.py:93} INFO -   inflating: /opt/***/dags/data/bills/sres/BILLSTATUS-118sres8.xml
+[2024-04-12T17:18:47.976+0000] {subprocess.py:93} INFO -   inflating: /opt/***/dags/data/bills/sres/BILLSTATUS-118sres541.xml
+[2024-04-12T17:18:47.981+0000] {subprocess.py:93} INFO -   inflating: /opt/***/dags/data/bills/sres/BILLSTATUS-118sres503.xml
+[2024-04-12T17:18:47.988+0000] {subprocess.py:93} INFO -   inflating: /opt/***/dags/data/bills/sres/BILLSTATUS-118sres508.xml
+[2024-04-12T17:18:47.993+0000] {subprocess.py:93} INFO -   inflating: /opt/***/dags/data/bills/sres/BILLSTATUS-118sres506.xml
+[2024-04-12T17:18:47.998+0000] {subprocess.py:93} INFO -   inflating: /opt/***/dags/data/bills/sres/BILLSTATUS-118sres116.xml
+[2024-04-12T17:18:48.004+0000] {subprocess.py:93} INFO -   inflating: /opt/***/dags/data/bills/sres/BILLSTATUS-118sres571.xml
+[2024-04-12T17:18:48.007+0000] {subprocess.py:93} INFO -   inflating: /opt/***/dags/data/bills/sres/BILLSTATUS-118sres575.xml
+[2024-04-12T17:18:48.011+0000] {subprocess.py:93} INFO -   inflating: /opt/***/dags/data/bills/sres/BILLSTATUS-118sres559.xml
+[2024-04-12T17:18:48.019+0000] {subprocess.py:93} INFO -   inflating: /opt/***/dags/data/bills/sres/BILLSTATUS-118sres458.xml
+[2024-04-12T17:18:48.042+0000] {subprocess.py:93} INFO -   inflating: /opt/***/dags/data/bills/sres/BILLSTATUS-118sres530.xml
+[2024-04-12T17:18:48.047+0000] {subprocess.py:93} INFO -   inflating: /opt/***/dags/data/bills/sres/BILLSTATUS-118sres79.xml
+[2024-04-12T17:18:48.053+0000] {subprocess.py:93} INFO -   inflating: /opt/***/dags/data/bills/sres/BILLSTATUS-118sres210.xml
+[2024-04-12T17:18:48.060+0000] {subprocess.py:93} INFO -   inflating: /opt/***/dags/data/bills/sres/BILLSTATUS-118sres463.xml
+[2024-04-12T17:18:48.077+0000] {subprocess.py:93} INFO -   inflating: /opt/***/dags/data/bills/sres/BILLSTATUS-118sres511.xml
+[2024-04-12T17:18:48.080+0000] {subprocess.py:93} INFO -   inflating: /opt/***/dags/data/bills/sres/BILLSTATUS-118sres524.xml
+[2024-04-12T17:18:48.082+0000] {subprocess.py:93} INFO -   inflating: /opt/***/dags/data/bills/sres/BILLSTATUS-118sres577.xml
+[2024-04-12T17:18:48.083+0000] {subprocess.py:93} INFO -   inflating: /opt/***/dags/data/bills/sres/BILLSTATUS-118sres522.xml
+[2024-04-12T17:18:48.087+0000] {subprocess.py:93} INFO -   inflating: /opt/***/dags/data/bills/sres/BILLSTATUS-118sres244.xml
+[2024-04-12T17:18:48.090+0000] {subprocess.py:93} INFO -   inflating: /opt/***/dags/data/bills/sres/BILLSTATUS-118sres521.xml
+[2024-04-12T17:18:48.095+0000] {subprocess.py:93} INFO -   inflating: /opt/***/dags/data/bills/sres/BILLSTATUS-118sres515.xml
+[2024-04-12T17:18:48.098+0000] {subprocess.py:93} INFO -   inflating: /opt/***/dags/data/bills/sres/BILLSTATUS-118sres196.xml
+[2024-04-12T17:18:48.104+0000] {subprocess.py:93} INFO -   inflating: /opt/***/dags/data/bills/sres/BILLSTATUS-118sres450.xml
+[2024-04-12T17:18:48.106+0000] {subprocess.py:93} INFO -   inflating: /opt/***/dags/data/bills/sres/BILLSTATUS-118sres476.xml
+[2024-04-12T17:18:48.108+0000] {subprocess.py:93} INFO -   inflating: /opt/***/dags/data/bills/sres/BILLSTATUS-118sres517.xml
+[2024-04-12T17:18:48.112+0000] {subprocess.py:93} INFO -   inflating: /opt/***/dags/data/bills/sres/BILLSTATUS-118sres161.xml
+[2024-04-12T17:18:48.114+0000] {subprocess.py:93} INFO -   inflating: /opt/***/dags/data/bills/sres/BILLSTATUS-118sres219.xml
+[2024-04-12T17:18:48.116+0000] {subprocess.py:93} INFO -   inflating: /opt/***/dags/data/bills/sres/BILLSTATUS-118sres622.xml
+[2024-04-12T17:18:48.118+0000] {subprocess.py:93} INFO -   inflating: /opt/***/dags/data/bills/sres/BILLSTATUS-118sres526.xml
+[2024-04-12T17:18:48.125+0000] {subprocess.py:93} INFO -   inflating: /opt/***/dags/data/bills/sres/BILLSTATUS-118sres520.xml
+[2024-04-12T17:18:48.127+0000] {subprocess.py:93} INFO -   inflating: /opt/***/dags/data/bills/sres/BILLSTATUS-118sres553.xml
+[2024-04-12T17:18:48.129+0000] {subprocess.py:93} INFO -   inflating: /opt/***/dags/data/bills/sres/BILLSTATUS-118sres544.xml
+[2024-04-12T17:18:48.131+0000] {subprocess.py:93} INFO -   inflating: /opt/***/dags/data/bills/sres/BILLSTATUS-118sres534.xml
+[2024-04-12T17:18:48.133+0000] {subprocess.py:93} INFO -   inflating: /opt/***/dags/data/bills/sres/BILLSTATUS-118sres612.xml
+[2024-04-12T17:18:48.138+0000] {subprocess.py:93} INFO -   inflating: /opt/***/dags/data/bills/sres/BILLSTATUS-118sres257.xml
+[2024-04-12T17:18:48.141+0000] {subprocess.py:93} INFO -   inflating: /opt/***/dags/data/bills/sres/BILLSTATUS-118sres590.xml
+[2024-04-12T17:18:48.142+0000] {subprocess.py:93} INFO -   inflating: /opt/***/dags/data/bills/sres/BILLSTATUS-118sres581.xml
+[2024-04-12T17:18:48.144+0000] {subprocess.py:93} INFO -   inflating: /opt/***/dags/data/bills/sres/BILLSTATUS-118sres533.xml
+[2024-04-12T17:18:48.147+0000] {subprocess.py:93} INFO -   inflating: /opt/***/dags/data/bills/sres/BILLSTATUS-118sres557.xml
+[2024-04-12T17:18:48.149+0000] {subprocess.py:93} INFO -   inflating: /opt/***/dags/data/bills/sres/BILLSTATUS-118sres552.xml
+[2024-04-12T17:18:48.151+0000] {subprocess.py:93} INFO -   inflating: /opt/***/dags/data/bills/sres/BILLSTATUS-118sres214.xml
+[2024-04-12T17:18:48.153+0000] {subprocess.py:93} INFO -   inflating: /opt/***/dags/data/bills/sres/BILLSTATUS-118sres240.xml
+[2024-04-12T17:18:48.155+0000] {subprocess.py:93} INFO -   inflating: /opt/***/dags/data/bills/sres/BILLSTATUS-118sres584.xml
+[2024-04-12T17:18:48.160+0000] {subprocess.py:93} INFO -   inflating: /opt/***/dags/data/bills/sres/BILLSTATUS-118sres540.xml
+[2024-04-12T17:18:48.162+0000] {subprocess.py:93} INFO -   inflating: /opt/***/dags/data/bills/sres/BILLSTATUS-118sres589.xml
+[2024-04-12T17:18:48.163+0000] {subprocess.py:93} INFO -   inflating: /opt/***/dags/data/bills/sres/BILLSTATUS-118sres519.xml
+[2024-04-12T17:18:48.166+0000] {subprocess.py:93} INFO -   inflating: /opt/***/dags/data/bills/sres/BILLSTATUS-118sres548.xml
+[2024-04-12T17:18:48.170+0000] {subprocess.py:93} INFO -   inflating: /opt/***/dags/data/bills/sres/BILLSTATUS-118sres550.xml
+[2024-04-12T17:18:48.173+0000] {subprocess.py:93} INFO -   inflating: /opt/***/dags/data/bills/sres/BILLSTATUS-118sres112.xml
+[2024-04-12T17:18:48.175+0000] {subprocess.py:93} INFO -   inflating: /opt/***/dags/data/bills/sres/BILLSTATUS-118sres555.xml
+[2024-04-12T17:18:48.177+0000] {subprocess.py:93} INFO -   inflating: /opt/***/dags/data/bills/sres/BILLSTATUS-118sres172.xml
+[2024-04-12T17:18:48.179+0000] {subprocess.py:93} INFO -   inflating: /opt/***/dags/data/bills/sres/BILLSTATUS-118sres558.xml
+[2024-04-12T17:18:48.182+0000] {subprocess.py:93} INFO -   inflating: /opt/***/dags/data/bills/sres/BILLSTATUS-118sres457.xml
+[2024-04-12T17:18:48.183+0000] {subprocess.py:93} INFO -   inflating: /opt/***/dags/data/bills/sres/BILLSTATUS-118sres168.xml
+[2024-04-12T17:18:48.186+0000] {subprocess.py:93} INFO -   inflating: /opt/***/dags/data/bills/sres/BILLSTATUS-118sres556.xml
+[2024-04-12T17:18:48.190+0000] {subprocess.py:93} INFO -   inflating: /opt/***/dags/data/bills/sres/BILLSTATUS-118sres380.xml
+[2024-04-12T17:18:48.194+0000] {subprocess.py:93} INFO -   inflating: /opt/***/dags/data/bills/sres/BILLSTATUS-118sres554.xml
+[2024-04-12T17:18:48.197+0000] {subprocess.py:93} INFO -   inflating: /opt/***/dags/data/bills/sres/BILLSTATUS-118sres567.xml
+[2024-04-12T17:18:48.202+0000] {subprocess.py:93} INFO -   inflating: /opt/***/dags/data/bills/sres/BILLSTATUS-118sres598.xml
+[2024-04-12T17:18:48.210+0000] {subprocess.py:93} INFO -   inflating: /opt/***/dags/data/bills/sres/BILLSTATUS-118sres560.xml
+[2024-04-12T17:18:48.214+0000] {subprocess.py:93} INFO -   inflating: /opt/***/dags/data/bills/sres/BILLSTATUS-118sres73.xml
+[2024-04-12T17:18:48.222+0000] {subprocess.py:93} INFO -   inflating: /opt/***/dags/data/bills/sres/BILLSTATUS-118sres563.xml
+[2024-04-12T17:18:48.224+0000] {subprocess.py:93} INFO -   inflating: /opt/***/dags/data/bills/sres/BILLSTATUS-118sres561.xml
+[2024-04-12T17:18:48.226+0000] {subprocess.py:93} INFO -   inflating: /opt/***/dags/data/bills/sres/BILLSTATUS-118sres570.xml
+[2024-04-12T17:18:48.227+0000] {subprocess.py:93} INFO -   inflating: /opt/***/dags/data/bills/sres/BILLSTATUS-118sres536.xml
+[2024-04-12T17:18:48.231+0000] {subprocess.py:93} INFO -   inflating: /opt/***/dags/data/bills/sres/BILLSTATUS-118sres496.xml
+[2024-04-12T17:18:48.232+0000] {subprocess.py:93} INFO -   inflating: /opt/***/dags/data/bills/sres/BILLSTATUS-118sres568.xml
+[2024-04-12T17:18:48.234+0000] {subprocess.py:93} INFO -   inflating: /opt/***/dags/data/bills/sres/BILLSTATUS-118sres542.xml
+[2024-04-12T17:18:48.235+0000] {subprocess.py:93} INFO -   inflating: /opt/***/dags/data/bills/sres/BILLSTATUS-118sres535.xml
+[2024-04-12T17:18:48.237+0000] {subprocess.py:93} INFO -   inflating: /opt/***/dags/data/bills/sres/BILLSTATUS-118sres564.xml
+[2024-04-12T17:18:48.242+0000] {subprocess.py:93} INFO -   inflating: /opt/***/dags/data/bills/sres/BILLSTATUS-118sres585.xml
+[2024-04-12T17:18:48.244+0000] {subprocess.py:93} INFO -   inflating: /opt/***/dags/data/bills/sres/BILLSTATUS-118sres572.xml
+[2024-04-12T17:18:48.245+0000] {subprocess.py:93} INFO -   inflating: /opt/***/dags/data/bills/sres/BILLSTATUS-118sres583.xml
+[2024-04-12T17:18:48.247+0000] {subprocess.py:93} INFO -   inflating: /opt/***/dags/data/bills/sres/BILLSTATUS-118sres578.xml
+[2024-04-12T17:18:48.249+0000] {subprocess.py:93} INFO -   inflating: /opt/***/dags/data/bills/sres/BILLSTATUS-118sres592.xml
+[2024-04-12T17:18:48.253+0000] {subprocess.py:93} INFO -   inflating: /opt/***/dags/data/bills/sres/BILLSTATUS-118sres483.xml
+[2024-04-12T17:18:48.261+0000] {subprocess.py:93} INFO -   inflating: /opt/***/dags/data/bills/sres/BILLSTATUS-118sres579.xml
+[2024-04-12T17:18:48.263+0000] {subprocess.py:93} INFO -   inflating: /opt/***/dags/data/bills/sres/BILLSTATUS-118sres5.xml
+[2024-04-12T17:18:48.265+0000] {subprocess.py:93} INFO -   inflating: /opt/***/dags/data/bills/sres/BILLSTATUS-118sres153.xml
+[2024-04-12T17:18:48.267+0000] {subprocess.py:93} INFO -   inflating: /opt/***/dags/data/bills/sres/BILLSTATUS-118sres357.xml
+[2024-04-12T17:18:48.273+0000] {subprocess.py:93} INFO -   inflating: /opt/***/dags/data/bills/sres/BILLSTATUS-118sres188.xml
+[2024-04-12T17:18:48.277+0000] {subprocess.py:93} INFO -   inflating: /opt/***/dags/data/bills/sres/BILLSTATUS-118sres595.xml
+[2024-04-12T17:18:48.279+0000] {subprocess.py:93} INFO -   inflating: /opt/***/dags/data/bills/sres/BILLSTATUS-118sres599.xml
+[2024-04-12T17:18:48.281+0000] {subprocess.py:93} INFO -   inflating: /opt/***/dags/data/bills/sres/BILLSTATUS-118sres468.xml
+[2024-04-12T17:18:48.283+0000] {subprocess.py:93} INFO -   inflating: /opt/***/dags/data/bills/sres/BILLSTATUS-118sres233.xml
+[2024-04-12T17:18:48.288+0000] {subprocess.py:93} INFO -   inflating: /opt/***/dags/data/bills/sres/BILLSTATUS-118sres283.xml
+[2024-04-12T17:18:48.290+0000] {subprocess.py:93} INFO -   inflating: /opt/***/dags/data/bills/sres/BILLSTATUS-118sres576.xml
+[2024-04-12T17:18:48.291+0000] {subprocess.py:93} INFO -   inflating: /opt/***/dags/data/bills/sres/BILLSTATUS-118sres352.xml
+[2024-04-12T17:18:48.293+0000] {subprocess.py:93} INFO -   inflating: /opt/***/dags/data/bills/sres/BILLSTATUS-118sres596.xml
+[2024-04-12T17:18:48.297+0000] {subprocess.py:93} INFO -   inflating: /opt/***/dags/data/bills/sres/BILLSTATUS-118sres597.xml
+[2024-04-12T17:18:48.299+0000] {subprocess.py:93} INFO -   inflating: /opt/***/dags/data/bills/sres/BILLSTATUS-118sres82.xml
+[2024-04-12T17:18:48.302+0000] {subprocess.py:93} INFO -   inflating: /opt/***/dags/data/bills/sres/BILLSTATUS-118sres171.xml
+[2024-04-12T17:18:48.304+0000] {subprocess.py:93} INFO -   inflating: /opt/***/dags/data/bills/sres/BILLSTATUS-118sres203.xml
+[2024-04-12T17:18:48.307+0000] {subprocess.py:93} INFO -   inflating: /opt/***/dags/data/bills/sres/BILLSTATUS-118sres591.xml
+[2024-04-12T17:18:48.309+0000] {subprocess.py:93} INFO -   inflating: /opt/***/dags/data/bills/sres/BILLSTATUS-118sres594.xml
+[2024-04-12T17:18:48.311+0000] {subprocess.py:93} INFO -   inflating: /opt/***/dags/data/bills/sres/BILLSTATUS-118sres593.xml
+[2024-04-12T17:18:48.313+0000] {subprocess.py:93} INFO -   inflating: /opt/***/dags/data/bills/sres/BILLSTATUS-118sres588.xml
+[2024-04-12T17:18:48.315+0000] {subprocess.py:93} INFO -   inflating: /opt/***/dags/data/bills/sres/BILLSTATUS-118sres601.xml
+[2024-04-12T17:18:48.321+0000] {subprocess.py:93} INFO -   inflating: /opt/***/dags/data/bills/sres/BILLSTATUS-118sres605.xml
+[2024-04-12T17:18:48.325+0000] {subprocess.py:93} INFO -   inflating: /opt/***/dags/data/bills/sres/BILLSTATUS-118sres604.xml
+[2024-04-12T17:18:48.328+0000] {subprocess.py:93} INFO -   inflating: /opt/***/dags/data/bills/sres/BILLSTATUS-118sres602.xml
+[2024-04-12T17:18:48.330+0000] {subprocess.py:93} INFO -   inflating: /opt/***/dags/data/bills/sres/BILLSTATUS-118sres600.xml
+[2024-04-12T17:18:48.377+0000] {subprocess.py:93} INFO -   inflating: /opt/***/dags/data/bills/sres/BILLSTATUS-118sres603.xml
+[2024-04-12T17:18:48.404+0000] {subprocess.py:93} INFO -   inflating: /opt/***/dags/data/bills/sres/BILLSTATUS-118sres607.xml
+[2024-04-12T17:18:48.415+0000] {subprocess.py:93} INFO -   inflating: /opt/***/dags/data/bills/sres/BILLSTATUS-118sres608.xml
+[2024-04-12T17:18:48.426+0000] {subprocess.py:93} INFO -   inflating: /opt/***/dags/data/bills/sres/BILLSTATUS-118sres551.xml
+[2024-04-12T17:18:48.434+0000] {subprocess.py:93} INFO -   inflating: /opt/***/dags/data/bills/sres/BILLSTATUS-118sres621.xml
+[2024-04-12T17:18:48.442+0000] {subprocess.py:93} INFO -   inflating: /opt/***/dags/data/bills/sres/BILLSTATUS-118sres620.xml
+[2024-04-12T17:18:48.446+0000] {subprocess.py:93} INFO -   inflating: /opt/***/dags/data/bills/sres/BILLSTATUS-118sres619.xml
+[2024-04-12T17:18:48.449+0000] {subprocess.py:93} INFO -   inflating: /opt/***/dags/data/bills/sres/BILLSTATUS-118sres614.xml
+[2024-04-12T17:18:48.456+0000] {subprocess.py:93} INFO -   inflating: /opt/***/dags/data/bills/sres/BILLSTATUS-118sres613.xml
+[2024-04-12T17:18:48.463+0000] {subprocess.py:93} INFO -   inflating: /opt/***/dags/data/bills/sres/BILLSTATUS-118sres615.xml
+[2024-04-12T17:18:48.479+0000] {subprocess.py:93} INFO -   inflating: /opt/***/dags/data/bills/sres/BILLSTATUS-118sres611.xml
+[2024-04-12T17:18:48.482+0000] {subprocess.py:93} INFO -   inflating: /opt/***/dags/data/bills/sres/BILLSTATUS-118sres609.xml
+[2024-04-12T17:18:48.487+0000] {subprocess.py:93} INFO -   inflating: /opt/***/dags/data/bills/sres/BILLSTATUS-118sres618.xml
+[2024-04-12T17:18:48.491+0000] {subprocess.py:93} INFO -   inflating: /opt/***/dags/data/bills/sres/BILLSTATUS-118sres616.xml
+[2024-04-12T17:18:48.495+0000] {subprocess.py:93} INFO -   inflating: /opt/***/dags/data/bills/sres/BILLSTATUS-118sres623.xml
+[2024-04-12T17:18:48.498+0000] {subprocess.py:93} INFO -   inflating: /opt/***/dags/data/bills/sres/BILLSTATUS-118sres625.xml
+[2024-04-12T17:18:48.506+0000] {subprocess.py:93} INFO -   inflating: /opt/***/dags/data/bills/sres/BILLSTATUS-118sres624.xml
+[2024-04-12T17:18:48.509+0000] {subprocess.py:93} INFO -   inflating: /opt/***/dags/data/bills/sres/BILLSTATUS-118sres630.xml
+[2024-04-12T17:18:48.511+0000] {subprocess.py:93} INFO -   inflating: /opt/***/dags/data/bills/sres/BILLSTATUS-118sres617.xml
+[2024-04-12T17:18:48.512+0000] {subprocess.py:93} INFO -   inflating: /opt/***/dags/data/bills/sres/BILLSTATUS-118sres610.xml
+[2024-04-12T17:18:48.514+0000] {subprocess.py:93} INFO -   inflating: /opt/***/dags/data/bills/sres/BILLSTATUS-118sres566.xml
+[2024-04-12T17:18:48.519+0000] {subprocess.py:93} INFO -   inflating: /opt/***/dags/data/bills/sres/BILLSTATUS-118sres549.xml
+[2024-04-12T17:18:48.521+0000] {subprocess.py:93} INFO -   inflating: /opt/***/dags/data/bills/sres/BILLSTATUS-118sres626.xml
+[2024-04-12T17:18:48.524+0000] {subprocess.py:93} INFO -   inflating: /opt/***/dags/data/bills/sres/BILLSTATUS-118sres586.xml
+[2024-04-12T17:18:48.527+0000] {subprocess.py:93} INFO -   inflating: /opt/***/dags/data/bills/sres/BILLSTATUS-118sres628.xml
+[2024-04-12T17:18:48.531+0000] {subprocess.py:93} INFO -   inflating: /opt/***/dags/data/bills/sres/BILLSTATUS-118sres627.xml
+[2024-04-12T17:18:48.534+0000] {subprocess.py:93} INFO -   inflating: /opt/***/dags/data/bills/sres/BILLSTATUS-118sres629.xml
+[2024-04-12T17:18:48.539+0000] {subprocess.py:93} INFO -   inflating: /opt/***/dags/data/bills/sres/BILLSTATUS-118sres632.xml
+[2024-04-12T17:18:48.544+0000] {subprocess.py:93} INFO -   inflating: /opt/***/dags/data/bills/sres/BILLSTATUS-118sres636.xml
+[2024-04-12T17:18:48.548+0000] {subprocess.py:93} INFO -   inflating: /opt/***/dags/data/bills/sres/BILLSTATUS-118sres634.xml
+[2024-04-12T17:18:48.558+0000] {subprocess.py:93} INFO -   inflating: /opt/***/dags/data/bills/sres/BILLSTATUS-118sres639.xml
+[2024-04-12T17:18:48.562+0000] {subprocess.py:93} INFO -   inflating: /opt/***/dags/data/bills/sres/BILLSTATUS-118sres638.xml
+[2024-04-12T17:18:48.564+0000] {subprocess.py:93} INFO -   inflating: /opt/***/dags/data/bills/sres/BILLSTATUS-118sres633.xml
+[2024-04-12T17:18:48.567+0000] {subprocess.py:93} INFO -   inflating: /opt/***/dags/data/bills/sres/BILLSTATUS-118sres631.xml
+[2024-04-12T17:18:48.572+0000] {subprocess.py:93} INFO -   inflating: /opt/***/dags/data/bills/sres/BILLSTATUS-118sres635.xml
+[2024-04-12T17:18:48.574+0000] {subprocess.py:93} INFO -   inflating: /opt/***/dags/data/bills/sres/BILLSTATUS-118sres545.xml
+[2024-04-12T17:18:48.765+0000] {subprocess.py:93} INFO - --2024-04-12 17:18:48--  https://www.govinfo.gov/bulkdata/BILLSTATUS/118/hr/BILLSTATUS-118-hr.zip
+[2024-04-12T17:18:48.780+0000] {subprocess.py:93} INFO - Resolving www.govinfo.gov (www.govinfo.gov)... 172.64.146.68, 104.18.41.188, 2606:4700:4400::6812:29bc, ...
+[2024-04-12T17:18:48.804+0000] {subprocess.py:93} INFO - Connecting to www.govinfo.gov (www.govinfo.gov)|172.64.146.68|:443... connected.
+[2024-04-12T17:18:49.293+0000] {subprocess.py:93} INFO - HTTP request sent, awaiting response... 200 OK
+[2024-04-12T17:18:49.294+0000] {subprocess.py:93} INFO - Length: 24754399 (24M) [application/zip]
+[2024-04-12T17:18:49.295+0000] {subprocess.py:93} INFO - Saving to: ‘/opt/***/dags/data/bills/hr/BILLSTATUS-118-hr.zip’
+[2024-04-12T17:18:49.295+0000] {subprocess.py:93} INFO - 
+[2024-04-12T17:18:49.573+0000] {subprocess.py:93} INFO -      0K .......... .......... .......... .......... ..........  0%  180K 2m14s
+[2024-04-12T17:18:49.643+0000] {subprocess.py:93} INFO -     50K .......... .......... .......... .......... ..........  0%  718K 84s
+[2024-04-12T17:18:49.710+0000] {subprocess.py:93} INFO -    100K .......... .......... .......... .......... ..........  0%  733K 67s
+[2024-04-12T17:18:49.787+0000] {subprocess.py:93} INFO -    150K .......... .......... .......... .......... ..........  0%  671K 59s
+[2024-04-12T17:18:49.854+0000] {subprocess.py:93} INFO -    200K .......... .......... .......... .......... ..........  1%  736K 53s
+[2024-04-12T17:18:49.859+0000] {subprocess.py:93} INFO -    250K .......... .......... .......... .......... ..........  1% 8.81M 45s
+[2024-04-12T17:18:49.924+0000] {subprocess.py:93} INFO -    300K .......... .......... .......... .......... ..........  1%  768K 43s
+[2024-04-12T17:18:49.991+0000] {subprocess.py:93} INFO -    350K .......... .......... .......... .......... ..........  1%  744K 41s
+[2024-04-12T17:18:50.063+0000] {subprocess.py:93} INFO -    400K .......... .......... .......... .......... ..........  1%  697K 40s
+[2024-04-12T17:18:50.069+0000] {subprocess.py:93} INFO -    450K .......... .......... .......... .......... ..........  2% 8.68M 37s
+[2024-04-12T17:18:50.132+0000] {subprocess.py:93} INFO -    500K .......... .......... .......... .......... ..........  2%  784K 36s
+[2024-04-12T17:18:50.198+0000] {subprocess.py:93} INFO -    550K .......... .......... .......... .......... ..........  2%  758K 35s
+[2024-04-12T17:18:50.265+0000] {subprocess.py:93} INFO -    600K .......... .......... .......... .......... ..........  2%  747K 35s
+[2024-04-12T17:18:50.332+0000] {subprocess.py:93} INFO -    650K .......... .......... .......... .......... ..........  2%  968K 34s
+[2024-04-12T17:18:50.341+0000] {subprocess.py:93} INFO -    700K .......... .......... .......... .......... ..........  3% 2.12M 33s
+[2024-04-12T17:18:50.416+0000] {subprocess.py:93} INFO -    750K .......... .......... .......... .......... ..........  3%  658K 33s
+[2024-04-12T17:18:50.490+0000] {subprocess.py:93} INFO -    800K .......... .......... .......... .......... ..........  3%  669K 33s
+[2024-04-12T17:18:50.546+0000] {subprocess.py:93} INFO -    850K .......... .......... .......... .......... ..........  3%  909K 32s
+[2024-04-12T17:18:50.613+0000] {subprocess.py:93} INFO -    900K .......... .......... .......... .......... ..........  3%  757K 32s
+[2024-04-12T17:18:50.623+0000] {subprocess.py:93} INFO -    950K .......... .......... .......... .......... ..........  4% 4.84M 31s
+[2024-04-12T17:18:50.686+0000] {subprocess.py:93} INFO -   1000K .......... .......... .......... .......... ..........  4%  778K 31s
+[2024-04-12T17:18:50.763+0000] {subprocess.py:93} INFO -   1050K .......... .......... .......... .......... ..........  4%  651K 31s
+[2024-04-12T17:18:50.831+0000] {subprocess.py:93} INFO -   1100K .......... .......... .......... .......... ..........  4%  727K 31s
+[2024-04-12T17:18:50.898+0000] {subprocess.py:93} INFO -   1150K .......... .......... .......... .......... ..........  4%  749K 31s
+[2024-04-12T17:18:50.901+0000] {subprocess.py:93} INFO -   1200K .......... .......... .......... .......... ..........  5% 15.3M 29s
+[2024-04-12T17:18:50.974+0000] {subprocess.py:93} INFO -   1250K .......... .......... .......... .......... ..........  5%  684K 30s
+[2024-04-12T17:18:51.038+0000] {subprocess.py:93} INFO -   1300K .......... .......... .......... .......... ..........  5%  784K 29s
+[2024-04-12T17:18:51.112+0000] {subprocess.py:93} INFO -   1350K .......... .......... .......... .......... ..........  5%  679K 30s
+[2024-04-12T17:18:51.161+0000] {subprocess.py:93} INFO -   1400K .......... .......... .......... .......... ..........  5% 1.01M 29s
+[2024-04-12T17:18:51.248+0000] {subprocess.py:93} INFO -   1450K .......... .......... .......... .......... ..........  6%  566K 30s
+[2024-04-12T17:18:51.251+0000] {subprocess.py:93} INFO -   1500K .......... .......... .......... .......... ..........  6% 18.4M 29s
+[2024-04-12T17:18:51.316+0000] {subprocess.py:93} INFO -   1550K .......... .......... .......... .......... ..........  6%  763K 29s
+[2024-04-12T17:18:51.388+0000] {subprocess.py:93} INFO -   1600K .......... .......... .......... .......... ..........  6%  700K 29s
+[2024-04-12T17:18:51.453+0000] {subprocess.py:93} INFO -   1650K .......... .......... .......... .......... ..........  7%  765K 29s
+[2024-04-12T17:18:51.457+0000] {subprocess.py:93} INFO -   1700K .......... .......... .......... .......... ..........  7% 13.7M 28s
+[2024-04-12T17:18:51.531+0000] {subprocess.py:93} INFO -   1750K .......... .......... .......... .......... ..........  7%  678K 28s
+[2024-04-12T17:18:51.604+0000] {subprocess.py:93} INFO -   1800K .......... .......... .......... .......... ..........  7%  692K 28s
+[2024-04-12T17:18:51.674+0000] {subprocess.py:93} INFO -   1850K .......... .......... .......... .......... ..........  7%  711K 28s
+[2024-04-12T17:18:51.744+0000] {subprocess.py:93} INFO -   1900K .......... .......... .......... .......... ..........  8%  711K 28s
+[2024-04-12T17:18:51.753+0000] {subprocess.py:93} INFO -   1950K .......... .......... .......... .......... ..........  8% 6.28M 27s
+[2024-04-12T17:18:51.817+0000] {subprocess.py:93} INFO -   2000K .......... .......... .......... .......... ..........  8%  768K 27s
+[2024-04-12T17:18:51.888+0000] {subprocess.py:93} INFO -   2050K .......... .......... .......... .......... ..........  8%  707K 27s
+[2024-04-12T17:18:51.954+0000] {subprocess.py:93} INFO -   2100K .......... .......... .......... .......... ..........  8%  756K 27s
+[2024-04-12T17:18:52.024+0000] {subprocess.py:93} INFO -   2150K .......... .......... .......... .......... ..........  9%  715K 27s
+[2024-04-12T17:18:52.029+0000] {subprocess.py:93} INFO -   2200K .......... .......... .......... .......... ..........  9% 9.57M 27s
+[2024-04-12T17:18:52.094+0000] {subprocess.py:93} INFO -   2250K .......... .......... .......... .......... ..........  9%  765K 27s
+[2024-04-12T17:18:52.161+0000] {subprocess.py:93} INFO -   2300K .......... .......... .......... .......... ..........  9%  744K 27s
+[2024-04-12T17:18:52.228+0000] {subprocess.py:93} INFO -   2350K .......... .......... .......... .......... ..........  9%  753K 27s
+[2024-04-12T17:18:52.305+0000] {subprocess.py:93} INFO -   2400K .......... .......... .......... .......... .......... 10%  647K 27s
+[2024-04-12T17:18:52.309+0000] {subprocess.py:93} INFO -   2450K .......... .......... .......... .......... .......... 10% 10.6M 26s
+[2024-04-12T17:18:52.372+0000] {subprocess.py:93} INFO -   2500K .......... .......... .......... .......... .......... 10%  789K 26s
+[2024-04-12T17:18:52.666+0000] {subprocess.py:93} INFO -   2550K .......... .......... .......... .......... .......... 10%  171K 28s
+[2024-04-12T17:18:52.737+0000] {subprocess.py:93} INFO -   2600K .......... .......... .......... .......... .......... 10%  696K 28s
+[2024-04-12T17:18:53.021+0000] {subprocess.py:93} INFO -   2650K .......... .......... .......... .......... .......... 11%  176K 30s
+[2024-04-12T17:18:53.093+0000] {subprocess.py:93} INFO -   2700K .......... .......... .......... .......... .......... 11%  697K 30s
+[2024-04-12T17:18:53.165+0000] {subprocess.py:93} INFO -   2750K .......... .......... .......... .......... .......... 11%  694K 30s
+[2024-04-12T17:18:53.300+0000] {subprocess.py:93} INFO -   2800K .......... .......... .......... .......... .......... 11%  372K 30s
+[2024-04-12T17:18:53.374+0000] {subprocess.py:93} INFO -   2850K .......... .......... .......... .......... .......... 11%  679K 30s
+[2024-04-12T17:18:53.442+0000] {subprocess.py:93} INFO -   2900K .......... .......... .......... .......... .......... 12%  724K 30s
+[2024-04-12T17:18:53.589+0000] {subprocess.py:93} INFO -   2950K .......... .......... .......... .......... .......... 12%  351K 30s
+[2024-04-12T17:18:53.666+0000] {subprocess.py:93} INFO -   3000K .......... .......... .......... .......... .......... 12%  627K 30s
+[2024-04-12T17:18:53.715+0000] {subprocess.py:93} INFO -   3050K .......... .......... .......... .......... .......... 12% 1013K 30s
+[2024-04-12T17:18:53.793+0000] {subprocess.py:93} INFO -   3100K .......... .......... .......... .......... .......... 13%  658K 30s
+[2024-04-12T17:18:53.853+0000] {subprocess.py:93} INFO -   3150K .......... .......... .......... .......... .......... 13%  793K 30s
+[2024-04-12T17:18:53.922+0000] {subprocess.py:93} INFO -   3200K .......... .......... .......... .......... .......... 13%  738K 30s
+[2024-04-12T17:18:53.991+0000] {subprocess.py:93} INFO -   3250K .......... .......... .......... .......... .......... 13%  716K 30s
+[2024-04-12T17:18:53.998+0000] {subprocess.py:93} INFO -   3300K .......... .......... .......... .......... .......... 13% 6.76M 29s
+[2024-04-12T17:18:54.128+0000] {subprocess.py:93} INFO -   3350K .......... .......... .......... .......... .......... 14%  388K 30s
+[2024-04-12T17:18:54.133+0000] {subprocess.py:93} INFO -   3400K .......... .......... .......... .......... .......... 14% 7.80M 29s
+[2024-04-12T17:18:54.198+0000] {subprocess.py:93} INFO -   3450K .......... .......... .......... .......... .......... 14%  762K 29s
+[2024-04-12T17:18:54.274+0000] {subprocess.py:93} INFO -   3500K .......... .......... .......... .......... .......... 14%  661K 29s
+[2024-04-12T17:18:54.355+0000] {subprocess.py:93} INFO -   3550K .......... .......... .......... .......... .......... 14%  619K 29s
+[2024-04-12T17:18:54.423+0000] {subprocess.py:93} INFO -   3600K .......... .......... .......... .......... .......... 15% 11.3M 28s
+[2024-04-12T17:18:54.431+0000] {subprocess.py:93} INFO -   3650K .......... .......... .......... .......... .......... 15%  698K 28s
+[2024-04-12T17:18:54.489+0000] {subprocess.py:93} INFO -   3700K .......... .......... .......... .......... .......... 15%  853K 28s
+[2024-04-12T17:18:54.561+0000] {subprocess.py:93} INFO -   3750K .......... .......... .......... .......... .......... 15%  702K 28s
+[2024-04-12T17:18:54.628+0000] {subprocess.py:93} INFO -   3800K .......... .......... .......... .......... .......... 15%  752K 28s
+[2024-04-12T17:18:54.639+0000] {subprocess.py:93} INFO -   3850K .......... .......... .......... .......... .......... 16% 4.27M 28s
+[2024-04-12T17:18:54.842+0000] {subprocess.py:93} INFO -   3900K .......... .......... .......... .......... .......... 16%  245K 28s
+[2024-04-12T17:18:54.974+0000] {subprocess.py:93} INFO -   3950K .......... .......... .......... .......... .......... 16%  380K 29s
+[2024-04-12T17:18:55.112+0000] {subprocess.py:93} INFO -   4000K .......... .......... .......... .......... .......... 16%  366K 29s
+[2024-04-12T17:18:55.262+0000] {subprocess.py:93} INFO -   4050K .......... .......... .......... .......... .......... 16%  331K 29s
+[2024-04-12T17:18:55.610+0000] {subprocess.py:93} INFO -   4100K .......... .......... .......... .......... .......... 17%  144K 30s
+[2024-04-12T17:18:55.745+0000] {subprocess.py:93} INFO -   4150K .......... .......... .......... .......... .......... 17%  369K 31s
+[2024-04-12T17:18:55.890+0000] {subprocess.py:93} INFO -   4200K .......... .......... .......... .......... .......... 17%  345K 31s
+[2024-04-12T17:18:56.030+0000] {subprocess.py:93} INFO -   4250K .......... .......... .......... .......... .......... 17%  358K 31s
+[2024-04-12T17:18:56.168+0000] {subprocess.py:93} INFO -   4300K .......... .......... .......... .......... .......... 17%  363K 31s
+[2024-04-12T17:18:56.241+0000] {subprocess.py:93} INFO -   4350K .......... .......... .......... .......... .......... 18%  687K 31s
+[2024-04-12T17:18:56.385+0000] {subprocess.py:93} INFO -   4400K .......... .......... .......... .......... .......... 18%  349K 31s
+[2024-04-12T17:18:56.517+0000] {subprocess.py:93} INFO -   4450K .......... .......... .......... .......... .......... 18%  375K 32s
+[2024-04-12T17:18:56.587+0000] {subprocess.py:93} INFO -   4500K .......... .......... .......... .......... .......... 18%  708K 31s
+[2024-04-12T17:18:56.662+0000] {subprocess.py:93} INFO -   4550K .......... .......... .......... .......... .......... 19%  673K 31s
+[2024-04-12T17:18:56.794+0000] {subprocess.py:93} INFO -   4600K .......... .......... .......... .......... .......... 19%  381K 31s
+[2024-04-12T17:18:56.862+0000] {subprocess.py:93} INFO -   4650K .......... .......... .......... .......... .......... 19%  722K 31s
+[2024-04-12T17:18:56.941+0000] {subprocess.py:93} INFO -   4700K .......... .......... .......... .......... .......... 19%  637K 31s
+[2024-04-12T17:18:57.007+0000] {subprocess.py:93} INFO -   4750K .......... .......... .......... .......... .......... 19%  756K 31s
+[2024-04-12T17:18:57.078+0000] {subprocess.py:93} INFO -   4800K .......... .......... .......... .......... .......... 20%  708K 31s
+[2024-04-12T17:18:57.148+0000] {subprocess.py:93} INFO -   4850K .......... .......... .......... .......... .......... 20%  714K 31s
+[2024-04-12T17:18:57.214+0000] {subprocess.py:93} INFO -   4900K .......... .......... .......... .......... .......... 20%  756K 31s
+[2024-04-12T17:18:57.288+0000] {subprocess.py:93} INFO -   4950K .......... .......... .......... .......... .......... 20%  706K 31s
+[2024-04-12T17:18:57.359+0000] {subprocess.py:93} INFO -   5000K .......... .......... .......... .......... .......... 20%  675K 31s
+[2024-04-12T17:18:57.434+0000] {subprocess.py:93} INFO -   5050K .......... .......... .......... .......... .......... 21%  662K 30s
+[2024-04-12T17:18:57.490+0000] {subprocess.py:93} INFO -   5100K .......... .......... .......... .......... .......... 21%  901K 30s
+[2024-04-12T17:18:57.563+0000] {subprocess.py:93} INFO -   5150K .......... .......... .......... .......... .......... 21%  704K 30s
+[2024-04-12T17:18:57.624+0000] {subprocess.py:93} INFO -   5200K .......... .......... .......... .......... .......... 21%  791K 30s
+[2024-04-12T17:18:57.691+0000] {subprocess.py:93} INFO -   5250K .......... .......... .......... .......... .......... 21%  749K 30s
+[2024-04-12T17:18:57.761+0000] {subprocess.py:93} INFO -   5300K .......... .......... .......... .......... .......... 22%  724K 30s
+[2024-04-12T17:18:57.769+0000] {subprocess.py:93} INFO -   5350K .......... .......... .......... .......... .......... 22% 5.93M 29s
+[2024-04-12T17:18:57.834+0000] {subprocess.py:93} INFO -   5400K .......... .......... .......... .......... .......... 22%  760K 29s
+[2024-04-12T17:18:57.921+0000] {subprocess.py:93} INFO -   5450K .......... .......... .......... .......... .......... 22%  570K 29s
+[2024-04-12T17:18:57.988+0000] {subprocess.py:93} INFO -   5500K .......... .......... .......... .......... .......... 22%  765K 29s
+[2024-04-12T17:18:58.253+0000] {subprocess.py:93} INFO -   5550K .......... .......... .......... .......... .......... 23%  187K 30s
+[2024-04-12T17:18:58.608+0000] {subprocess.py:93} INFO -   5600K .......... .......... .......... .......... .......... 23%  141K 31s
+[2024-04-12T17:18:58.679+0000] {subprocess.py:93} INFO -   5650K .......... .......... .......... .......... .......... 23%  710K 30s
+[2024-04-12T17:18:58.750+0000] {subprocess.py:93} INFO -   5700K .......... .......... .......... .......... .......... 23%  697K 30s
+[2024-04-12T17:18:58.915+0000] {subprocess.py:93} INFO -   5750K .......... .......... .......... .......... .......... 23%  304K 30s
+[2024-04-12T17:18:59.002+0000] {subprocess.py:93} INFO -   5800K .......... .......... .......... .......... .......... 24%  588K 30s
+[2024-04-12T17:18:59.059+0000] {subprocess.py:93} INFO -   5850K .......... .......... .......... .......... .......... 24%  838K 30s
+[2024-04-12T17:18:59.193+0000] {subprocess.py:93} INFO -   5900K .......... .......... .......... .......... .......... 24%  376K 30s
+[2024-04-12T17:18:59.263+0000] {subprocess.py:93} INFO -   5950K .......... .......... .......... .......... .......... 24%  717K 30s
+[2024-04-12T17:18:59.329+0000] {subprocess.py:93} INFO -   6000K .......... .......... .......... .......... .......... 25% 6.69M 30s
+[2024-04-12T17:18:59.495+0000] {subprocess.py:93} INFO -   6050K .......... .......... .......... .......... .......... 25%  222K 30s
+[2024-04-12T17:18:59.526+0000] {subprocess.py:93} INFO -   6100K .......... .......... .......... .......... .......... 25% 1.57M 30s
+[2024-04-12T17:18:59.543+0000] {subprocess.py:93} INFO -   6150K .......... .......... .......... .......... .......... 25% 3.05M 30s
+[2024-04-12T17:18:59.606+0000] {subprocess.py:93} INFO -   6200K .......... .......... .......... .......... .......... 25%  781K 30s
+[2024-04-12T17:18:59.676+0000] {subprocess.py:93} INFO -   6250K .......... .......... .......... .......... .......... 26%  708K 29s
+[2024-04-12T17:18:59.681+0000] {subprocess.py:93} INFO -   6300K .......... .......... .......... .......... .......... 26% 10.4M 29s
+[2024-04-12T17:18:59.761+0000] {subprocess.py:93} INFO -   6350K .......... .......... .......... .......... .......... 26%  623K 29s
+[2024-04-12T17:18:59.837+0000] {subprocess.py:93} INFO -   6400K .......... .......... .......... .......... .......... 26%  663K 29s
+[2024-04-12T17:18:59.909+0000] {subprocess.py:93} INFO -   6450K .......... .......... .......... .......... .......... 26%  695K 29s
+[2024-04-12T17:19:00.042+0000] {subprocess.py:93} INFO -   6500K .......... .......... .......... .......... .......... 27%  374K 29s
+[2024-04-12T17:19:00.387+0000] {subprocess.py:93} INFO -   6550K .......... .......... .......... .......... .......... 27%  145K 30s
+[2024-04-12T17:19:00.590+0000] {subprocess.py:93} INFO -   6600K .......... .......... .......... .......... .......... 27%  246K 30s
+[2024-04-12T17:19:00.777+0000] {subprocess.py:93} INFO -   6650K .......... .......... .......... .......... .......... 27%  271K 30s
+[2024-04-12T17:19:00.809+0000] {subprocess.py:93} INFO -   6700K .......... .......... .......... .......... .......... 27% 1.44M 30s
+[2024-04-12T17:19:00.866+0000] {subprocess.py:93} INFO -   6750K .......... .......... .......... .......... .......... 28%  871K 30s
+[2024-04-12T17:19:00.968+0000] {local_task_job_runner.py:302} WARNING - State of this instance has been externally set to restarting. Terminating instance.
+[2024-04-12T17:19:00.978+0000] {process_utils.py:131} INFO - Sending 15 to group 2840. PIDs of all processes in the group: [2841, 2859, 2840]
+[2024-04-12T17:19:00.979+0000] {process_utils.py:86} INFO - Sending the signal 15 to group 2840
+[2024-04-12T17:19:00.980+0000] {taskinstance.py:2483} ERROR - Received SIGTERM. Terminating subprocesses.
+[2024-04-12T17:19:00.980+0000] {subprocess.py:104} INFO - Sending SIGTERM signal to process group
+[2024-04-12T17:19:01.016+0000] {taskinstance.py:2731} ERROR - Task failed with exception
+Traceback (most recent call last):
+  File "/home/airflow/.local/lib/python3.11/site-packages/airflow/models/taskinstance.py", line 444, in _execute_task
+    result = _execute_callable(context=context, **execute_callable_kwargs)
+             ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/airflow/.local/lib/python3.11/site-packages/airflow/models/taskinstance.py", line 414, in _execute_callable
+    return execute_callable(context=context, **execute_callable_kwargs)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/airflow/.local/lib/python3.11/site-packages/airflow/operators/bash.py", line 203, in execute
+    result = self.subprocess_hook.run_command(
+             ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/airflow/.local/lib/python3.11/site-packages/airflow/hooks/subprocess.py", line 91, in run_command
+    for raw_line in iter(self.sub_process.stdout.readline, b""):
+  File "/home/airflow/.local/lib/python3.11/site-packages/airflow/models/taskinstance.py", line 2485, in signal_handler
+    raise AirflowException("Task received SIGTERM signal")
+airflow.exceptions.AirflowException: Task received SIGTERM signal
+[2024-04-12T17:19:01.022+0000] {taskinstance.py:1149} INFO - Marking task as UP_FOR_RETRY. dag_id=upload_congress_data, task_id=download_bill_statuses, execution_date=20240412T171418, start_date=20240412T171840, end_date=20240412T171901
+[2024-04-12T17:19:01.033+0000] {standard_task_runner.py:107} ERROR - Failed to execute job 84 for task download_bill_statuses (Task received SIGTERM signal; 2840)
+[2024-04-12T17:19:01.079+0000] {process_utils.py:79} INFO - Process psutil.Process(pid=2840, status='terminated', exitcode=1, started='17:18:40') (2840) terminated with exit code 1
+[2024-04-12T17:19:01.080+0000] {process_utils.py:79} INFO - Process psutil.Process(pid=2841, status='terminated', started='17:18:40') (2841) terminated with exit code None
+[2024-04-12T17:19:01.080+0000] {process_utils.py:79} INFO - Process psutil.Process(pid=2859, status='terminated', started='17:18:48') (2859) terminated with exit code None

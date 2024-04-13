@@ -1,0 +1,11 @@
+version: 2
+sources:
+  - name: staging
+    database: inbound-ship-412204
+    schema: Congress
+
+    tables:
+      - name: member
+      - name: bills
+      - name: votes
+

@@ -31,3 +31,461 @@ TypeError: string indices must be integers, not 'str'
 [2024-04-10T04:31:13.094+0000] {standard_task_runner.py:107} ERROR - Failed to execute job 6 for task get_votes_from_downloaded_bills (string indices must be integers, not 'str'; 158)
 [2024-04-10T04:31:13.135+0000] {local_task_job_runner.py:234} INFO - Task exited with return code 1
 [2024-04-10T04:31:13.184+0000] {taskinstance.py:3312} INFO - 0 downstream tasks scheduled from follow-on schedule check
+[2024-04-12T17:44:09.223+0000] {taskinstance.py:1979} INFO - Dependencies all met for dep_context=non-requeueable deps ti=<TaskInstance: upload_congress_data.get_votes_from_downloaded_bills scheduled__2024-03-15T00:00:00+00:00 [queued]>
+[2024-04-12T17:44:09.229+0000] {taskinstance.py:1979} INFO - Dependencies all met for dep_context=requeueable deps ti=<TaskInstance: upload_congress_data.get_votes_from_downloaded_bills scheduled__2024-03-15T00:00:00+00:00 [queued]>
+[2024-04-12T17:44:09.230+0000] {taskinstance.py:2193} INFO - Starting attempt 1 of 1
+[2024-04-12T17:44:09.240+0000] {taskinstance.py:2217} INFO - Executing <Task(PythonOperator): get_votes_from_downloaded_bills> on 2024-03-15 00:00:00+00:00
+[2024-04-12T17:44:09.246+0000] {standard_task_runner.py:60} INFO - Started process 154 to run task
+[2024-04-12T17:44:09.250+0000] {standard_task_runner.py:87} INFO - Running: ['***', 'tasks', 'run', 'upload_congress_data', 'get_votes_from_downloaded_bills', 'scheduled__2024-03-15T00:00:00+00:00', '--job-id', '9', '--raw', '--subdir', 'DAGS_FOLDER/upload_congress_data.py', '--cfg-path', '/tmp/tmp3s9xzgfj']
+[2024-04-12T17:44:09.254+0000] {standard_task_runner.py:88} INFO - Job 9: Subtask get_votes_from_downloaded_bills
+[2024-04-12T17:44:09.320+0000] {task_command.py:423} INFO - Running <TaskInstance: upload_congress_data.get_votes_from_downloaded_bills scheduled__2024-03-15T00:00:00+00:00 [running]> on host 08bbc0b56ffc
+[2024-04-12T17:44:09.388+0000] {taskinstance.py:2513} INFO - Exporting env vars: AIRFLOW_CTX_DAG_OWNER='***' AIRFLOW_CTX_DAG_ID='upload_congress_data' AIRFLOW_CTX_TASK_ID='get_votes_from_downloaded_bills' AIRFLOW_CTX_EXECUTION_DATE='2024-03-15T00:00:00+00:00' AIRFLOW_CTX_TRY_NUMBER='1' AIRFLOW_CTX_DAG_RUN_ID='scheduled__2024-03-15T00:00:00+00:00'
+[2024-04-12T17:44:09.699+0000] {get_data.py:131} INFO - Opened bill from file /opt/***/dags/data/bills/hjres/BILLSTATUS-118hjres68.json
+[2024-04-12T17:44:10.061+0000] {get_data.py:131} INFO - Opened bill from file /opt/***/dags/data/bills/hjres/BILLSTATUS-118hjres44.json
+[2024-04-12T17:44:10.806+0000] {get_data.py:131} INFO - Opened bill from file /opt/***/dags/data/bills/hjres/BILLSTATUS-118hjres45.json
+[2024-04-12T17:44:11.951+0000] {get_data.py:131} INFO - Opened bill from file /opt/***/dags/data/bills/hjres/BILLSTATUS-118hjres24.json
+[2024-04-12T17:44:12.269+0000] {get_data.py:131} INFO - Opened bill from file /opt/***/dags/data/bills/hjres/BILLSTATUS-118hjres39.json
+[2024-04-12T17:44:13.202+0000] {get_data.py:131} INFO - Opened bill from file /opt/***/dags/data/bills/hjres/BILLSTATUS-118hjres42.json
+[2024-04-12T17:44:14.200+0000] {get_data.py:131} INFO - Opened bill from file /opt/***/dags/data/bills/hjres/BILLSTATUS-118hjres74.json
+[2024-04-12T17:44:14.517+0000] {get_data.py:131} INFO - Opened bill from file /opt/***/dags/data/bills/hjres/BILLSTATUS-118hjres7.json
+[2024-04-12T17:44:15.096+0000] {get_data.py:131} INFO - Opened bill from file /opt/***/dags/data/bills/hjres/BILLSTATUS-118hjres79.json
+[2024-04-12T17:44:15.420+0000] {get_data.py:131} INFO - Opened bill from file /opt/***/dags/data/bills/hjres/BILLSTATUS-118hjres98.json
+[2024-04-12T17:44:15.812+0000] {logging_mixin.py:188} INFO - An exception occurred 'rollcall-vote' Failed to save one or more votes for {bill_type} {bill_number}
+[2024-04-12T17:44:15.958+0000] {logging_mixin.py:188} INFO - An exception occurred 'rollcall-vote' Failed to save one or more votes for {bill_type} {bill_number}
+[2024-04-12T17:44:16.105+0000] {logging_mixin.py:188} INFO - An exception occurred 'rollcall-vote' Failed to save one or more votes for {bill_type} {bill_number}
+[2024-04-12T17:44:16.247+0000] {logging_mixin.py:188} INFO - An exception occurred 'rollcall-vote' Failed to save one or more votes for {bill_type} {bill_number}
+[2024-04-12T17:44:16.248+0000] {get_data.py:131} INFO - Opened bill from file /opt/***/dags/data/bills/hjres/BILLSTATUS-118hjres70.json
+[2024-04-12T17:44:16.575+0000] {get_data.py:131} INFO - Opened bill from file /opt/***/dags/data/bills/hjres/BILLSTATUS-118hjres27.json
+[2024-04-12T17:44:17.484+0000] {get_data.py:131} INFO - Opened bill from file /opt/***/dags/data/bills/hjres/BILLSTATUS-118hjres88.json
+[2024-04-12T17:44:17.849+0000] {get_data.py:131} INFO - Opened bill from file /opt/***/dags/data/bills/hjres/BILLSTATUS-118hjres30.json
+[2024-04-12T17:44:18.727+0000] {get_data.py:131} INFO - Opened bill from file /opt/***/dags/data/bills/hjres/BILLSTATUS-118hjres26.json
+[2024-04-12T17:44:19.303+0000] {get_data.py:131} INFO - Opened bill from file /opt/***/dags/data/bills/hjres/BILLSTATUS-118hjres71.json
+[2024-04-12T17:44:19.624+0000] {get_data.py:131} INFO - Opened bill from file /opt/***/dags/data/bills/hconres/BILLSTATUS-118hconres7.json
+[2024-04-12T17:44:19.772+0000] {logging_mixin.py:188} INFO - An exception occurred 'rollcall-vote' Failed to save one or more votes for {bill_type} {bill_number}
+[2024-04-12T17:44:19.913+0000] {logging_mixin.py:188} INFO - An exception occurred 'rollcall-vote' Failed to save one or more votes for {bill_type} {bill_number}
+[2024-04-12T17:44:19.919+0000] {get_data.py:131} INFO - Opened bill from file /opt/***/dags/data/bills/hconres/BILLSTATUS-118hconres30.json
+[2024-04-12T17:44:20.260+0000] {get_data.py:131} INFO - Opened bill from file /opt/***/dags/data/bills/hconres/BILLSTATUS-118hconres57.json
+[2024-04-12T17:44:20.629+0000] {get_data.py:131} INFO - Opened bill from file /opt/***/dags/data/bills/hconres/BILLSTATUS-118hconres40.json
+[2024-04-12T17:44:20.989+0000] {get_data.py:131} INFO - Opened bill from file /opt/***/dags/data/bills/hconres/BILLSTATUS-118hconres21.json
+[2024-04-12T17:44:21.309+0000] {get_data.py:131} INFO - Opened bill from file /opt/***/dags/data/bills/hconres/BILLSTATUS-118hconres3.json
+[2024-04-12T17:44:21.458+0000] {logging_mixin.py:188} INFO - An exception occurred 'rollcall-vote' Failed to save one or more votes for {bill_type} {bill_number}
+[2024-04-12T17:44:21.597+0000] {logging_mixin.py:188} INFO - An exception occurred 'rollcall-vote' Failed to save one or more votes for {bill_type} {bill_number}
+[2024-04-12T17:44:21.601+0000] {get_data.py:131} INFO - Opened bill from file /opt/***/dags/data/bills/hconres/BILLSTATUS-118hconres86.json
+[2024-04-12T17:44:21.763+0000] {logging_mixin.py:188} INFO - An exception occurred 'rollcall-vote' Failed to save one or more votes for {bill_type} {bill_number}
+[2024-04-12T17:44:21.914+0000] {logging_mixin.py:188} INFO - An exception occurred 'rollcall-vote' Failed to save one or more votes for {bill_type} {bill_number}
+[2024-04-12T17:44:21.916+0000] {get_data.py:131} INFO - Opened bill from file /opt/***/dags/data/bills/hconres/BILLSTATUS-118hconres9.json
+[2024-04-12T17:44:22.237+0000] {get_data.py:131} INFO - Opened bill from file /opt/***/dags/data/bills/hconres/BILLSTATUS-118hconres25.json
+[2024-04-12T17:44:22.584+0000] {get_data.py:131} INFO - Opened bill from file /opt/***/dags/data/bills/s/BILLSTATUS-118s870.json
+[2024-04-12T17:44:23.227+0000] {get_data.py:131} INFO - Opened bill from file /opt/***/dags/data/bills/s/BILLSTATUS-118s3427.json
+[2024-04-12T17:44:23.381+0000] {logging_mixin.py:188} INFO - An exception occurred 'rollcall-vote' Failed to save one or more votes for {bill_type} {bill_number}
+[2024-04-12T17:44:23.545+0000] {logging_mixin.py:188} INFO - An exception occurred 'rollcall-vote' Failed to save one or more votes for {bill_type} {bill_number}
+[2024-04-12T17:44:23.725+0000] {logging_mixin.py:188} INFO - An exception occurred 'rollcall-vote' Failed to save one or more votes for {bill_type} {bill_number}
+[2024-04-12T17:44:23.875+0000] {logging_mixin.py:188} INFO - An exception occurred 'rollcall-vote' Failed to save one or more votes for {bill_type} {bill_number}
+[2024-04-12T17:44:23.876+0000] {get_data.py:131} INFO - Opened bill from file /opt/***/dags/data/bills/s/BILLSTATUS-118s112.json
+[2024-04-12T17:44:24.187+0000] {get_data.py:131} INFO - Opened bill from file /opt/***/dags/data/bills/s/BILLSTATUS-118s3250.json
+[2024-04-12T17:44:24.342+0000] {logging_mixin.py:188} INFO - An exception occurred 'rollcall-vote' Failed to save one or more votes for {bill_type} {bill_number}
+[2024-04-12T17:44:24.490+0000] {logging_mixin.py:188} INFO - An exception occurred 'rollcall-vote' Failed to save one or more votes for {bill_type} {bill_number}
+[2024-04-12T17:44:24.638+0000] {logging_mixin.py:188} INFO - An exception occurred 'rollcall-vote' Failed to save one or more votes for {bill_type} {bill_number}
+[2024-04-12T17:44:24.796+0000] {logging_mixin.py:188} INFO - An exception occurred 'rollcall-vote' Failed to save one or more votes for {bill_type} {bill_number}
+[2024-04-12T17:44:24.800+0000] {get_data.py:131} INFO - Opened bill from file /opt/***/dags/data/bills/s/BILLSTATUS-118s2226.json
+[2024-04-12T17:44:24.983+0000] {get_data.py:131} INFO - Opened bill from file /opt/***/dags/data/bills/s/BILLSTATUS-118s2051.json
+[2024-04-12T17:44:25.328+0000] {get_data.py:131} INFO - Opened bill from file /opt/***/dags/data/bills/s/BILLSTATUS-118s788.json
+[2024-04-12T17:44:25.658+0000] {get_data.py:131} INFO - Opened bill from file /opt/***/dags/data/bills/s/BILLSTATUS-118s475.json
+[2024-04-12T17:44:26.016+0000] {get_data.py:131} INFO - Opened bill from file /opt/***/dags/data/bills/s/BILLSTATUS-118s619.json
+[2024-04-12T17:44:26.327+0000] {get_data.py:131} INFO - Opened bill from file /opt/***/dags/data/bills/s/BILLSTATUS-118s316.json
+[2024-04-12T17:44:28.958+0000] {get_data.py:131} INFO - Opened bill from file /opt/***/dags/data/bills/s/BILLSTATUS-118s382.json
+[2024-04-12T17:44:29.292+0000] {get_data.py:131} INFO - Opened bill from file /opt/***/dags/data/bills/s/BILLSTATUS-118s3853.json
+[2024-04-12T17:44:29.551+0000] {get_data.py:131} INFO - Opened bill from file /opt/***/dags/data/bills/s/BILLSTATUS-118s111.json
+[2024-04-12T17:44:29.863+0000] {get_data.py:131} INFO - Opened bill from file /opt/***/dags/data/bills/s/BILLSTATUS-118s326.json
+[2024-04-12T17:44:30.025+0000] {get_data.py:131} INFO - Opened bill from file /opt/***/dags/data/bills/sres/BILLSTATUS-118sres13.json
+[2024-04-12T17:44:30.281+0000] {get_data.py:131} INFO - Opened bill from file /opt/***/dags/data/bills/sres/BILLSTATUS-118sres21.json
+[2024-04-12T17:44:30.538+0000] {get_data.py:131} INFO - Opened bill from file /opt/***/dags/data/bills/sres/BILLSTATUS-118sres504.json
+[2024-04-12T17:44:30.735+0000] {get_data.py:131} INFO - Opened bill from file /opt/***/dags/data/bills/sres/BILLSTATUS-118sres417.json
+[2024-04-12T17:44:31.014+0000] {get_data.py:131} INFO - Opened bill from file /opt/***/dags/data/bills/hr/BILLSTATUS-118hr1339.json
+[2024-04-12T17:44:31.348+0000] {get_data.py:131} INFO - Opened bill from file /opt/***/dags/data/bills/hr/BILLSTATUS-118hr2796.json
+[2024-04-12T17:44:31.686+0000] {get_data.py:131} INFO - Opened bill from file /opt/***/dags/data/bills/hr/BILLSTATUS-118hr2811.json
+[2024-04-12T17:44:32.184+0000] {get_data.py:131} INFO - Opened bill from file /opt/***/dags/data/bills/hr/BILLSTATUS-118hr23.json
+[2024-04-12T17:44:32.321+0000] {logging_mixin.py:188} INFO - An exception occurred 'rollcall-vote' Failed to save one or more votes for {bill_type} {bill_number}
+[2024-04-12T17:44:32.477+0000] {logging_mixin.py:188} INFO - An exception occurred 'rollcall-vote' Failed to save one or more votes for {bill_type} {bill_number}
+[2024-04-12T17:44:32.628+0000] {logging_mixin.py:188} INFO - An exception occurred 'rollcall-vote' Failed to save one or more votes for {bill_type} {bill_number}
+[2024-04-12T17:44:32.632+0000] {get_data.py:131} INFO - Opened bill from file /opt/***/dags/data/bills/hr/BILLSTATUS-118hr406.json
+[2024-04-12T17:44:32.965+0000] {get_data.py:131} INFO - Opened bill from file /opt/***/dags/data/bills/hr/BILLSTATUS-118hr4984.json
+[2024-04-12T17:44:33.108+0000] {logging_mixin.py:188} INFO - An exception occurred 'rollcall-vote' Failed to save one or more votes for {bill_type} {bill_number}
+[2024-04-12T17:44:33.265+0000] {logging_mixin.py:188} INFO - An exception occurred 'rollcall-vote' Failed to save one or more votes for {bill_type} {bill_number}
+[2024-04-12T17:44:33.413+0000] {logging_mixin.py:188} INFO - An exception occurred 'rollcall-vote' Failed to save one or more votes for {bill_type} {bill_number}
+[2024-04-12T17:44:33.567+0000] {logging_mixin.py:188} INFO - An exception occurred 'rollcall-vote' Failed to save one or more votes for {bill_type} {bill_number}
+[2024-04-12T17:44:33.570+0000] {get_data.py:131} INFO - Opened bill from file /opt/***/dags/data/bills/hr/BILLSTATUS-118hr538.json
+[2024-04-12T17:44:33.897+0000] {get_data.py:131} INFO - Opened bill from file /opt/***/dags/data/bills/hr/BILLSTATUS-118hr3152.json
+[2024-04-12T17:44:34.300+0000] {get_data.py:131} INFO - Opened bill from file /opt/***/dags/data/bills/hr/BILLSTATUS-118hr5585.json
+[2024-04-12T17:44:34.448+0000] {logging_mixin.py:188} INFO - An exception occurred 'rollcall-vote' Failed to save one or more votes for {bill_type} {bill_number}
+[2024-04-12T17:44:34.605+0000] {logging_mixin.py:188} INFO - An exception occurred 'rollcall-vote' Failed to save one or more votes for {bill_type} {bill_number}
+[2024-04-12T17:44:34.782+0000] {logging_mixin.py:188} INFO - An exception occurred 'rollcall-vote' Failed to save one or more votes for {bill_type} {bill_number}
+[2024-04-12T17:44:34.931+0000] {logging_mixin.py:188} INFO - An exception occurred 'rollcall-vote' Failed to save one or more votes for {bill_type} {bill_number}
+[2024-04-12T17:44:34.935+0000] {get_data.py:131} INFO - Opened bill from file /opt/***/dags/data/bills/hr/BILLSTATUS-118hr4394.json
+[2024-04-12T17:44:35.442+0000] {get_data.py:131} INFO - Opened bill from file /opt/***/dags/data/bills/hr/BILLSTATUS-118hr277.json
+[2024-04-12T17:44:35.960+0000] {get_data.py:131} INFO - Opened bill from file /opt/***/dags/data/bills/hr/BILLSTATUS-118hr1159.json
+[2024-04-12T17:44:36.267+0000] {get_data.py:131} INFO - Opened bill from file /opt/***/dags/data/bills/hr/BILLSTATUS-118hr7520.json
+[2024-04-12T17:44:36.408+0000] {logging_mixin.py:188} INFO - An exception occurred 'rollcall-vote' Failed to save one or more votes for {bill_type} {bill_number}
+[2024-04-12T17:44:36.557+0000] {logging_mixin.py:188} INFO - An exception occurred 'rollcall-vote' Failed to save one or more votes for {bill_type} {bill_number}
+[2024-04-12T17:44:36.560+0000] {get_data.py:131} INFO - Opened bill from file /opt/***/dags/data/bills/hr/BILLSTATUS-118hr3099.json
+[2024-04-12T17:44:36.882+0000] {get_data.py:131} INFO - Opened bill from file /opt/***/dags/data/bills/hr/BILLSTATUS-118hr7023.json
+[2024-04-12T17:44:37.394+0000] {get_data.py:131} INFO - Opened bill from file /opt/***/dags/data/bills/hr/BILLSTATUS-118hr1548.json
+[2024-04-12T17:44:37.726+0000] {get_data.py:131} INFO - Opened bill from file /opt/***/dags/data/bills/hr/BILLSTATUS-118hr1163.json
+[2024-04-12T17:44:38.195+0000] {get_data.py:131} INFO - Opened bill from file /opt/***/dags/data/bills/hr/BILLSTATUS-118hr6976.json
+[2024-04-12T17:44:38.342+0000] {logging_mixin.py:188} INFO - An exception occurred 'rollcall-vote' Failed to save one or more votes for {bill_type} {bill_number}
+[2024-04-12T17:44:38.483+0000] {logging_mixin.py:188} INFO - An exception occurred 'rollcall-vote' Failed to save one or more votes for {bill_type} {bill_number}
+[2024-04-12T17:44:38.624+0000] {logging_mixin.py:188} INFO - An exception occurred 'rollcall-vote' Failed to save one or more votes for {bill_type} {bill_number}
+[2024-04-12T17:44:38.768+0000] {logging_mixin.py:188} INFO - An exception occurred 'rollcall-vote' Failed to save one or more votes for {bill_type} {bill_number}
+[2024-04-12T17:44:38.770+0000] {get_data.py:131} INFO - Opened bill from file /opt/***/dags/data/bills/hr/BILLSTATUS-118hr3774.json
+[2024-04-12T17:44:39.075+0000] {get_data.py:131} INFO - Opened bill from file /opt/***/dags/data/bills/hr/BILLSTATUS-118hr6126.json
+[2024-04-12T17:44:39.666+0000] {get_data.py:131} INFO - Opened bill from file /opt/***/dags/data/bills/hr/BILLSTATUS-118hr467.json
+[2024-04-12T17:44:40.036+0000] {get_data.py:131} INFO - Opened bill from file /opt/***/dags/data/bills/hr/BILLSTATUS-118hr3324.json
+[2024-04-12T17:44:40.364+0000] {get_data.py:131} INFO - Opened bill from file /opt/***/dags/data/bills/hr/BILLSTATUS-118hr5862.json
+[2024-04-12T17:44:40.511+0000] {logging_mixin.py:188} INFO - An exception occurred 'rollcall-vote' Failed to save one or more votes for {bill_type} {bill_number}
+[2024-04-12T17:44:40.664+0000] {logging_mixin.py:188} INFO - An exception occurred 'rollcall-vote' Failed to save one or more votes for {bill_type} {bill_number}
+[2024-04-12T17:44:40.818+0000] {logging_mixin.py:188} INFO - An exception occurred 'rollcall-vote' Failed to save one or more votes for {bill_type} {bill_number}
+[2024-04-12T17:44:40.964+0000] {logging_mixin.py:188} INFO - An exception occurred 'rollcall-vote' Failed to save one or more votes for {bill_type} {bill_number}
+[2024-04-12T17:44:40.968+0000] {get_data.py:131} INFO - Opened bill from file /opt/***/dags/data/bills/hr/BILLSTATUS-118hr1123.json
+[2024-04-12T17:44:41.308+0000] {get_data.py:131} INFO - Opened bill from file /opt/***/dags/data/bills/hr/BILLSTATUS-118hr1836.json
+[2024-04-12T17:44:41.453+0000] {logging_mixin.py:188} INFO - An exception occurred 'rollcall-vote' Failed to save one or more votes for {bill_type} {bill_number}
+[2024-04-12T17:44:41.613+0000] {logging_mixin.py:188} INFO - An exception occurred 'rollcall-vote' Failed to save one or more votes for {bill_type} {bill_number}
+[2024-04-12T17:44:41.620+0000] {get_data.py:131} INFO - Opened bill from file /opt/***/dags/data/bills/hr/BILLSTATUS-118hr3935.json
+[2024-04-12T17:44:42.389+0000] {get_data.py:131} INFO - Opened bill from file /opt/***/dags/data/bills/hr/BILLSTATUS-118hr2670.json
+[2024-04-12T17:44:45.504+0000] {get_data.py:131} INFO - Opened bill from file /opt/***/dags/data/bills/hr/BILLSTATUS-118hr2365.json
+[2024-04-12T17:44:45.850+0000] {get_data.py:131} INFO - Opened bill from file /opt/***/dags/data/bills/hr/BILLSTATUS-118hr1226.json
+[2024-04-12T17:44:46.164+0000] {get_data.py:131} INFO - Opened bill from file /opt/***/dags/data/bills/hr/BILLSTATUS-118hr4531.json
+[2024-04-12T17:44:46.464+0000] {get_data.py:131} INFO - Opened bill from file /opt/***/dags/data/bills/hr/BILLSTATUS-118hr734.json
+[2024-04-12T17:44:46.990+0000] {get_data.py:131} INFO - Opened bill from file /opt/***/dags/data/bills/hr/BILLSTATUS-118hr7521.json
+[2024-04-12T17:44:47.140+0000] {logging_mixin.py:188} INFO - An exception occurred 'rollcall-vote' Failed to save one or more votes for {bill_type} {bill_number}
+[2024-04-12T17:44:47.287+0000] {logging_mixin.py:188} INFO - An exception occurred 'rollcall-vote' Failed to save one or more votes for {bill_type} {bill_number}
+[2024-04-12T17:44:47.289+0000] {get_data.py:131} INFO - Opened bill from file /opt/***/dags/data/bills/hr/BILLSTATUS-118hr5.json
+[2024-04-12T17:44:47.804+0000] {get_data.py:131} INFO - Opened bill from file /opt/***/dags/data/bills/hr/BILLSTATUS-118hr3391.json
+[2024-04-12T17:44:47.954+0000] {logging_mixin.py:188} INFO - An exception occurred 'rollcall-vote' Failed to save one or more votes for {bill_type} {bill_number}
+[2024-04-12T17:44:48.097+0000] {logging_mixin.py:188} INFO - An exception occurred 'rollcall-vote' Failed to save one or more votes for {bill_type} {bill_number}
+[2024-04-12T17:44:48.241+0000] {logging_mixin.py:188} INFO - An exception occurred 'rollcall-vote' Failed to save one or more votes for {bill_type} {bill_number}
+[2024-04-12T17:44:48.384+0000] {logging_mixin.py:188} INFO - An exception occurred 'rollcall-vote' Failed to save one or more votes for {bill_type} {bill_number}
+[2024-04-12T17:44:48.386+0000] {get_data.py:131} INFO - Opened bill from file /opt/***/dags/data/bills/hr/BILLSTATUS-118hr2754.json
+[2024-04-12T17:44:48.530+0000] {logging_mixin.py:188} INFO - An exception occurred 'rollcall-vote' Failed to save one or more votes for {bill_type} {bill_number}
+[2024-04-12T17:44:48.668+0000] {logging_mixin.py:188} INFO - An exception occurred 'rollcall-vote' Failed to save one or more votes for {bill_type} {bill_number}
+[2024-04-12T17:44:48.806+0000] {logging_mixin.py:188} INFO - An exception occurred 'rollcall-vote' Failed to save one or more votes for {bill_type} {bill_number}
+[2024-04-12T17:44:48.949+0000] {logging_mixin.py:188} INFO - An exception occurred 'rollcall-vote' Failed to save one or more votes for {bill_type} {bill_number}
+[2024-04-12T17:44:48.955+0000] {get_data.py:131} INFO - Opened bill from file /opt/***/dags/data/bills/hr/BILLSTATUS-118hr485.json
+[2024-04-12T17:44:49.100+0000] {logging_mixin.py:188} INFO - An exception occurred 'rollcall-vote' Failed to save one or more votes for {bill_type} {bill_number}
+[2024-04-12T17:44:49.273+0000] {logging_mixin.py:188} INFO - An exception occurred 'rollcall-vote' Failed to save one or more votes for {bill_type} {bill_number}
+[2024-04-12T17:44:49.433+0000] {logging_mixin.py:188} INFO - An exception occurred 'rollcall-vote' Failed to save one or more votes for {bill_type} {bill_number}
+[2024-04-12T17:44:49.590+0000] {logging_mixin.py:188} INFO - An exception occurred 'rollcall-vote' Failed to save one or more votes for {bill_type} {bill_number}
+[2024-04-12T17:44:49.761+0000] {logging_mixin.py:188} INFO - An exception occurred 'rollcall-vote' Failed to save one or more votes for {bill_type} {bill_number}
+[2024-04-12T17:44:49.910+0000] {logging_mixin.py:188} INFO - An exception occurred 'rollcall-vote' Failed to save one or more votes for {bill_type} {bill_number}
+[2024-04-12T17:44:49.915+0000] {get_data.py:131} INFO - Opened bill from file /opt/***/dags/data/bills/hr/BILLSTATUS-118hr1752.json
+[2024-04-12T17:44:50.068+0000] {logging_mixin.py:188} INFO - An exception occurred 'rollcall-vote' Failed to save one or more votes for {bill_type} {bill_number}
+[2024-04-12T17:44:50.219+0000] {logging_mixin.py:188} INFO - An exception occurred 'rollcall-vote' Failed to save one or more votes for {bill_type} {bill_number}
+[2024-04-12T17:44:50.221+0000] {get_data.py:131} INFO - Opened bill from file /opt/***/dags/data/bills/hr/BILLSTATUS-118hr1093.json
+[2024-04-12T17:44:50.545+0000] {get_data.py:131} INFO - Opened bill from file /opt/***/dags/data/bills/hr/BILLSTATUS-118hr1640.json
+[2024-04-12T17:44:50.879+0000] {get_data.py:131} INFO - Opened bill from file /opt/***/dags/data/bills/hr/BILLSTATUS-118hr3981.json
+[2024-04-12T17:44:51.224+0000] {get_data.py:131} INFO - Opened bill from file /opt/***/dags/data/bills/hr/BILLSTATUS-118hr542.json
+[2024-04-12T17:44:51.570+0000] {get_data.py:131} INFO - Opened bill from file /opt/***/dags/data/bills/hr/BILLSTATUS-118hr22.json
+[2024-04-12T17:44:51.720+0000] {logging_mixin.py:188} INFO - An exception occurred 'rollcall-vote' Failed to save one or more votes for {bill_type} {bill_number}
+[2024-04-12T17:44:51.870+0000] {logging_mixin.py:188} INFO - An exception occurred 'rollcall-vote' Failed to save one or more votes for {bill_type} {bill_number}
+[2024-04-12T17:44:51.871+0000] {get_data.py:131} INFO - Opened bill from file /opt/***/dags/data/bills/hr/BILLSTATUS-118hr2797.json
+[2024-04-12T17:44:52.210+0000] {get_data.py:131} INFO - Opened bill from file /opt/***/dags/data/bills/hr/BILLSTATUS-118hr1154.json
+[2024-04-12T17:44:52.562+0000] {get_data.py:131} INFO - Opened bill from file /opt/***/dags/data/bills/hr/BILLSTATUS-118hr1338.json
+[2024-04-12T17:44:52.890+0000] {get_data.py:131} INFO - Opened bill from file /opt/***/dags/data/bills/hr/BILLSTATUS-118hr2.json
+[2024-04-12T17:44:53.387+0000] {get_data.py:131} INFO - Opened bill from file /opt/***/dags/data/bills/hr/BILLSTATUS-118hr7463.json
+[2024-04-12T17:44:54.438+0000] {logging_mixin.py:188} INFO - An exception occurred 'rollcall-vote' Failed to save one or more votes for {bill_type} {bill_number}
+[2024-04-12T17:44:54.593+0000] {logging_mixin.py:188} INFO - An exception occurred 'rollcall-vote' Failed to save one or more votes for {bill_type} {bill_number}
+[2024-04-12T17:44:54.748+0000] {logging_mixin.py:188} INFO - An exception occurred 'rollcall-vote' Failed to save one or more votes for {bill_type} {bill_number}
+[2024-04-12T17:44:54.894+0000] {logging_mixin.py:188} INFO - An exception occurred 'rollcall-vote' Failed to save one or more votes for {bill_type} {bill_number}
+[2024-04-12T17:44:54.897+0000] {get_data.py:131} INFO - Opened bill from file /opt/***/dags/data/bills/hr/BILLSTATUS-118hr676.json
+[2024-04-12T17:44:55.314+0000] {get_data.py:131} INFO - Opened bill from file /opt/***/dags/data/bills/hr/BILLSTATUS-118hr7176.json
+[2024-04-12T17:44:55.459+0000] {logging_mixin.py:188} INFO - An exception occurred 'rollcall-vote' Failed to save one or more votes for {bill_type} {bill_number}
+[2024-04-12T17:44:55.600+0000] {logging_mixin.py:188} INFO - An exception occurred 'rollcall-vote' Failed to save one or more votes for {bill_type} {bill_number}
+[2024-04-12T17:44:55.742+0000] {logging_mixin.py:188} INFO - An exception occurred 'rollcall-vote' Failed to save one or more votes for {bill_type} {bill_number}
+[2024-04-12T17:44:55.894+0000] {logging_mixin.py:188} INFO - An exception occurred 'rollcall-vote' Failed to save one or more votes for {bill_type} {bill_number}
+[2024-04-12T17:44:56.044+0000] {logging_mixin.py:188} INFO - An exception occurred 'rollcall-vote' Failed to save one or more votes for {bill_type} {bill_number}
+[2024-04-12T17:44:56.207+0000] {logging_mixin.py:188} INFO - An exception occurred 'rollcall-vote' Failed to save one or more votes for {bill_type} {bill_number}
+[2024-04-12T17:44:56.209+0000] {get_data.py:131} INFO - Opened bill from file /opt/***/dags/data/bills/hr/BILLSTATUS-118hr1734.json
+[2024-04-12T17:44:56.522+0000] {get_data.py:131} INFO - Opened bill from file /opt/***/dags/data/bills/hr/BILLSTATUS-118hr3089.json
+[2024-04-12T17:44:56.838+0000] {get_data.py:131} INFO - Opened bill from file /opt/***/dags/data/bills/hr/BILLSTATUS-118hr288.json
+[2024-04-12T17:44:57.329+0000] {get_data.py:131} INFO - Opened bill from file /opt/***/dags/data/bills/hr/BILLSTATUS-118hr1149.json
+[2024-04-12T17:44:57.661+0000] {get_data.py:131} INFO - Opened bill from file /opt/***/dags/data/bills/hr/BILLSTATUS-118hr359.json
+[2024-04-12T17:44:57.997+0000] {get_data.py:131} INFO - Opened bill from file /opt/***/dags/data/bills/hr/BILLSTATUS-118hr4367.json
+[2024-04-12T17:44:58.470+0000] {get_data.py:131} INFO - Opened bill from file /opt/***/dags/data/bills/hr/BILLSTATUS-118hr4664.json
+[2024-04-12T17:44:58.470+0000] {get_data.py:131} INFO - Opened bill from file /opt/***/dags/data/bills/hr/BILLSTATUS-118hr6679.json
+[2024-04-12T17:44:58.620+0000] {logging_mixin.py:188} INFO - An exception occurred 'rollcall-vote' Failed to save one or more votes for {bill_type} {bill_number}
+[2024-04-12T17:44:58.770+0000] {logging_mixin.py:188} INFO - An exception occurred 'rollcall-vote' Failed to save one or more votes for {bill_type} {bill_number}
+[2024-04-12T17:44:58.920+0000] {logging_mixin.py:188} INFO - An exception occurred 'rollcall-vote' Failed to save one or more votes for {bill_type} {bill_number}
+[2024-04-12T17:44:59.086+0000] {logging_mixin.py:188} INFO - An exception occurred 'rollcall-vote' Failed to save one or more votes for {bill_type} {bill_number}
+[2024-04-12T17:44:59.089+0000] {get_data.py:131} INFO - Opened bill from file /opt/***/dags/data/bills/hr/BILLSTATUS-118hr5110.json
+[2024-04-12T17:44:59.405+0000] {get_data.py:131} INFO - Opened bill from file /opt/***/dags/data/bills/hr/BILLSTATUS-118hr400.json
+[2024-04-12T17:44:59.556+0000] {logging_mixin.py:188} INFO - An exception occurred 'rollcall-vote' Failed to save one or more votes for {bill_type} {bill_number}
+[2024-04-12T17:44:59.709+0000] {logging_mixin.py:188} INFO - An exception occurred 'rollcall-vote' Failed to save one or more votes for {bill_type} {bill_number}
+[2024-04-12T17:44:59.710+0000] {get_data.py:131} INFO - Opened bill from file /opt/***/dags/data/bills/hr/BILLSTATUS-118hr139.json
+[2024-04-12T17:45:00.025+0000] {get_data.py:131} INFO - Opened bill from file /opt/***/dags/data/bills/hr/BILLSTATUS-118hr302.json
+[2024-04-12T17:45:00.343+0000] {get_data.py:131} INFO - Opened bill from file /opt/***/dags/data/bills/hr/BILLSTATUS-118hr1606.json
+[2024-04-12T17:45:00.662+0000] {get_data.py:131} INFO - Opened bill from file /opt/***/dags/data/bills/hr/BILLSTATUS-118hr6655.json
+[2024-04-12T17:45:01.047+0000] {get_data.py:131} INFO - Opened bill from file /opt/***/dags/data/bills/hr/BILLSTATUS-118hr1715.json
+[2024-04-12T17:45:01.369+0000] {get_data.py:131} INFO - Opened bill from file /opt/***/dags/data/bills/hr/BILLSTATUS-118hr2494.json
+[2024-04-12T17:45:01.722+0000] {get_data.py:131} INFO - Opened bill from file /opt/***/dags/data/bills/hr/BILLSTATUS-118hr2882.json
+[2024-04-12T17:45:04.105+0000] {logging_mixin.py:188} INFO - An exception occurred 'rollcall-vote' Failed to save one or more votes for {bill_type} {bill_number}
+[2024-04-12T17:45:04.257+0000] {logging_mixin.py:188} INFO - An exception occurred 'rollcall-vote' Failed to save one or more votes for {bill_type} {bill_number}
+[2024-04-12T17:45:04.438+0000] {logging_mixin.py:188} INFO - An exception occurred 'rollcall-vote' Failed to save one or more votes for {bill_type} {bill_number}
+[2024-04-12T17:45:04.586+0000] {logging_mixin.py:188} INFO - An exception occurred 'rollcall-vote' Failed to save one or more votes for {bill_type} {bill_number}
+[2024-04-12T17:45:04.590+0000] {get_data.py:131} INFO - Opened bill from file /opt/***/dags/data/bills/hr/BILLSTATUS-118hr1607.json
+[2024-04-12T17:45:04.939+0000] {get_data.py:131} INFO - Opened bill from file /opt/***/dags/data/bills/hr/BILLSTATUS-118hr753.json
+[2024-04-12T17:45:05.264+0000] {get_data.py:131} INFO - Opened bill from file /opt/***/dags/data/bills/hr/BILLSTATUS-118hr7511.json
+[2024-04-12T17:45:05.425+0000] {logging_mixin.py:188} INFO - An exception occurred 'rollcall-vote' Failed to save one or more votes for {bill_type} {bill_number}
+[2024-04-12T17:45:05.566+0000] {logging_mixin.py:188} INFO - An exception occurred 'rollcall-vote' Failed to save one or more votes for {bill_type} {bill_number}
+[2024-04-12T17:45:05.568+0000] {get_data.py:131} INFO - Opened bill from file /opt/***/dags/data/bills/hr/BILLSTATUS-118hr7454.json
+[2024-04-12T17:45:05.719+0000] {logging_mixin.py:188} INFO - An exception occurred 'rollcall-vote' Failed to save one or more votes for {bill_type} {bill_number}
+[2024-04-12T17:45:05.877+0000] {logging_mixin.py:188} INFO - An exception occurred 'rollcall-vote' Failed to save one or more votes for {bill_type} {bill_number}
+[2024-04-12T17:45:06.036+0000] {logging_mixin.py:188} INFO - An exception occurred 'rollcall-vote' Failed to save one or more votes for {bill_type} {bill_number}
+[2024-04-12T17:45:06.173+0000] {logging_mixin.py:188} INFO - An exception occurred 'rollcall-vote' Failed to save one or more votes for {bill_type} {bill_number}
+[2024-04-12T17:45:06.176+0000] {get_data.py:131} INFO - Opened bill from file /opt/***/dags/data/bills/hr/BILLSTATUS-118hr1353.json
+[2024-04-12T17:45:06.505+0000] {get_data.py:131} INFO - Opened bill from file /opt/***/dags/data/bills/hr/BILLSTATUS-118hr3250.json
+[2024-04-12T17:45:06.834+0000] {get_data.py:131} INFO - Opened bill from file /opt/***/dags/data/bills/hr/BILLSTATUS-118hr4468.json
+[2024-04-12T17:45:07.325+0000] {get_data.py:131} INFO - Opened bill from file /opt/***/dags/data/bills/hr/BILLSTATUS-118hr2379.json
+[2024-04-12T17:45:07.651+0000] {get_data.py:131} INFO - Opened bill from file /opt/***/dags/data/bills/hr/BILLSTATUS-118hr1105.json
+[2024-04-12T17:45:07.987+0000] {get_data.py:131} INFO - Opened bill from file /opt/***/dags/data/bills/hr/BILLSTATUS-118hr6678.json
+[2024-04-12T17:45:08.122+0000] {logging_mixin.py:188} INFO - An exception occurred 'rollcall-vote' Failed to save one or more votes for {bill_type} {bill_number}
+[2024-04-12T17:45:08.259+0000] {logging_mixin.py:188} INFO - An exception occurred 'rollcall-vote' Failed to save one or more votes for {bill_type} {bill_number}
+[2024-04-12T17:45:08.395+0000] {logging_mixin.py:188} INFO - An exception occurred 'rollcall-vote' Failed to save one or more votes for {bill_type} {bill_number}
+[2024-04-12T17:45:08.552+0000] {logging_mixin.py:188} INFO - An exception occurred 'rollcall-vote' Failed to save one or more votes for {bill_type} {bill_number}
+[2024-04-12T17:45:08.556+0000] {get_data.py:131} INFO - Opened bill from file /opt/***/dags/data/bills/hr/BILLSTATUS-118hr4665.json
+[2024-04-12T17:45:09.048+0000] {get_data.py:131} INFO - Opened bill from file /opt/***/dags/data/bills/hr/BILLSTATUS-118hr533.json
+[2024-04-12T17:45:09.190+0000] {logging_mixin.py:188} INFO - An exception occurred 'rollcall-vote' Failed to save one or more votes for {bill_type} {bill_number}
+[2024-04-12T17:45:09.336+0000] {logging_mixin.py:188} INFO - An exception occurred 'rollcall-vote' Failed to save one or more votes for {bill_type} {bill_number}
+[2024-04-12T17:45:09.483+0000] {logging_mixin.py:188} INFO - An exception occurred 'rollcall-vote' Failed to save one or more votes for {bill_type} {bill_number}
+[2024-04-12T17:45:09.633+0000] {logging_mixin.py:188} INFO - An exception occurred 'rollcall-vote' Failed to save one or more votes for {bill_type} {bill_number}
+[2024-04-12T17:45:09.636+0000] {get_data.py:131} INFO - Opened bill from file /opt/***/dags/data/bills/hr/BILLSTATUS-118hr4366.json
+[2024-04-12T17:45:12.503+0000] {get_data.py:131} INFO - Opened bill from file /opt/***/dags/data/bills/hr/BILLSTATUS-118hr5961.json
+[2024-04-12T17:45:12.818+0000] {get_data.py:131} INFO - Opened bill from file /opt/***/dags/data/bills/hr/BILLSTATUS-118hr1076.json
+[2024-04-12T17:45:13.160+0000] {get_data.py:131} INFO - Opened bill from file /opt/***/dags/data/bills/hr/BILLSTATUS-118hr6009.json
+[2024-04-12T17:45:13.311+0000] {logging_mixin.py:188} INFO - An exception occurred 'rollcall-vote' Failed to save one or more votes for {bill_type} {bill_number}
+[2024-04-12T17:45:13.465+0000] {logging_mixin.py:188} INFO - An exception occurred 'rollcall-vote' Failed to save one or more votes for {bill_type} {bill_number}
+[2024-04-12T17:45:13.642+0000] {logging_mixin.py:188} INFO - An exception occurred 'rollcall-vote' Failed to save one or more votes for {bill_type} {bill_number}
+[2024-04-12T17:45:13.648+0000] {get_data.py:131} INFO - Opened bill from file /opt/***/dags/data/bills/hr/BILLSTATUS-118hr7024.json
+[2024-04-12T17:45:13.810+0000] {logging_mixin.py:188} INFO - An exception occurred 'rollcall-vote' Failed to save one or more votes for {bill_type} {bill_number}
+[2024-04-12T17:45:13.962+0000] {logging_mixin.py:188} INFO - An exception occurred 'rollcall-vote' Failed to save one or more votes for {bill_type} {bill_number}
+[2024-04-12T17:45:14.113+0000] {logging_mixin.py:188} INFO - An exception occurred 'rollcall-vote' Failed to save one or more votes for {bill_type} {bill_number}
+[2024-04-12T17:45:14.276+0000] {logging_mixin.py:188} INFO - An exception occurred 'rollcall-vote' Failed to save one or more votes for {bill_type} {bill_number}
+[2024-04-12T17:45:14.280+0000] {get_data.py:131} INFO - Opened bill from file /opt/***/dags/data/bills/hr/BILLSTATUS-118hr3821.json
+[2024-04-12T17:45:14.442+0000] {logging_mixin.py:188} INFO - An exception occurred 'rollcall-vote' Failed to save one or more votes for {bill_type} {bill_number}
+[2024-04-12T17:45:14.599+0000] {logging_mixin.py:188} INFO - An exception occurred 'rollcall-vote' Failed to save one or more votes for {bill_type} {bill_number}
+[2024-04-12T17:45:14.760+0000] {logging_mixin.py:188} INFO - An exception occurred 'rollcall-vote' Failed to save one or more votes for {bill_type} {bill_number}
+[2024-04-12T17:45:14.908+0000] {logging_mixin.py:188} INFO - An exception occurred 'rollcall-vote' Failed to save one or more votes for {bill_type} {bill_number}
+[2024-04-12T17:45:14.911+0000] {get_data.py:131} INFO - Opened bill from file /opt/***/dags/data/bills/hr/BILLSTATUS-118hr3564.json
+[2024-04-12T17:45:15.414+0000] {get_data.py:131} INFO - Opened bill from file /opt/***/dags/data/bills/hr/BILLSTATUS-118hr159.json
+[2024-04-12T17:45:15.562+0000] {logging_mixin.py:188} INFO - An exception occurred 'rollcall-vote' Failed to save one or more votes for {bill_type} {bill_number}
+[2024-04-12T17:45:15.703+0000] {logging_mixin.py:188} INFO - An exception occurred 'rollcall-vote' Failed to save one or more votes for {bill_type} {bill_number}
+[2024-04-12T17:45:15.707+0000] {get_data.py:131} INFO - Opened bill from file /opt/***/dags/data/bills/hr/BILLSTATUS-118hr4723.json
+[2024-04-12T17:45:15.852+0000] {logging_mixin.py:188} INFO - An exception occurred 'rollcall-vote' Failed to save one or more votes for {bill_type} {bill_number}
+[2024-04-12T17:45:16.032+0000] {logging_mixin.py:188} INFO - An exception occurred 'rollcall-vote' Failed to save one or more votes for {bill_type} {bill_number}
+[2024-04-12T17:45:16.036+0000] {get_data.py:131} INFO - Opened bill from file /opt/***/dags/data/bills/hr/BILLSTATUS-118hr4365.json
+[2024-04-12T17:45:16.510+0000] {get_data.py:131} INFO - Opened bill from file /opt/***/dags/data/bills/hr/BILLSTATUS-118hr3224.json
+[2024-04-12T17:45:16.828+0000] {get_data.py:131} INFO - Opened bill from file /opt/***/dags/data/bills/hr/BILLSTATUS-118hr662.json
+[2024-04-12T17:45:17.193+0000] {get_data.py:131} INFO - Opened bill from file /opt/***/dags/data/bills/hr/BILLSTATUS-118hr3843.json
+[2024-04-12T17:45:17.349+0000] {logging_mixin.py:188} INFO - An exception occurred 'rollcall-vote' Failed to save one or more votes for {bill_type} {bill_number}
+[2024-04-12T17:45:17.499+0000] {logging_mixin.py:188} INFO - An exception occurred 'rollcall-vote' Failed to save one or more votes for {bill_type} {bill_number}
+[2024-04-12T17:45:17.658+0000] {logging_mixin.py:188} INFO - An exception occurred 'rollcall-vote' Failed to save one or more votes for {bill_type} {bill_number}
+[2024-04-12T17:45:17.837+0000] {logging_mixin.py:188} INFO - An exception occurred 'rollcall-vote' Failed to save one or more votes for {bill_type} {bill_number}
+[2024-04-12T17:45:17.843+0000] {get_data.py:131} INFO - Opened bill from file /opt/***/dags/data/bills/hr/BILLSTATUS-118hr300.json
+[2024-04-12T17:45:17.994+0000] {logging_mixin.py:188} INFO - An exception occurred 'rollcall-vote' Failed to save one or more votes for {bill_type} {bill_number}
+[2024-04-12T17:45:18.174+0000] {logging_mixin.py:188} INFO - An exception occurred 'rollcall-vote' Failed to save one or more votes for {bill_type} {bill_number}
+[2024-04-12T17:45:18.175+0000] {get_data.py:131} INFO - Opened bill from file /opt/***/dags/data/bills/hr/BILLSTATUS-118hr357.json
+[2024-04-12T17:45:18.650+0000] {get_data.py:131} INFO - Opened bill from file /opt/***/dags/data/bills/hr/BILLSTATUS-118hr1096.json
+[2024-04-12T17:45:18.965+0000] {get_data.py:131} INFO - Opened bill from file /opt/***/dags/data/bills/hr/BILLSTATUS-118hr4502.json
+[2024-04-12T17:45:19.300+0000] {get_data.py:131} INFO - Opened bill from file /opt/***/dags/data/bills/hr/BILLSTATUS-118hr1147.json
+[2024-04-12T17:45:19.615+0000] {get_data.py:131} INFO - Opened bill from file /opt/***/dags/data/bills/hr/BILLSTATUS-118hr5692.json
+[2024-04-12T17:45:19.944+0000] {get_data.py:131} INFO - Opened bill from file /opt/***/dags/data/bills/hr/BILLSTATUS-118hr6544.json
+[2024-04-12T17:45:20.091+0000] {logging_mixin.py:188} INFO - An exception occurred 'rollcall-vote' Failed to save one or more votes for {bill_type} {bill_number}
+[2024-04-12T17:45:20.239+0000] {logging_mixin.py:188} INFO - An exception occurred 'rollcall-vote' Failed to save one or more votes for {bill_type} {bill_number}
+[2024-04-12T17:45:20.410+0000] {logging_mixin.py:188} INFO - An exception occurred 'rollcall-vote' Failed to save one or more votes for {bill_type} {bill_number}
+[2024-04-12T17:45:20.554+0000] {logging_mixin.py:188} INFO - An exception occurred 'rollcall-vote' Failed to save one or more votes for {bill_type} {bill_number}
+[2024-04-12T17:45:20.556+0000] {get_data.py:131} INFO - Opened bill from file /opt/***/dags/data/bills/hr/BILLSTATUS-118hr3746.json
+[2024-04-12T17:45:21.283+0000] {get_data.py:131} INFO - Opened bill from file /opt/***/dags/data/bills/hr/BILLSTATUS-118hr140.json
+[2024-04-12T17:45:21.789+0000] {get_data.py:131} INFO - Opened bill from file /opt/***/dags/data/bills/hr/BILLSTATUS-118hr1669.json
+[2024-04-12T17:45:22.121+0000] {get_data.py:131} INFO - Opened bill from file /opt/***/dags/data/bills/hr/BILLSTATUS-118hr3091.json
+[2024-04-12T17:45:22.461+0000] {get_data.py:131} INFO - Opened bill from file /opt/***/dags/data/bills/hr/BILLSTATUS-118hr382.json
+[2024-04-12T17:45:22.909+0000] {logging_mixin.py:188} INFO - An exception occurred 'rollcall-vote' Failed to save one or more votes for {bill_type} {bill_number}
+[2024-04-12T17:45:22.911+0000] {get_data.py:131} INFO - Opened bill from file /opt/***/dags/data/bills/hr/BILLSTATUS-118hr3838.json
+[2024-04-12T17:45:23.047+0000] {logging_mixin.py:188} INFO - An exception occurred 'rollcall-vote' Failed to save one or more votes for {bill_type} {bill_number}
+[2024-04-12T17:45:23.191+0000] {logging_mixin.py:188} INFO - An exception occurred 'rollcall-vote' Failed to save one or more votes for {bill_type} {bill_number}
+[2024-04-12T17:45:23.364+0000] {logging_mixin.py:188} INFO - An exception occurred 'rollcall-vote' Failed to save one or more votes for {bill_type} {bill_number}
+[2024-04-12T17:45:23.531+0000] {logging_mixin.py:188} INFO - An exception occurred 'rollcall-vote' Failed to save one or more votes for {bill_type} {bill_number}
+[2024-04-12T17:45:23.534+0000] {get_data.py:131} INFO - Opened bill from file /opt/***/dags/data/bills/hr/BILLSTATUS-118hr5283.json
+[2024-04-12T17:45:23.890+0000] {get_data.py:131} INFO - Opened bill from file /opt/***/dags/data/bills/hr/BILLSTATUS-118hr1151.json
+[2024-04-12T17:45:24.222+0000] {get_data.py:131} INFO - Opened bill from file /opt/***/dags/data/bills/hr/BILLSTATUS-118hr2792.json
+[2024-04-12T17:45:24.567+0000] {get_data.py:131} INFO - Opened bill from file /opt/***/dags/data/bills/hr/BILLSTATUS-118hr443.json
+[2024-04-12T17:45:24.709+0000] {logging_mixin.py:188} INFO - An exception occurred 'rollcall-vote' Failed to save one or more votes for {bill_type} {bill_number}
+[2024-04-12T17:45:24.865+0000] {logging_mixin.py:188} INFO - An exception occurred 'rollcall-vote' Failed to save one or more votes for {bill_type} {bill_number}
+[2024-04-12T17:45:25.017+0000] {logging_mixin.py:188} INFO - An exception occurred 'rollcall-vote' Failed to save one or more votes for {bill_type} {bill_number}
+[2024-04-12T17:45:25.186+0000] {logging_mixin.py:188} INFO - An exception occurred 'rollcall-vote' Failed to save one or more votes for {bill_type} {bill_number}
+[2024-04-12T17:45:25.191+0000] {get_data.py:131} INFO - Opened bill from file /opt/***/dags/data/bills/hr/BILLSTATUS-118hr2793.json
+[2024-04-12T17:45:25.531+0000] {get_data.py:131} INFO - Opened bill from file /opt/***/dags/data/bills/hr/BILLSTATUS-118hr1107.json
+[2024-04-12T17:45:25.882+0000] {get_data.py:131} INFO - Opened bill from file /opt/***/dags/data/bills/hr/BILLSTATUS-118hr26.json
+[2024-04-12T17:45:26.028+0000] {logging_mixin.py:188} INFO - An exception occurred 'rollcall-vote' Failed to save one or more votes for {bill_type} {bill_number}
+[2024-04-12T17:45:26.182+0000] {logging_mixin.py:188} INFO - An exception occurred 'rollcall-vote' Failed to save one or more votes for {bill_type} {bill_number}
+[2024-04-12T17:45:26.367+0000] {logging_mixin.py:188} INFO - An exception occurred 'rollcall-vote' Failed to save one or more votes for {bill_type} {bill_number}
+[2024-04-12T17:45:26.369+0000] {get_data.py:131} INFO - Opened bill from file /opt/***/dags/data/bills/hr/BILLSTATUS-118hr815.json
+[2024-04-12T17:45:28.177+0000] {get_data.py:131} INFO - Opened bill from file /opt/***/dags/data/bills/hr/BILLSTATUS-118hr839.json
+[2024-04-12T17:45:28.328+0000] {logging_mixin.py:188} INFO - An exception occurred 'rollcall-vote' Failed to save one or more votes for {bill_type} {bill_number}
+[2024-04-12T17:45:28.495+0000] {logging_mixin.py:188} INFO - An exception occurred 'rollcall-vote' Failed to save one or more votes for {bill_type} {bill_number}
+[2024-04-12T17:45:28.676+0000] {logging_mixin.py:188} INFO - An exception occurred 'rollcall-vote' Failed to save one or more votes for {bill_type} {bill_number}
+[2024-04-12T17:45:28.823+0000] {logging_mixin.py:188} INFO - An exception occurred 'rollcall-vote' Failed to save one or more votes for {bill_type} {bill_number}
+[2024-04-12T17:45:28.825+0000] {get_data.py:131} INFO - Opened bill from file /opt/***/dags/data/bills/hr/BILLSTATUS-118hr497.json
+[2024-04-12T17:45:28.963+0000] {logging_mixin.py:188} INFO - An exception occurred 'rollcall-vote' Failed to save one or more votes for {bill_type} {bill_number}
+[2024-04-12T17:45:29.106+0000] {logging_mixin.py:188} INFO - An exception occurred 'rollcall-vote' Failed to save one or more votes for {bill_type} {bill_number}
+[2024-04-12T17:45:29.262+0000] {logging_mixin.py:188} INFO - An exception occurred 'rollcall-vote' Failed to save one or more votes for {bill_type} {bill_number}
+[2024-04-12T17:45:29.265+0000] {get_data.py:131} INFO - Opened bill from file /opt/***/dags/data/bills/hr/BILLSTATUS-118hr4368.json
+[2024-04-12T17:45:29.813+0000] {get_data.py:131} INFO - Opened bill from file /opt/***/dags/data/bills/hr/BILLSTATUS-118hr7102.json
+[2024-04-12T17:45:29.953+0000] {logging_mixin.py:188} INFO - An exception occurred 'rollcall-vote' Failed to save one or more votes for {bill_type} {bill_number}
+[2024-04-12T17:45:30.097+0000] {logging_mixin.py:188} INFO - An exception occurred 'rollcall-vote' Failed to save one or more votes for {bill_type} {bill_number}
+[2024-04-12T17:45:30.234+0000] {logging_mixin.py:188} INFO - An exception occurred 'rollcall-vote' Failed to save one or more votes for {bill_type} {bill_number}
+[2024-04-12T17:45:30.404+0000] {logging_mixin.py:188} INFO - An exception occurred 'rollcall-vote' Failed to save one or more votes for {bill_type} {bill_number}
+[2024-04-12T17:45:30.407+0000] {get_data.py:131} INFO - Opened bill from file /opt/***/dags/data/bills/hr/BILLSTATUS-118hr593.json
+[2024-04-12T17:45:30.748+0000] {get_data.py:131} INFO - Opened bill from file /opt/***/dags/data/bills/hr/BILLSTATUS-118hr340.json
+[2024-04-12T17:45:31.089+0000] {get_data.py:131} INFO - Opened bill from file /opt/***/dags/data/bills/hr/BILLSTATUS-118hr788.json
+[2024-04-12T17:45:31.250+0000] {logging_mixin.py:188} INFO - An exception occurred 'rollcall-vote' Failed to save one or more votes for {bill_type} {bill_number}
+[2024-04-12T17:45:31.414+0000] {logging_mixin.py:188} INFO - An exception occurred 'rollcall-vote' Failed to save one or more votes for {bill_type} {bill_number}
+[2024-04-12T17:45:31.596+0000] {logging_mixin.py:188} INFO - An exception occurred 'rollcall-vote' Failed to save one or more votes for {bill_type} {bill_number}
+[2024-04-12T17:45:31.753+0000] {logging_mixin.py:188} INFO - An exception occurred 'rollcall-vote' Failed to save one or more votes for {bill_type} {bill_number}
+[2024-04-12T17:45:31.896+0000] {logging_mixin.py:188} INFO - An exception occurred 'rollcall-vote' Failed to save one or more votes for {bill_type} {bill_number}
+[2024-04-12T17:45:32.050+0000] {logging_mixin.py:188} INFO - An exception occurred 'rollcall-vote' Failed to save one or more votes for {bill_type} {bill_number}
+[2024-04-12T17:45:32.053+0000] {get_data.py:131} INFO - Opened bill from file /opt/***/dags/data/bills/hr/BILLSTATUS-118hr6363.json
+[2024-04-12T17:45:32.837+0000] {get_data.py:131} INFO - Opened bill from file /opt/***/dags/data/bills/hr/BILLSTATUS-118hr1.json
+[2024-04-12T17:45:33.335+0000] {get_data.py:131} INFO - Opened bill from file /opt/***/dags/data/bills/hr/BILLSTATUS-118hr4470.json
+[2024-04-12T17:45:33.657+0000] {get_data.py:131} INFO - Opened bill from file /opt/***/dags/data/bills/hr/BILLSTATUS-118hr663.json
+[2024-04-12T17:45:33.973+0000] {get_data.py:131} INFO - Opened bill from file /opt/***/dags/data/bills/hr/BILLSTATUS-118hr2766.json
+[2024-04-12T17:45:34.115+0000] {logging_mixin.py:188} INFO - An exception occurred 'rollcall-vote' Failed to save one or more votes for {bill_type} {bill_number}
+[2024-04-12T17:45:34.268+0000] {logging_mixin.py:188} INFO - An exception occurred 'rollcall-vote' Failed to save one or more votes for {bill_type} {bill_number}
+[2024-04-12T17:45:34.418+0000] {logging_mixin.py:188} INFO - An exception occurred 'rollcall-vote' Failed to save one or more votes for {bill_type} {bill_number}
+[2024-04-12T17:45:34.686+0000] {logging_mixin.py:188} INFO - An exception occurred 'rollcall-vote' Failed to save one or more votes for {bill_type} {bill_number}
+[2024-04-12T17:45:34.689+0000] {get_data.py:131} INFO - Opened bill from file /opt/***/dags/data/bills/hr/BILLSTATUS-118hr589.json
+[2024-04-12T17:45:35.028+0000] {get_data.py:131} INFO - Opened bill from file /opt/***/dags/data/bills/hr/BILLSTATUS-118hr1023.json
+[2024-04-12T17:45:35.567+0000] {get_data.py:131} INFO - Opened bill from file /opt/***/dags/data/bills/hr/BILLSTATUS-118hr4364.json
+[2024-04-12T17:45:36.055+0000] {get_data.py:131} INFO - Opened bill from file /opt/***/dags/data/bills/hr/BILLSTATUS-118hr347.json
+[2024-04-12T17:45:36.365+0000] {get_data.py:131} INFO - Opened bill from file /opt/***/dags/data/bills/hr/BILLSTATUS-118hr886.json
+[2024-04-12T17:45:36.526+0000] {logging_mixin.py:188} INFO - An exception occurred 'rollcall-vote' Failed to save one or more votes for {bill_type} {bill_number}
+[2024-04-12T17:45:36.670+0000] {logging_mixin.py:188} INFO - An exception occurred 'rollcall-vote' Failed to save one or more votes for {bill_type} {bill_number}
+[2024-04-12T17:45:36.672+0000] {get_data.py:131} INFO - Opened bill from file /opt/***/dags/data/bills/hr/BILLSTATUS-118hr185.json
+[2024-04-12T17:45:37.161+0000] {get_data.py:131} INFO - Opened bill from file /opt/***/dags/data/bills/hr/BILLSTATUS-118hr3941.json
+[2024-04-12T17:45:37.621+0000] {get_data.py:131} INFO - Opened bill from file /opt/***/dags/data/bills/hr/BILLSTATUS-118hr5856.json
+[2024-04-12T17:45:37.769+0000] {logging_mixin.py:188} INFO - An exception occurred 'rollcall-vote' Failed to save one or more votes for {bill_type} {bill_number}
+[2024-04-12T17:45:37.924+0000] {logging_mixin.py:188} INFO - An exception occurred 'rollcall-vote' Failed to save one or more votes for {bill_type} {bill_number}
+[2024-04-12T17:45:38.074+0000] {logging_mixin.py:188} INFO - An exception occurred 'rollcall-vote' Failed to save one or more votes for {bill_type} {bill_number}
+[2024-04-12T17:45:38.233+0000] {logging_mixin.py:188} INFO - An exception occurred 'rollcall-vote' Failed to save one or more votes for {bill_type} {bill_number}
+[2024-04-12T17:45:38.236+0000] {get_data.py:131} INFO - Opened bill from file /opt/***/dags/data/bills/hr/BILLSTATUS-118hr21.json
+[2024-04-12T17:45:38.375+0000] {logging_mixin.py:188} INFO - An exception occurred 'rollcall-vote' Failed to save one or more votes for {bill_type} {bill_number}
+[2024-04-12T17:45:38.528+0000] {logging_mixin.py:188} INFO - An exception occurred 'rollcall-vote' Failed to save one or more votes for {bill_type} {bill_number}
+[2024-04-12T17:45:38.531+0000] {get_data.py:131} INFO - Opened bill from file /opt/***/dags/data/bills/hr/BILLSTATUS-118hr3202.json
+[2024-04-12T17:45:38.686+0000] {logging_mixin.py:188} INFO - An exception occurred 'rollcall-vote' Failed to save one or more votes for {bill_type} {bill_number}
+[2024-04-12T17:45:38.830+0000] {logging_mixin.py:188} INFO - An exception occurred 'rollcall-vote' Failed to save one or more votes for {bill_type} {bill_number}
+[2024-04-12T17:45:38.975+0000] {logging_mixin.py:188} INFO - An exception occurred 'rollcall-vote' Failed to save one or more votes for {bill_type} {bill_number}
+[2024-04-12T17:45:39.145+0000] {logging_mixin.py:188} INFO - An exception occurred 'rollcall-vote' Failed to save one or more votes for {bill_type} {bill_number}
+[2024-04-12T17:45:39.148+0000] {get_data.py:131} INFO - Opened bill from file /opt/***/dags/data/bills/hr/BILLSTATUS-118hr6503.json
+[2024-04-12T17:45:39.500+0000] {get_data.py:131} INFO - Opened bill from file /opt/***/dags/data/bills/hr/BILLSTATUS-118hr5378.json
+[2024-04-12T17:45:39.803+0000] {get_data.py:131} INFO - Opened bill from file /opt/***/dags/data/bills/hr/BILLSTATUS-118hr500.json
+[2024-04-12T17:45:39.955+0000] {logging_mixin.py:188} INFO - An exception occurred 'rollcall-vote' Failed to save one or more votes for {bill_type} {bill_number}
+[2024-04-12T17:45:40.101+0000] {logging_mixin.py:188} INFO - An exception occurred 'rollcall-vote' Failed to save one or more votes for {bill_type} {bill_number}
+[2024-04-12T17:45:40.104+0000] {get_data.py:131} INFO - Opened bill from file /opt/***/dags/data/bills/hr/BILLSTATUS-118hr2560.json
+[2024-04-12T17:45:40.451+0000] {get_data.py:131} INFO - Opened bill from file /opt/***/dags/data/bills/hr/BILLSTATUS-118hr1435.json
+[2024-04-12T17:45:40.932+0000] {get_data.py:131} INFO - Opened bill from file /opt/***/dags/data/bills/hr/BILLSTATUS-118hr5860.json
+[2024-04-12T17:45:41.558+0000] {get_data.py:131} INFO - Opened bill from file /opt/***/dags/data/bills/hr/BILLSTATUS-118hr3799.json
+[2024-04-12T17:45:42.047+0000] {get_data.py:131} INFO - Opened bill from file /opt/***/dags/data/bills/hr/BILLSTATUS-118hr2872.json
+[2024-04-12T17:45:42.192+0000] {logging_mixin.py:188} INFO - An exception occurred 'rollcall-vote' Failed to save one or more votes for {bill_type} {bill_number}
+[2024-04-12T17:45:42.358+0000] {logging_mixin.py:188} INFO - An exception occurred 'rollcall-vote' Failed to save one or more votes for {bill_type} {bill_number}
+[2024-04-12T17:45:42.527+0000] {logging_mixin.py:188} INFO - An exception occurred 'rollcall-vote' Failed to save one or more votes for {bill_type} {bill_number}
+[2024-04-12T17:45:42.697+0000] {logging_mixin.py:188} INFO - An exception occurred 'rollcall-vote' Failed to save one or more votes for {bill_type} {bill_number}
+[2024-04-12T17:45:43.349+0000] {get_data.py:131} INFO - Opened bill from file /opt/***/dags/data/bills/hr/BILLSTATUS-118hr3672.json
+[2024-04-12T17:45:43.752+0000] {get_data.py:131} INFO - Opened bill from file /opt/***/dags/data/bills/hr/BILLSTATUS-118hr5933.json
+[2024-04-12T17:45:44.088+0000] {get_data.py:131} INFO - Opened bill from file /opt/***/dags/data/bills/hr/BILLSTATUS-118hr5525.json
+[2024-04-12T17:45:44.620+0000] {get_data.py:131} INFO - Opened bill from file /opt/***/dags/data/bills/hr/BILLSTATUS-118hr4820.json
+[2024-04-12T17:45:44.622+0000] {get_data.py:131} INFO - Opened bill from file /opt/***/dags/data/bills/hr/BILLSTATUS-118hr6276.json
+[2024-04-12T17:45:44.766+0000] {logging_mixin.py:188} INFO - An exception occurred 'rollcall-vote' Failed to save one or more votes for {bill_type} {bill_number}
+[2024-04-12T17:45:44.912+0000] {logging_mixin.py:188} INFO - An exception occurred 'rollcall-vote' Failed to save one or more votes for {bill_type} {bill_number}
+[2024-04-12T17:45:45.061+0000] {logging_mixin.py:188} INFO - An exception occurred 'rollcall-vote' Failed to save one or more votes for {bill_type} {bill_number}
+[2024-04-12T17:45:45.065+0000] {get_data.py:131} INFO - Opened bill from file /opt/***/dags/data/bills/hr/BILLSTATUS-118hr5119.json
+[2024-04-12T17:45:45.436+0000] {get_data.py:131} INFO - Opened bill from file /opt/***/dags/data/bills/hr/BILLSTATUS-118hr2799.json
+[2024-04-12T17:45:45.584+0000] {logging_mixin.py:188} INFO - An exception occurred 'rollcall-vote' Failed to save one or more votes for {bill_type} {bill_number}
+[2024-04-12T17:45:45.738+0000] {logging_mixin.py:188} INFO - An exception occurred 'rollcall-vote' Failed to save one or more votes for {bill_type} {bill_number}
+[2024-04-12T17:45:45.880+0000] {logging_mixin.py:188} INFO - An exception occurred 'rollcall-vote' Failed to save one or more votes for {bill_type} {bill_number}
+[2024-04-12T17:45:46.063+0000] {logging_mixin.py:188} INFO - An exception occurred 'rollcall-vote' Failed to save one or more votes for {bill_type} {bill_number}
+[2024-04-12T17:45:46.202+0000] {logging_mixin.py:188} INFO - An exception occurred 'rollcall-vote' Failed to save one or more votes for {bill_type} {bill_number}
+[2024-04-12T17:45:46.353+0000] {logging_mixin.py:188} INFO - An exception occurred 'rollcall-vote' Failed to save one or more votes for {bill_type} {bill_number}
+[2024-04-12T17:45:46.356+0000] {get_data.py:131} INFO - Opened bill from file /opt/***/dags/data/bills/hr/BILLSTATUS-118hr5375.json
+[2024-04-12T17:45:46.499+0000] {logging_mixin.py:188} INFO - An exception occurred 'rollcall-vote' Failed to save one or more votes for {bill_type} {bill_number}
+[2024-04-12T17:45:46.652+0000] {logging_mixin.py:188} INFO - An exception occurred 'rollcall-vote' Failed to save one or more votes for {bill_type} {bill_number}
+[2024-04-12T17:45:46.804+0000] {logging_mixin.py:188} INFO - An exception occurred 'rollcall-vote' Failed to save one or more votes for {bill_type} {bill_number}
+[2024-04-12T17:45:46.945+0000] {logging_mixin.py:188} INFO - An exception occurred 'rollcall-vote' Failed to save one or more votes for {bill_type} {bill_number}
+[2024-04-12T17:45:46.947+0000] {get_data.py:131} INFO - Opened bill from file /opt/***/dags/data/bills/hr/BILLSTATUS-118hr6918.json
+[2024-04-12T17:45:47.107+0000] {logging_mixin.py:188} INFO - An exception occurred 'rollcall-vote' Failed to save one or more votes for {bill_type} {bill_number}
+[2024-04-12T17:45:47.254+0000] {logging_mixin.py:188} INFO - An exception occurred 'rollcall-vote' Failed to save one or more votes for {bill_type} {bill_number}
+[2024-04-12T17:45:47.409+0000] {logging_mixin.py:188} INFO - An exception occurred 'rollcall-vote' Failed to save one or more votes for {bill_type} {bill_number}
+[2024-04-12T17:45:47.572+0000] {logging_mixin.py:188} INFO - An exception occurred 'rollcall-vote' Failed to save one or more votes for {bill_type} {bill_number}
+[2024-04-12T17:45:47.730+0000] {logging_mixin.py:188} INFO - An exception occurred 'rollcall-vote' Failed to save one or more votes for {bill_type} {bill_number}
+[2024-04-12T17:45:47.933+0000] {logging_mixin.py:188} INFO - An exception occurred 'rollcall-vote' Failed to save one or more votes for {bill_type} {bill_number}
+[2024-04-12T17:45:47.937+0000] {get_data.py:131} INFO - Opened bill from file /opt/***/dags/data/bills/hr/BILLSTATUS-118hr1727.json
+[2024-04-12T17:45:48.105+0000] {logging_mixin.py:188} INFO - An exception occurred 'rollcall-vote' Failed to save one or more votes for {bill_type} {bill_number}
+[2024-04-12T17:45:48.260+0000] {logging_mixin.py:188} INFO - An exception occurred 'rollcall-vote' Failed to save one or more votes for {bill_type} {bill_number}
+[2024-04-12T17:45:48.441+0000] {logging_mixin.py:188} INFO - An exception occurred 'rollcall-vote' Failed to save one or more votes for {bill_type} {bill_number}
+[2024-04-12T17:45:48.599+0000] {logging_mixin.py:188} INFO - An exception occurred 'rollcall-vote' Failed to save one or more votes for {bill_type} {bill_number}
+[2024-04-12T17:45:48.601+0000] {get_data.py:131} INFO - Opened bill from file /opt/***/dags/data/bills/hr/BILLSTATUS-118hr4821.json
+[2024-04-12T17:45:49.062+0000] {get_data.py:131} INFO - Opened bill from file /opt/***/dags/data/bills/hr/BILLSTATUS-118hr1567.json
+[2024-04-12T17:45:49.365+0000] {get_data.py:131} INFO - Opened bill from file /opt/***/dags/data/bills/hr/BILLSTATUS-118hr5524.json
+[2024-04-12T17:45:49.704+0000] {get_data.py:131} INFO - Opened bill from file /opt/***/dags/data/bills/hr/BILLSTATUS-118hr1530.json
+[2024-04-12T17:45:50.018+0000] {get_data.py:131} INFO - Opened bill from file /opt/***/dags/data/bills/hr/BILLSTATUS-118hr3848.json
+[2024-04-12T17:45:50.378+0000] {get_data.py:131} INFO - Opened bill from file /opt/***/dags/data/bills/hr/BILLSTATUS-118hr1121.json
+[2024-04-12T17:45:50.523+0000] {logging_mixin.py:188} INFO - An exception occurred 'rollcall-vote' Failed to save one or more votes for {bill_type} {bill_number}
+[2024-04-12T17:45:50.685+0000] {logging_mixin.py:188} INFO - An exception occurred 'rollcall-vote' Failed to save one or more votes for {bill_type} {bill_number}
+[2024-04-12T17:45:50.858+0000] {logging_mixin.py:188} INFO - An exception occurred 'rollcall-vote' Failed to save one or more votes for {bill_type} {bill_number}
+[2024-04-12T17:45:50.864+0000] {get_data.py:131} INFO - Opened bill from file /opt/***/dags/data/bills/hr/BILLSTATUS-118hr1156.json
+[2024-04-12T17:45:51.210+0000] {get_data.py:131} INFO - Opened bill from file /opt/***/dags/data/bills/hr/BILLSTATUS-118hr2795.json
+[2024-04-12T17:45:51.551+0000] {get_data.py:131} INFO - Opened bill from file /opt/***/dags/data/bills/hr/BILLSTATUS-118hr2812.json
+[2024-04-12T17:45:51.872+0000] {get_data.py:131} INFO - Opened bill from file /opt/***/dags/data/bills/hr/BILLSTATUS-118hr6914.json
+[2024-04-12T17:45:52.020+0000] {logging_mixin.py:188} INFO - An exception occurred 'rollcall-vote' Failed to save one or more votes for {bill_type} {bill_number}
+[2024-04-12T17:45:52.161+0000] {logging_mixin.py:188} INFO - An exception occurred 'rollcall-vote' Failed to save one or more votes for {bill_type} {bill_number}
+[2024-04-12T17:45:52.305+0000] {logging_mixin.py:188} INFO - An exception occurred 'rollcall-vote' Failed to save one or more votes for {bill_type} {bill_number}
+[2024-04-12T17:45:52.487+0000] {logging_mixin.py:188} INFO - An exception occurred 'rollcall-vote' Failed to save one or more votes for {bill_type} {bill_number}
+[2024-04-12T17:45:52.660+0000] {logging_mixin.py:188} INFO - An exception occurred 'rollcall-vote' Failed to save one or more votes for {bill_type} {bill_number}
+[2024-04-12T17:45:52.870+0000] {logging_mixin.py:188} INFO - An exception occurred 'rollcall-vote' Failed to save one or more votes for {bill_type} {bill_number}
+[2024-04-12T17:45:52.895+0000] {get_data.py:131} INFO - Opened bill from file /opt/***/dags/data/bills/hr/BILLSTATUS-118hr813.json
+[2024-04-12T17:45:53.259+0000] {get_data.py:131} INFO - Opened bill from file /opt/***/dags/data/bills/hr/BILLSTATUS-118hr1547.json
+[2024-04-12T17:45:53.593+0000] {get_data.py:131} INFO - Opened bill from file /opt/***/dags/data/bills/hr/BILLSTATUS-118hr7217.json
+[2024-04-12T17:45:53.743+0000] {logging_mixin.py:188} INFO - An exception occurred 'rollcall-vote' Failed to save one or more votes for {bill_type} {bill_number}
+[2024-04-12T17:45:53.894+0000] {logging_mixin.py:188} INFO - An exception occurred 'rollcall-vote' Failed to save one or more votes for {bill_type} {bill_number}
+[2024-04-12T17:45:54.056+0000] {logging_mixin.py:188} INFO - An exception occurred 'rollcall-vote' Failed to save one or more votes for {bill_type} {bill_number}
+[2024-04-12T17:45:54.203+0000] {logging_mixin.py:188} INFO - An exception occurred 'rollcall-vote' Failed to save one or more votes for {bill_type} {bill_number}
+[2024-04-12T17:45:54.205+0000] {get_data.py:131} INFO - Opened bill from file /opt/***/dags/data/bills/hr/BILLSTATUS-118hr5894.json
+[2024-04-12T17:45:54.206+0000] {get_data.py:131} INFO - Opened bill from file /opt/***/dags/data/bills/hr/BILLSTATUS-118hr5528.json
+[2024-04-12T17:45:54.347+0000] {logging_mixin.py:188} INFO - An exception occurred 'rollcall-vote' Failed to save one or more votes for {bill_type} {bill_number}
+[2024-04-12T17:45:54.490+0000] {logging_mixin.py:188} INFO - An exception occurred 'rollcall-vote' Failed to save one or more votes for {bill_type} {bill_number}
+[2024-04-12T17:45:54.636+0000] {logging_mixin.py:188} INFO - An exception occurred 'rollcall-vote' Failed to save one or more votes for {bill_type} {bill_number}
+[2024-04-12T17:45:54.792+0000] {logging_mixin.py:188} INFO - An exception occurred 'rollcall-vote' Failed to save one or more votes for {bill_type} {bill_number}
+[2024-04-12T17:45:54.794+0000] {get_data.py:131} INFO - Opened bill from file /opt/***/dags/data/bills/hr/BILLSTATUS-118hr1615.json
+[2024-04-12T17:45:55.154+0000] {get_data.py:131} INFO - Opened bill from file /opt/***/dags/data/bills/hr/BILLSTATUS-118hr346.json
+[2024-04-12T17:45:55.386+0000] {logging_mixin.py:188} INFO - An exception occurred 'rollcall-vote' Failed to save one or more votes for {bill_type} {bill_number}
+[2024-04-12T17:45:55.539+0000] {logging_mixin.py:188} INFO - An exception occurred 'rollcall-vote' Failed to save one or more votes for {bill_type} {bill_number}
+[2024-04-12T17:45:55.542+0000] {get_data.py:131} INFO - Opened bill from file /opt/***/dags/data/bills/sjres/BILLSTATUS-118sjres24.json
+[2024-04-12T17:45:56.646+0000] {get_data.py:131} INFO - Opened bill from file /opt/***/dags/data/bills/sjres/BILLSTATUS-118sjres32.json
+[2024-04-12T17:45:57.581+0000] {get_data.py:131} INFO - Opened bill from file /opt/***/dags/data/bills/sjres/BILLSTATUS-118sjres44.json
+[2024-04-12T17:45:58.001+0000] {get_data.py:131} INFO - Opened bill from file /opt/***/dags/data/bills/sjres/BILLSTATUS-118sjres38.json
+[2024-04-12T17:45:58.729+0000] {logging_mixin.py:188} INFO - An exception occurred 'rollcall-vote' Failed to save one or more votes for {bill_type} {bill_number}
+[2024-04-12T17:45:58.986+0000] {logging_mixin.py:188} INFO - An exception occurred 'rollcall-vote' Failed to save one or more votes for {bill_type} {bill_number}
+[2024-04-12T17:45:59.132+0000] {logging_mixin.py:188} INFO - An exception occurred 'rollcall-vote' Failed to save one or more votes for {bill_type} {bill_number}
+[2024-04-12T17:45:59.274+0000] {logging_mixin.py:188} INFO - An exception occurred 'rollcall-vote' Failed to save one or more votes for {bill_type} {bill_number}
+[2024-04-12T17:45:59.558+0000] {get_data.py:131} INFO - Opened bill from file /opt/***/dags/data/bills/sjres/BILLSTATUS-118sjres43.json
+[2024-04-12T17:45:59.934+0000] {get_data.py:131} INFO - Opened bill from file /opt/***/dags/data/bills/sjres/BILLSTATUS-118sjres4.json
+[2024-04-12T17:46:00.118+0000] {get_data.py:131} INFO - Opened bill from file /opt/***/dags/data/bills/sjres/BILLSTATUS-118sjres18.json
+[2024-04-12T17:46:00.393+0000] {get_data.py:131} INFO - Opened bill from file /opt/***/dags/data/bills/sjres/BILLSTATUS-118sjres9.json
+[2024-04-12T17:46:01.313+0000] {get_data.py:131} INFO - Opened bill from file /opt/***/dags/data/bills/sjres/BILLSTATUS-118sjres62.json
+[2024-04-12T17:46:01.581+0000] {get_data.py:131} INFO - Opened bill from file /opt/***/dags/data/bills/sjres/BILLSTATUS-118sjres23.json
+[2024-04-12T17:46:01.899+0000] {get_data.py:131} INFO - Opened bill from file /opt/***/dags/data/bills/sjres/BILLSTATUS-118sjres42.json
+[2024-04-12T17:46:02.193+0000] {get_data.py:131} INFO - Opened bill from file /opt/***/dags/data/bills/sjres/BILLSTATUS-118sjres61.json
+[2024-04-12T17:46:02.452+0000] {get_data.py:131} INFO - Opened bill from file /opt/***/dags/data/bills/sjres/BILLSTATUS-118sjres60.json
+[2024-04-12T17:46:02.653+0000] {get_data.py:131} INFO - Opened bill from file /opt/***/dags/data/bills/sjres/BILLSTATUS-118sjres51.json
+[2024-04-12T17:46:02.844+0000] {get_data.py:131} INFO - Opened bill from file /opt/***/dags/data/bills/sjres/BILLSTATUS-118sjres10.json
+[2024-04-12T17:46:03.039+0000] {get_data.py:131} INFO - Opened bill from file /opt/***/dags/data/bills/sjres/BILLSTATUS-118sjres11.json
+[2024-04-12T17:46:03.901+0000] {python.py:202} INFO - Done. Returned value was: None
+[2024-04-12T17:46:03.912+0000] {taskinstance.py:1149} INFO - Marking task as SUCCESS. dag_id=upload_congress_data, task_id=get_votes_from_downloaded_bills, execution_date=20240315T000000, start_date=20240412T174409, end_date=20240412T174603
+[2024-04-12T17:46:03.964+0000] {local_task_job_runner.py:234} INFO - Task exited with return code 0
+[2024-04-12T17:46:03.994+0000] {taskinstance.py:3312} INFO - 1 downstream tasks scheduled from follow-on schedule check

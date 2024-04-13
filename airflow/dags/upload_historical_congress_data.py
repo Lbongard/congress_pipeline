@@ -52,20 +52,20 @@
 # )
 
 
-# def format_end_date(**kwargs):
-#     execution_date = kwargs['execution_date']
-#     end_date = execution_date.strftime('%Y-%m-%dT00:00:00Z')
+def format_end_date(**kwargs):
+    execution_date = kwargs['execution_date']
+    end_date = execution_date.strftime('%Y-%m-%dT00:00:00Z')
 
-#     logging.info("Formatted execution date: %s", end_date)
-#     return end_date
+    logging.info("Formatted execution date: %s", end_date)
+    return end_date
 
 
-# format_date_task = PythonOperator(
-#     task_id='format_execution_date_task',
-#     python_callable=format_end_date,
-#     provide_context=True,
-#     dag=dag
-# )
+format_date_task = PythonOperator(
+    task_id='format_execution_date_task',
+    python_callable=format_end_date,
+    provide_context=True,
+    dag=dag
+)
 
 # params_bills = {
 #     'limit': 250,
@@ -86,13 +86,13 @@
 #                 'data_type':'bills'}
 # )
 
-# params_members = {
-#     'limit': 250,
-#     'offset': 0,
-#     'start_date': "2023-01-01T00:00:00Z",
-#     "end_date":"{{ task_instance.xcom_pull(task_ids='format_execution_date_task') }}",
-#     'api_key': "WNue8kCDCOIlewAsULgnN8j6SqSgAZjE2sYbPsBb"
-# }
+params_members = {
+    'limit': 250,
+    'offset': 0,
+    'start_date': "2023-01-01T00:00:00Z",
+    "end_date":"{{ task_instance.xcom_pull(task_ids='format_execution_date_task') }}",
+    'api_key': "WNue8kCDCOIlewAsULgnN8j6SqSgAZjE2sYbPsBb"
+}
 
 # upload_historical_member_data = PythonOperator(
 #     dag=dag,

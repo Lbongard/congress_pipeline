@@ -418,7 +418,7 @@ def get_vote_metadata(data, chamber, bill_type, bill_number):
     if chamber == 'House':
         vote_date = data['rollcall-vote']['vote-metadata']['action-date']
         date_obj = datetime.strptime(vote_date, '%d-%b-%Y')
-        formatted_vote_date = date_obj.strftime('%Y/%m/%d')
+        formatted_vote_date = date_obj.strftime('%Y-%m-%d')
         
         return {'date': formatted_vote_date,
                 'bill_type': bill_type,
@@ -436,7 +436,7 @@ def get_vote_metadata(data, chamber, bill_type, bill_number):
         vote_date = data['roll_call_vote']['vote_date']
         vote_date = vote_date.replace(': ', ':')
         date_obj = datetime.strptime(vote_date, '%B %d, %Y, %I:%M %p')
-        formatted_vote_date = date_obj.strftime('%Y/%m/%d')
+        formatted_vote_date = date_obj.strftime('%Y-%m-%d')
         
         return {'date': formatted_vote_date,
                 'bill_type': bill_type,

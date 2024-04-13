@@ -1,0 +1,46 @@
+[2024-04-12T17:55:23.197+0000] {taskinstance.py:1979} INFO - Dependencies all met for dep_context=non-requeueable deps ti=<TaskInstance: upload_congress_data.bq_create_Congress_members_partitioned_table_task scheduled__2024-03-15T00:00:00+00:00 [queued]>
+[2024-04-12T17:55:23.201+0000] {taskinstance.py:1979} INFO - Dependencies all met for dep_context=requeueable deps ti=<TaskInstance: upload_congress_data.bq_create_Congress_members_partitioned_table_task scheduled__2024-03-15T00:00:00+00:00 [queued]>
+[2024-04-12T17:55:23.202+0000] {taskinstance.py:2193} INFO - Starting attempt 7 of 9
+[2024-04-12T17:55:23.208+0000] {taskinstance.py:2217} INFO - Executing <Task(BigQueryInsertJobOperator): bq_create_Congress_members_partitioned_table_task> on 2024-03-15 00:00:00+00:00
+[2024-04-12T17:55:23.213+0000] {standard_task_runner.py:60} INFO - Started process 352 to run task
+[2024-04-12T17:55:23.216+0000] {standard_task_runner.py:87} INFO - Running: ['***', 'tasks', 'run', 'upload_congress_data', 'bq_create_Congress_members_partitioned_table_task', 'scheduled__2024-03-15T00:00:00+00:00', '--job-id', '26', '--raw', '--subdir', 'DAGS_FOLDER/upload_congress_data.py', '--cfg-path', '/tmp/tmp9c7ss0ua']
+[2024-04-12T17:55:23.219+0000] {standard_task_runner.py:88} INFO - Job 26: Subtask bq_create_Congress_members_partitioned_table_task
+[2024-04-12T17:55:23.250+0000] {task_command.py:423} INFO - Running <TaskInstance: upload_congress_data.bq_create_Congress_members_partitioned_table_task scheduled__2024-03-15T00:00:00+00:00 [running]> on host 08bbc0b56ffc
+[2024-04-12T17:55:23.291+0000] {taskinstance.py:2513} INFO - Exporting env vars: AIRFLOW_CTX_DAG_EMAIL='***@***.com' AIRFLOW_CTX_DAG_OWNER='***' AIRFLOW_CTX_DAG_ID='upload_congress_data' AIRFLOW_CTX_TASK_ID='bq_create_Congress_members_partitioned_table_task' AIRFLOW_CTX_EXECUTION_DATE='2024-03-15T00:00:00+00:00' AIRFLOW_CTX_TRY_NUMBER='7' AIRFLOW_CTX_DAG_RUN_ID='scheduled__2024-03-15T00:00:00+00:00'
+[2024-04-12T17:55:23.293+0000] {crypto.py:82} WARNING - empty cryptography key - values will not be stored encrypted.
+[2024-04-12T17:55:23.294+0000] {connection.py:269} WARNING - Connection schemes (type: google_cloud_platform) shall not contain '_' according to RFC3986.
+[2024-04-12T17:55:23.295+0000] {base.py:83} INFO - Using connection ID 'google_cloud_default' for task execution.
+[2024-04-12T17:55:23.340+0000] {bigquery.py:2811} INFO - Executing: {'query': {'query': 'DROP TABLE IF EXISTS Congress.members;         CREATE TABLE Congress.members         PARTITION BY updateDate_formatted         AS         SELECT *, DATE(updateDate) updateDate_formatted         FROM Congress.members_external_table;', 'useLegacySql': False}}'
+[2024-04-12T17:55:23.341+0000] {bigquery.py:1613} INFO - Inserting job ***_upload_congress_data_bq_create_Congress_members_partitioned_table_task_2024_03_15T00_00_00_00_00_7afbf209aca11153f5691edb6ee8839b
+[2024-04-12T17:55:26.053+0000] {taskinstance.py:2731} ERROR - Task failed with exception
+Traceback (most recent call last):
+  File "/home/airflow/.local/lib/python3.11/site-packages/airflow/models/taskinstance.py", line 444, in _execute_task
+    result = _execute_callable(context=context, **execute_callable_kwargs)
+             ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/airflow/.local/lib/python3.11/site-packages/airflow/models/taskinstance.py", line 414, in _execute_callable
+    return execute_callable(context=context, **execute_callable_kwargs)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/airflow/.local/lib/python3.11/site-packages/airflow/providers/google/cloud/operators/bigquery.py", line 2870, in execute
+    job.result(timeout=self.result_timeout, retry=self.result_retry)
+  File "/home/airflow/.local/lib/python3.11/site-packages/google/cloud/bigquery/job/query.py", line 1595, in result
+    do_get_result()
+  File "/home/airflow/.local/lib/python3.11/site-packages/google/cloud/bigquery/job/query.py", line 1584, in do_get_result
+    super(QueryJob, self).result(retry=retry, timeout=timeout)
+  File "/home/airflow/.local/lib/python3.11/site-packages/google/cloud/bigquery/job/base.py", line 971, in result
+    return super(_AsyncJob, self).result(timeout=timeout, **kwargs)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/airflow/.local/lib/python3.11/site-packages/google/api_core/future/polling.py", line 261, in result
+    raise self._exception
+google.api_core.exceptions.BadRequest: 400 Invalid value: Error while reading table: Congress.members_external_table, error message: JSON parsing error in row starting at position 0: Could not convert value 'number_value: 	 "4.0"' to integer. Field: district; Value: 4.0 File: gs://congress_data/members/member_A000148.json at [1:48]
+
+Location: US
+Job ID: airflow_upload_congress_data_bq_create_Congress_members_partitioned_table_task_2024_03_15T00_00_00_00_00_7afbf209aca11153f5691edb6ee8839b
+
+[2024-04-12T17:55:26.079+0000] {taskinstance.py:1149} INFO - Marking task as UP_FOR_RETRY. dag_id=upload_congress_data, task_id=bq_create_Congress_members_partitioned_table_task, execution_date=20240315T000000, start_date=20240412T175523, end_date=20240412T175526
+[2024-04-12T17:55:26.097+0000] {standard_task_runner.py:107} ERROR - Failed to execute job 26 for task bq_create_Congress_members_partitioned_table_task (400 Invalid value: Error while reading table: Congress.members_external_table, error message: JSON parsing error in row starting at position 0: Could not convert value 'number_value: 	 "4.0"' to integer. Field: district; Value: 4.0 File: gs://congress_data/members/member_A000148.json at [1:48]
+
+Location: US
+Job ID: airflow_upload_congress_data_bq_create_Congress_members_partitioned_table_task_2024_03_15T00_00_00_00_00_7afbf209aca11153f5691edb6ee8839b
+; 352)
+[2024-04-12T17:55:26.115+0000] {local_task_job_runner.py:234} INFO - Task exited with return code 1
+[2024-04-12T17:55:26.130+0000] {taskinstance.py:3312} INFO - 0 downstream tasks scheduled from follow-on schedule check

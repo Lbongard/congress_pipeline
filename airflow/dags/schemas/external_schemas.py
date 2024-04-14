@@ -79,11 +79,11 @@ OPTIONS (
   format = 'JSON',
   uris = [
     'gs://congress_data/bill_status/hconres/*.json',
-    'gs://congress_data/bills_status/hjres/*.json',
-    'gs://congress_data/bills_status/hr/*.json',
-    'gs://congress_data/bills_status/s/*.json',
-    'gs://congress_data/bills_status/sjres/*.json',
-    'gs://congress_data/bills_status/sres/*.json'
+    'gs://congress_data/bill_status/hjres/*.json',
+    'gs://congress_data/bill_status/hr/*.json',
+    'gs://congress_data/bill_status/s/*.json',
+    'gs://congress_data/bill_status/sjres/*.json',
+    'gs://congress_data/bill_status/sres/*.json'
   ]);
 
 """
@@ -93,6 +93,7 @@ vote_ddl = """CREATE OR REPLACE EXTERNAL TABLE Congress.votes_external_table (
     date DATE,
     bill_type STRING,
     bill_number STRING,
+    chamber STRING,
     roll_call_number STRING,
     result STRING,
     totals STRUCT<

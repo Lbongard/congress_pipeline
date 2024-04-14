@@ -28,3 +28,8 @@ set-gcp-project:
 set-congress-api-key:
 	@echo "congress_api_key=$(congress-api-key)" >> airflow/.env
 	@echo "Congress API Key set to $(congress-api-key)."
+
+install-dbt:
+	brew untap dbt-labs/dbt
+	brew tap dbt-labs/dbt-cli
+	brew install dbt

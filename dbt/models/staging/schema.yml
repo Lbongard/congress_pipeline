@@ -6,6 +6,6 @@ sources:
 
     tables:
       - name: member
-      - name: bills
+      - name: bill_status
       - name: votes
 

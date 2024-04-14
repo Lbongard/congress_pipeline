@@ -55,3 +55,13 @@
 [2024-04-14T20:57:53.933+0000] {logging_mixin.py:188} INFO - [2024-04-14T20:57:53.932+0000] {dagbag.py:540} INFO - Filling up the DagBag from /opt/airflow/dags/data/bills/hr/BILLSTATUS-118-hr.zip
 [2024-04-14T20:58:05.477+0000] {processor.py:842} WARNING - No viable dags retrieved from /opt/airflow/dags/data/bills/hr/BILLSTATUS-118-hr.zip
 [2024-04-14T20:58:05.605+0000] {processor.py:183} INFO - Processing /opt/airflow/dags/data/bills/hr/BILLSTATUS-118-hr.zip took 11.745 seconds
+[2024-04-14T21:36:58.306+0000] {processor.py:161} INFO - Started process (PID=32) to work on /opt/airflow/dags/data/bills/hr/BILLSTATUS-118-hr.zip
+[2024-04-14T21:36:58.310+0000] {processor.py:830} INFO - Processing file /opt/airflow/dags/data/bills/hr/BILLSTATUS-118-hr.zip for tasks to queue
+[2024-04-14T21:36:58.315+0000] {logging_mixin.py:188} INFO - [2024-04-14T21:36:58.314+0000] {dagbag.py:540} INFO - Filling up the DagBag from /opt/airflow/dags/data/bills/hr/BILLSTATUS-118-hr.zip
+[2024-04-14T21:36:58.371+0000] {processor.py:842} WARNING - No viable dags retrieved from /opt/airflow/dags/data/bills/hr/BILLSTATUS-118-hr.zip
+[2024-04-14T21:36:58.396+0000] {processor.py:183} INFO - Processing /opt/airflow/dags/data/bills/hr/BILLSTATUS-118-hr.zip took 0.094 seconds
+[2024-04-14T21:39:13.074+0000] {processor.py:161} INFO - Started process (PID=32) to work on /opt/airflow/dags/data/bills/hr/BILLSTATUS-118-hr.zip
+[2024-04-14T21:39:13.076+0000] {processor.py:830} INFO - Processing file /opt/airflow/dags/data/bills/hr/BILLSTATUS-118-hr.zip for tasks to queue
+[2024-04-14T21:39:13.079+0000] {logging_mixin.py:188} INFO - [2024-04-14T21:39:13.078+0000] {dagbag.py:540} INFO - Filling up the DagBag from /opt/airflow/dags/data/bills/hr/BILLSTATUS-118-hr.zip
+[2024-04-14T21:39:13.157+0000] {processor.py:842} WARNING - No viable dags retrieved from /opt/airflow/dags/data/bills/hr/BILLSTATUS-118-hr.zip
+[2024-04-14T21:39:13.180+0000] {processor.py:183} INFO - Processing /opt/airflow/dags/data/bills/hr/BILLSTATUS-118-hr.zip took 0.109 seconds

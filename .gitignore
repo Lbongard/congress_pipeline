@@ -1,2 +1,3 @@
 airflow/dags/data/
 airflow/dags/logs
+.env

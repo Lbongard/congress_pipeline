@@ -1,0 +1,15 @@
+bq-dbt-proj:
+  outputs:
+    dev:
+      dataset: Congress
+      fixed_retries: 1
+      keyfile: /.google/credentials/google_credentials.json
+      location: US
+      method: service-account
+      priority: interactive
+      project: ${GCP_PROJECT}
+      threads: 4
+      timeout_seconds: 300
+      type: bigquery
+      database: ${GCP_PROJECT}
+  target: dev

@@ -1,7 +1,7 @@
 version: 2
 sources:
   - name: staging
-    database: inbound-ship-412204
+    database: ${GCP_PROJECT}
     schema: Congress
 
     tables:

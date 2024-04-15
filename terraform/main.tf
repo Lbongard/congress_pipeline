@@ -3,6 +3,7 @@
 
 provider "google" {
   project = <project_id>
+  credentials = <path to credentials>
   region  = "US"
 }
 

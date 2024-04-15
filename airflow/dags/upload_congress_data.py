@@ -19,6 +19,7 @@ load_dotenv()
 
 # PROJECT_ID = os.getenv("GCP_PROJECT_ID")
 PROJECT_ID = os.environ.get("GCP_PROJECT_ID")
+BUCKET_NAME = os.environ.get("TF_VAR_gcs_bucket_name")
 BIGQUERY_DATASET= 'Congress'
 DATA_TYPES = {'bill_status':{'table_struct':bill_status_ddl,
                              'date_col':'bill.introducedDate',
@@ -140,7 +141,7 @@ for data_type in DATA_TYPES.keys():
     task_id = f'upload_{data_type}_to_gcs',
     python_callable=upload_folder_to_gcs,
     op_kwargs={'local_folder_path':DATA_TYPES[data_type]['local_folder_path'], 
-               'bucket_name':'congress_data', 
+               'bucket_name':BUCKET_NAME, 
                'destination_folder':f'{data_type}'}
 )
     

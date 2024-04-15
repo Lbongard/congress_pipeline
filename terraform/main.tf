@@ -2,7 +2,7 @@
 # with standard storage
 
 provider "google" {
-  project = "inbound-ship-412204"
+  project = "${GCP_PROJECT}"
   region = "US"
 }
 

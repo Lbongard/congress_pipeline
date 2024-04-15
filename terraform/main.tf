@@ -2,14 +2,8 @@
 # with standard storage
 
 provider "google" {
-  project = var.gcp_project_id
+  project = <project_id>
   region  = "US"
-}
-
-# Define the project ID as a variable
-variable "gcp_project_id" {
-  type    = string
-  default = "${GCP_PROJECT}"
 }
 
 # Define top-level bucket

@@ -7,7 +7,7 @@ bq-dbt-proj:
       location: US
       method: service-account
       priority: interactive
-      project: ${GCP_PROJECT}
+      project: "${GCP_PROJECT}"
       threads: 4
       timeout_seconds: 300
       type: bigquery

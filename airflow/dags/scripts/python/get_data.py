@@ -22,46 +22,6 @@ from datetime import datetime
 
 # https://medium.com/@danilo.drobac/real-world-python-for-data-engineering-1-api-pagination-6b92fec2fc50
 
-@dataclass
-class BillSchema:
-    congress: int
-    latestAction: Dict[str, str] #Update to date for first item?
-    number: str
-    originChamber: str
-    originChamberCode: str
-    title: str
-    type: str
-    updateDate: str
-    updateDateIncludingText: str
-    url: str
-
-@dataclass
-class Committee:
-    url: str
-    systemCode: str
-    name: str
-
-@dataclass
-class RecordedVote:
-    roll_number: str
-    url: str
-    chamber: str
-    congress: str
-    date: str
-    sessionNumber: str
-
-@dataclass
-class ActionSchema:
-    actionDate: str
-    text: str
-    type: str
-    sourceSystem: Dict[int, str]
-    actionTime: Optional[str]=None
-    actionCode: Optional[str]=None
-    committees: Optional[List[Committee]]=None
-    recordedVotes: Optional[List[RecordedVote]]=None
-    calendar: Optional[str]=None
-    calendarNumber: Optional[str]=None
 
 @dataclass
 class TermsItem:
@@ -178,66 +138,6 @@ def get_votes(bill_json, save_folder):
             print(f"An exception occurred", e, "Failed to save one or more votes for {bill_type} {bill_number}")
 
 
-
-# def get_and_upload_votes(ti, **kwargs):
-    
-#     bills_list = ti.xcom_pull(key='bills_list', task_ids="get_bills_from_bq")
-#     params = kwargs['params']
-
-#     for bill in bills_list:
-#         params['congress'] = bill[0]
-#         logging.info(f'Congress = {bill[0]}')
-#         params['bill_number'] = bill[1]
-#         params['bill_type'] = bill[2].lower()
-
-#         # get_and_upload_data(params=params, data_type='actions')
-
-#         # Get Votes
-
-#         api_response = get_api_response(params, 'actions')
-
-#         actions_df = pd.DataFrame(api_response.actions)
-#         # print(actions_df)
-      
-#         roll_call_votes = actions_df[actions_df['recordedVotes'].isna() == False].recordedVotes
-#         # Some empty votes left in?
-#         if roll_call_votes.empty == False:
-#             try:
-#                 # print(roll_call_votes)
-#                 for roll_call in roll_call_votes:
-#                     # print(roll_call)
-#                     for vote in roll_call:
-#                         if vote['chamber'] == 'Senate':
-#                             xml_path = vote['url']
-#                             response = requests.get(xml_path)
-                            
-#                             # Turning Response into a json
-#                             response_dict = xmltodict.parse(response.content)
-#                             votes_data = response_dict['roll_call_vote']['members']['member']
-#                         else:
-#                             vote_year = pd.to_datetime(vote['date']).year
-#                             # Add leading 0 for roll calls in the single or double digits
-#                             vote_num = str(vote['rollNumber']).zfill(0)
-#                             xml_path = f'https://clerk.house.gov/evs/{vote_year}/roll{vote_num}.xml'
-#                             response = requests.get(xml_path)
-
-#                             # Turning Response into a json
-#                             response_dict = xmltodict.parse(response.content)
-#                             votes_data = response_dict['rollcall-vote']['vote-data']['recorded-vote']
-
-#                         # print(type(votes_data))
-
-#                         file_name = f'votes/{vote["chamber"]}/{params["bill_type"]}_{params["bill_number"]}_{vote["rollNumber"]}.parquet'
-
-#                         upload_to_gcs_as_parquet(obj_list=votes_data,
-#                                                 bucket_name='congress_data',
-#                                                 file_name=file_name,
-#                                                 data_type='votes')
-#             except:
-#                 logging.error(f'Actions not fully uploaded for bill {params["bill_type"]} {params["bill_number"]} in Congress {params["congress"]}')
-
-
-
 def get_members(params, save_folder):
 
     load_dotenv()
@@ -350,16 +250,6 @@ def upload_to_gcs_as_parquet(obj_list, bucket_name, file_name, data_type):
     
     print(f"Parquet data uploaded to gs://{bucket_name}/{file_name}")
 
-def get_bills_from_bq(ti):
-    # Fetch all bills from bigquery
-    client = bigquery.Client()
-    query = 'SELECT DISTINCT congress, number, type FROM Congress.bills'
-    query_job = client.query(query)
-    results = query_job.result()
-
-    bills_list = [(row.congress, row.number, row.type) for row in results]
-    ti.xcom_push(key='bills_list', value=bills_list)
-    # return bills_list
 
 def upload_folder_to_gcs(local_folder_path, bucket_name, destination_folder):
     # Initialize a clientdock
@@ -388,22 +278,6 @@ def upload_folder_to_gcs(local_folder_path, bucket_name, destination_folder):
 
             print(f"Uploaded {local_file_path} to gs://{bucket_name}/{gcs_blob_name}")
 
-# def upload_folder_to_gcs(local_folder_path, bucket_name):
-#     # Get list of all directories in the source directory
-#     folders = [f.path for f in os.scandir(local_folder_path) if f.is_dir()]
-
-#     # Loop through each folder and upload to GCS
-#     for folder in folders:
-#         # Construct the command to upload the directory to GCS using gsutil
-#         command = ['gsutil', '-m', 'cp', '-r', folder, 'gs://' + bucket_name]
-
-#         # Run the command
-#         try:
-#             subprocess.run(command, check=True)
-#             print(f"Successfully uploaded {folder} to GCS bucket {bucket_name}.")
-#         except subprocess.CalledProcessError as e:
-#             print(f"Error: Failed to upload {folder} to GCS bucket {bucket_name}.")
-#             print(e)
 
 def conform_votes(vote_data, bill_type, bill_number, roll_call_number, chamber):
     conform_data = {

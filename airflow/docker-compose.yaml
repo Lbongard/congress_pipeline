@@ -65,8 +65,8 @@ x-airflow-common:
     AIRFLOW__CORE__LOAD_EXAMPLES: 'false'
     AIRFLOW__API__AUTH_BACKENDS: 'airflow.api.auth.backend.basic_auth,airflow.api.auth.backend.session'
     GOOGLE_APPLICATION_CREDENTIALS: /.google/credentials/google_credentials.json
-    GCP_PROJECT_ID: "${GCP_PROJECT}"
-    GCP_GCS_BUCKET: congress_data/bills
+    GCP_PROJECT_ID: "${TF_VAR_gcp_project}"
+    GCP_GCS_BUCKET: "${TF_VAR_gcs_bucket}"
     AIRFLOW_CONN_GOOGLE_CLOUD_DEFAULT: 'google-cloud-platform://?extra__google_cloud_platform__key_path=/.google/credentials/google_credentials.json'
     # yamllint disable rule:line-length
     # Use simple http server on scheduler for health checks
@@ -82,7 +82,7 @@ x-airflow-common:
     - ${AIRFLOW_PROJ_DIR:-.}/config:/opt/airflow/config
     - ${AIRFLOW_PROJ_DIR:-.}/plugins:/opt/airflow/plugins
     # - ~/.google/credentials/:/.google/credentials:ro
-    - $(dirname "$google_credentials"):/.google/credentials:ro
+    - "$(./get_credentials_dir.sh)":/.google/credentials:ro
   user: "${AIRFLOW_UID:-50000}:0"
   depends_on:
     &airflow-common-depends-on

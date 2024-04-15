@@ -1,7 +1,7 @@
 # Create new storage bucket in the US multi-region
 # with standard storage
 
-variable "project_id" {
+variable "gcp_project" {
   description = "GCP Project ID"
 }
 
@@ -10,7 +10,7 @@ variable "google_credentials" {
 }
 
 provider "google" {
-  project = var.project_id
+  project = var.gcp_project
   credentials = var.google_credentials
   region  = "US"
 }

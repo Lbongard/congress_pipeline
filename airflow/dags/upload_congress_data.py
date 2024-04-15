@@ -18,7 +18,7 @@ import logging
 load_dotenv()
 
 # PROJECT_ID = os.getenv("GCP_PROJECT_ID")
-PROJECT_ID = os.environ.get("GCP_PROJECT_ID")
+PROJECT_ID = os.environ.get("TF_VAR_google_credentials")
 BUCKET_NAME = os.environ.get("TF_VAR_gcs_bucket_name")
 BIGQUERY_DATASET= 'Congress'
 DATA_TYPES = {'bill_status':{'table_struct':bill_status_ddl,

@@ -1,9 +1,17 @@
 # Create new storage bucket in the US multi-region
 # with standard storage
 
+variable "project_id" {
+  description = "GCP Project ID"
+}
+
+variable "google_credentials" {
+  description = "Path to google credentials file"
+}
+
 provider "google" {
-  project = "<your project id>"
-  credentials = "<path to your credentials>"
+  project = var.project_id
+  credentials = var.google_credentials
   region  = "US"
 }
 

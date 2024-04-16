@@ -10,25 +10,29 @@ variable "google_credentials" {
 }
 
 provider "google" {
-  project = var.gcp_project
+  project     = var.gcp_project
   credentials = var.google_credentials
-  region  = "US"
+  region      = "US"
 }
 
 variable "gcs_bucket_name" {
   description = "My Storage Bucket Name"
-  #Update the below to a unique bucket name
-  # default     = "congress_data"
+  # Update the below to a unique bucket name
+  # default = "congress_data"
 }
 
 # Define top-level bucket
 resource "google_storage_bucket" "static" {
- name          = var.gcs_bucket_name
- location      = "US"
- storage_class = "STANDARD"
- public_access_prevention = "enforced"
+  name                       = var.gcs_bucket_name
+  location                   = "US"
+  storage_class              = "STANDARD"
+  public_access_prevention   = "enforced"
+  uniform_bucket_level_access = true
+}
 
- uniform_bucket_level_access = true
+resource "google_bigquery_dataset" "dataset" {
+  dataset_id = "Congress"
+  location   = "US"
 }
 
 # # Define subdirectories (placeholders) by creating empty objects

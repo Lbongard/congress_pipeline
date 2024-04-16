@@ -1,10 +1,11 @@
 airflow-up:
-	cd ./airflow && \
-	source get_credentials_dir.sh && \
-	docker compose build && \
-	docker compose up airflow-init && \
-	docker compose up -d && \
-	cd ../
+    cd ./airflow && \
+    export google_credentials_dir=$$(dirname $$TF_VAR_google_credentials) && \
+    export google_credentials_file=$$(basename $$TF_VAR_google_credentials) && \
+    docker compose build && \
+    docker compose up airflow-init && \
+    docker compose up -d && \
+    cd ../
 
 trigger-dags:
 	cd ./airflow && \

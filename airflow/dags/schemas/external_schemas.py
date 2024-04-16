@@ -1,4 +1,7 @@
-bill_status_ddl = """CREATE OR REPLACE EXTERNAL TABLE Congress.bill_status_external_table(
+import os
+BUCKET_NAME = os.environ.get("GCP_GCS_BUCKET")
+
+bill_status_ddl = f"""CREATE OR REPLACE EXTERNAL TABLE Congress.bill_status_external_table(
    bill STRUCT<
         number STRING,
         updateDate TIMESTAMP,
@@ -63,12 +66,12 @@ bill_status_ddl = """CREATE OR REPLACE EXTERNAL TABLE Congress.bill_status_exter
 OPTIONS (
   format = 'JSON',
   uris = [
-    'gs://congress_data/bill_status/hconres/*.json',
-    'gs://congress_data/bill_status/hjres/*.json',
-    'gs://congress_data/bill_status/hr/*.json',
-    'gs://congress_data/bill_status/s/*.json',
-    'gs://congress_data/bill_status/sjres/*.json',
-    'gs://congress_data/bill_status/sres/*.json'
+    'gs://{BUCKET_NAME}/bill_status/hconres/*.json',
+    'gs://{BUCKET_NAME}/bill_status/hjres/*.json',
+    'gs://{BUCKET_NAME}/bill_status/hr/*.json',
+    'gs://{BUCKET_NAME}/bill_status/s/*.json',
+    'gs://{BUCKET_NAME}/bill_status/sjres/*.json',
+    'gs://{BUCKET_NAME}/bill_status/sres/*.json'
   ]);
 
 """
@@ -99,12 +102,12 @@ vote_ddl = """CREATE OR REPLACE EXTERNAL TABLE Congress.votes_external_table (
 )
 OPTIONS (
   format = "JSON",
-  uris = ['gs://congress_data/votes/HCONRES/*.json',
-    'gs://congress_data/votes/HJRES/*.json',
-    'gs://congress_data/votes/HR/*.json',
-    'gs://congress_data/votes/S/*.json',
-    'gs://congress_data/votes/SJRES/*.json',
-    'gs://congress_data/votes/SRES/*.json']
+  uris = ['gs://{{BUCKET_NAME}}votes/HCONRES/*.json',
+    'gs://{BUCKET_NAME}/votes/HJRES/*.json',
+    'gs://{BUCKET_NAME}/votes/HR/*.json',
+    'gs://{BUCKET_NAME}/votes/S/*.json',
+    'gs://{BUCKET_NAME}/votes/SJRES/*.json',
+    'gs://{BUCKET_NAME}/votes/SRES/*.json']
 )"""
 
 member_ddl = """CREATE OR REPLACE EXTERNAL TABLE Congress.members_external_table (
@@ -125,6 +128,6 @@ member_ddl = """CREATE OR REPLACE EXTERNAL TABLE Congress.members_external_table
 )
 OPTIONS (
   format = 'JSON',
-  uris = ['gs://congress_data/members/*.json']
+  uris = ['gs://{BUCKET_NAME}/members/*.json']
   )
 """

@@ -18,7 +18,7 @@ import logging
 load_dotenv()
 
 # PROJECT_ID = os.getenv("GCP_PROJECT_ID")
-PROJECT_ID = os.environ.get("TF_VAR_gcp_project")
+PROJECT_ID = os.environ.get("GCP_PROJECT_ID")
 BUCKET_NAME = os.environ.get("GCP_GCS_BUCKET")
 print(f"Bucket Name: {BUCKET_NAME}")
 BIGQUERY_DATASET= 'Congress'

@@ -1,5 +1,6 @@
 airflow-up:
 	cd ./airflow && \
+	source get_credentials_dir.sh && \
 	docker compose build && \
 	docker compose up airflow-init && \
 	docker compose up -d && \

@@ -3,22 +3,22 @@ This project creates a data pipline using US congressional data from GovInfo.gov
 
 While Congress originates and votes on various types of bills each year, this project seeks to create greater clarity around the types of bills that Congress addresses on a yearly basis. The pipeline defines a dimensional model by creating a fact (roll call vote) table and multiple dimension tables which contain information on members, vote metadata and congressional committees. The data used is for the current (118th) US Congress.
 
-This project was created for the (Data Talks Club Data Engineering Zoomcamp)[https://github.com/DataTalksClub/data-engineering-zoomcamp/tree/main]. See the 'Future Improvements' section for planned improvements to the pipeline.
+This project was created for the [Data Talks Club Data Engineering Zoomcamp](https://github.com/DataTalksClub/data-engineering-zoomcamp/tree/main). See the 'Future Improvements' section for planned improvements to the pipeline.
 
 # Project Architecture
 ![Screenshot 2024-04-16 at 9 49 40 PM](https://github.com/Lbongard/congress_pipeline/assets/62773555/47d3ce6b-bb5b-49be-9808-293cc566fcf9)
 
 # Data
-Information on the API and bulk data download used in this project can be found (here)[https://www.congress.gov/help/using-data-offsite] and (here)[https://www.govinfo.gov/bulkdata]
+Information on the API and bulk data download used in this project can be found [here](https://www.congress.gov/help/using-data-offsite) and [here](https://www.govinfo.gov/bulkdata)
 
 # Prerequisites
 In order to replicate this project, ensure the following list of programs is installed on your computer:
-* (Docker and docker compose)[https://docs.docker.com/compose/install/]
-* (Terraform)[https://developer.hashicorp.com/terraform/tutorials/aws-get-started/install-cli]
+* [Docker and docker compose](https://docs.docker.com/compose/install/)
+* [Terraform](https://developer.hashicorp.com/terraform/tutorials/aws-get-started/install-cli)
 * Git
-* (Google Cloud Platform)[https://cloud.google.com/gcp?hl=en]. Google offers a 3 month free trial for those signing up with a new email address.
+* [Google Cloud Platform](https://cloud.google.com/gcp?hl=en). Google offers a 3 month free trial for those signing up with a new email address.
 
-Additionally, you will need to sign up for a (congress.gov api key)[https://api.congress.gov/sign-up/]
+Additionally, you will need to sign up for a [congress.gov api key](https://api.congress.gov/sign-up/)
 
 # Recreating the Project
 
@@ -90,7 +90,7 @@ terraform destroy
 ```
 
 # Dashboard
-Using this data, it is possible to create a dashboard in Looker by selecting the BigQuery dataset as a source. See the example I created (here)[https://lookerstudio.google.com/reporting/134e8ca6-c712-42f5-8cbb-7ee197ced7ec]
+Using this data, it is possible to create a dashboard in Looker by selecting the BigQuery dataset as a source. See the example I created [here](https://lookerstudio.google.com/reporting/134e8ca6-c712-42f5-8cbb-7ee197ced7ec)
 
 ![Screenshot 2024-04-16 at 10 26 43 PM](https://github.com/Lbongard/congress_pipeline/assets/62773555/564ce1c3-882c-4a21-aefe-630b12169e94)
 

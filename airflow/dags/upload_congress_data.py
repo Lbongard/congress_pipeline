@@ -21,7 +21,7 @@ PROJECT_ID = os.environ.get("GCP_PROJECT_ID")
 BUCKET_NAME = os.environ.get("GCP_GCS_BUCKET")
 print(f"Bucket Name: {BUCKET_NAME}")
 
-congress_api_key = os.environ.get("congress_api_key")
+CONGRESS_API_KEY = os.environ.get("CONGRESS_API_KEY")
 
 BIGQUERY_DATASET= 'Congress'
 DATA_TYPES = {'bill_status':{'table_struct':bill_status_ddl,
@@ -112,7 +112,7 @@ params_members = {
     # Beginning of 118th Congress
     'start_date': "2023-01-01T00:00:00Z",
     "end_date":"{{ task_instance.xcom_pull(task_ids='format_execution_date_task') }}",
-    'api_key': congress_api_key
+    'api_key': CONGRESS_API_KEY
 }
 
 format_date_task = PythonOperator(

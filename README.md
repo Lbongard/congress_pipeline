@@ -21,7 +21,55 @@ In order to replicate this project, ensure the following list of programs is ins
 Additionally, you will need to sign up for a (congress.gov api key)[https://api.congress.gov/sign-up/]
 
 # Recreating the Project
-First, create a new GCP Project and service account. Service accounts can be created under the 'IAM & Admin' section of the GCP console. Ensure that this service account has admin access to 'BigQuery', 'Compute' and 'Storage'
+
+1. **First, create a new GCP Project and service account.** Service accounts can be created under the 'IAM & Admin' section of the GCP console. Ensure that this service account has admin access to 'BigQuery', 'Compute' and 'Storage'. Download a json key associated with the account and note the directory in which you save it.
+
 ![Screenshot 2024-04-16 at 10 04 23 PM](https://github.com/Lbongard/congress_pipeline/assets/62773555/23f4c900-17c1-40e0-be43-3de6f7992de3)
 
+2. **Clone this repository**
+3. **Navigate to the root of the cloned repo and activate the virtual environment**
+
+```
+# Set up virtual env
+source venv/bin/activate
+pip install -r requirements.txt
+```
+4. **Set required environment variables**. These are needed for Terraform, Airflow and DBT. Replace placeholders with variables where appropriate below.
+
+```
+# Set Environment Variables
+
+export TF_VAR_google_credentials=<path_to_google_credentials_key>
+export TF_VAR_gcp_project=<your_gcp_project_id>
+export TF_VAR_gcs_bucket_name="congress_data_${TF_VAR_gcp_project}"
+
+export congress_api_key=<your_congress_api_key>
+
+export google_credentials_dir=$(dirname ${TF_VAR_google_credentials})
+export google_credentials_file=$(basename ${TF_VAR_google_credentials})
+
+
+export DBT_GOOGLE_CREDENTIALS=$TF_VAR_google_credentials
+export DBT_GCP_PROJECT=$TF_VAR_GCP_PROJECT
+export DBT_PROFILES_DIR=./
+
+export DBT_GOOGLE_CREDENTIALS=$TF_VAR_google_credentials
+export DBT_GCP_PROJECT=$TF_VAR_gcp_project
+```
+5. **Switch to the Terraform directory and create infra**
+
+```
+# Switch to Terraform Directory
+cd ./terraform
+terraform init
+terraform plan
+terraform apply
+```
+6. **Switch back to the root directory and run airflow.** The following make command will build the docker container and start running the pipeline. After a few minutes, you can check the status of the pipeline by going to localhost:8080 in your browser. Ensure that the pipeline has started. Grab some coffee while it runs.
+```
+make airflow-up
+```
+
+
+7. 
 

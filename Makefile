@@ -1,7 +1,5 @@
 airflow-up:
-    cd ./airflow && \
-    export google_credentials_dir=$$(dirname $$TF_VAR_google_credentials) && \
-    export google_credentials_file=$$(basename $$TF_VAR_google_credentials) && \
+	cd ./airflow && \
     docker compose build && \
     docker compose up airflow-init && \
     docker compose up -d && \

@@ -15,12 +15,14 @@ from dotenv import load_dotenv
 import os
 import logging
 
-load_dotenv()
 
 # PROJECT_ID = os.getenv("GCP_PROJECT_ID")
 PROJECT_ID = os.environ.get("GCP_PROJECT_ID")
 BUCKET_NAME = os.environ.get("GCP_GCS_BUCKET")
 print(f"Bucket Name: {BUCKET_NAME}")
+
+congress_api_key = os.environ.get("congress_api_key")
+
 BIGQUERY_DATASET= 'Congress'
 DATA_TYPES = {'bill_status':{'table_struct':bill_status_ddl,
                              'date_col':'bill.introducedDate',
@@ -66,13 +68,6 @@ files_to_download = [
 ]
 
 
-# bash_command = ' && '.join([
-#                             f'wget {file_url} && \
-#                             unzip -o /{file_url.split("/")[-1]} && \
-#                             rm {file_url.split("/")[-1]} || \
-#                             echo "Failed to download or unzip {file_url}"' \
-#                             for file_url in files_to_download])
-
 bash_command = ' && '.join([
     f'rm -rf /opt/airflow/dags/data/bills/{bill_type} \
     && mkdir -p /opt/airflow/dags/data/bills/{bill_type} \
@@ -117,7 +112,7 @@ params_members = {
     # Beginning of 118th Congress
     'start_date': "2023-01-01T00:00:00Z",
     "end_date":"{{ task_instance.xcom_pull(task_ids='format_execution_date_task') }}",
-    'api_key': "WNue8kCDCOIlewAsULgnN8j6SqSgAZjE2sYbPsBb"
+    'api_key': congress_api_key
 }
 
 format_date_task = PythonOperator(
@@ -189,38 +184,10 @@ for data_type in DATA_TYPES.keys():
     elif data_type == 'members':
         upload_to_gcs.set_upstream(get_members_data)
 
-
-
-# bigquery_external_table_task = BigQueryCreateExternalTableOperator(
-#         task_id = "bill_status_external_table_task",
-#         table_resource={
-#             "tableReference": {
-#                 "projectID": PROJECT_ID,
-#                 "datasetId": BIGQUERY_DATASET,
-#                 "tableId": f"bill_status_external_table",
-#             },
-#             "externalDataConfiguration": {
-#                 "autodetect": "False",
-#                 "schema": {
-#                     "fields": bill_status_schema
-#                 },
-#                 "sourceFormat": 'JSON',
-#                 "sourceUris": ['gs://congress_data/bills/hconres/*.json',
-#                                 'gs://congress_data/bills/hjres/*.json',
-#                                 'gs://congress_data/bills/hr/*.json',
-#                                 'gs://congress_data/bills/s/*.json',
-#                                 'gs://congress_data/bills/sjres/*.json',
-#                                 'gs://congress_data/bills/sres/*.json'],
-#                 },
-#         },
-#         dag=dag 
-#     )
-
 get_bills >> convert_to_json >> upload_to_gcs >> bigquery_external_table_task >> bq_create_partitioned_table_job
 
 convert_to_json >> get_votes_from_bills
 
 format_date_task >> get_members_data
 
-# convert_to_json.downstream_task_ids.remove('upload_members_to_gcs')
 

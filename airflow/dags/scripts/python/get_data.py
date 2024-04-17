@@ -202,26 +202,6 @@ def get_members_api_call(params):
 
 
 
-
-# def get_member_api_response(params):
-        
-#     start_date  = params.get('start_date', None)
-#     end_date    = params.get('end_date', None)
-#     limit       = params.get('limit', None)
-#     api_key     = params.get('api_key', None)
-#     offset      = params.get('offset', None)
-
-#     path = f'https://api.congress.gov/v3/member?format=json&fromDateTime={start_date}&toDateTime={end_date}&offset={offset}&limit={limit}&api_key={api_key}'
-    
-#     logging.info(f'executing API call for {path}')
-
-#     response = requests.get(path)
-
-#     api_response = ApiResponse(**response.json())
-
-#     return api_response
-
-
 def upload_to_gcs_as_parquet(obj_list, bucket_name, file_name, data_type):
     
     # Object containing list of members in API response is plural. Why 'member' in endpoint is not also plural I could not tell you.

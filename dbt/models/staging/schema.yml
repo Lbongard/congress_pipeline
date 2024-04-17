@@ -1,11 +1,11 @@
 version: 2
 sources:
   - name: staging
-    database: "${GCP_PROJECT}"
+    database: "{{ env_var('DBT_GCP_PROJECT') }}"
     schema: Congress
 
     tables:
-      - name: member
+      - name: members
       - name: bill_status
       - name: votes
 

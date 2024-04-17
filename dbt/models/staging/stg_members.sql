@@ -1,5 +1,5 @@
 with source as(
-    select * from {{source('staging', 'member')}}
+    select * from {{source('staging', 'members')}}
 )
 
 select s.bioguideID,
@@ -8,9 +8,10 @@ select s.bioguideID,
        s.district,
        s.depiction,
        s.depiction.imageURL imageURL,
-       terms.chamber chamber,
+       item.chamber chamber,
     --    terms.startYear term_start_year,
     --    terms.endYear term_end_year
-from source s
+from source s, 
+     UNNEST(terms.item) as item
 
 

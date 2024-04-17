@@ -76,7 +76,7 @@ OPTIONS (
 
 """
 
-vote_ddl = """CREATE OR REPLACE EXTERNAL TABLE Congress.votes_external_table (
+vote_ddl = f"""CREATE OR REPLACE EXTERNAL TABLE Congress.votes_external_table (
   vote STRUCT<
     date DATE,
     bill_type STRING,
@@ -102,7 +102,7 @@ vote_ddl = """CREATE OR REPLACE EXTERNAL TABLE Congress.votes_external_table (
 )
 OPTIONS (
   format = "JSON",
-  uris = ['gs://{{BUCKET_NAME}}votes/HCONRES/*.json',
+  uris = ['gs://{BUCKET_NAME}/votes/HCONRES/*.json',
     'gs://{BUCKET_NAME}/votes/HJRES/*.json',
     'gs://{BUCKET_NAME}/votes/HR/*.json',
     'gs://{BUCKET_NAME}/votes/S/*.json',
@@ -110,7 +110,7 @@ OPTIONS (
     'gs://{BUCKET_NAME}/votes/SRES/*.json']
 )"""
 
-member_ddl = """CREATE OR REPLACE EXTERNAL TABLE Congress.members_external_table (
+member_ddl = f"""CREATE OR REPLACE EXTERNAL TABLE Congress.members_external_table (
   bioguideId STRING,
   state STRING,
   partyName STRING,

@@ -1,4 +1,4 @@
-#!/Users/reidbongard/Dropbox/Mac/Documents/Projects_and_Competitions/congress_etl/venv/bin/python
+#!/Users/reidbongard/Dropbox/Mac/Documents/Projects_and_Competitions/congress_pipeline/venv/bin/python3.12
 # -*- coding: utf-8 -*-
 import re
 import sys

@@ -1,3 +1,6 @@
 airflow/dags/data/
 airflow/dags/logs
+test/hr
+test/s
+terraform/.terraform
 .env

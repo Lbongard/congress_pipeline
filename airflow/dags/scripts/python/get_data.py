@@ -86,56 +86,65 @@ def get_votes_for_saved_bills(local_folder_path, save_folder):
 
 def get_votes(bill_json, save_folder):
     
-    f = open(bill_json, "r")
-    bill = dict(json.load(f))
-    logging.info(f"Opened bill from file {bill_json}")
+    votes_list = []
 
-    bill_number = bill['bill']['number']
-    bill_type = bill['bill']['type']
+    with open(bill_json) as f:
+        for line in f:
+            json_content = json.loads(line)
+            bill = dict(json_content)
 
-    bill_actions = [action for action in bill['bill']['actions']['item']]
-    recorded_votes = [vote for action in bill_actions for vote in action['recordedVotes']]
+            bill_number = bill['bill']['number']
+            bill_type = bill['bill']['type']
+            logging.info(f"Opened bill {bill_type} {bill_number}")
+
+            bill_actions = [action for action in bill['bill']['actions']['item']]
+            recorded_votes = [vote for action in bill_actions for vote in action['recordedVotes']]
     
-    # return recorded_votes
-    for vote in recorded_votes:
-        try:
-            vote_num = str(vote['rollNumber']).zfill(0)
-            if vote['chamber'] == 'Senate':
-                
-                xml_path = vote['url']
-                response = requests.get(xml_path)
+            # return recorded_votes
+            for vote in recorded_votes:
+                try:
+                    vote_num = str(vote['rollNumber']).zfill(0)
+                    if vote['chamber'] == 'Senate':
+                        
+                        xml_path = vote['url']
+                        response = requests.get(xml_path)
 
-                response_dict = xmltodict.parse(response.content)
-                # votes_data = response_dict['roll_call_vote']['members']['member']
+                        response_dict = xmltodict.parse(response.content)
+                        # votes_data = response_dict['roll_call_vote']['members']['member']
 
-            else:
-                vote_year = pd.to_datetime(vote['date']).year
-                # Add leading 0 for roll calls in the single or double digits
-                xml_path = f'https://clerk.house.gov/evs/{vote_year}/roll{vote_num}.xml'
-                response = requests.get(xml_path)
+                    else:
+                        vote_year = pd.to_datetime(vote['date']).year
+                        # Add leading 0 for roll calls in the single or double digits
+                        xml_path = f'https://clerk.house.gov/evs/{vote_year}/roll{vote_num}.xml'
+                        response = requests.get(xml_path)
 
-                # Turning Response into a json
-                response_dict = xmltodict.parse(response.content)
-                # votes_data = response_dict['rollcall-vote']['vote-data']['recorded-vote']
+                        # Turning Response into a json
+                        response_dict = xmltodict.parse(response.content)
+                        # votes_data = response_dict['rollcall-vote']['vote-data']['recorded-vote']
 
-            votes_data = conform_votes(vote_data=response_dict, 
-                                           bill_type=bill_type, 
-                                           bill_number=bill_number, 
-                                           roll_call_number=vote_num, 
-                                           chamber=vote['chamber'])
+                    votes_data = conform_votes(vote_data=response_dict, 
+                                                bill_type=bill_type, 
+                                                bill_number=bill_number, 
+                                                roll_call_number=vote_num, 
+                                                chamber=vote['chamber'])
+                    votes_list.append(votes_data)
+                    
+                except Exception as e:
+                    print(f"An exception occurred", e, "Failed to save one or more votes for {bill_type} {bill_number}")
+                    
+    batch_json_str = "\n".join([json.dumps(obj) for obj in votes_list])
 
-            save_dir = os.path.join(save_folder, bill_type)
-            
-            if not os.path.exists(save_dir):
-                os.makedirs(save_dir)
+    save_dir = os.path.join(save_folder, bill_type)
+    
+    if not os.path.exists(save_dir):
+        os.makedirs(save_dir)
 
-            file_name = f'{save_dir}/{bill_type}_{bill_number}_voteNumber{vote_num}.json'
-            
-            with open(file_name, "w") as outfile:
-                json.dump(votes_data, outfile)
+    file_name = f'{save_dir}/votes_{os.path.basename(bill_json)}'
+    
+    with open(file_name, "w") as outfile:
+        outfile.write(batch_json_str)
 
-        except Exception as e:
-            print(f"An exception occurred", e, "Failed to save one or more votes for {bill_type} {bill_number}")
+               
 
 
 def get_members(params, save_folder):
@@ -165,10 +174,11 @@ def get_members(params, save_folder):
 
         members_df = pd.DataFrame(data.members)
 
-        for i in members_df.index:
-            bio_guide_id = members_df.loc[i]['bioguideId']
-            members_df.loc[i].to_json(f'{save_folder}/member_{bio_guide_id}.json')
+        filename = f"{save_folder}/members_{i}_{i + limit}.json"
+        f = open(filename, "w")
 
+        for row in members_df.index:
+            f.write(members_df.loc[row].to_json() + "\n")
 
         print(f'{i+len(data.members)} of {records_to_fetch} member records saved')
 

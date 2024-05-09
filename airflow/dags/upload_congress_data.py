@@ -178,11 +178,11 @@ for data_type in DATA_TYPES.keys():
     upload_to_gcs >> bigquery_external_table_task >> bq_create_partitioned_table_job
 
     if data_type == 'bill_status':
-        upload_to_gcs.set_upstream(convert_to_json)
+        convert_to_json >> upload_to_gcs
     elif data_type == 'votes':
-        upload_to_gcs.set_upstream(get_votes_from_bills)
+        get_votes_from_bills >> upload_to_gcs
     elif data_type == 'members':
-        upload_to_gcs.set_upstream(get_members_data)
+        get_members_data >> upload_to_gcs
 
 get_bills >> convert_to_json >> upload_to_gcs >> bigquery_external_table_task >> bq_create_partitioned_table_job
 

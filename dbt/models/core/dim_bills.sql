@@ -11,6 +11,7 @@ with source as(
 select distinct bill_key,
        number,
        type,
+       introducedDate,
        concat(type, number) bill_name,
        title,
        policyArea.name policy_area,

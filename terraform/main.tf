@@ -23,6 +23,7 @@ variable "gcs_bucket_name" {
 
 # Define top-level bucket
 resource "google_storage_bucket" "static" {
+  force_destroy = true
   name                       = var.gcs_bucket_name
   location                   = "US"
   storage_class              = "STANDARD"
@@ -33,6 +34,7 @@ resource "google_storage_bucket" "static" {
 resource "google_bigquery_dataset" "dataset" {
   dataset_id = "Congress"
   location   = "US"
+  delete_contents_on_destroy = true
 }
 
 

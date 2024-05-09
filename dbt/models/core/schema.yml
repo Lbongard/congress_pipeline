@@ -1,0 +1,43 @@
+version: 2
+
+models:
+  - name: dim_votes
+    columns:
+      - name: bill_key
+        tests:
+          - not_null
+          - relationships:
+              to: ref('dim_bills')
+              field: bill_key
+      - name: roll_call_number
+        tests:
+          - unique
+
+  - name: dim_bills
+    columns:
+      - name: bill_key
+        tests:
+          - unique
+          - not_null
+
+  - name: fact_roll_call_votes
+    tests:
+      - unique:
+          column_name: "bill_key || '-' || roll_call_number || '-' || bioguideID"
+    
+    columns:
+      - name: bill_key
+        tests:
+          - not_null
+          - relationships:
+              to: ref('dim_bills')
+              field: bill_key
+
+      - name: bioguideID
+        tests:
+          - not_null
+          - relationships:
+              to: ref('dim_members')
+              field: bioguideID
+
+

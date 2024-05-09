@@ -4,44 +4,63 @@ import json
 import subprocess
 import logging
 
-def convert_xml_to_newline_json(xml_content):
-    json_data = xmltodict.parse(xml_content)
-    newline_json = '\n'.join(json.dumps({key: value}) for key, value in json_data.items())
-    return newline_json
+# def convert_xml_to_newline_json(xml_content):
+#     json_data = xmltodict.parse(xml_content)
+#     newline_json = '\n'.join(json.dumps({key: value}) for key, value in json_data.items())
+#     return newline_json
 
 def convert_folder_xml_to_newline_json(folder):
-    for root, dirs, files in os.walk(folder):
-        for filename in files:
-            if filename.endswith(".xml"):
-                xml_file = os.path.join(root, filename)
-                try:
-                    with open(xml_file, "r") as f:
-                        xml_content = f.read()
-                    # newline_json_data = convert_xml_to_newline_json(xml_content)
+    
+    for subfolder in os.listdir(folder):
+        subfolder_path = os.path.join(folder, subfolder)
+        if os.path.isdir(subfolder_path):
+            files = os.listdir(subfolder_path)
 
-                    # Only keep jsons with recorded votes
-                    if 'recordedVotes' in str(xml_content):
-                        json_data = xmltodict.parse(xml_content)
+            json_objects = []
+            xml_files = []
 
-                        # only keep needed fields
-                        json_data = enforce_schema(json_data=json_data['billStatus'])
-
-                        json_data = replace_special_characters(json_data)
-                        newline_json_data = '\n'.join(json.dumps({key: value}) for key, value in json_data.items())
-                        # newline_json_data = convert_xml_to_newline_json(xml_content)
-                        json_filename = os.path.splitext(filename)[0] + ".json"
-                        json_file = os.path.join(root, json_filename)
-                        # Replace special characters in keys
-                        with open(json_file, "w") as f:
-                            f.write(newline_json_data)
-                            # json.dump(newline_json_data, f)
-                            print(f"Converted {xml_file} to {json_file}")
-                except:
-                    # logging.info(f'Failed to convert data for {xml_file}')
-                    raise Exception(f'failed to convert data for {xml_file}')
+            for filename in files:
+                if filename.endswith(".xml"):
+                    xml_file = os.path.join(subfolder_path, filename)
+                    try:
+                        with open(xml_file, "r") as f:
+                            xml_content = f.read()
+                            json_object = xmltodict.parse(xml_content)
+                            # only keep needed fields
+                            json_object_parsed = enforce_schema(json_data=json_object['billStatus'])
+                            json_objects.append(json_object_parsed)
+                            xml_files.append(xml_file)
+                    except:
+                        # logging.info(f'Failed to convert data for {xml_file}')
+                        raise Exception(f'failed to convert data for {xml_file}')
                     
+            batch_size = 250
+            batch_count = 0
 
-                os.remove(xml_file)
+            for i in range(0, len(json_objects), batch_size):
+                # Get the current batch
+                batch = json_objects[i:i + batch_size]
+
+                # Convert batch to newline-separated JSON
+                batch_json_str = "\n".join([json.dumps(obj) for obj in batch])
+
+                # Output the batch to a new file
+                output_file = f'{subfolder_path}/{subfolder}bill_status_{batch_count}.json'
+                with open(output_file, 'w') as f:
+                    f.write(batch_json_str)
+                
+                # Increment the batch count
+                batch_count += 1
+
+            # Remove original xml files
+            for xml_file in xml_files:
+                if os.path.exists(xml_file):
+                    try:
+                        os.remove(xml_file)
+                    except Exception as e:
+                        print(f"Error deleting {xml_file}")
+                else:
+                    print(f'{xml_file} not found.')
                 
 
 def check_for_votes(json_input):

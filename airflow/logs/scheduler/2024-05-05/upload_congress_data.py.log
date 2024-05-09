@@ -1,0 +1,160 @@
+[2024-05-05T01:02:51.156+0000] {processor.py:161} INFO - Started process (PID=785) to work on /opt/airflow/dags/upload_congress_data.py
+[2024-05-05T01:02:51.156+0000] {processor.py:830} INFO - Processing file /opt/airflow/dags/upload_congress_data.py for tasks to queue
+[2024-05-05T01:02:51.158+0000] {logging_mixin.py:188} INFO - [2024-05-05T01:02:51.158+0000] {dagbag.py:540} INFO - Filling up the DagBag from /opt/airflow/dags/upload_congress_data.py
+[2024-05-05T01:02:51.181+0000] {logging_mixin.py:188} INFO - Bucket Name: congress_data_testproject-420401
+[2024-05-05T01:02:51.186+0000] {processor.py:840} INFO - DAG(s) 'upload_congress_data' retrieved from /opt/airflow/dags/upload_congress_data.py
+[2024-05-05T01:02:51.200+0000] {logging_mixin.py:188} INFO - [2024-05-05T01:02:51.200+0000] {dag.py:3047} INFO - Sync 1 DAGs
+[2024-05-05T01:02:51.210+0000] {logging_mixin.py:188} INFO - [2024-05-05T01:02:51.210+0000] {dag.py:3834} INFO - Setting next_dagrun for upload_congress_data to None, run_after=None
+[2024-05-05T01:02:51.217+0000] {processor.py:183} INFO - Processing /opt/airflow/dags/upload_congress_data.py took 0.064 seconds
+[2024-05-05T02:18:50.631+0000] {processor.py:161} INFO - Started process (PID=793) to work on /opt/airflow/dags/upload_congress_data.py
+[2024-05-05T02:18:50.634+0000] {processor.py:830} INFO - Processing file /opt/airflow/dags/upload_congress_data.py for tasks to queue
+[2024-05-05T02:18:50.641+0000] {logging_mixin.py:188} INFO - [2024-05-05T02:18:50.640+0000] {dagbag.py:540} INFO - Filling up the DagBag from /opt/airflow/dags/upload_congress_data.py
+[2024-05-05T02:18:50.700+0000] {logging_mixin.py:188} INFO - Bucket Name: congress_data_testproject-420401
+[2024-05-05T02:18:50.718+0000] {processor.py:840} INFO - DAG(s) 'upload_congress_data' retrieved from /opt/airflow/dags/upload_congress_data.py
+[2024-05-05T02:18:50.764+0000] {logging_mixin.py:188} INFO - [2024-05-05T02:18:50.764+0000] {dag.py:3047} INFO - Sync 1 DAGs
+[2024-05-05T02:18:50.796+0000] {logging_mixin.py:188} INFO - [2024-05-05T02:18:50.796+0000] {dag.py:3834} INFO - Setting next_dagrun for upload_congress_data to None, run_after=None
+[2024-05-05T02:18:50.828+0000] {processor.py:183} INFO - Processing /opt/airflow/dags/upload_congress_data.py took 0.206 seconds
+[2024-05-05T03:40:03.250+0000] {processor.py:161} INFO - Started process (PID=801) to work on /opt/airflow/dags/upload_congress_data.py
+[2024-05-05T03:40:03.252+0000] {processor.py:830} INFO - Processing file /opt/airflow/dags/upload_congress_data.py for tasks to queue
+[2024-05-05T03:40:03.257+0000] {logging_mixin.py:188} INFO - [2024-05-05T03:40:03.257+0000] {dagbag.py:540} INFO - Filling up the DagBag from /opt/airflow/dags/upload_congress_data.py
+[2024-05-05T03:40:03.315+0000] {logging_mixin.py:188} INFO - Bucket Name: congress_data_testproject-420401
+[2024-05-05T03:40:03.335+0000] {processor.py:840} INFO - DAG(s) 'upload_congress_data' retrieved from /opt/airflow/dags/upload_congress_data.py
+[2024-05-05T03:40:03.371+0000] {logging_mixin.py:188} INFO - [2024-05-05T03:40:03.371+0000] {dag.py:3047} INFO - Sync 1 DAGs
+[2024-05-05T03:40:03.396+0000] {logging_mixin.py:188} INFO - [2024-05-05T03:40:03.396+0000] {dag.py:3834} INFO - Setting next_dagrun for upload_congress_data to None, run_after=None
+[2024-05-05T03:40:03.422+0000] {processor.py:183} INFO - Processing /opt/airflow/dags/upload_congress_data.py took 0.178 seconds
+[2024-05-05T04:57:21.534+0000] {processor.py:161} INFO - Started process (PID=803) to work on /opt/airflow/dags/upload_congress_data.py
+[2024-05-05T04:57:21.536+0000] {processor.py:830} INFO - Processing file /opt/airflow/dags/upload_congress_data.py for tasks to queue
+[2024-05-05T04:57:21.540+0000] {logging_mixin.py:188} INFO - [2024-05-05T04:57:21.539+0000] {dagbag.py:540} INFO - Filling up the DagBag from /opt/airflow/dags/upload_congress_data.py
+[2024-05-05T04:57:21.583+0000] {logging_mixin.py:188} INFO - Bucket Name: congress_data_testproject-420401
+[2024-05-05T04:57:21.598+0000] {processor.py:840} INFO - DAG(s) 'upload_congress_data' retrieved from /opt/airflow/dags/upload_congress_data.py
+[2024-05-05T04:57:21.638+0000] {logging_mixin.py:188} INFO - [2024-05-05T04:57:21.638+0000] {dag.py:3047} INFO - Sync 1 DAGs
+[2024-05-05T04:57:21.662+0000] {logging_mixin.py:188} INFO - [2024-05-05T04:57:21.661+0000] {dag.py:3834} INFO - Setting next_dagrun for upload_congress_data to None, run_after=None
+[2024-05-05T04:57:21.685+0000] {processor.py:183} INFO - Processing /opt/airflow/dags/upload_congress_data.py took 0.156 seconds
+[2024-05-05T06:20:57.886+0000] {processor.py:161} INFO - Started process (PID=817) to work on /opt/airflow/dags/upload_congress_data.py
+[2024-05-05T06:20:57.889+0000] {processor.py:830} INFO - Processing file /opt/airflow/dags/upload_congress_data.py for tasks to queue
+[2024-05-05T06:20:57.895+0000] {logging_mixin.py:188} INFO - [2024-05-05T06:20:57.894+0000] {dagbag.py:540} INFO - Filling up the DagBag from /opt/airflow/dags/upload_congress_data.py
+[2024-05-05T06:20:57.946+0000] {logging_mixin.py:188} INFO - Bucket Name: congress_data_testproject-420401
+[2024-05-05T06:20:57.963+0000] {processor.py:840} INFO - DAG(s) 'upload_congress_data' retrieved from /opt/airflow/dags/upload_congress_data.py
+[2024-05-05T06:20:58.006+0000] {logging_mixin.py:188} INFO - [2024-05-05T06:20:58.006+0000] {dag.py:3047} INFO - Sync 1 DAGs
+[2024-05-05T06:20:58.035+0000] {logging_mixin.py:188} INFO - [2024-05-05T06:20:58.034+0000] {dag.py:3834} INFO - Setting next_dagrun for upload_congress_data to None, run_after=None
+[2024-05-05T06:20:58.064+0000] {processor.py:183} INFO - Processing /opt/airflow/dags/upload_congress_data.py took 0.185 seconds
+[2024-05-05T07:44:20.889+0000] {processor.py:161} INFO - Started process (PID=825) to work on /opt/airflow/dags/upload_congress_data.py
+[2024-05-05T07:44:20.895+0000] {processor.py:830} INFO - Processing file /opt/airflow/dags/upload_congress_data.py for tasks to queue
+[2024-05-05T07:44:20.902+0000] {logging_mixin.py:188} INFO - [2024-05-05T07:44:20.901+0000] {dagbag.py:540} INFO - Filling up the DagBag from /opt/airflow/dags/upload_congress_data.py
+[2024-05-05T07:44:20.974+0000] {logging_mixin.py:188} INFO - Bucket Name: congress_data_testproject-420401
+[2024-05-05T07:44:20.988+0000] {processor.py:840} INFO - DAG(s) 'upload_congress_data' retrieved from /opt/airflow/dags/upload_congress_data.py
+[2024-05-05T07:44:21.018+0000] {logging_mixin.py:188} INFO - [2024-05-05T07:44:21.018+0000] {dag.py:3047} INFO - Sync 1 DAGs
+[2024-05-05T07:44:21.030+0000] {logging_mixin.py:188} INFO - [2024-05-05T07:44:21.030+0000] {dag.py:3834} INFO - Setting next_dagrun for upload_congress_data to None, run_after=None
+[2024-05-05T07:44:21.039+0000] {processor.py:183} INFO - Processing /opt/airflow/dags/upload_congress_data.py took 0.162 seconds
+[2024-05-05T09:26:26.753+0000] {processor.py:161} INFO - Started process (PID=827) to work on /opt/airflow/dags/upload_congress_data.py
+[2024-05-05T09:26:26.753+0000] {processor.py:830} INFO - Processing file /opt/airflow/dags/upload_congress_data.py for tasks to queue
+[2024-05-05T09:26:26.755+0000] {logging_mixin.py:188} INFO - [2024-05-05T09:26:26.755+0000] {dagbag.py:540} INFO - Filling up the DagBag from /opt/airflow/dags/upload_congress_data.py
+[2024-05-05T09:26:26.780+0000] {logging_mixin.py:188} INFO - Bucket Name: congress_data_testproject-420401
+[2024-05-05T09:26:26.789+0000] {processor.py:840} INFO - DAG(s) 'upload_congress_data' retrieved from /opt/airflow/dags/upload_congress_data.py
+[2024-05-05T09:26:26.808+0000] {logging_mixin.py:188} INFO - [2024-05-05T09:26:26.808+0000] {dag.py:3047} INFO - Sync 1 DAGs
+[2024-05-05T09:26:26.821+0000] {logging_mixin.py:188} INFO - [2024-05-05T09:26:26.821+0000] {dag.py:3834} INFO - Setting next_dagrun for upload_congress_data to None, run_after=None
+[2024-05-05T09:26:26.831+0000] {processor.py:183} INFO - Processing /opt/airflow/dags/upload_congress_data.py took 0.081 seconds
+[2024-05-05T10:47:57.118+0000] {processor.py:161} INFO - Started process (PID=835) to work on /opt/airflow/dags/upload_congress_data.py
+[2024-05-05T10:47:57.120+0000] {processor.py:830} INFO - Processing file /opt/airflow/dags/upload_congress_data.py for tasks to queue
+[2024-05-05T10:47:57.123+0000] {logging_mixin.py:188} INFO - [2024-05-05T10:47:57.123+0000] {dagbag.py:540} INFO - Filling up the DagBag from /opt/airflow/dags/upload_congress_data.py
+[2024-05-05T10:47:57.168+0000] {logging_mixin.py:188} INFO - Bucket Name: congress_data_testproject-420401
+[2024-05-05T10:47:57.182+0000] {processor.py:840} INFO - DAG(s) 'upload_congress_data' retrieved from /opt/airflow/dags/upload_congress_data.py
+[2024-05-05T10:47:57.219+0000] {logging_mixin.py:188} INFO - [2024-05-05T10:47:57.218+0000] {dag.py:3047} INFO - Sync 1 DAGs
+[2024-05-05T10:47:57.251+0000] {logging_mixin.py:188} INFO - [2024-05-05T10:47:57.251+0000] {dag.py:3834} INFO - Setting next_dagrun for upload_congress_data to None, run_after=None
+[2024-05-05T10:47:57.279+0000] {processor.py:183} INFO - Processing /opt/airflow/dags/upload_congress_data.py took 0.167 seconds
+[2024-05-05T11:54:38.789+0000] {processor.py:161} INFO - Started process (PID=843) to work on /opt/airflow/dags/upload_congress_data.py
+[2024-05-05T11:54:38.792+0000] {processor.py:830} INFO - Processing file /opt/airflow/dags/upload_congress_data.py for tasks to queue
+[2024-05-05T11:54:38.796+0000] {logging_mixin.py:188} INFO - [2024-05-05T11:54:38.795+0000] {dagbag.py:540} INFO - Filling up the DagBag from /opt/airflow/dags/upload_congress_data.py
+[2024-05-05T11:54:38.870+0000] {logging_mixin.py:188} INFO - Bucket Name: congress_data_testproject-420401
+[2024-05-05T11:54:38.897+0000] {processor.py:840} INFO - DAG(s) 'upload_congress_data' retrieved from /opt/airflow/dags/upload_congress_data.py
+[2024-05-05T11:54:38.956+0000] {logging_mixin.py:188} INFO - [2024-05-05T11:54:38.956+0000] {dag.py:3047} INFO - Sync 1 DAGs
+[2024-05-05T11:54:38.990+0000] {logging_mixin.py:188} INFO - [2024-05-05T11:54:38.989+0000] {dag.py:3834} INFO - Setting next_dagrun for upload_congress_data to None, run_after=None
+[2024-05-05T11:54:39.020+0000] {processor.py:183} INFO - Processing /opt/airflow/dags/upload_congress_data.py took 0.238 seconds
+[2024-05-05T13:17:30.450+0000] {processor.py:161} INFO - Started process (PID=852) to work on /opt/airflow/dags/upload_congress_data.py
+[2024-05-05T13:17:30.450+0000] {processor.py:830} INFO - Processing file /opt/airflow/dags/upload_congress_data.py for tasks to queue
+[2024-05-05T13:17:30.452+0000] {logging_mixin.py:188} INFO - [2024-05-05T13:17:30.452+0000] {dagbag.py:540} INFO - Filling up the DagBag from /opt/airflow/dags/upload_congress_data.py
+[2024-05-05T13:17:30.481+0000] {logging_mixin.py:188} INFO - Bucket Name: congress_data_testproject-420401
+[2024-05-05T13:17:30.490+0000] {processor.py:840} INFO - DAG(s) 'upload_congress_data' retrieved from /opt/airflow/dags/upload_congress_data.py
+[2024-05-05T13:17:30.539+0000] {logging_mixin.py:188} INFO - [2024-05-05T13:17:30.539+0000] {dag.py:3047} INFO - Sync 1 DAGs
+[2024-05-05T13:17:30.574+0000] {logging_mixin.py:188} INFO - [2024-05-05T13:17:30.574+0000] {dag.py:3834} INFO - Setting next_dagrun for upload_congress_data to None, run_after=None
+[2024-05-05T13:17:30.977+0000] {processor.py:183} INFO - Processing /opt/airflow/dags/upload_congress_data.py took 0.530 seconds
+[2024-05-05T14:12:55.847+0000] {processor.py:161} INFO - Started process (PID=860) to work on /opt/airflow/dags/upload_congress_data.py
+[2024-05-05T14:12:55.850+0000] {processor.py:830} INFO - Processing file /opt/airflow/dags/upload_congress_data.py for tasks to queue
+[2024-05-05T14:12:55.864+0000] {logging_mixin.py:188} INFO - [2024-05-05T14:12:55.862+0000] {dagbag.py:540} INFO - Filling up the DagBag from /opt/airflow/dags/upload_congress_data.py
+[2024-05-05T14:12:55.967+0000] {logging_mixin.py:188} INFO - Bucket Name: congress_data_testproject-420401
+[2024-05-05T14:12:55.991+0000] {processor.py:840} INFO - DAG(s) 'upload_congress_data' retrieved from /opt/airflow/dags/upload_congress_data.py
+[2024-05-05T14:12:56.025+0000] {logging_mixin.py:188} INFO - [2024-05-05T14:12:56.025+0000] {dag.py:3047} INFO - Sync 1 DAGs
+[2024-05-05T14:12:56.050+0000] {logging_mixin.py:188} INFO - [2024-05-05T14:12:56.049+0000] {dag.py:3834} INFO - Setting next_dagrun for upload_congress_data to None, run_after=None
+[2024-05-05T14:12:56.076+0000] {processor.py:183} INFO - Processing /opt/airflow/dags/upload_congress_data.py took 0.236 seconds
+[2024-05-05T15:13:51.519+0000] {processor.py:161} INFO - Started process (PID=868) to work on /opt/airflow/dags/upload_congress_data.py
+[2024-05-05T15:13:51.520+0000] {processor.py:830} INFO - Processing file /opt/airflow/dags/upload_congress_data.py for tasks to queue
+[2024-05-05T15:13:51.522+0000] {logging_mixin.py:188} INFO - [2024-05-05T15:13:51.522+0000] {dagbag.py:540} INFO - Filling up the DagBag from /opt/airflow/dags/upload_congress_data.py
+[2024-05-05T15:13:51.547+0000] {logging_mixin.py:188} INFO - Bucket Name: congress_data_testproject-420401
+[2024-05-05T15:13:51.553+0000] {processor.py:840} INFO - DAG(s) 'upload_congress_data' retrieved from /opt/airflow/dags/upload_congress_data.py
+[2024-05-05T15:13:51.568+0000] {logging_mixin.py:188} INFO - [2024-05-05T15:13:51.568+0000] {dag.py:3047} INFO - Sync 1 DAGs
+[2024-05-05T15:13:51.578+0000] {logging_mixin.py:188} INFO - [2024-05-05T15:13:51.578+0000] {dag.py:3834} INFO - Setting next_dagrun for upload_congress_data to None, run_after=None
+[2024-05-05T15:13:51.586+0000] {processor.py:183} INFO - Processing /opt/airflow/dags/upload_congress_data.py took 0.070 seconds
+[2024-05-05T16:30:44.108+0000] {processor.py:161} INFO - Started process (PID=876) to work on /opt/airflow/dags/upload_congress_data.py
+[2024-05-05T16:30:44.110+0000] {processor.py:830} INFO - Processing file /opt/airflow/dags/upload_congress_data.py for tasks to queue
+[2024-05-05T16:30:44.114+0000] {logging_mixin.py:188} INFO - [2024-05-05T16:30:44.114+0000] {dagbag.py:540} INFO - Filling up the DagBag from /opt/airflow/dags/upload_congress_data.py
+[2024-05-05T16:30:44.162+0000] {logging_mixin.py:188} INFO - Bucket Name: congress_data_testproject-420401
+[2024-05-05T16:30:44.179+0000] {processor.py:840} INFO - DAG(s) 'upload_congress_data' retrieved from /opt/airflow/dags/upload_congress_data.py
+[2024-05-05T16:30:44.226+0000] {logging_mixin.py:188} INFO - [2024-05-05T16:30:44.226+0000] {dag.py:3047} INFO - Sync 1 DAGs
+[2024-05-05T16:30:44.260+0000] {logging_mixin.py:188} INFO - [2024-05-05T16:30:44.259+0000] {dag.py:3834} INFO - Setting next_dagrun for upload_congress_data to None, run_after=None
+[2024-05-05T16:30:44.286+0000] {processor.py:183} INFO - Processing /opt/airflow/dags/upload_congress_data.py took 0.184 seconds
+[2024-05-05T17:43:58.769+0000] {processor.py:161} INFO - Started process (PID=884) to work on /opt/airflow/dags/upload_congress_data.py
+[2024-05-05T17:43:58.771+0000] {processor.py:830} INFO - Processing file /opt/airflow/dags/upload_congress_data.py for tasks to queue
+[2024-05-05T17:43:58.775+0000] {logging_mixin.py:188} INFO - [2024-05-05T17:43:58.774+0000] {dagbag.py:540} INFO - Filling up the DagBag from /opt/airflow/dags/upload_congress_data.py
+[2024-05-05T17:43:58.819+0000] {logging_mixin.py:188} INFO - Bucket Name: congress_data_testproject-420401
+[2024-05-05T17:43:58.833+0000] {processor.py:840} INFO - DAG(s) 'upload_congress_data' retrieved from /opt/airflow/dags/upload_congress_data.py
+[2024-05-05T17:43:58.869+0000] {logging_mixin.py:188} INFO - [2024-05-05T17:43:58.869+0000] {dag.py:3047} INFO - Sync 1 DAGs
+[2024-05-05T17:43:58.902+0000] {logging_mixin.py:188} INFO - [2024-05-05T17:43:58.901+0000] {dag.py:3834} INFO - Setting next_dagrun for upload_congress_data to None, run_after=None
+[2024-05-05T17:43:58.928+0000] {processor.py:183} INFO - Processing /opt/airflow/dags/upload_congress_data.py took 0.163 seconds
+[2024-05-05T19:02:07.057+0000] {processor.py:161} INFO - Started process (PID=892) to work on /opt/airflow/dags/upload_congress_data.py
+[2024-05-05T19:02:07.059+0000] {processor.py:830} INFO - Processing file /opt/airflow/dags/upload_congress_data.py for tasks to queue
+[2024-05-05T19:02:07.067+0000] {logging_mixin.py:188} INFO - [2024-05-05T19:02:07.066+0000] {dagbag.py:540} INFO - Filling up the DagBag from /opt/airflow/dags/upload_congress_data.py
+[2024-05-05T19:02:07.123+0000] {logging_mixin.py:188} INFO - Bucket Name: congress_data_testproject-420401
+[2024-05-05T19:02:07.143+0000] {processor.py:840} INFO - DAG(s) 'upload_congress_data' retrieved from /opt/airflow/dags/upload_congress_data.py
+[2024-05-05T19:02:07.205+0000] {logging_mixin.py:188} INFO - [2024-05-05T19:02:07.205+0000] {dag.py:3047} INFO - Sync 1 DAGs
+[2024-05-05T19:02:07.244+0000] {logging_mixin.py:188} INFO - [2024-05-05T19:02:07.243+0000] {dag.py:3834} INFO - Setting next_dagrun for upload_congress_data to None, run_after=None
+[2024-05-05T19:02:07.282+0000] {processor.py:183} INFO - Processing /opt/airflow/dags/upload_congress_data.py took 0.233 seconds
+[2024-05-05T20:18:03.809+0000] {processor.py:161} INFO - Started process (PID=900) to work on /opt/airflow/dags/upload_congress_data.py
+[2024-05-05T20:18:03.811+0000] {processor.py:830} INFO - Processing file /opt/airflow/dags/upload_congress_data.py for tasks to queue
+[2024-05-05T20:18:03.816+0000] {logging_mixin.py:188} INFO - [2024-05-05T20:18:03.815+0000] {dagbag.py:540} INFO - Filling up the DagBag from /opt/airflow/dags/upload_congress_data.py
+[2024-05-05T20:18:03.868+0000] {logging_mixin.py:188} INFO - Bucket Name: congress_data_testproject-420401
+[2024-05-05T20:18:03.886+0000] {processor.py:840} INFO - DAG(s) 'upload_congress_data' retrieved from /opt/airflow/dags/upload_congress_data.py
+[2024-05-05T20:18:03.924+0000] {logging_mixin.py:188} INFO - [2024-05-05T20:18:03.924+0000] {dag.py:3047} INFO - Sync 1 DAGs
+[2024-05-05T20:18:03.956+0000] {logging_mixin.py:188} INFO - [2024-05-05T20:18:03.956+0000] {dag.py:3834} INFO - Setting next_dagrun for upload_congress_data to None, run_after=None
+[2024-05-05T20:18:03.980+0000] {processor.py:183} INFO - Processing /opt/airflow/dags/upload_congress_data.py took 0.179 seconds
+[2024-05-05T21:03:24.342+0000] {processor.py:161} INFO - Started process (PID=908) to work on /opt/airflow/dags/upload_congress_data.py
+[2024-05-05T21:03:24.344+0000] {processor.py:830} INFO - Processing file /opt/airflow/dags/upload_congress_data.py for tasks to queue
+[2024-05-05T21:03:24.350+0000] {logging_mixin.py:188} INFO - [2024-05-05T21:03:24.349+0000] {dagbag.py:540} INFO - Filling up the DagBag from /opt/airflow/dags/upload_congress_data.py
+[2024-05-05T21:03:24.423+0000] {logging_mixin.py:188} INFO - Bucket Name: congress_data_testproject-420401
+[2024-05-05T21:03:24.442+0000] {processor.py:840} INFO - DAG(s) 'upload_congress_data' retrieved from /opt/airflow/dags/upload_congress_data.py
+[2024-05-05T21:03:24.503+0000] {logging_mixin.py:188} INFO - [2024-05-05T21:03:24.503+0000] {dag.py:3047} INFO - Sync 1 DAGs
+[2024-05-05T21:03:24.516+0000] {logging_mixin.py:188} INFO - [2024-05-05T21:03:24.516+0000] {dag.py:3834} INFO - Setting next_dagrun for upload_congress_data to None, run_after=None
+[2024-05-05T21:03:24.525+0000] {processor.py:183} INFO - Processing /opt/airflow/dags/upload_congress_data.py took 0.190 seconds
+[2024-05-05T22:20:40.902+0000] {processor.py:161} INFO - Started process (PID=916) to work on /opt/airflow/dags/upload_congress_data.py
+[2024-05-05T22:20:40.903+0000] {processor.py:830} INFO - Processing file /opt/airflow/dags/upload_congress_data.py for tasks to queue
+[2024-05-05T22:20:40.905+0000] {logging_mixin.py:188} INFO - [2024-05-05T22:20:40.905+0000] {dagbag.py:540} INFO - Filling up the DagBag from /opt/airflow/dags/upload_congress_data.py
+[2024-05-05T22:20:40.930+0000] {logging_mixin.py:188} INFO - Bucket Name: congress_data_testproject-420401
+[2024-05-05T22:20:40.947+0000] {processor.py:840} INFO - DAG(s) 'upload_congress_data' retrieved from /opt/airflow/dags/upload_congress_data.py
+[2024-05-05T22:20:40.964+0000] {logging_mixin.py:188} INFO - [2024-05-05T22:20:40.964+0000] {dag.py:3047} INFO - Sync 1 DAGs
+[2024-05-05T22:20:40.978+0000] {logging_mixin.py:188} INFO - [2024-05-05T22:20:40.978+0000] {dag.py:3834} INFO - Setting next_dagrun for upload_congress_data to None, run_after=None
+[2024-05-05T22:20:40.989+0000] {processor.py:183} INFO - Processing /opt/airflow/dags/upload_congress_data.py took 0.089 seconds
+[2024-05-05T23:04:26.053+0000] {processor.py:161} INFO - Started process (PID=924) to work on /opt/airflow/dags/upload_congress_data.py
+[2024-05-05T23:04:26.055+0000] {processor.py:830} INFO - Processing file /opt/airflow/dags/upload_congress_data.py for tasks to queue
+[2024-05-05T23:04:26.062+0000] {logging_mixin.py:188} INFO - [2024-05-05T23:04:26.061+0000] {dagbag.py:540} INFO - Filling up the DagBag from /opt/airflow/dags/upload_congress_data.py
+[2024-05-05T23:04:26.113+0000] {logging_mixin.py:188} INFO - Bucket Name: congress_data_testproject-420401
+[2024-05-05T23:04:26.132+0000] {processor.py:840} INFO - DAG(s) 'upload_congress_data' retrieved from /opt/airflow/dags/upload_congress_data.py
+[2024-05-05T23:04:26.164+0000] {logging_mixin.py:188} INFO - [2024-05-05T23:04:26.163+0000] {dag.py:3047} INFO - Sync 1 DAGs
+[2024-05-05T23:04:26.216+0000] {logging_mixin.py:188} INFO - [2024-05-05T23:04:26.216+0000] {dag.py:3834} INFO - Setting next_dagrun for upload_congress_data to None, run_after=None
+[2024-05-05T23:04:26.250+0000] {processor.py:183} INFO - Processing /opt/airflow/dags/upload_congress_data.py took 0.202 seconds
+[2024-05-05T23:50:03.333+0000] {processor.py:161} INFO - Started process (PID=932) to work on /opt/airflow/dags/upload_congress_data.py
+[2024-05-05T23:50:03.335+0000] {processor.py:830} INFO - Processing file /opt/airflow/dags/upload_congress_data.py for tasks to queue
+[2024-05-05T23:50:03.339+0000] {logging_mixin.py:188} INFO - [2024-05-05T23:50:03.339+0000] {dagbag.py:540} INFO - Filling up the DagBag from /opt/airflow/dags/upload_congress_data.py
+[2024-05-05T23:50:03.389+0000] {logging_mixin.py:188} INFO - Bucket Name: congress_data_testproject-420401
+[2024-05-05T23:50:03.406+0000] {processor.py:840} INFO - DAG(s) 'upload_congress_data' retrieved from /opt/airflow/dags/upload_congress_data.py
+[2024-05-05T23:50:03.453+0000] {logging_mixin.py:188} INFO - [2024-05-05T23:50:03.453+0000] {dag.py:3047} INFO - Sync 1 DAGs
+[2024-05-05T23:50:03.488+0000] {logging_mixin.py:188} INFO - [2024-05-05T23:50:03.488+0000] {dag.py:3834} INFO - Setting next_dagrun for upload_congress_data to None, run_after=None
+[2024-05-05T23:50:03.525+0000] {processor.py:183} INFO - Processing /opt/airflow/dags/upload_congress_data.py took 0.198 seconds

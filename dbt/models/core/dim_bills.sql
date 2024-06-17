@@ -14,9 +14,9 @@ select distinct bill_key,
        introducedDate,
        concat(type, number) bill_name,
        title,
+       most_recent_text,
        policyArea.name policy_area,
        latestAction.ActionDate latestActionDate,
        latestAction.text latestActionText
-from source,
-UNNEST(subjects.legislativeSubjects.item) item
+from source
 

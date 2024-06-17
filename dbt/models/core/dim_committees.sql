@@ -9,6 +9,7 @@ source as(
     select * from {{ref("stg_bills")}}
 )
 
-select  distinct item.*
+select  distinct bill_key
+        ,item.*
         from source,
         UNNEST(committees.item) item

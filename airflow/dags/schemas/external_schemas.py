@@ -59,7 +59,8 @@ bill_status_ddl = f"""CREATE OR REPLACE EXTERNAL TABLE Congress.bill_status_exte
         latestAction STRUCT<
             actionDate DATE,
             text STRING
-        >
+        >,
+        most_recent_text STRING
     >
 )
 

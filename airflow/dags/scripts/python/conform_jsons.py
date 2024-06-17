@@ -1,3 +1,7 @@
+import pandas as pd
+from datetime import datetime
+from bs4 import BeautifulSoup
+
 def conform_data(json_data):
     conform_data = {
         "bill": {
@@ -31,7 +35,8 @@ def conform_data(json_data):
             "latestAction": {
                 "actionDate": json_data.get("bill", {}).get("latestAction", {}).get("actionDate"),
                 "text": json_data.get("bill", {}).get("latestAction", {}).get("text")
-            }
+            },
+            "most_recent_text": get_most_recent_text(json_data.get("bill", {}).get('summaries', {}).get('summary', {}))
         }
     }
 
@@ -99,6 +104,20 @@ def vote_dict(vote):
         }
     return {}
 
+def get_most_recent_text(item):
+    summary_list = ensure_list(item)
+    filtered_summary_list = [summary for summary in summary_list if 'text' in summary]
+
+    if not filtered_summary_list:
+        return None
+    
+    most_recent_summary = max(filtered_summary_list, key=lambda x: datetime.strptime(x['actionDate'], '%Y-%m-%d'))
+
+    most_recent_text = most_recent_summary['text'][:1000]
+
+    formatted_most_recent_text = BeautifulSoup(most_recent_text, 'html.parser').prettify()
+    
+    return formatted_most_recent_text
 
 def ensure_list(item):
     if isinstance(item, list):

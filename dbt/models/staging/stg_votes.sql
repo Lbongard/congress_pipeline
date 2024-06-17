@@ -16,6 +16,7 @@ select s.vote.date,
        s.vote.totals.present present_totals, 
        s.vote.totals.not_voting not_voting_totals,
        legislator.id bioguideID,
-       legislator.vote
+       legislator.vote,
+       legislator.party
 from source s, 
      UNNEST(legislator) as legislator

@@ -2,6 +2,9 @@ version: 2
 
 models:
   - name: dim_votes
+    tests:
+      - unique:
+          column_name: "bill_key || '-' || roll_call_number"
     columns:
       - name: bill_key
         tests:
@@ -9,9 +12,6 @@ models:
           - relationships:
               to: ref('dim_bills')
               field: bill_key
-      - name: roll_call_number
-        tests:
-          - unique
 
   - name: dim_bills
     columns:

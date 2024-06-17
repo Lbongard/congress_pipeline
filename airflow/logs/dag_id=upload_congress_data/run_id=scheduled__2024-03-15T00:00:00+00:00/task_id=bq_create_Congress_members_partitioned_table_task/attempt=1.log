@@ -163,3 +163,54 @@ Job ID: airflow_upload_congress_data_bq_create_Congress_members_partitioned_tabl
 [2024-05-09T03:04:36.601+0000] {taskinstance.py:1149} INFO - Marking task as SUCCESS. dag_id=upload_congress_data, task_id=bq_create_Congress_members_partitioned_table_task, execution_date=20240315T000000, start_date=20240509T030431, end_date=20240509T030436
 [2024-05-09T03:04:36.629+0000] {local_task_job_runner.py:234} INFO - Task exited with return code 0
 [2024-05-09T03:04:36.643+0000] {taskinstance.py:3312} INFO - 0 downstream tasks scheduled from follow-on schedule check
+[2024-05-12T17:51:06.978+0000] {taskinstance.py:1979} INFO - Dependencies all met for dep_context=non-requeueable deps ti=<TaskInstance: upload_congress_data.bq_create_Congress_members_partitioned_table_task scheduled__2024-03-15T00:00:00+00:00 [queued]>
+[2024-05-12T17:51:06.982+0000] {taskinstance.py:1979} INFO - Dependencies all met for dep_context=requeueable deps ti=<TaskInstance: upload_congress_data.bq_create_Congress_members_partitioned_table_task scheduled__2024-03-15T00:00:00+00:00 [queued]>
+[2024-05-12T17:51:06.982+0000] {taskinstance.py:2193} INFO - Starting attempt 1 of 3
+[2024-05-12T17:51:06.988+0000] {taskinstance.py:2217} INFO - Executing <Task(BigQueryInsertJobOperator): bq_create_Congress_members_partitioned_table_task> on 2024-03-15 00:00:00+00:00
+[2024-05-12T17:51:06.992+0000] {standard_task_runner.py:60} INFO - Started process 137 to run task
+[2024-05-12T17:51:06.995+0000] {standard_task_runner.py:87} INFO - Running: ['***', 'tasks', 'run', 'upload_congress_data', 'bq_create_Congress_members_partitioned_table_task', 'scheduled__2024-03-15T00:00:00+00:00', '--job-id', '11', '--raw', '--subdir', 'DAGS_FOLDER/upload_congress_data.py', '--cfg-path', '/tmp/tmpep2jbdxm']
+[2024-05-12T17:51:06.997+0000] {standard_task_runner.py:88} INFO - Job 11: Subtask bq_create_Congress_members_partitioned_table_task
+[2024-05-12T17:51:07.025+0000] {task_command.py:423} INFO - Running <TaskInstance: upload_congress_data.bq_create_Congress_members_partitioned_table_task scheduled__2024-03-15T00:00:00+00:00 [running]> on host 0a1e0f9c595a
+[2024-05-12T17:51:07.066+0000] {taskinstance.py:2513} INFO - Exporting env vars: AIRFLOW_CTX_DAG_EMAIL='***@***.com' AIRFLOW_CTX_DAG_OWNER='***' AIRFLOW_CTX_DAG_ID='upload_congress_data' AIRFLOW_CTX_TASK_ID='bq_create_Congress_members_partitioned_table_task' AIRFLOW_CTX_EXECUTION_DATE='2024-03-15T00:00:00+00:00' AIRFLOW_CTX_TRY_NUMBER='1' AIRFLOW_CTX_DAG_RUN_ID='scheduled__2024-03-15T00:00:00+00:00'
+[2024-05-12T17:51:07.067+0000] {crypto.py:82} WARNING - empty cryptography key - values will not be stored encrypted.
+[2024-05-12T17:51:07.068+0000] {connection.py:269} WARNING - Connection schemes (type: google_cloud_platform) shall not contain '_' according to RFC3986.
+[2024-05-12T17:51:07.068+0000] {base.py:83} INFO - Using connection ID 'google_cloud_default' for task execution.
+[2024-05-12T17:51:07.109+0000] {bigquery.py:2811} INFO - Executing: {'query': {'query': 'DROP TABLE IF EXISTS Congress.members;         CREATE TABLE Congress.members         PARTITION BY updateDate_formatted         AS         SELECT *, DATE(updateDate) updateDate_formatted         FROM Congress.members_external_table;', 'useLegacySql': False}}'
+[2024-05-12T17:51:07.110+0000] {bigquery.py:1613} INFO - Inserting job ***_upload_congress_data_bq_create_Congress_members_partitioned_table_task_2024_03_15T00_00_00_00_00_1a3fc0a98c7f76deb0b42556fcfe5c2e
+[2024-05-12T17:51:11.625+0000] {taskinstance.py:1149} INFO - Marking task as SUCCESS. dag_id=upload_congress_data, task_id=bq_create_Congress_members_partitioned_table_task, execution_date=20240315T000000, start_date=20240512T175106, end_date=20240512T175111
+[2024-05-12T17:51:11.678+0000] {local_task_job_runner.py:234} INFO - Task exited with return code 0
+[2024-05-12T17:51:11.690+0000] {taskinstance.py:3312} INFO - 0 downstream tasks scheduled from follow-on schedule check
+[2024-06-14T02:14:49.324+0000] {taskinstance.py:1979} INFO - Dependencies all met for dep_context=non-requeueable deps ti=<TaskInstance: upload_congress_data.bq_create_Congress_members_partitioned_table_task scheduled__2024-03-15T00:00:00+00:00 [queued]>
+[2024-06-14T02:14:49.330+0000] {taskinstance.py:1979} INFO - Dependencies all met for dep_context=requeueable deps ti=<TaskInstance: upload_congress_data.bq_create_Congress_members_partitioned_table_task scheduled__2024-03-15T00:00:00+00:00 [queued]>
+[2024-06-14T02:14:49.330+0000] {taskinstance.py:2193} INFO - Starting attempt 1 of 3
+[2024-06-14T02:14:49.337+0000] {taskinstance.py:2217} INFO - Executing <Task(BigQueryInsertJobOperator): bq_create_Congress_members_partitioned_table_task> on 2024-03-15 00:00:00+00:00
+[2024-06-14T02:14:49.343+0000] {standard_task_runner.py:60} INFO - Started process 138 to run task
+[2024-06-14T02:14:49.347+0000] {standard_task_runner.py:87} INFO - Running: ['***', 'tasks', 'run', 'upload_congress_data', 'bq_create_Congress_members_partitioned_table_task', 'scheduled__2024-03-15T00:00:00+00:00', '--job-id', '11', '--raw', '--subdir', 'DAGS_FOLDER/upload_congress_data.py', '--cfg-path', '/tmp/tmpvpfc1o8x']
+[2024-06-14T02:14:49.349+0000] {standard_task_runner.py:88} INFO - Job 11: Subtask bq_create_Congress_members_partitioned_table_task
+[2024-06-14T02:14:49.384+0000] {task_command.py:423} INFO - Running <TaskInstance: upload_congress_data.bq_create_Congress_members_partitioned_table_task scheduled__2024-03-15T00:00:00+00:00 [running]> on host de601090b16d
+[2024-06-14T02:14:49.440+0000] {taskinstance.py:2513} INFO - Exporting env vars: AIRFLOW_CTX_DAG_EMAIL='***@***.com' AIRFLOW_CTX_DAG_OWNER='***' AIRFLOW_CTX_DAG_ID='upload_congress_data' AIRFLOW_CTX_TASK_ID='bq_create_Congress_members_partitioned_table_task' AIRFLOW_CTX_EXECUTION_DATE='2024-03-15T00:00:00+00:00' AIRFLOW_CTX_TRY_NUMBER='1' AIRFLOW_CTX_DAG_RUN_ID='scheduled__2024-03-15T00:00:00+00:00'
+[2024-06-14T02:14:49.443+0000] {crypto.py:82} WARNING - empty cryptography key - values will not be stored encrypted.
+[2024-06-14T02:14:49.447+0000] {connection.py:269} WARNING - Connection schemes (type: google_cloud_platform) shall not contain '_' according to RFC3986.
+[2024-06-14T02:14:49.449+0000] {base.py:83} INFO - Using connection ID 'google_cloud_default' for task execution.
+[2024-06-14T02:14:49.500+0000] {bigquery.py:2811} INFO - Executing: {'query': {'query': 'DROP TABLE IF EXISTS Congress.members;         CREATE TABLE Congress.members         PARTITION BY updateDate_formatted         AS         SELECT *, DATE(updateDate) updateDate_formatted         FROM Congress.members_external_table;', 'useLegacySql': False}}'
+[2024-06-14T02:14:49.501+0000] {bigquery.py:1613} INFO - Inserting job ***_upload_congress_data_bq_create_Congress_members_partitioned_table_task_2024_03_15T00_00_00_00_00_1cea419647758d34c171a771b280c1b1
+[2024-06-14T02:14:55.217+0000] {taskinstance.py:1149} INFO - Marking task as SUCCESS. dag_id=upload_congress_data, task_id=bq_create_Congress_members_partitioned_table_task, execution_date=20240315T000000, start_date=20240614T021449, end_date=20240614T021455
+[2024-06-14T02:14:55.237+0000] {local_task_job_runner.py:234} INFO - Task exited with return code 0
+[2024-06-14T02:14:55.246+0000] {taskinstance.py:3312} INFO - 0 downstream tasks scheduled from follow-on schedule check
+[2024-06-14T03:13:41.155+0000] {taskinstance.py:1979} INFO - Dependencies all met for dep_context=non-requeueable deps ti=<TaskInstance: upload_congress_data.bq_create_Congress_members_partitioned_table_task scheduled__2024-03-15T00:00:00+00:00 [queued]>
+[2024-06-14T03:13:41.160+0000] {taskinstance.py:1979} INFO - Dependencies all met for dep_context=requeueable deps ti=<TaskInstance: upload_congress_data.bq_create_Congress_members_partitioned_table_task scheduled__2024-03-15T00:00:00+00:00 [queued]>
+[2024-06-14T03:13:41.160+0000] {taskinstance.py:2193} INFO - Starting attempt 1 of 3
+[2024-06-14T03:13:41.167+0000] {taskinstance.py:2217} INFO - Executing <Task(BigQueryInsertJobOperator): bq_create_Congress_members_partitioned_table_task> on 2024-03-15 00:00:00+00:00
+[2024-06-14T03:13:41.172+0000] {standard_task_runner.py:60} INFO - Started process 157 to run task
+[2024-06-14T03:13:41.174+0000] {standard_task_runner.py:87} INFO - Running: ['***', 'tasks', 'run', 'upload_congress_data', 'bq_create_Congress_members_partitioned_table_task', 'scheduled__2024-03-15T00:00:00+00:00', '--job-id', '13', '--raw', '--subdir', 'DAGS_FOLDER/upload_congress_data.py', '--cfg-path', '/tmp/tmp_ou9gxcp']
+[2024-06-14T03:13:41.177+0000] {standard_task_runner.py:88} INFO - Job 13: Subtask bq_create_Congress_members_partitioned_table_task
+[2024-06-14T03:13:41.210+0000] {task_command.py:423} INFO - Running <TaskInstance: upload_congress_data.bq_create_Congress_members_partitioned_table_task scheduled__2024-03-15T00:00:00+00:00 [running]> on host a10bcdfa929f
+[2024-06-14T03:13:41.247+0000] {taskinstance.py:2513} INFO - Exporting env vars: AIRFLOW_CTX_DAG_EMAIL='***@***.com' AIRFLOW_CTX_DAG_OWNER='***' AIRFLOW_CTX_DAG_ID='upload_congress_data' AIRFLOW_CTX_TASK_ID='bq_create_Congress_members_partitioned_table_task' AIRFLOW_CTX_EXECUTION_DATE='2024-03-15T00:00:00+00:00' AIRFLOW_CTX_TRY_NUMBER='1' AIRFLOW_CTX_DAG_RUN_ID='scheduled__2024-03-15T00:00:00+00:00'
+[2024-06-14T03:13:41.249+0000] {crypto.py:82} WARNING - empty cryptography key - values will not be stored encrypted.
+[2024-06-14T03:13:41.249+0000] {connection.py:269} WARNING - Connection schemes (type: google_cloud_platform) shall not contain '_' according to RFC3986.
+[2024-06-14T03:13:41.250+0000] {base.py:83} INFO - Using connection ID 'google_cloud_default' for task execution.
+[2024-06-14T03:13:41.290+0000] {bigquery.py:2811} INFO - Executing: {'query': {'query': 'DROP TABLE IF EXISTS Congress.members;         CREATE TABLE Congress.members         PARTITION BY updateDate_formatted         AS         SELECT *, DATE(updateDate) updateDate_formatted         FROM Congress.members_external_table;', 'useLegacySql': False}}'
+[2024-06-14T03:13:41.291+0000] {bigquery.py:1613} INFO - Inserting job ***_upload_congress_data_bq_create_Congress_members_partitioned_table_task_2024_03_15T00_00_00_00_00_82de24246deb18b40ba5e9b742a1e142
+[2024-06-14T03:13:46.398+0000] {taskinstance.py:1149} INFO - Marking task as SUCCESS. dag_id=upload_congress_data, task_id=bq_create_Congress_members_partitioned_table_task, execution_date=20240315T000000, start_date=20240614T031341, end_date=20240614T031346
+[2024-06-14T03:13:46.441+0000] {local_task_job_runner.py:234} INFO - Task exited with return code 0
+[2024-06-14T03:13:46.449+0000] {taskinstance.py:3312} INFO - 0 downstream tasks scheduled from follow-on schedule check

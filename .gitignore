@@ -4,3 +4,4 @@ test/hr
 test/s
 terraform/.terraform
 .env
+.streamlit/secrets.toml

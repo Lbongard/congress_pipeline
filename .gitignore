@@ -1,7 +1,6 @@
 airflow/dags/data/
 airflow/dags/logs/
-test/hr/
-test/s/
+test/
 terraform/.terraform
 .env
 .streamlit/secrets.toml

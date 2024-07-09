@@ -788,3 +788,53 @@
 [2024-07-09T03:53:06.080+0000] {logging_mixin.py:188} INFO - [2024-07-09T03:53:06.080+0000] {dagbag.py:540} INFO - Filling up the DagBag from /opt/airflow/dags/scripts/python/.ipynb_checkpoints/get_data-checkpoint.py
 [2024-07-09T03:53:06.131+0000] {processor.py:842} WARNING - No viable dags retrieved from /opt/airflow/dags/scripts/python/.ipynb_checkpoints/get_data-checkpoint.py
 [2024-07-09T03:53:06.154+0000] {processor.py:183} INFO - Processing /opt/airflow/dags/scripts/python/.ipynb_checkpoints/get_data-checkpoint.py took 0.083 seconds
+[2024-07-09T03:53:36.689+0000] {processor.py:161} INFO - Started process (PID=18811) to work on /opt/airflow/dags/scripts/python/.ipynb_checkpoints/get_data-checkpoint.py
+[2024-07-09T03:53:36.690+0000] {processor.py:830} INFO - Processing file /opt/airflow/dags/scripts/python/.ipynb_checkpoints/get_data-checkpoint.py for tasks to queue
+[2024-07-09T03:53:36.692+0000] {logging_mixin.py:188} INFO - [2024-07-09T03:53:36.691+0000] {dagbag.py:540} INFO - Filling up the DagBag from /opt/airflow/dags/scripts/python/.ipynb_checkpoints/get_data-checkpoint.py
+[2024-07-09T03:53:36.740+0000] {processor.py:842} WARNING - No viable dags retrieved from /opt/airflow/dags/scripts/python/.ipynb_checkpoints/get_data-checkpoint.py
+[2024-07-09T03:53:36.771+0000] {processor.py:183} INFO - Processing /opt/airflow/dags/scripts/python/.ipynb_checkpoints/get_data-checkpoint.py took 0.086 seconds
+[2024-07-09T03:54:07.148+0000] {processor.py:161} INFO - Started process (PID=18820) to work on /opt/airflow/dags/scripts/python/.ipynb_checkpoints/get_data-checkpoint.py
+[2024-07-09T03:54:07.149+0000] {processor.py:830} INFO - Processing file /opt/airflow/dags/scripts/python/.ipynb_checkpoints/get_data-checkpoint.py for tasks to queue
+[2024-07-09T03:54:07.150+0000] {logging_mixin.py:188} INFO - [2024-07-09T03:54:07.150+0000] {dagbag.py:540} INFO - Filling up the DagBag from /opt/airflow/dags/scripts/python/.ipynb_checkpoints/get_data-checkpoint.py
+[2024-07-09T03:54:07.180+0000] {processor.py:842} WARNING - No viable dags retrieved from /opt/airflow/dags/scripts/python/.ipynb_checkpoints/get_data-checkpoint.py
+[2024-07-09T03:54:07.198+0000] {processor.py:183} INFO - Processing /opt/airflow/dags/scripts/python/.ipynb_checkpoints/get_data-checkpoint.py took 0.055 seconds
+[2024-07-09T03:54:37.705+0000] {processor.py:161} INFO - Started process (PID=18829) to work on /opt/airflow/dags/scripts/python/.ipynb_checkpoints/get_data-checkpoint.py
+[2024-07-09T03:54:37.707+0000] {processor.py:830} INFO - Processing file /opt/airflow/dags/scripts/python/.ipynb_checkpoints/get_data-checkpoint.py for tasks to queue
+[2024-07-09T03:54:37.709+0000] {logging_mixin.py:188} INFO - [2024-07-09T03:54:37.708+0000] {dagbag.py:540} INFO - Filling up the DagBag from /opt/airflow/dags/scripts/python/.ipynb_checkpoints/get_data-checkpoint.py
+[2024-07-09T03:54:37.771+0000] {processor.py:842} WARNING - No viable dags retrieved from /opt/airflow/dags/scripts/python/.ipynb_checkpoints/get_data-checkpoint.py
+[2024-07-09T03:54:37.787+0000] {processor.py:183} INFO - Processing /opt/airflow/dags/scripts/python/.ipynb_checkpoints/get_data-checkpoint.py took 0.090 seconds
+[2024-07-09T03:55:08.136+0000] {processor.py:161} INFO - Started process (PID=18838) to work on /opt/airflow/dags/scripts/python/.ipynb_checkpoints/get_data-checkpoint.py
+[2024-07-09T03:55:08.137+0000] {processor.py:830} INFO - Processing file /opt/airflow/dags/scripts/python/.ipynb_checkpoints/get_data-checkpoint.py for tasks to queue
+[2024-07-09T03:55:08.138+0000] {logging_mixin.py:188} INFO - [2024-07-09T03:55:08.138+0000] {dagbag.py:540} INFO - Filling up the DagBag from /opt/airflow/dags/scripts/python/.ipynb_checkpoints/get_data-checkpoint.py
+[2024-07-09T03:55:08.163+0000] {processor.py:842} WARNING - No viable dags retrieved from /opt/airflow/dags/scripts/python/.ipynb_checkpoints/get_data-checkpoint.py
+[2024-07-09T03:55:08.174+0000] {processor.py:183} INFO - Processing /opt/airflow/dags/scripts/python/.ipynb_checkpoints/get_data-checkpoint.py took 0.042 seconds
+[2024-07-09T03:55:38.803+0000] {processor.py:161} INFO - Started process (PID=18847) to work on /opt/airflow/dags/scripts/python/.ipynb_checkpoints/get_data-checkpoint.py
+[2024-07-09T03:55:38.804+0000] {processor.py:830} INFO - Processing file /opt/airflow/dags/scripts/python/.ipynb_checkpoints/get_data-checkpoint.py for tasks to queue
+[2024-07-09T03:55:38.805+0000] {logging_mixin.py:188} INFO - [2024-07-09T03:55:38.805+0000] {dagbag.py:540} INFO - Filling up the DagBag from /opt/airflow/dags/scripts/python/.ipynb_checkpoints/get_data-checkpoint.py
+[2024-07-09T03:55:38.863+0000] {processor.py:842} WARNING - No viable dags retrieved from /opt/airflow/dags/scripts/python/.ipynb_checkpoints/get_data-checkpoint.py
+[2024-07-09T03:55:38.881+0000] {processor.py:183} INFO - Processing /opt/airflow/dags/scripts/python/.ipynb_checkpoints/get_data-checkpoint.py took 0.084 seconds
+[2024-07-09T03:56:09.352+0000] {processor.py:161} INFO - Started process (PID=18856) to work on /opt/airflow/dags/scripts/python/.ipynb_checkpoints/get_data-checkpoint.py
+[2024-07-09T03:56:09.354+0000] {processor.py:830} INFO - Processing file /opt/airflow/dags/scripts/python/.ipynb_checkpoints/get_data-checkpoint.py for tasks to queue
+[2024-07-09T03:56:09.358+0000] {logging_mixin.py:188} INFO - [2024-07-09T03:56:09.356+0000] {dagbag.py:540} INFO - Filling up the DagBag from /opt/airflow/dags/scripts/python/.ipynb_checkpoints/get_data-checkpoint.py
+[2024-07-09T03:56:09.398+0000] {processor.py:842} WARNING - No viable dags retrieved from /opt/airflow/dags/scripts/python/.ipynb_checkpoints/get_data-checkpoint.py
+[2024-07-09T03:56:09.429+0000] {processor.py:183} INFO - Processing /opt/airflow/dags/scripts/python/.ipynb_checkpoints/get_data-checkpoint.py took 0.082 seconds
+[2024-07-09T03:56:40.037+0000] {processor.py:161} INFO - Started process (PID=18865) to work on /opt/airflow/dags/scripts/python/.ipynb_checkpoints/get_data-checkpoint.py
+[2024-07-09T03:56:40.039+0000] {processor.py:830} INFO - Processing file /opt/airflow/dags/scripts/python/.ipynb_checkpoints/get_data-checkpoint.py for tasks to queue
+[2024-07-09T03:56:40.040+0000] {logging_mixin.py:188} INFO - [2024-07-09T03:56:40.039+0000] {dagbag.py:540} INFO - Filling up the DagBag from /opt/airflow/dags/scripts/python/.ipynb_checkpoints/get_data-checkpoint.py
+[2024-07-09T03:56:40.068+0000] {processor.py:842} WARNING - No viable dags retrieved from /opt/airflow/dags/scripts/python/.ipynb_checkpoints/get_data-checkpoint.py
+[2024-07-09T03:56:40.080+0000] {processor.py:183} INFO - Processing /opt/airflow/dags/scripts/python/.ipynb_checkpoints/get_data-checkpoint.py took 0.047 seconds
+[2024-07-09T03:57:10.453+0000] {processor.py:161} INFO - Started process (PID=18874) to work on /opt/airflow/dags/scripts/python/.ipynb_checkpoints/get_data-checkpoint.py
+[2024-07-09T03:57:10.454+0000] {processor.py:830} INFO - Processing file /opt/airflow/dags/scripts/python/.ipynb_checkpoints/get_data-checkpoint.py for tasks to queue
+[2024-07-09T03:57:10.455+0000] {logging_mixin.py:188} INFO - [2024-07-09T03:57:10.455+0000] {dagbag.py:540} INFO - Filling up the DagBag from /opt/airflow/dags/scripts/python/.ipynb_checkpoints/get_data-checkpoint.py
+[2024-07-09T03:57:10.478+0000] {processor.py:842} WARNING - No viable dags retrieved from /opt/airflow/dags/scripts/python/.ipynb_checkpoints/get_data-checkpoint.py
+[2024-07-09T03:57:10.491+0000] {processor.py:183} INFO - Processing /opt/airflow/dags/scripts/python/.ipynb_checkpoints/get_data-checkpoint.py took 0.040 seconds
+[2024-07-09T03:57:40.875+0000] {processor.py:161} INFO - Started process (PID=18883) to work on /opt/airflow/dags/scripts/python/.ipynb_checkpoints/get_data-checkpoint.py
+[2024-07-09T03:57:40.877+0000] {processor.py:830} INFO - Processing file /opt/airflow/dags/scripts/python/.ipynb_checkpoints/get_data-checkpoint.py for tasks to queue
+[2024-07-09T03:57:40.878+0000] {logging_mixin.py:188} INFO - [2024-07-09T03:57:40.877+0000] {dagbag.py:540} INFO - Filling up the DagBag from /opt/airflow/dags/scripts/python/.ipynb_checkpoints/get_data-checkpoint.py
+[2024-07-09T03:57:40.901+0000] {processor.py:842} WARNING - No viable dags retrieved from /opt/airflow/dags/scripts/python/.ipynb_checkpoints/get_data-checkpoint.py
+[2024-07-09T03:57:40.912+0000] {processor.py:183} INFO - Processing /opt/airflow/dags/scripts/python/.ipynb_checkpoints/get_data-checkpoint.py took 0.040 seconds
+[2024-07-09T03:58:11.254+0000] {processor.py:161} INFO - Started process (PID=18892) to work on /opt/airflow/dags/scripts/python/.ipynb_checkpoints/get_data-checkpoint.py
+[2024-07-09T03:58:11.255+0000] {processor.py:830} INFO - Processing file /opt/airflow/dags/scripts/python/.ipynb_checkpoints/get_data-checkpoint.py for tasks to queue
+[2024-07-09T03:58:11.256+0000] {logging_mixin.py:188} INFO - [2024-07-09T03:58:11.256+0000] {dagbag.py:540} INFO - Filling up the DagBag from /opt/airflow/dags/scripts/python/.ipynb_checkpoints/get_data-checkpoint.py
+[2024-07-09T03:58:11.307+0000] {processor.py:842} WARNING - No viable dags retrieved from /opt/airflow/dags/scripts/python/.ipynb_checkpoints/get_data-checkpoint.py
+[2024-07-09T03:58:11.344+0000] {processor.py:183} INFO - Processing /opt/airflow/dags/scripts/python/.ipynb_checkpoints/get_data-checkpoint.py took 0.093 seconds

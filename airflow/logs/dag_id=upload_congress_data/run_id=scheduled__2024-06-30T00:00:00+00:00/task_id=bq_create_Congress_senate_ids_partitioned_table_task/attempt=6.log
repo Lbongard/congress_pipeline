@@ -1,0 +1,46 @@
+[2024-07-01T02:59:57.974+0000] {taskinstance.py:1979} INFO - Dependencies all met for dep_context=non-requeueable deps ti=<TaskInstance: upload_congress_data.bq_create_Congress_senate_ids_partitioned_table_task scheduled__2024-06-30T00:00:00+00:00 [queued]>
+[2024-07-01T02:59:57.978+0000] {taskinstance.py:1979} INFO - Dependencies all met for dep_context=requeueable deps ti=<TaskInstance: upload_congress_data.bq_create_Congress_senate_ids_partitioned_table_task scheduled__2024-06-30T00:00:00+00:00 [queued]>
+[2024-07-01T02:59:57.978+0000] {taskinstance.py:2193} INFO - Starting attempt 6 of 7
+[2024-07-01T02:59:57.984+0000] {taskinstance.py:2217} INFO - Executing <Task(BigQueryInsertJobOperator): bq_create_Congress_senate_ids_partitioned_table_task> on 2024-06-30 00:00:00+00:00
+[2024-07-01T02:59:57.988+0000] {standard_task_runner.py:60} INFO - Started process 545 to run task
+[2024-07-01T02:59:57.991+0000] {standard_task_runner.py:87} INFO - Running: ['***', 'tasks', 'run', 'upload_congress_data', 'bq_create_Congress_senate_ids_partitioned_table_task', 'scheduled__2024-06-30T00:00:00+00:00', '--job-id', '43', '--raw', '--subdir', 'DAGS_FOLDER/upload_congress_data.py', '--cfg-path', '/tmp/tmpdv12vklk']
+[2024-07-01T02:59:57.993+0000] {standard_task_runner.py:88} INFO - Job 43: Subtask bq_create_Congress_senate_ids_partitioned_table_task
+[2024-07-01T02:59:58.025+0000] {task_command.py:423} INFO - Running <TaskInstance: upload_congress_data.bq_create_Congress_senate_ids_partitioned_table_task scheduled__2024-06-30T00:00:00+00:00 [running]> on host 0344fe541aae
+[2024-07-01T02:59:58.062+0000] {taskinstance.py:2513} INFO - Exporting env vars: AIRFLOW_CTX_DAG_EMAIL='***@***.com' AIRFLOW_CTX_DAG_OWNER='***' AIRFLOW_CTX_DAG_ID='upload_congress_data' AIRFLOW_CTX_TASK_ID='bq_create_Congress_senate_ids_partitioned_table_task' AIRFLOW_CTX_EXECUTION_DATE='2024-06-30T00:00:00+00:00' AIRFLOW_CTX_TRY_NUMBER='6' AIRFLOW_CTX_DAG_RUN_ID='scheduled__2024-06-30T00:00:00+00:00'
+[2024-07-01T02:59:58.064+0000] {crypto.py:82} WARNING - empty cryptography key - values will not be stored encrypted.
+[2024-07-01T02:59:58.064+0000] {connection.py:269} WARNING - Connection schemes (type: google_cloud_platform) shall not contain '_' according to RFC3986.
+[2024-07-01T02:59:58.065+0000] {base.py:83} INFO - Using connection ID 'google_cloud_default' for task execution.
+[2024-07-01T02:59:58.108+0000] {bigquery.py:2811} INFO - Executing: {'query': {'query': 'DROP TABLE IF EXISTS Congress.senate_ids;             CREATE TABLE Congress.senate_ids             PARTITION BY bioguideID             AS             SELECT *             FROM Congress.senate_ids_external_table;', 'useLegacySql': False}}'
+[2024-07-01T02:59:58.109+0000] {bigquery.py:1613} INFO - Inserting job ***_upload_congress_data_bq_create_Congress_senate_ids_partitioned_table_task_2024_06_30T00_00_00_00_00_c8e5a209187bafdb346c1d46ab0046a7
+[2024-07-01T03:00:00.468+0000] {taskinstance.py:2731} ERROR - Task failed with exception
+Traceback (most recent call last):
+  File "/home/airflow/.local/lib/python3.11/site-packages/airflow/models/taskinstance.py", line 444, in _execute_task
+    result = _execute_callable(context=context, **execute_callable_kwargs)
+             ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/airflow/.local/lib/python3.11/site-packages/airflow/models/taskinstance.py", line 414, in _execute_callable
+    return execute_callable(context=context, **execute_callable_kwargs)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/airflow/.local/lib/python3.11/site-packages/airflow/providers/google/cloud/operators/bigquery.py", line 2870, in execute
+    job.result(timeout=self.result_timeout, retry=self.result_retry)
+  File "/home/airflow/.local/lib/python3.11/site-packages/google/cloud/bigquery/job/query.py", line 1595, in result
+    do_get_result()
+  File "/home/airflow/.local/lib/python3.11/site-packages/google/cloud/bigquery/job/query.py", line 1584, in do_get_result
+    super(QueryJob, self).result(retry=retry, timeout=timeout)
+  File "/home/airflow/.local/lib/python3.11/site-packages/google/cloud/bigquery/job/base.py", line 971, in result
+    return super(_AsyncJob, self).result(timeout=timeout, **kwargs)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/airflow/.local/lib/python3.11/site-packages/google/api_core/future/polling.py", line 261, in result
+    raise self._exception
+google.api_core.exceptions.BadRequest: 400 Query error: PARTITION BY expression must be DATE(<timestamp_column>), DATE(<datetime_column>), DATETIME_TRUNC(<datetime_column>, DAY/HOUR/MONTH/YEAR), a DATE column, TIMESTAMP_TRUNC(<timestamp_column>, DAY/HOUR/MONTH/YEAR), DATE_TRUNC(<date_column>, MONTH/YEAR), or RANGE_BUCKET(<int64_column>, GENERATE_ARRAY(<int64_value>, <int64_value>[, <int64_value>])) at [1:55]
+
+Location: US
+Job ID: airflow_upload_congress_data_bq_create_Congress_senate_ids_partitioned_table_task_2024_06_30T00_00_00_00_00_c8e5a209187bafdb346c1d46ab0046a7
+
+[2024-07-01T03:00:00.480+0000] {taskinstance.py:1149} INFO - Marking task as UP_FOR_RETRY. dag_id=upload_congress_data, task_id=bq_create_Congress_senate_ids_partitioned_table_task, execution_date=20240630T000000, start_date=20240701T025957, end_date=20240701T030000
+[2024-07-01T03:00:00.491+0000] {standard_task_runner.py:107} ERROR - Failed to execute job 43 for task bq_create_Congress_senate_ids_partitioned_table_task (400 Query error: PARTITION BY expression must be DATE(<timestamp_column>), DATE(<datetime_column>), DATETIME_TRUNC(<datetime_column>, DAY/HOUR/MONTH/YEAR), a DATE column, TIMESTAMP_TRUNC(<timestamp_column>, DAY/HOUR/MONTH/YEAR), DATE_TRUNC(<date_column>, MONTH/YEAR), or RANGE_BUCKET(<int64_column>, GENERATE_ARRAY(<int64_value>, <int64_value>[, <int64_value>])) at [1:55]
+
+Location: US
+Job ID: airflow_upload_congress_data_bq_create_Congress_senate_ids_partitioned_table_task_2024_06_30T00_00_00_00_00_c8e5a209187bafdb346c1d46ab0046a7
+; 545)
+[2024-07-01T03:00:00.523+0000] {local_task_job_runner.py:234} INFO - Task exited with return code 1
+[2024-07-01T03:00:00.542+0000] {taskinstance.py:3312} INFO - 0 downstream tasks scheduled from follow-on schedule check

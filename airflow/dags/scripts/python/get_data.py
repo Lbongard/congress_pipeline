@@ -352,3 +352,48 @@ def legislator_dict(item, chamber):
                     'vote' : item.get("vote_cast")
                 }
             return {}
+
+
+def get_senate_ids(save_folder):
+
+    if os.path.exists(save_folder):
+        shutil.rmtree(save_folder)
+    os.makedirs(save_folder)
+    
+    response = requests.get('https://www.senate.gov/about/senator-lookup.xml')
+    sen_id_list = conform_senate_ids(response.content)
+    
+    sen_id_df = pd.DataFrame(sen_id_list)
+
+    filename = f"{save_folder}/senate_id_lookup.json"
+    f = open(filename, "w")
+
+    for row in sen_id_df.index:
+        f.write(sen_id_df.loc[row].to_json() + "\n")
+
+
+
+def conform_senate_ids(data):
+    
+    
+    sen_dict = xmltodict.parse(data)
+    sen_id_list = [sen_id_dict(sen) for sen in sen_dict['senators']['senator']]
+    
+    return sen_id_list
+        
+def sen_id_dict(item):
+    if isinstance(item, dict):
+        
+        if isinstance(item.get('lisid'), list):
+            lisid = item.get('lisid')[0]
+        else: 
+            lisid = item.get('lisid')
+
+        return {
+            'first_name': item.get('full_name').get('first_name'),
+            'last_name': item.get('full_name').get('last_name'),
+            'state': item.get('state'),
+            'bioguideID': item.get('bioguide'),
+            'lisid':lisid
+        }
+    return {}

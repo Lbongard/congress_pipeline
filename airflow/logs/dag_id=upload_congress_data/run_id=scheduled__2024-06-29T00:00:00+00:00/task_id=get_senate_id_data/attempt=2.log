@@ -1,0 +1,44 @@
+[2024-06-30T16:54:23.792+0000] {taskinstance.py:1979} INFO - Dependencies all met for dep_context=non-requeueable deps ti=<TaskInstance: upload_congress_data.get_senate_id_data scheduled__2024-06-29T00:00:00+00:00 [queued]>
+[2024-06-30T16:54:23.801+0000] {taskinstance.py:1979} INFO - Dependencies all met for dep_context=requeueable deps ti=<TaskInstance: upload_congress_data.get_senate_id_data scheduled__2024-06-29T00:00:00+00:00 [queued]>
+[2024-06-30T16:54:23.802+0000] {taskinstance.py:2193} INFO - Starting attempt 2 of 3
+[2024-06-30T16:54:23.817+0000] {taskinstance.py:2217} INFO - Executing <Task(PythonOperator): get_senate_id_data> on 2024-06-29 00:00:00+00:00
+[2024-06-30T16:54:23.825+0000] {standard_task_runner.py:60} INFO - Started process 88 to run task
+[2024-06-30T16:54:23.829+0000] {standard_task_runner.py:87} INFO - Running: ['***', 'tasks', 'run', 'upload_congress_data', 'get_senate_id_data', 'scheduled__2024-06-29T00:00:00+00:00', '--job-id', '8', '--raw', '--subdir', 'DAGS_FOLDER/upload_congress_data.py', '--cfg-path', '/tmp/tmpt9ek_dgx']
+[2024-06-30T16:54:23.833+0000] {standard_task_runner.py:88} INFO - Job 8: Subtask get_senate_id_data
+[2024-06-30T16:54:23.980+0000] {task_command.py:423} INFO - Running <TaskInstance: upload_congress_data.get_senate_id_data scheduled__2024-06-29T00:00:00+00:00 [running]> on host 106864a7e5f7
+[2024-06-30T16:54:24.077+0000] {taskinstance.py:2513} INFO - Exporting env vars: AIRFLOW_CTX_DAG_EMAIL='***@***.com' AIRFLOW_CTX_DAG_OWNER='***' AIRFLOW_CTX_DAG_ID='upload_congress_data' AIRFLOW_CTX_TASK_ID='get_senate_id_data' AIRFLOW_CTX_EXECUTION_DATE='2024-06-29T00:00:00+00:00' AIRFLOW_CTX_TRY_NUMBER='2' AIRFLOW_CTX_DAG_RUN_ID='scheduled__2024-06-29T00:00:00+00:00'
+[2024-06-30T16:54:24.627+0000] {taskinstance.py:2731} ERROR - Task failed with exception
+Traceback (most recent call last):
+  File "/home/airflow/.local/lib/python3.11/site-packages/airflow/models/taskinstance.py", line 444, in _execute_task
+    result = _execute_callable(context=context, **execute_callable_kwargs)
+             ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/airflow/.local/lib/python3.11/site-packages/airflow/models/taskinstance.py", line 414, in _execute_callable
+    return execute_callable(context=context, **execute_callable_kwargs)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/airflow/.local/lib/python3.11/site-packages/airflow/operators/python.py", line 200, in execute
+    return_value = self.execute_callable()
+                   ^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/airflow/.local/lib/python3.11/site-packages/airflow/operators/python.py", line 217, in execute_callable
+    return self.python_callable(*self.op_args, **self.op_kwargs)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/opt/airflow/dags/scripts/python/get_data.py", line 364, in get_senate_ids
+    f = open(filename, "w")
+        ^^^^^^^^^^^^^^^^^^^
+FileNotFoundError: [Errno 2] No such file or directory: '/opt/airflow/dags/data/senate_ids/senate_id_lookup.json'
+[2024-06-30T16:54:24.660+0000] {taskinstance.py:1149} INFO - Marking task as UP_FOR_RETRY. dag_id=upload_congress_data, task_id=get_senate_id_data, execution_date=20240629T000000, start_date=20240630T165423, end_date=20240630T165424
+[2024-06-30T16:54:24.742+0000] {standard_task_runner.py:107} ERROR - Failed to execute job 8 for task get_senate_id_data ([Errno 2] No such file or directory: '/opt/airflow/dags/data/senate_ids/senate_id_lookup.json'; 88)
+[2024-06-30T16:54:24.826+0000] {local_task_job_runner.py:234} INFO - Task exited with return code 1
+[2024-06-30T16:54:24.865+0000] {taskinstance.py:3312} INFO - 0 downstream tasks scheduled from follow-on schedule check
+[2024-06-30T19:28:42.234+0000] {taskinstance.py:1979} INFO - Dependencies all met for dep_context=non-requeueable deps ti=<TaskInstance: upload_congress_data.get_senate_id_data scheduled__2024-06-29T00:00:00+00:00 [queued]>
+[2024-06-30T19:28:42.250+0000] {taskinstance.py:1979} INFO - Dependencies all met for dep_context=requeueable deps ti=<TaskInstance: upload_congress_data.get_senate_id_data scheduled__2024-06-29T00:00:00+00:00 [queued]>
+[2024-06-30T19:28:42.257+0000] {taskinstance.py:2193} INFO - Starting attempt 2 of 4
+[2024-06-30T19:28:42.306+0000] {taskinstance.py:2217} INFO - Executing <Task(PythonOperator): get_senate_id_data> on 2024-06-29 00:00:00+00:00
+[2024-06-30T19:28:42.316+0000] {standard_task_runner.py:60} INFO - Started process 715 to run task
+[2024-06-30T19:28:42.336+0000] {standard_task_runner.py:87} INFO - Running: ['***', 'tasks', 'run', 'upload_congress_data', 'get_senate_id_data', 'scheduled__2024-06-29T00:00:00+00:00', '--job-id', '13', '--raw', '--subdir', 'DAGS_FOLDER/upload_congress_data.py', '--cfg-path', '/tmp/tmpxpgvbnk7']
+[2024-06-30T19:28:42.350+0000] {standard_task_runner.py:88} INFO - Job 13: Subtask get_senate_id_data
+[2024-06-30T19:28:42.503+0000] {task_command.py:423} INFO - Running <TaskInstance: upload_congress_data.get_senate_id_data scheduled__2024-06-29T00:00:00+00:00 [running]> on host 321f475acc45
+[2024-06-30T19:28:42.748+0000] {taskinstance.py:2513} INFO - Exporting env vars: AIRFLOW_CTX_DAG_EMAIL='***@***.com' AIRFLOW_CTX_DAG_OWNER='***' AIRFLOW_CTX_DAG_ID='upload_congress_data' AIRFLOW_CTX_TASK_ID='get_senate_id_data' AIRFLOW_CTX_EXECUTION_DATE='2024-06-29T00:00:00+00:00' AIRFLOW_CTX_TRY_NUMBER='2' AIRFLOW_CTX_DAG_RUN_ID='scheduled__2024-06-29T00:00:00+00:00'
+[2024-06-30T19:28:43.697+0000] {python.py:202} INFO - Done. Returned value was: None
+[2024-06-30T19:28:43.704+0000] {taskinstance.py:1149} INFO - Marking task as SUCCESS. dag_id=upload_congress_data, task_id=get_senate_id_data, execution_date=20240629T000000, start_date=20240630T192842, end_date=20240630T192843
+[2024-06-30T19:28:43.757+0000] {local_task_job_runner.py:234} INFO - Task exited with return code 0
+[2024-06-30T19:28:43.781+0000] {taskinstance.py:3312} INFO - 0 downstream tasks scheduled from follow-on schedule check

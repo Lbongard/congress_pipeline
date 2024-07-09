@@ -1,0 +1,16 @@
+[2024-07-01T02:41:09.038+0000] {taskinstance.py:1979} INFO - Dependencies all met for dep_context=non-requeueable deps ti=<TaskInstance: upload_congress_data.upload_members_to_gcs scheduled__2024-06-30T00:00:00+00:00 [queued]>
+[2024-07-01T02:41:09.053+0000] {taskinstance.py:1979} INFO - Dependencies all met for dep_context=requeueable deps ti=<TaskInstance: upload_congress_data.upload_members_to_gcs scheduled__2024-06-30T00:00:00+00:00 [queued]>
+[2024-07-01T02:41:09.054+0000] {taskinstance.py:2193} INFO - Starting attempt 1 of 1
+[2024-07-01T02:41:09.072+0000] {taskinstance.py:2217} INFO - Executing <Task(PythonOperator): upload_members_to_gcs> on 2024-06-30 00:00:00+00:00
+[2024-07-01T02:41:09.091+0000] {standard_task_runner.py:60} INFO - Started process 164 to run task
+[2024-07-01T02:41:09.117+0000] {standard_task_runner.py:87} INFO - Running: ['***', 'tasks', 'run', 'upload_congress_data', 'upload_members_to_gcs', 'scheduled__2024-06-30T00:00:00+00:00', '--job-id', '11', '--raw', '--subdir', 'DAGS_FOLDER/upload_congress_data.py', '--cfg-path', '/tmp/tmpa_z64phg']
+[2024-07-01T02:41:09.127+0000] {standard_task_runner.py:88} INFO - Job 11: Subtask upload_members_to_gcs
+[2024-07-01T02:41:09.240+0000] {task_command.py:423} INFO - Running <TaskInstance: upload_congress_data.upload_members_to_gcs scheduled__2024-06-30T00:00:00+00:00 [running]> on host 0344fe541aae
+[2024-07-01T02:41:09.469+0000] {taskinstance.py:2513} INFO - Exporting env vars: AIRFLOW_CTX_DAG_OWNER='***' AIRFLOW_CTX_DAG_ID='upload_congress_data' AIRFLOW_CTX_TASK_ID='upload_members_to_gcs' AIRFLOW_CTX_EXECUTION_DATE='2024-06-30T00:00:00+00:00' AIRFLOW_CTX_TRY_NUMBER='1' AIRFLOW_CTX_DAG_RUN_ID='scheduled__2024-06-30T00:00:00+00:00'
+[2024-07-01T02:41:11.252+0000] {logging_mixin.py:188} INFO - Uploaded /opt/***/dags/data/members/members_250_500.json to gs://congress_data_testproject-420401/members/members_250_500.json
+[2024-07-01T02:41:11.926+0000] {logging_mixin.py:188} INFO - Uploaded /opt/***/dags/data/members/members_0_250.json to gs://congress_data_testproject-420401/members/members_0_250.json
+[2024-07-01T02:41:12.525+0000] {logging_mixin.py:188} INFO - Uploaded /opt/***/dags/data/members/members_500_750.json to gs://congress_data_testproject-420401/members/members_500_750.json
+[2024-07-01T02:41:12.526+0000] {python.py:202} INFO - Done. Returned value was: None
+[2024-07-01T02:41:12.567+0000] {taskinstance.py:1149} INFO - Marking task as SUCCESS. dag_id=upload_congress_data, task_id=upload_members_to_gcs, execution_date=20240630T000000, start_date=20240701T024109, end_date=20240701T024112
+[2024-07-01T02:41:12.611+0000] {local_task_job_runner.py:234} INFO - Task exited with return code 0
+[2024-07-01T02:41:12.701+0000] {taskinstance.py:3312} INFO - 0 downstream tasks scheduled from follow-on schedule check

@@ -1,0 +1,22 @@
+[2024-06-30T19:28:44.775+0000] {taskinstance.py:1979} INFO - Dependencies all met for dep_context=non-requeueable deps ti=<TaskInstance: upload_congress_data.get_members_data scheduled__2024-06-29T00:00:00+00:00 [queued]>
+[2024-06-30T19:28:44.782+0000] {taskinstance.py:1979} INFO - Dependencies all met for dep_context=requeueable deps ti=<TaskInstance: upload_congress_data.get_members_data scheduled__2024-06-29T00:00:00+00:00 [queued]>
+[2024-06-30T19:28:44.783+0000] {taskinstance.py:2193} INFO - Starting attempt 2 of 4
+[2024-06-30T19:28:44.791+0000] {taskinstance.py:2217} INFO - Executing <Task(PythonOperator): get_members_data> on 2024-06-29 00:00:00+00:00
+[2024-06-30T19:28:44.798+0000] {standard_task_runner.py:60} INFO - Started process 724 to run task
+[2024-06-30T19:28:44.801+0000] {standard_task_runner.py:87} INFO - Running: ['***', 'tasks', 'run', 'upload_congress_data', 'get_members_data', 'scheduled__2024-06-29T00:00:00+00:00', '--job-id', '16', '--raw', '--subdir', 'DAGS_FOLDER/upload_congress_data.py', '--cfg-path', '/tmp/tmpofrkddv1']
+[2024-06-30T19:28:44.805+0000] {standard_task_runner.py:88} INFO - Job 16: Subtask get_members_data
+[2024-06-30T19:28:44.861+0000] {task_command.py:423} INFO - Running <TaskInstance: upload_congress_data.get_members_data scheduled__2024-06-29T00:00:00+00:00 [running]> on host 321f475acc45
+[2024-06-30T19:28:44.912+0000] {taskinstance.py:2513} INFO - Exporting env vars: AIRFLOW_CTX_DAG_EMAIL='***@***.com' AIRFLOW_CTX_DAG_OWNER='***' AIRFLOW_CTX_DAG_ID='upload_congress_data' AIRFLOW_CTX_TASK_ID='get_members_data' AIRFLOW_CTX_EXECUTION_DATE='2024-06-29T00:00:00+00:00' AIRFLOW_CTX_TRY_NUMBER='2' AIRFLOW_CTX_DAG_RUN_ID='scheduled__2024-06-29T00:00:00+00:00'
+[2024-06-30T19:28:44.917+0000] {get_data.py:160} INFO - Max records passed as None
+[2024-06-30T19:28:44.918+0000] {get_data.py:205} INFO - executing API call for https://api.congress.gov/v3/member?format=json&fromDateTime=2023-01-01T00:00:00Z&toDateTime=2024-06-29T00:00:00Z&offset=0&limit=250&api_key=WNue8kCDCOIlewAsULgnN8j6SqSgAZjE2sYbPsBb
+[2024-06-30T19:28:50.568+0000] {get_data.py:167} INFO - About to start fetching 692 records
+[2024-06-30T19:28:50.571+0000] {get_data.py:205} INFO - executing API call for https://api.congress.gov/v3/member?format=json&fromDateTime=2023-01-01T00:00:00Z&toDateTime=2024-06-29T00:00:00Z&offset=0&limit=250&api_key=WNue8kCDCOIlewAsULgnN8j6SqSgAZjE2sYbPsBb
+[2024-06-30T19:28:51.614+0000] {logging_mixin.py:188} INFO - 250 of 692 member records saved
+[2024-06-30T19:28:51.614+0000] {get_data.py:205} INFO - executing API call for https://api.congress.gov/v3/member?format=json&fromDateTime=2023-01-01T00:00:00Z&toDateTime=2024-06-29T00:00:00Z&offset=250&limit=250&api_key=WNue8kCDCOIlewAsULgnN8j6SqSgAZjE2sYbPsBb
+[2024-06-30T19:28:56.168+0000] {logging_mixin.py:188} INFO - 500 of 692 member records saved
+[2024-06-30T19:28:56.168+0000] {get_data.py:205} INFO - executing API call for https://api.congress.gov/v3/member?format=json&fromDateTime=2023-01-01T00:00:00Z&toDateTime=2024-06-29T00:00:00Z&offset=500&limit=250&api_key=WNue8kCDCOIlewAsULgnN8j6SqSgAZjE2sYbPsBb
+[2024-06-30T19:29:00.238+0000] {logging_mixin.py:188} INFO - 692 of 692 member records saved
+[2024-06-30T19:29:00.240+0000] {python.py:202} INFO - Done. Returned value was: None
+[2024-06-30T19:29:00.253+0000] {taskinstance.py:1149} INFO - Marking task as SUCCESS. dag_id=upload_congress_data, task_id=get_members_data, execution_date=20240629T000000, start_date=20240630T192844, end_date=20240630T192900
+[2024-06-30T19:29:00.297+0000] {local_task_job_runner.py:234} INFO - Task exited with return code 0
+[2024-06-30T19:29:00.316+0000] {taskinstance.py:3312} INFO - 0 downstream tasks scheduled from follow-on schedule check

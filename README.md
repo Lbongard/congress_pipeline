@@ -81,8 +81,10 @@ make airflow-up
 
 ```
 dbt deps
+dbt seed
 dbt run
 ```
+Note: This data model contains a list of congressional districts by zip code published by Open Source Activism. You can find the dataset and list of caveats here: https://github.com/OpenSourceActivismTech/us-zipcodes-congress
 
 8. **Once done, make sure that you destroy the google cloud storage bucket and BigQuery Dataset.** Navigate to the terraform directory and run the following:
 ```

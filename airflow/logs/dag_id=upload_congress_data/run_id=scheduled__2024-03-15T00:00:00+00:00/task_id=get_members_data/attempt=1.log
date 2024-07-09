@@ -578,3 +578,52 @@ KeyError: 0
 [2024-06-14T03:10:50.757+0000] {taskinstance.py:1149} INFO - Marking task as SUCCESS. dag_id=upload_congress_data, task_id=get_members_data, execution_date=20240315T000000, start_date=20240614T031044, end_date=20240614T031050
 [2024-06-14T03:10:50.800+0000] {local_task_job_runner.py:234} INFO - Task exited with return code 0
 [2024-06-14T03:10:50.817+0000] {taskinstance.py:3312} INFO - 0 downstream tasks scheduled from follow-on schedule check
+[2024-06-19T19:21:46.215+0000] {taskinstance.py:1979} INFO - Dependencies all met for dep_context=non-requeueable deps ti=<TaskInstance: upload_congress_data.get_members_data scheduled__2024-03-15T00:00:00+00:00 [queued]>
+[2024-06-19T19:21:46.221+0000] {taskinstance.py:1979} INFO - Dependencies all met for dep_context=requeueable deps ti=<TaskInstance: upload_congress_data.get_members_data scheduled__2024-03-15T00:00:00+00:00 [queued]>
+[2024-06-19T19:21:46.221+0000] {taskinstance.py:2193} INFO - Starting attempt 1 of 3
+[2024-06-19T19:21:46.228+0000] {taskinstance.py:2217} INFO - Executing <Task(PythonOperator): get_members_data> on 2024-03-15 00:00:00+00:00
+[2024-06-19T19:21:46.256+0000] {standard_task_runner.py:60} INFO - Started process 59 to run task
+[2024-06-19T19:21:46.260+0000] {standard_task_runner.py:87} INFO - Running: ['***', 'tasks', 'run', 'upload_congress_data', 'get_members_data', 'scheduled__2024-03-15T00:00:00+00:00', '--job-id', '5', '--raw', '--subdir', 'DAGS_FOLDER/upload_congress_data.py', '--cfg-path', '/tmp/tmpdyiwxvid']
+[2024-06-19T19:21:46.266+0000] {standard_task_runner.py:88} INFO - Job 5: Subtask get_members_data
+[2024-06-19T19:21:46.321+0000] {task_command.py:423} INFO - Running <TaskInstance: upload_congress_data.get_members_data scheduled__2024-03-15T00:00:00+00:00 [running]> on host 88c7ac0b9ed4
+[2024-06-19T19:21:46.383+0000] {taskinstance.py:2513} INFO - Exporting env vars: AIRFLOW_CTX_DAG_EMAIL='***@***.com' AIRFLOW_CTX_DAG_OWNER='***' AIRFLOW_CTX_DAG_ID='upload_congress_data' AIRFLOW_CTX_TASK_ID='get_members_data' AIRFLOW_CTX_EXECUTION_DATE='2024-03-15T00:00:00+00:00' AIRFLOW_CTX_TRY_NUMBER='1' AIRFLOW_CTX_DAG_RUN_ID='scheduled__2024-03-15T00:00:00+00:00'
+[2024-06-19T19:21:46.387+0000] {get_data.py:160} INFO - Max records passed as None
+[2024-06-19T19:21:46.388+0000] {get_data.py:205} INFO - executing API call for https://api.congress.gov/v3/member?format=json&fromDateTime=2023-01-01T00:00:00Z&toDateTime=2024-03-15T00:00:00Z&offset=0&limit=250&api_key=WNue8kCDCOIlewAsULgnN8j6SqSgAZjE2sYbPsBb
+[2024-06-19T19:21:49.414+0000] {get_data.py:167} INFO - About to start fetching 225 records
+[2024-06-19T19:21:49.420+0000] {get_data.py:205} INFO - executing API call for https://api.congress.gov/v3/member?format=json&fromDateTime=2023-01-01T00:00:00Z&toDateTime=2024-03-15T00:00:00Z&offset=0&limit=250&api_key=WNue8kCDCOIlewAsULgnN8j6SqSgAZjE2sYbPsBb
+[2024-06-19T19:21:50.422+0000] {logging_mixin.py:188} INFO - 225 of 225 member records saved
+[2024-06-19T19:21:50.428+0000] {python.py:202} INFO - Done. Returned value was: None
+[2024-06-19T19:21:50.488+0000] {taskinstance.py:1149} INFO - Marking task as SUCCESS. dag_id=upload_congress_data, task_id=get_members_data, execution_date=20240315T000000, start_date=20240619T192146, end_date=20240619T192150
+[2024-06-19T19:21:50.613+0000] {local_task_job_runner.py:234} INFO - Task exited with return code 0
+[2024-06-19T19:21:50.668+0000] {taskinstance.py:3312} INFO - 0 downstream tasks scheduled from follow-on schedule check
+[2024-06-21T03:10:19.863+0000] {taskinstance.py:1979} INFO - Dependencies all met for dep_context=non-requeueable deps ti=<TaskInstance: upload_congress_data.get_members_data scheduled__2024-03-15T00:00:00+00:00 [queued]>
+[2024-06-21T03:10:19.872+0000] {taskinstance.py:1979} INFO - Dependencies all met for dep_context=requeueable deps ti=<TaskInstance: upload_congress_data.get_members_data scheduled__2024-03-15T00:00:00+00:00 [queued]>
+[2024-06-21T03:10:19.873+0000] {taskinstance.py:2193} INFO - Starting attempt 1 of 3
+[2024-06-21T03:10:19.886+0000] {taskinstance.py:2217} INFO - Executing <Task(PythonOperator): get_members_data> on 2024-03-15 00:00:00+00:00
+[2024-06-21T03:10:19.900+0000] {standard_task_runner.py:60} INFO - Started process 75 to run task
+[2024-06-21T03:10:19.923+0000] {standard_task_runner.py:87} INFO - Running: ['***', 'tasks', 'run', 'upload_congress_data', 'get_members_data', 'scheduled__2024-03-15T00:00:00+00:00', '--job-id', '5', '--raw', '--subdir', 'DAGS_FOLDER/upload_congress_data.py', '--cfg-path', '/tmp/tmpnint09yj']
+[2024-06-21T03:10:19.935+0000] {standard_task_runner.py:88} INFO - Job 5: Subtask get_members_data
+[2024-06-21T03:10:20.057+0000] {task_command.py:423} INFO - Running <TaskInstance: upload_congress_data.get_members_data scheduled__2024-03-15T00:00:00+00:00 [running]> on host e69b8c0a2a30
+[2024-06-21T03:10:20.219+0000] {taskinstance.py:2513} INFO - Exporting env vars: AIRFLOW_CTX_DAG_EMAIL='***@***.com' AIRFLOW_CTX_DAG_OWNER='***' AIRFLOW_CTX_DAG_ID='upload_congress_data' AIRFLOW_CTX_TASK_ID='get_members_data' AIRFLOW_CTX_EXECUTION_DATE='2024-03-15T00:00:00+00:00' AIRFLOW_CTX_TRY_NUMBER='1' AIRFLOW_CTX_DAG_RUN_ID='scheduled__2024-03-15T00:00:00+00:00'
+[2024-06-21T03:10:20.222+0000] {taskinstance.py:2731} ERROR - Task failed with exception
+Traceback (most recent call last):
+  File "/home/airflow/.local/lib/python3.11/site-packages/airflow/models/taskinstance.py", line 444, in _execute_task
+    result = _execute_callable(context=context, **execute_callable_kwargs)
+             ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/airflow/.local/lib/python3.11/site-packages/airflow/models/taskinstance.py", line 414, in _execute_callable
+    return execute_callable(context=context, **execute_callable_kwargs)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/airflow/.local/lib/python3.11/site-packages/airflow/operators/python.py", line 200, in execute
+    return_value = self.execute_callable()
+                   ^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/airflow/.local/lib/python3.11/site-packages/airflow/operators/python.py", line 217, in execute_callable
+    return self.python_callable(*self.op_args, **self.op_kwargs)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/opt/airflow/dags/scripts/python/get_data.py", line 152, in get_members
+    params['end_date'] = ti.xcom_pull(task_ids='format_execution_date_task', key='formatted_end_date')
+                         ^^
+NameError: name 'ti' is not defined
+[2024-06-21T03:10:20.237+0000] {taskinstance.py:1149} INFO - Marking task as UP_FOR_RETRY. dag_id=upload_congress_data, task_id=get_members_data, execution_date=20240315T000000, start_date=20240621T031019, end_date=20240621T031020
+[2024-06-21T03:10:20.257+0000] {standard_task_runner.py:107} ERROR - Failed to execute job 5 for task get_members_data (name 'ti' is not defined; 75)
+[2024-06-21T03:10:20.296+0000] {local_task_job_runner.py:234} INFO - Task exited with return code 1
+[2024-06-21T03:10:20.329+0000] {taskinstance.py:3312} INFO - 0 downstream tasks scheduled from follow-on schedule check

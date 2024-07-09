@@ -6,6 +6,7 @@ from airflow.operators.python import PythonOperator
 from airflow.providers.google.cloud.transfers.gcs_to_bigquery import GCSToBigQueryOperator
 from airflow.providers.google.cloud.operators.bigquery import BigQueryCreateExternalTableOperator, BigQueryInsertJobOperator
 from airflow import DAG
+from airflow.utils.dates import days_ago
 
 from scripts.python.get_data import *
 from scripts.python.xmlConvert import convert_folder_xml_to_newline_json
@@ -25,14 +26,17 @@ CONGRESS_API_KEY = os.environ.get("CONGRESS_API_KEY")
 
 BIGQUERY_DATASET= 'Congress'
 DATA_TYPES = {'bill_status':{'table_struct':bill_status_ddl,
-                             'date_col':'bill.introducedDate',
+                             'partition_col':'bill.introducedDate',
                              'local_folder_path':'/opt/airflow/dags/data/bills'},
               'votes':      {'table_struct':vote_ddl,
-                             'date_col':'vote.date',
+                             'partition_col':'vote.date',
                              'local_folder_path':'/opt/airflow/dags/data/votes'},
               'members':    {'table_struct':member_ddl,
-                             'date_col':'updateDate',
-                             'local_folder_path':'/opt/airflow/dags/data/members'}
+                             'partition_col':'updateDate',
+                             'local_folder_path':'/opt/airflow/dags/data/members'},
+              'senate_ids': {'table_struct':senate_id_ddl,
+                             'partition_col':'',
+                             'local_folder_path':'/opt/airflow/dags/data/senate_ids'}
                              }
 
 # DAG definition
@@ -40,7 +44,7 @@ default_args = {
     "owner": "airflow",
     "depends_on_past": True,
     "wait_for_downstream": True,
-    "start_date": datetime(2024, 3, 15),
+    "start_date": days_ago(1),
     "email": ["airflow@airflow.com"],
     "email_on_failure": False,
     "email_on_retry": False,
@@ -62,6 +66,7 @@ files_to_download = [
     ['hr', 'https://www.govinfo.gov/bulkdata/BILLSTATUS/118/hr/BILLSTATUS-118-hr.zip'],
     ['hconres', 'https://www.govinfo.gov/bulkdata/BILLSTATUS/118/hconres/BILLSTATUS-118-hconres.zip'],
     ['hjres', 'https://www.govinfo.gov/bulkdata/BILLSTATUS/118/hjres/BILLSTATUS-118-hjres.zip'],
+    ['hres', 'https://www.govinfo.gov/bulkdata/BILLSTATUS/118/hres/BILLSTATUS-118-hres.zip'],
     ['s', 'https://www.govinfo.gov/bulkdata/BILLSTATUS/118/s/BILLSTATUS-118-s.zip'],
     ['sjres', 'https://www.govinfo.gov/bulkdata/BILLSTATUS/118/sjres/BILLSTATUS-118-sjres.zip'],
     ['sconres', 'https://www.govinfo.gov/bulkdata/BILLSTATUS/118/sconres/BILLSTATUS-118-sconres.zip']
@@ -130,6 +135,13 @@ get_members_data = PythonOperator(
     dag=dag
 )
 
+get_senate_id_data = PythonOperator(
+    task_id = 'get_senate_id_data',
+    python_callable=get_senate_ids,
+    op_kwargs= {'save_folder':'/opt/airflow/dags/data/senate_ids'},
+    dag=dag
+)
+
 
 for data_type in DATA_TYPES.keys():
 
@@ -152,17 +164,29 @@ for data_type in DATA_TYPES.keys():
             dag=dag  
         )
     
-    date_col = DATA_TYPES[data_type]['date_col']
-    new_date_col = date_col.split('.')[-1] + '_formatted'
+    partition_col = DATA_TYPES[data_type]['partition_col']
+
+    if data_type in ('bill_status', 'votes', 'members'):
     
-    CREATE_BQ_TBL_QUERY = (
-        f"DROP TABLE IF EXISTS {BIGQUERY_DATASET}.{data_type}; \
-        CREATE TABLE {BIGQUERY_DATASET}.{data_type} \
-        PARTITION BY {new_date_col} \
-        AS \
-        SELECT *, DATE({date_col}) {new_date_col} \
-        FROM {BIGQUERY_DATASET}.{data_type}_external_table;"
-    )
+        new_partition_col = partition_col.split('.')[-1] + '_formatted'
+        
+        CREATE_BQ_TBL_QUERY = (
+            f"DROP TABLE IF EXISTS {BIGQUERY_DATASET}.{data_type}; \
+            CREATE TABLE {BIGQUERY_DATASET}.{data_type} \
+            PARTITION BY {new_partition_col} \
+            AS \
+            SELECT *, DATE({partition_col}) {new_partition_col} \
+            FROM {BIGQUERY_DATASET}.{data_type}_external_table;"
+        )
+    
+    else:
+        CREATE_BQ_TBL_QUERY = (
+            f"DROP TABLE IF EXISTS {BIGQUERY_DATASET}.{data_type}; \
+            CREATE TABLE {BIGQUERY_DATASET}.{data_type} \
+            AS \
+            SELECT * \
+            FROM {BIGQUERY_DATASET}.{data_type}_external_table;"
+        )
 
     bq_create_partitioned_table_job = BigQueryInsertJobOperator(
         task_id=f"bq_create_{BIGQUERY_DATASET}_{data_type}_partitioned_table_task",
@@ -183,6 +207,9 @@ for data_type in DATA_TYPES.keys():
         get_votes_from_bills >> upload_to_gcs
     elif data_type == 'members':
         get_members_data >> upload_to_gcs
+        convert_to_json >> upload_to_gcs
+    elif data_type == 'senate_ids':
+        get_senate_id_data >> upload_to_gcs
 
 get_bills >> convert_to_json >> upload_to_gcs >> bigquery_external_table_task >> bq_create_partitioned_table_job
 

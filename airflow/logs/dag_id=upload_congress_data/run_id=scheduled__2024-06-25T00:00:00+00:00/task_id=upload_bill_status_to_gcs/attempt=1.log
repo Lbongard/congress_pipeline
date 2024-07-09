@@ -1,0 +1,81 @@
+[2024-06-26T19:57:03.935+0000] {taskinstance.py:1979} INFO - Dependencies all met for dep_context=non-requeueable deps ti=<TaskInstance: upload_congress_data.upload_bill_status_to_gcs scheduled__2024-06-25T00:00:00+00:00 [queued]>
+[2024-06-26T19:57:03.941+0000] {taskinstance.py:1979} INFO - Dependencies all met for dep_context=requeueable deps ti=<TaskInstance: upload_congress_data.upload_bill_status_to_gcs scheduled__2024-06-25T00:00:00+00:00 [queued]>
+[2024-06-26T19:57:03.941+0000] {taskinstance.py:2193} INFO - Starting attempt 1 of 1
+[2024-06-26T19:57:03.951+0000] {taskinstance.py:2217} INFO - Executing <Task(PythonOperator): upload_bill_status_to_gcs> on 2024-06-25 00:00:00+00:00
+[2024-06-26T19:57:03.959+0000] {standard_task_runner.py:60} INFO - Started process 143 to run task
+[2024-06-26T19:57:03.964+0000] {standard_task_runner.py:87} INFO - Running: ['***', 'tasks', 'run', 'upload_congress_data', 'upload_bill_status_to_gcs', 'scheduled__2024-06-25T00:00:00+00:00', '--job-id', '8', '--raw', '--subdir', 'DAGS_FOLDER/upload_congress_data.py', '--cfg-path', '/tmp/tmpuahkbz6u']
+[2024-06-26T19:57:03.970+0000] {standard_task_runner.py:88} INFO - Job 8: Subtask upload_bill_status_to_gcs
+[2024-06-26T19:57:04.043+0000] {task_command.py:423} INFO - Running <TaskInstance: upload_congress_data.upload_bill_status_to_gcs scheduled__2024-06-25T00:00:00+00:00 [running]> on host dc1d14f648c1
+[2024-06-26T19:57:04.105+0000] {taskinstance.py:2513} INFO - Exporting env vars: AIRFLOW_CTX_DAG_OWNER='***' AIRFLOW_CTX_DAG_ID='upload_congress_data' AIRFLOW_CTX_TASK_ID='upload_bill_status_to_gcs' AIRFLOW_CTX_EXECUTION_DATE='2024-06-25T00:00:00+00:00' AIRFLOW_CTX_TRY_NUMBER='1' AIRFLOW_CTX_DAG_RUN_ID='scheduled__2024-06-25T00:00:00+00:00'
+[2024-06-26T19:57:07.450+0000] {logging_mixin.py:188} INFO - Uploaded /opt/***/dags/data/bills/hjres/hjresbill_status_0.json to gs://congress_data_testproject-420401/bill_status/hjres/hjresbill_status_0.json
+[2024-06-26T19:57:08.331+0000] {logging_mixin.py:188} INFO - Uploaded /opt/***/dags/data/bills/sconres/sconresbill_status_0.json to gs://congress_data_testproject-420401/bill_status/sconres/sconresbill_status_0.json
+[2024-06-26T19:57:09.248+0000] {logging_mixin.py:188} INFO - Uploaded /opt/***/dags/data/bills/hconres/hconresbill_status_0.json to gs://congress_data_testproject-420401/bill_status/hconres/hconresbill_status_0.json
+[2024-06-26T19:57:10.144+0000] {logging_mixin.py:188} INFO - Uploaded /opt/***/dags/data/bills/s/sbill_status_16.json to gs://congress_data_testproject-420401/bill_status/s/sbill_status_16.json
+[2024-06-26T19:57:10.774+0000] {logging_mixin.py:188} INFO - Uploaded /opt/***/dags/data/bills/s/sbill_status_3.json to gs://congress_data_testproject-420401/bill_status/s/sbill_status_3.json
+[2024-06-26T19:57:11.404+0000] {logging_mixin.py:188} INFO - Uploaded /opt/***/dags/data/bills/s/sbill_status_2.json to gs://congress_data_testproject-420401/bill_status/s/sbill_status_2.json
+[2024-06-26T19:57:12.011+0000] {logging_mixin.py:188} INFO - Uploaded /opt/***/dags/data/bills/s/sbill_status_17.json to gs://congress_data_testproject-420401/bill_status/s/sbill_status_17.json
+[2024-06-26T19:57:12.626+0000] {logging_mixin.py:188} INFO - Uploaded /opt/***/dags/data/bills/s/sbill_status_9.json to gs://congress_data_testproject-420401/bill_status/s/sbill_status_9.json
+[2024-06-26T19:57:13.253+0000] {logging_mixin.py:188} INFO - Uploaded /opt/***/dags/data/bills/s/sbill_status_10.json to gs://congress_data_testproject-420401/bill_status/s/sbill_status_10.json
+[2024-06-26T19:57:13.827+0000] {logging_mixin.py:188} INFO - Uploaded /opt/***/dags/data/bills/s/sbill_status_5.json to gs://congress_data_testproject-420401/bill_status/s/sbill_status_5.json
+[2024-06-26T19:57:14.456+0000] {logging_mixin.py:188} INFO - Uploaded /opt/***/dags/data/bills/s/sbill_status_4.json to gs://congress_data_testproject-420401/bill_status/s/sbill_status_4.json
+[2024-06-26T19:57:15.108+0000] {logging_mixin.py:188} INFO - Uploaded /opt/***/dags/data/bills/s/sbill_status_11.json to gs://congress_data_testproject-420401/bill_status/s/sbill_status_11.json
+[2024-06-26T19:57:15.767+0000] {logging_mixin.py:188} INFO - Uploaded /opt/***/dags/data/bills/s/sbill_status_8.json to gs://congress_data_testproject-420401/bill_status/s/sbill_status_8.json
+[2024-06-26T19:57:16.419+0000] {logging_mixin.py:188} INFO - Uploaded /opt/***/dags/data/bills/s/sbill_status_7.json to gs://congress_data_testproject-420401/bill_status/s/sbill_status_7.json
+[2024-06-26T19:57:17.065+0000] {logging_mixin.py:188} INFO - Uploaded /opt/***/dags/data/bills/s/sbill_status_12.json to gs://congress_data_testproject-420401/bill_status/s/sbill_status_12.json
+[2024-06-26T19:57:17.711+0000] {logging_mixin.py:188} INFO - Uploaded /opt/***/dags/data/bills/s/sbill_status_13.json to gs://congress_data_testproject-420401/bill_status/s/sbill_status_13.json
+[2024-06-26T19:57:18.343+0000] {logging_mixin.py:188} INFO - Uploaded /opt/***/dags/data/bills/s/sbill_status_6.json to gs://congress_data_testproject-420401/bill_status/s/sbill_status_6.json
+[2024-06-26T19:57:18.998+0000] {logging_mixin.py:188} INFO - Uploaded /opt/***/dags/data/bills/s/sbill_status_1.json to gs://congress_data_testproject-420401/bill_status/s/sbill_status_1.json
+[2024-06-26T19:57:19.627+0000] {logging_mixin.py:188} INFO - Uploaded /opt/***/dags/data/bills/s/sbill_status_14.json to gs://congress_data_testproject-420401/bill_status/s/sbill_status_14.json
+[2024-06-26T19:57:20.242+0000] {logging_mixin.py:188} INFO - Uploaded /opt/***/dags/data/bills/s/sbill_status_18.json to gs://congress_data_testproject-420401/bill_status/s/sbill_status_18.json
+[2024-06-26T19:57:20.915+0000] {logging_mixin.py:188} INFO - Uploaded /opt/***/dags/data/bills/s/sbill_status_15.json to gs://congress_data_testproject-420401/bill_status/s/sbill_status_15.json
+[2024-06-26T19:57:21.556+0000] {logging_mixin.py:188} INFO - Uploaded /opt/***/dags/data/bills/s/sbill_status_0.json to gs://congress_data_testproject-420401/bill_status/s/sbill_status_0.json
+[2024-06-26T19:57:22.187+0000] {logging_mixin.py:188} INFO - Uploaded /opt/***/dags/data/bills/sres/sresbill_status_1.json to gs://congress_data_testproject-420401/bill_status/sres/sresbill_status_1.json
+[2024-06-26T19:57:22.816+0000] {logging_mixin.py:188} INFO - Uploaded /opt/***/dags/data/bills/sres/sresbill_status_0.json to gs://congress_data_testproject-420401/bill_status/sres/sresbill_status_0.json
+[2024-06-26T19:57:23.480+0000] {logging_mixin.py:188} INFO - Uploaded /opt/***/dags/data/bills/sres/sresbill_status_2.json to gs://congress_data_testproject-420401/bill_status/sres/sresbill_status_2.json
+[2024-06-26T19:57:23.876+0000] {logging_mixin.py:188} INFO - Uploaded /opt/***/dags/data/bills/hres/hresbill_status_0.json to gs://congress_data_testproject-420401/bill_status/hres/hresbill_status_0.json
+[2024-06-26T19:57:24.259+0000] {logging_mixin.py:188} INFO - Uploaded /opt/***/dags/data/bills/hres/hresbill_status_1.json to gs://congress_data_testproject-420401/bill_status/hres/hresbill_status_1.json
+[2024-06-26T19:57:24.649+0000] {logging_mixin.py:188} INFO - Uploaded /opt/***/dags/data/bills/hres/hresbill_status_4.json to gs://congress_data_testproject-420401/bill_status/hres/hresbill_status_4.json
+[2024-06-26T19:57:24.996+0000] {logging_mixin.py:188} INFO - Uploaded /opt/***/dags/data/bills/hres/hresbill_status_5.json to gs://congress_data_testproject-420401/bill_status/hres/hresbill_status_5.json
+[2024-06-26T19:57:25.375+0000] {logging_mixin.py:188} INFO - Uploaded /opt/***/dags/data/bills/hres/hresbill_status_2.json to gs://congress_data_testproject-420401/bill_status/hres/hresbill_status_2.json
+[2024-06-26T19:57:25.762+0000] {logging_mixin.py:188} INFO - Uploaded /opt/***/dags/data/bills/hres/hresbill_status_3.json to gs://congress_data_testproject-420401/bill_status/hres/hresbill_status_3.json
+[2024-06-26T19:57:26.417+0000] {logging_mixin.py:188} INFO - Uploaded /opt/***/dags/data/bills/hr/hrbill_status_26.json to gs://congress_data_testproject-420401/bill_status/hr/hrbill_status_26.json
+[2024-06-26T19:57:27.082+0000] {logging_mixin.py:188} INFO - Uploaded /opt/***/dags/data/bills/hr/hrbill_status_30.json to gs://congress_data_testproject-420401/bill_status/hr/hrbill_status_30.json
+[2024-06-26T19:57:27.750+0000] {logging_mixin.py:188} INFO - Uploaded /opt/***/dags/data/bills/hr/hrbill_status_10.json to gs://congress_data_testproject-420401/bill_status/hr/hrbill_status_10.json
+[2024-06-26T19:57:28.416+0000] {logging_mixin.py:188} INFO - Uploaded /opt/***/dags/data/bills/hr/hrbill_status_0.json to gs://congress_data_testproject-420401/bill_status/hr/hrbill_status_0.json
+[2024-06-26T19:57:29.132+0000] {logging_mixin.py:188} INFO - Uploaded /opt/***/dags/data/bills/hr/hrbill_status_1.json to gs://congress_data_testproject-420401/bill_status/hr/hrbill_status_1.json
+[2024-06-26T19:57:29.814+0000] {logging_mixin.py:188} INFO - Uploaded /opt/***/dags/data/bills/hr/hrbill_status_11.json to gs://congress_data_testproject-420401/bill_status/hr/hrbill_status_11.json
+[2024-06-26T19:57:30.441+0000] {logging_mixin.py:188} INFO - Uploaded /opt/***/dags/data/bills/hr/hrbill_status_31.json to gs://congress_data_testproject-420401/bill_status/hr/hrbill_status_31.json
+[2024-06-26T19:57:31.091+0000] {logging_mixin.py:188} INFO - Uploaded /opt/***/dags/data/bills/hr/hrbill_status_27.json to gs://congress_data_testproject-420401/bill_status/hr/hrbill_status_27.json
+[2024-06-26T19:57:31.699+0000] {logging_mixin.py:188} INFO - Uploaded /opt/***/dags/data/bills/hr/hrbill_status_16.json to gs://congress_data_testproject-420401/bill_status/hr/hrbill_status_16.json
+[2024-06-26T19:57:32.356+0000] {logging_mixin.py:188} INFO - Uploaded /opt/***/dags/data/bills/hr/hrbill_status_6.json to gs://congress_data_testproject-420401/bill_status/hr/hrbill_status_6.json
+[2024-06-26T19:57:32.985+0000] {logging_mixin.py:188} INFO - Uploaded /opt/***/dags/data/bills/hr/hrbill_status_20.json to gs://congress_data_testproject-420401/bill_status/hr/hrbill_status_20.json
+[2024-06-26T19:57:33.623+0000] {logging_mixin.py:188} INFO - Uploaded /opt/***/dags/data/bills/hr/hrbill_status_21.json to gs://congress_data_testproject-420401/bill_status/hr/hrbill_status_21.json
+[2024-06-26T19:57:34.243+0000] {logging_mixin.py:188} INFO - Uploaded /opt/***/dags/data/bills/hr/hrbill_status_7.json to gs://congress_data_testproject-420401/bill_status/hr/hrbill_status_7.json
+[2024-06-26T19:57:34.876+0000] {logging_mixin.py:188} INFO - Uploaded /opt/***/dags/data/bills/hr/hrbill_status_17.json to gs://congress_data_testproject-420401/bill_status/hr/hrbill_status_17.json
+[2024-06-26T19:57:35.465+0000] {logging_mixin.py:188} INFO - Uploaded /opt/***/dags/data/bills/hr/hrbill_status_4.json to gs://congress_data_testproject-420401/bill_status/hr/hrbill_status_4.json
+[2024-06-26T19:57:36.130+0000] {logging_mixin.py:188} INFO - Uploaded /opt/***/dags/data/bills/hr/hrbill_status_14.json to gs://congress_data_testproject-420401/bill_status/hr/hrbill_status_14.json
+[2024-06-26T19:57:36.777+0000] {logging_mixin.py:188} INFO - Uploaded /opt/***/dags/data/bills/hr/hrbill_status_8.json to gs://congress_data_testproject-420401/bill_status/hr/hrbill_status_8.json
+[2024-06-26T19:57:37.437+0000] {logging_mixin.py:188} INFO - Uploaded /opt/***/dags/data/bills/hr/hrbill_status_18.json to gs://congress_data_testproject-420401/bill_status/hr/hrbill_status_18.json
+[2024-06-26T19:57:38.046+0000] {logging_mixin.py:188} INFO - Uploaded /opt/***/dags/data/bills/hr/hrbill_status_34.json to gs://congress_data_testproject-420401/bill_status/hr/hrbill_status_34.json
+[2024-06-26T19:57:38.689+0000] {logging_mixin.py:188} INFO - Uploaded /opt/***/dags/data/bills/hr/hrbill_status_22.json to gs://congress_data_testproject-420401/bill_status/hr/hrbill_status_22.json
+[2024-06-26T19:57:39.361+0000] {logging_mixin.py:188} INFO - Uploaded /opt/***/dags/data/bills/hr/hrbill_status_23.json to gs://congress_data_testproject-420401/bill_status/hr/hrbill_status_23.json
+[2024-06-26T19:57:39.966+0000] {logging_mixin.py:188} INFO - Uploaded /opt/***/dags/data/bills/hr/hrbill_status_35.json to gs://congress_data_testproject-420401/bill_status/hr/hrbill_status_35.json
+[2024-06-26T19:57:40.565+0000] {logging_mixin.py:188} INFO - Uploaded /opt/***/dags/data/bills/hr/hrbill_status_19.json to gs://congress_data_testproject-420401/bill_status/hr/hrbill_status_19.json
+[2024-06-26T19:57:41.220+0000] {logging_mixin.py:188} INFO - Uploaded /opt/***/dags/data/bills/hr/hrbill_status_9.json to gs://congress_data_testproject-420401/bill_status/hr/hrbill_status_9.json
+[2024-06-26T19:57:41.840+0000] {logging_mixin.py:188} INFO - Uploaded /opt/***/dags/data/bills/hr/hrbill_status_15.json to gs://congress_data_testproject-420401/bill_status/hr/hrbill_status_15.json
+[2024-06-26T19:57:42.443+0000] {logging_mixin.py:188} INFO - Uploaded /opt/***/dags/data/bills/hr/hrbill_status_5.json to gs://congress_data_testproject-420401/bill_status/hr/hrbill_status_5.json
+[2024-06-26T19:57:43.074+0000] {logging_mixin.py:188} INFO - Uploaded /opt/***/dags/data/bills/hr/hrbill_status_32.json to gs://congress_data_testproject-420401/bill_status/hr/hrbill_status_32.json
+[2024-06-26T19:57:43.692+0000] {logging_mixin.py:188} INFO - Uploaded /opt/***/dags/data/bills/hr/hrbill_status_24.json to gs://congress_data_testproject-420401/bill_status/hr/hrbill_status_24.json
+[2024-06-26T19:57:44.342+0000] {logging_mixin.py:188} INFO - Uploaded /opt/***/dags/data/bills/hr/hrbill_status_2.json to gs://congress_data_testproject-420401/bill_status/hr/hrbill_status_2.json
+[2024-06-26T19:57:44.951+0000] {logging_mixin.py:188} INFO - Uploaded /opt/***/dags/data/bills/hr/hrbill_status_12.json to gs://congress_data_testproject-420401/bill_status/hr/hrbill_status_12.json
+[2024-06-26T19:57:45.591+0000] {logging_mixin.py:188} INFO - Uploaded /opt/***/dags/data/bills/hr/hrbill_status_28.json to gs://congress_data_testproject-420401/bill_status/hr/hrbill_status_28.json
+[2024-06-26T19:57:46.235+0000] {logging_mixin.py:188} INFO - Uploaded /opt/***/dags/data/bills/hr/hrbill_status_29.json to gs://congress_data_testproject-420401/bill_status/hr/hrbill_status_29.json
+[2024-06-26T19:57:46.837+0000] {logging_mixin.py:188} INFO - Uploaded /opt/***/dags/data/bills/hr/hrbill_status_13.json to gs://congress_data_testproject-420401/bill_status/hr/hrbill_status_13.json
+[2024-06-26T19:57:47.460+0000] {logging_mixin.py:188} INFO - Uploaded /opt/***/dags/data/bills/hr/hrbill_status_3.json to gs://congress_data_testproject-420401/bill_status/hr/hrbill_status_3.json
+[2024-06-26T19:57:48.074+0000] {logging_mixin.py:188} INFO - Uploaded /opt/***/dags/data/bills/hr/hrbill_status_25.json to gs://congress_data_testproject-420401/bill_status/hr/hrbill_status_25.json
+[2024-06-26T19:57:48.714+0000] {logging_mixin.py:188} INFO - Uploaded /opt/***/dags/data/bills/hr/hrbill_status_33.json to gs://congress_data_testproject-420401/bill_status/hr/hrbill_status_33.json
+[2024-06-26T19:57:49.368+0000] {logging_mixin.py:188} INFO - Uploaded /opt/***/dags/data/bills/sjres/sjresbill_status_0.json to gs://congress_data_testproject-420401/bill_status/sjres/sjresbill_status_0.json
+[2024-06-26T19:57:49.369+0000] {python.py:202} INFO - Done. Returned value was: None
+[2024-06-26T19:57:49.386+0000] {taskinstance.py:1149} INFO - Marking task as SUCCESS. dag_id=upload_congress_data, task_id=upload_bill_status_to_gcs, execution_date=20240625T000000, start_date=20240626T195703, end_date=20240626T195749
+[2024-06-26T19:57:49.437+0000] {local_task_job_runner.py:234} INFO - Task exited with return code 0
+[2024-06-26T19:57:49.459+0000] {taskinstance.py:3312} INFO - 1 downstream tasks scheduled from follow-on schedule check

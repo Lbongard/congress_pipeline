@@ -1,0 +1,34 @@
+[2024-06-30T16:53:21.140+0000] {taskinstance.py:1979} INFO - Dependencies all met for dep_context=non-requeueable deps ti=<TaskInstance: upload_congress_data.format_execution_date_task scheduled__2024-06-29T00:00:00+00:00 [queued]>
+[2024-06-30T16:53:21.161+0000] {taskinstance.py:1979} INFO - Dependencies all met for dep_context=requeueable deps ti=<TaskInstance: upload_congress_data.format_execution_date_task scheduled__2024-06-29T00:00:00+00:00 [queued]>
+[2024-06-30T16:53:21.162+0000] {taskinstance.py:2193} INFO - Starting attempt 1 of 3
+[2024-06-30T16:53:21.187+0000] {taskinstance.py:2217} INFO - Executing <Task(PythonOperator): format_execution_date_task> on 2024-06-29 00:00:00+00:00
+[2024-06-30T16:53:21.204+0000] {standard_task_runner.py:60} INFO - Started process 54 to run task
+[2024-06-30T16:53:21.217+0000] {standard_task_runner.py:87} INFO - Running: ['***', 'tasks', 'run', 'upload_congress_data', 'format_execution_date_task', 'scheduled__2024-06-29T00:00:00+00:00', '--job-id', '3', '--raw', '--subdir', 'DAGS_FOLDER/upload_congress_data.py', '--cfg-path', '/tmp/tmp7eql0cy2']
+[2024-06-30T16:53:21.222+0000] {standard_task_runner.py:88} INFO - Job 3: Subtask format_execution_date_task
+[2024-06-30T16:53:21.291+0000] {task_command.py:423} INFO - Running <TaskInstance: upload_congress_data.format_execution_date_task scheduled__2024-06-29T00:00:00+00:00 [running]> on host 106864a7e5f7
+[2024-06-30T16:53:21.401+0000] {taskinstance.py:2513} INFO - Exporting env vars: AIRFLOW_CTX_DAG_EMAIL='***@***.com' AIRFLOW_CTX_DAG_OWNER='***' AIRFLOW_CTX_DAG_ID='upload_congress_data' AIRFLOW_CTX_TASK_ID='format_execution_date_task' AIRFLOW_CTX_EXECUTION_DATE='2024-06-29T00:00:00+00:00' AIRFLOW_CTX_TRY_NUMBER='1' AIRFLOW_CTX_DAG_RUN_ID='scheduled__2024-06-29T00:00:00+00:00'
+[2024-06-30T16:53:21.404+0000] {warnings.py:110} WARNING - /home/***/.local/lib/python3.11/site-packages/***/utils/context.py:315: AirflowContextDeprecationWarning: Accessing 'execution_date' from the template is deprecated and will be removed in a future version. Please use 'data_interval_start' or 'logical_date' instead.
+  warnings.warn(_create_deprecation_warning(k, replacements))
+
+[2024-06-30T16:53:21.405+0000] {upload_congress_data.py:111} INFO - Formatted execution date: 2024-06-29T00:00:00Z
+[2024-06-30T16:53:21.405+0000] {python.py:202} INFO - Done. Returned value was: 2024-06-29T00:00:00Z
+[2024-06-30T16:53:21.446+0000] {taskinstance.py:1149} INFO - Marking task as SUCCESS. dag_id=upload_congress_data, task_id=format_execution_date_task, execution_date=20240629T000000, start_date=20240630T165321, end_date=20240630T165321
+[2024-06-30T16:53:21.509+0000] {local_task_job_runner.py:234} INFO - Task exited with return code 0
+[2024-06-30T16:53:21.544+0000] {taskinstance.py:3312} INFO - 1 downstream tasks scheduled from follow-on schedule check
+[2024-06-30T17:00:38.011+0000] {taskinstance.py:1979} INFO - Dependencies all met for dep_context=non-requeueable deps ti=<TaskInstance: upload_congress_data.format_execution_date_task scheduled__2024-06-29T00:00:00+00:00 [queued]>
+[2024-06-30T17:00:38.021+0000] {taskinstance.py:1979} INFO - Dependencies all met for dep_context=requeueable deps ti=<TaskInstance: upload_congress_data.format_execution_date_task scheduled__2024-06-29T00:00:00+00:00 [queued]>
+[2024-06-30T17:00:38.021+0000] {taskinstance.py:2193} INFO - Starting attempt 1 of 3
+[2024-06-30T17:00:38.031+0000] {taskinstance.py:2217} INFO - Executing <Task(PythonOperator): format_execution_date_task> on 2024-06-29 00:00:00+00:00
+[2024-06-30T17:00:38.041+0000] {standard_task_runner.py:60} INFO - Started process 61 to run task
+[2024-06-30T17:00:38.047+0000] {standard_task_runner.py:87} INFO - Running: ['***', 'tasks', 'run', 'upload_congress_data', 'format_execution_date_task', 'scheduled__2024-06-29T00:00:00+00:00', '--job-id', '4', '--raw', '--subdir', 'DAGS_FOLDER/upload_congress_data.py', '--cfg-path', '/tmp/tmpv0rfyy8k']
+[2024-06-30T17:00:38.051+0000] {standard_task_runner.py:88} INFO - Job 4: Subtask format_execution_date_task
+[2024-06-30T17:00:38.121+0000] {task_command.py:423} INFO - Running <TaskInstance: upload_congress_data.format_execution_date_task scheduled__2024-06-29T00:00:00+00:00 [running]> on host 321f475acc45
+[2024-06-30T17:00:38.223+0000] {taskinstance.py:2513} INFO - Exporting env vars: AIRFLOW_CTX_DAG_EMAIL='***@***.com' AIRFLOW_CTX_DAG_OWNER='***' AIRFLOW_CTX_DAG_ID='upload_congress_data' AIRFLOW_CTX_TASK_ID='format_execution_date_task' AIRFLOW_CTX_EXECUTION_DATE='2024-06-29T00:00:00+00:00' AIRFLOW_CTX_TRY_NUMBER='1' AIRFLOW_CTX_DAG_RUN_ID='scheduled__2024-06-29T00:00:00+00:00'
+[2024-06-30T17:00:38.226+0000] {warnings.py:110} WARNING - /home/***/.local/lib/python3.11/site-packages/***/utils/context.py:315: AirflowContextDeprecationWarning: Accessing 'execution_date' from the template is deprecated and will be removed in a future version. Please use 'data_interval_start' or 'logical_date' instead.
+  warnings.warn(_create_deprecation_warning(k, replacements))
+
+[2024-06-30T17:00:38.227+0000] {upload_congress_data.py:111} INFO - Formatted execution date: 2024-06-29T00:00:00Z
+[2024-06-30T17:00:38.228+0000] {python.py:202} INFO - Done. Returned value was: 2024-06-29T00:00:00Z
+[2024-06-30T17:00:38.248+0000] {taskinstance.py:1149} INFO - Marking task as SUCCESS. dag_id=upload_congress_data, task_id=format_execution_date_task, execution_date=20240629T000000, start_date=20240630T170038, end_date=20240630T170038
+[2024-06-30T17:00:38.302+0000] {local_task_job_runner.py:234} INFO - Task exited with return code 0
+[2024-06-30T17:00:38.344+0000] {taskinstance.py:3312} INFO - 1 downstream tasks scheduled from follow-on schedule check

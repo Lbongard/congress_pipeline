@@ -14,15 +14,19 @@ with votes_categorized as(
                  ELSE 0
                  END nay_or_no_vote
           , case 
-                 WHEN vote IN ('Present', 'Not Voting') THEN 1
+                 WHEN vote = 'Present' THEN 1
                  ELSE 0
                  END abstain_vote
+        --   , case
+        --          WHEN vote = 'Not Voting' THEN 1
+        --          ELSE 0
+        --          END not_voting
 FROM (select distinct * from {{ref("stg_votes")}})
 ),
 
 votes_by_party as(
     select roll_call_number, 
-       chamber, 
+       replace(chamber, 'House', 'House of Representatives') chamber,
        concat(bill_type, bill_number) bill_name,
 
        sum(case party when 'D' THEN yea_or_aye_vote ELSE 0 END) D_yea_or_aye_votes,
@@ -46,7 +50,7 @@ select distinct {{ dbt_utils.generate_surrogate_key(['bill_type', 'bill_number']
        roll_call_number,
        date vote_date,
        bill_type,
-       chamber,
+       replace(chamber, 'House', 'House of Representatives') chamber,
        concat(bill_type, bill_number) bill_name,
        result,
        cast(yea_totals as int) yea_totals,

@@ -8,4 +8,5 @@ sources:
       - name: members
       - name: bill_status
       - name: votes
+      - name: senate_ids
 

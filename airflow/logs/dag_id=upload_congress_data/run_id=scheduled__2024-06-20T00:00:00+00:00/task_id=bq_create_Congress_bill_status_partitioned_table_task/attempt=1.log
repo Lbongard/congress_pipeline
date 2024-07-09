@@ -1,0 +1,17 @@
+[2024-06-21T03:22:39.268+0000] {taskinstance.py:1979} INFO - Dependencies all met for dep_context=non-requeueable deps ti=<TaskInstance: upload_congress_data.bq_create_Congress_bill_status_partitioned_table_task scheduled__2024-06-20T00:00:00+00:00 [queued]>
+[2024-06-21T03:22:39.285+0000] {taskinstance.py:1979} INFO - Dependencies all met for dep_context=requeueable deps ti=<TaskInstance: upload_congress_data.bq_create_Congress_bill_status_partitioned_table_task scheduled__2024-06-20T00:00:00+00:00 [queued]>
+[2024-06-21T03:22:39.286+0000] {taskinstance.py:2193} INFO - Starting attempt 1 of 3
+[2024-06-21T03:22:39.306+0000] {taskinstance.py:2217} INFO - Executing <Task(BigQueryInsertJobOperator): bq_create_Congress_bill_status_partitioned_table_task> on 2024-06-20 00:00:00+00:00
+[2024-06-21T03:22:39.319+0000] {standard_task_runner.py:60} INFO - Started process 179 to run task
+[2024-06-21T03:22:39.324+0000] {standard_task_runner.py:87} INFO - Running: ['***', 'tasks', 'run', 'upload_congress_data', 'bq_create_Congress_bill_status_partitioned_table_task', 'scheduled__2024-06-20T00:00:00+00:00', '--job-id', '13', '--raw', '--subdir', 'DAGS_FOLDER/upload_congress_data.py', '--cfg-path', '/tmp/tmplb9y8wc3']
+[2024-06-21T03:22:39.329+0000] {standard_task_runner.py:88} INFO - Job 13: Subtask bq_create_Congress_bill_status_partitioned_table_task
+[2024-06-21T03:22:39.399+0000] {task_command.py:423} INFO - Running <TaskInstance: upload_congress_data.bq_create_Congress_bill_status_partitioned_table_task scheduled__2024-06-20T00:00:00+00:00 [running]> on host 9a2b65edee5d
+[2024-06-21T03:22:39.508+0000] {taskinstance.py:2513} INFO - Exporting env vars: AIRFLOW_CTX_DAG_EMAIL='***@***.com' AIRFLOW_CTX_DAG_OWNER='***' AIRFLOW_CTX_DAG_ID='upload_congress_data' AIRFLOW_CTX_TASK_ID='bq_create_Congress_bill_status_partitioned_table_task' AIRFLOW_CTX_EXECUTION_DATE='2024-06-20T00:00:00+00:00' AIRFLOW_CTX_TRY_NUMBER='1' AIRFLOW_CTX_DAG_RUN_ID='scheduled__2024-06-20T00:00:00+00:00'
+[2024-06-21T03:22:39.511+0000] {crypto.py:82} WARNING - empty cryptography key - values will not be stored encrypted.
+[2024-06-21T03:22:39.512+0000] {connection.py:269} WARNING - Connection schemes (type: google_cloud_platform) shall not contain '_' according to RFC3986.
+[2024-06-21T03:22:39.513+0000] {base.py:83} INFO - Using connection ID 'google_cloud_default' for task execution.
+[2024-06-21T03:22:39.623+0000] {bigquery.py:2811} INFO - Executing: {'query': {'query': 'DROP TABLE IF EXISTS Congress.bill_status;         CREATE TABLE Congress.bill_status         PARTITION BY introducedDate_formatted         AS         SELECT *, DATE(bill.introducedDate) introducedDate_formatted         FROM Congress.bill_status_external_table;', 'useLegacySql': False}}'
+[2024-06-21T03:22:39.626+0000] {bigquery.py:1613} INFO - Inserting job ***_upload_congress_data_bq_create_Congress_bill_status_partitioned_table_task_2024_06_20T00_00_00_00_00_eef0287da11c7d4b417df58a41fb6bcc
+[2024-06-21T03:22:51.543+0000] {taskinstance.py:1149} INFO - Marking task as SUCCESS. dag_id=upload_congress_data, task_id=bq_create_Congress_bill_status_partitioned_table_task, execution_date=20240620T000000, start_date=20240621T032239, end_date=20240621T032251
+[2024-06-21T03:22:51.617+0000] {local_task_job_runner.py:234} INFO - Task exited with return code 0
+[2024-06-21T03:22:51.664+0000] {taskinstance.py:3312} INFO - 0 downstream tasks scheduled from follow-on schedule check

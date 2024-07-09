@@ -1,0 +1,17 @@
+[2024-07-03T00:42:24.942+0000] {taskinstance.py:1979} INFO - Dependencies all met for dep_context=non-requeueable deps ti=<TaskInstance: upload_congress_data.bq_create_senate_ids_external_table_task scheduled__2024-06-30T00:00:00+00:00 [queued]>
+[2024-07-03T00:42:24.948+0000] {taskinstance.py:1979} INFO - Dependencies all met for dep_context=requeueable deps ti=<TaskInstance: upload_congress_data.bq_create_senate_ids_external_table_task scheduled__2024-06-30T00:00:00+00:00 [queued]>
+[2024-07-03T00:42:24.948+0000] {taskinstance.py:2193} INFO - Starting attempt 7 of 9
+[2024-07-03T00:42:24.954+0000] {taskinstance.py:2217} INFO - Executing <Task(BigQueryInsertJobOperator): bq_create_senate_ids_external_table_task> on 2024-06-30 00:00:00+00:00
+[2024-07-03T00:42:24.962+0000] {standard_task_runner.py:60} INFO - Started process 3402 to run task
+[2024-07-03T00:42:24.964+0000] {standard_task_runner.py:87} INFO - Running: ['***', 'tasks', 'run', 'upload_congress_data', 'bq_create_senate_ids_external_table_task', 'scheduled__2024-06-30T00:00:00+00:00', '--job-id', '57', '--raw', '--subdir', 'DAGS_FOLDER/upload_congress_data.py', '--cfg-path', '/tmp/tmpq5qa0qcs']
+[2024-07-03T00:42:24.967+0000] {standard_task_runner.py:88} INFO - Job 57: Subtask bq_create_senate_ids_external_table_task
+[2024-07-03T00:42:25.027+0000] {task_command.py:423} INFO - Running <TaskInstance: upload_congress_data.bq_create_senate_ids_external_table_task scheduled__2024-06-30T00:00:00+00:00 [running]> on host 0344fe541aae
+[2024-07-03T00:42:25.074+0000] {taskinstance.py:2513} INFO - Exporting env vars: AIRFLOW_CTX_DAG_EMAIL='***@***.com' AIRFLOW_CTX_DAG_OWNER='***' AIRFLOW_CTX_DAG_ID='upload_congress_data' AIRFLOW_CTX_TASK_ID='bq_create_senate_ids_external_table_task' AIRFLOW_CTX_EXECUTION_DATE='2024-06-30T00:00:00+00:00' AIRFLOW_CTX_TRY_NUMBER='7' AIRFLOW_CTX_DAG_RUN_ID='scheduled__2024-06-30T00:00:00+00:00'
+[2024-07-03T00:42:25.076+0000] {crypto.py:82} WARNING - empty cryptography key - values will not be stored encrypted.
+[2024-07-03T00:42:25.077+0000] {connection.py:269} WARNING - Connection schemes (type: google_cloud_platform) shall not contain '_' according to RFC3986.
+[2024-07-03T00:42:25.077+0000] {base.py:83} INFO - Using connection ID 'google_cloud_default' for task execution.
+[2024-07-03T00:42:25.119+0000] {bigquery.py:2811} INFO - Executing: {'query': {'query': "CREATE OR REPLACE EXTERNAL TABLE Congress.senate_ids_external_table (\n  first_name STRING,\n  last_name STRING,\n  state STRING,\n  bioguideID STRING,\n  lisid STRING\n)\nOPTIONS(\n  format = 'JSON',\n  uris = ['gs://congress_data_testproject-420401/senate_ids/*.json']\n  )", 'useLegacySql': False}}'
+[2024-07-03T00:42:25.120+0000] {bigquery.py:1613} INFO - Inserting job ***_upload_congress_data_bq_create_senate_ids_external_table_task_2024_06_30T00_00_00_00_00_462fa0ec663a884f9c30295b51ee5e2e
+[2024-07-03T00:42:26.701+0000] {taskinstance.py:1149} INFO - Marking task as SUCCESS. dag_id=upload_congress_data, task_id=bq_create_senate_ids_external_table_task, execution_date=20240630T000000, start_date=20240703T004224, end_date=20240703T004226
+[2024-07-03T00:42:26.762+0000] {local_task_job_runner.py:234} INFO - Task exited with return code 0
+[2024-07-03T00:42:26.791+0000] {taskinstance.py:3312} INFO - 1 downstream tasks scheduled from follow-on schedule check

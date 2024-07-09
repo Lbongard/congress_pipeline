@@ -70,6 +70,7 @@ OPTIONS (
     'gs://{BUCKET_NAME}/bill_status/hconres/*.json',
     'gs://{BUCKET_NAME}/bill_status/hjres/*.json',
     'gs://{BUCKET_NAME}/bill_status/hr/*.json',
+    'gs://{BUCKET_NAME}/bill_status/hres/*.json',
     'gs://{BUCKET_NAME}/bill_status/s/*.json',
     'gs://{BUCKET_NAME}/bill_status/sjres/*.json',
     'gs://{BUCKET_NAME}/bill_status/sres/*.json'
@@ -106,6 +107,7 @@ OPTIONS (
   uris = ['gs://{BUCKET_NAME}/votes/HCONRES/*.json',
     'gs://{BUCKET_NAME}/votes/HJRES/*.json',
     'gs://{BUCKET_NAME}/votes/HR/*.json',
+    'gs://{BUCKET_NAME}/votes/HRES/*.json',
     'gs://{BUCKET_NAME}/votes/S/*.json',
     'gs://{BUCKET_NAME}/votes/SJRES/*.json',
     'gs://{BUCKET_NAME}/votes/SRES/*.json']
@@ -129,6 +131,19 @@ member_ddl = f"""CREATE OR REPLACE EXTERNAL TABLE Congress.members_external_tabl
 )
 OPTIONS (
   format = 'JSON',
-  uris = ['gs://{BUCKET_NAME}/members/*.json']
+  uris = ['gs://{BUCKET_NAME}/members/members*.json']
+  )
+"""
+
+senate_id_ddl = f"""CREATE OR REPLACE EXTERNAL TABLE Congress.senate_ids_external_table (
+  first_name STRING,
+  last_name STRING,
+  state STRING,
+  bioguideID STRING,
+  lisid STRING
+)
+OPTIONS(
+  format = 'JSON',
+  uris = ['gs://{BUCKET_NAME}/senate_ids/*.json']
   )
 """

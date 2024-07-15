@@ -80,15 +80,18 @@ def get_votes_for_saved_bills(local_folder_path, save_folder):
 
     for root, dirs, files in os.walk(local_folder_path):
         for file in files:
-            local_file_path = os.path.join(root, file)
-            get_votes(bill_json=local_file_path, save_folder=save_folder)
+            if file.endswith('.json'):
+                local_file_path = os.path.join(root, file)
+                get_votes(bill_json=local_file_path, save_folder=save_folder)
 
 
 def get_votes(bill_json, save_folder):
     
     votes_list = []
+    
+    logging.info(f'Opening {bill_json}')
 
-    with open(bill_json) as f:
+    with open(bill_json, encoding='latin-1') as f:
         for line in f:
             json_content = json.loads(line)
             bill = dict(json_content)

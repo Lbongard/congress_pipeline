@@ -155,8 +155,8 @@ def action_dict(action):
 def sponsor_dict(sponsor):
     if isinstance(sponsor, dict):
         return {
-            "bioguideID": sponsor.get("bioguideID"),
-            "fulName": sponsor.get("fulName"),
+            "bioguideID": sponsor.get("bioguideId"),
+            "fulName": sponsor.get("fullName"),
             "firstName": sponsor.get("firstName"),
             "lastName": sponsor.get("lastName")
         }
@@ -166,7 +166,7 @@ def sponsor_dict(sponsor):
 def cosponsor_dict(cosponsor):
     if isinstance(cosponsor, dict):
         return {
-            "bioguideID": cosponsor.get("bioguideID")
+            "bioguideID": cosponsor.get("bioguideId")
         }
     return {}
 

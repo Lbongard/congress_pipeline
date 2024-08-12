@@ -6,6 +6,8 @@ source as(
 )
 
 select distinct s.vote.date,
+       s.vote.congress,
+       left(s.vote.session, 1) session,
        s.vote.bill_type,
        s.vote.bill_number,
        s.vote.chamber,

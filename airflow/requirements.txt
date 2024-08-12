@@ -36,6 +36,10 @@ cron-descriptor==1.4.3
 croniter==2.0.2
 cryptography==41.0.7
 db-dtypes==1.2.0
+dbt-bigquery==1.7.7
+dbt-core==1.7.12
+dbt-extractor==0.5.1
+dbt-semantic-interfaces==0.4.4
 decorator==5.1.1
 Deprecated==1.2.14
 dill==0.3.8
@@ -159,7 +163,7 @@ ordered-set==4.1.0
 packaging==23.2
 pandas==2.1.4
 pandas-gbq==0.22.0
-pathspec==0.12.1
+pathspec==0.11.2
 pendulum==3.0.0
 pluggy==1.4.0
 prison==0.2.1
@@ -212,7 +216,7 @@ uc-micro-py==1.0.3
 unicodecsv==0.14.1
 universal-pathlib==0.1.4
 uritemplate==4.1.1
-urllib3==2.2.1
+urllib3==1.26.19
 Werkzeug==2.2.3
 wrapt==1.16.0
 WTForms==3.1.2

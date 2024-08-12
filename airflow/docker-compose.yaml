@@ -70,6 +70,9 @@ x-airflow-common:
     GCP_GCS_BUCKET: "${TF_VAR_gcs_bucket_name}"
     AIRFLOW_CONN_GOOGLE_CLOUD_DEFAULT: 'google-cloud-platform://?extra__google_cloud_platform__key_path=/.google/credentials/${google_credentials_file}'
     CONGRESS_API_KEY: "${congress_api_key}"
+    DBT_PROFILES_DIR: /usr/app/dbt
+    DBT_GOOGLE_CREDENTIALS: /.google/credentials/${google_credentials_file}
+    DBT_GCP_PROJECT: ${DBT_GCP_PROJECT}
     # yamllint disable rule:line-length
     # Use simple http server on scheduler for health checks
     # See https://airflow.apache.org/docs/apache-airflow/stable/administration-and-deployment/logging-monitoring/check-health.html#scheduler-health-check-server
@@ -85,6 +88,7 @@ x-airflow-common:
     - ${AIRFLOW_PROJ_DIR:-.}/plugins:/opt/airflow/plugins
     # - ~/.google/credentials/:/.google/credentials:ro
     - ${google_credentials_dir}:/.google/credentials:ro
+    - ../dbt:/usr/app/dbt
   user: "${AIRFLOW_UID:-50000}:0"
   depends_on:
     &airflow-common-depends-on
@@ -289,6 +293,11 @@ services:
       <<: *airflow-common-depends-on
       airflow-init:
         condition: service_completed_successfully
+
+  dbt:
+    image: fishtownanalytics/dbt:1.0.0
+    volumes:
+      - ../dbt:/usr/app/dbt
 
 volumes:
   postgres-db-volume:

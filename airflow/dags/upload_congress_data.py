@@ -61,8 +61,15 @@ dag = DAG(
     max_active_runs=1,
 )
 
+congress_numbers = [
+                    # '116', '117', 
+                    '118']
+
+bill_types = ['sres', 'hr', 'hconres', 'hjres', 'hres', 's', 'sjres', 'sconres']
+MEMBERS_START_DATE = "2019-01-01T00:00:00Z" # Start of 116th Congress
+
 files_to_download = [
-    ['sres', 'https://www.govinfo.gov/bulkdata/BILLSTATUS/118/sres/BILLSTATUS-118-sres.zip'],
+    ['sres', ''],
     ['hr', 'https://www.govinfo.gov/bulkdata/BILLSTATUS/118/hr/BILLSTATUS-118-hr.zip'],
     ['hconres', 'https://www.govinfo.gov/bulkdata/BILLSTATUS/118/hconres/BILLSTATUS-118-hconres.zip'],
     ['hjres', 'https://www.govinfo.gov/bulkdata/BILLSTATUS/118/hjres/BILLSTATUS-118-hjres.zip'],
@@ -72,16 +79,18 @@ files_to_download = [
     ['sconres', 'https://www.govinfo.gov/bulkdata/BILLSTATUS/118/sconres/BILLSTATUS-118-sconres.zip']
 ]
 
+BASE_URL = 'https://www.govinfo.gov/bulkdata/BILLSTATUS/'
 
 bash_command = ' && '.join([
-    f'rm -rf /opt/airflow/dags/data/bills/{bill_type} \
-    && mkdir -p /opt/airflow/dags/data/bills/{bill_type} \
-    && wget -P /opt/airflow/dags/data/bills/{bill_type} "{file_url}" \
-    && unzip /opt/airflow/dags/data/bills/{bill_type}/{file_url.split("/")[-1]} -d /opt/airflow/dags/data/bills/{bill_type} \
-    && rm /opt/airflow/dags/data/bills/{bill_type}/{file_url.split("/")[-1]} \
-    || echo "Failed to download or unzip {file_url}"' \
-    for bill_type, file_url in files_to_download
+    f'rm -rf /opt/airflow/dags/data/bills/{congress_number}/{bill_type} \
+    && mkdir -p /opt/airflow/dags/data/bills/{congress_number}/{bill_type} \
+    && wget -P /opt/airflow/dags/data/bills/{congress_number}/{bill_type} "{BASE_URL}{congress_number}/{bill_type}/BILLSTATUS-{congress_number}-{bill_type}.zip" \
+    && unzip /opt/airflow/dags/data/bills/{congress_number}/{bill_type}/BILLSTATUS-{congress_number}-{bill_type} -d /opt/airflow/dags/data/bills/{congress_number}/{bill_type} \
+    && rm /opt/airflow/dags/data/bills/{congress_number}/{bill_type}/BILLSTATUS-{congress_number}-{bill_type}.zip \
+    || echo "Failed to download or unzip /opt/airflow/dags/data/bills/{congress_number}/{bill_type}"' \
+    for congress_number in congress_numbers for bill_type in bill_types
 ])
+
 
 
 # Define the BashOperator to run wget for each file
@@ -115,7 +124,7 @@ params_members = {
     'limit': 250,
     'offset': 0,
     # Beginning of 118th Congress
-    'start_date': "2023-01-01T00:00:00Z",
+    'start_date': MEMBERS_START_DATE,
     "end_date":"{{ task_instance.xcom_pull(task_ids='format_execution_date_task') }}",
     'api_key': CONGRESS_API_KEY
 }
@@ -140,6 +149,12 @@ get_senate_id_data = PythonOperator(
     python_callable=get_senate_ids,
     op_kwargs= {'save_folder':'/opt/airflow/dags/data/senate_ids'},
     dag=dag
+)
+
+dbt_run = BashOperator(
+    task_id='dbt_run',
+    bash_command='cd /usr/app/dbt && dbt deps && dbt seed && dbt run',
+    dag=dag,
 )
 
 
@@ -199,7 +214,7 @@ for data_type in DATA_TYPES.keys():
         dag=dag  
     )
     
-    upload_to_gcs >> bigquery_external_table_task >> bq_create_partitioned_table_job
+    upload_to_gcs >> bigquery_external_table_task >> bq_create_partitioned_table_job >> dbt_run
 
     if data_type == 'bill_status':
         convert_to_json >> upload_to_gcs
@@ -216,5 +231,8 @@ get_bills >> convert_to_json >> upload_to_gcs >> bigquery_external_table_task >>
 convert_to_json >> get_votes_from_bills
 
 format_date_task >> get_members_data
+
+
+
 
 

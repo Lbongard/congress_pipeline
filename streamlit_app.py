@@ -12,6 +12,8 @@ from streamlit_searchbox import st_searchbox
 import plotly.graph_objs as go
 import pandas as pd
 import numpy as np
+from st_aggrid import AgGrid, GridOptionsBuilder, JsCode
+from agstyler.agstyler import PINLEFT, PRECISION_TWO, draw_grid
 
 config_path = os.path.abspath(os.getenv('TF_VAR_google_credentials'))
 
@@ -96,53 +98,62 @@ def query_options_by_name(chamber, search_name):
     results = query_job.result().to_dataframe()
     return results
 
-
 @st.cache_data
-def query_voting_records():
-    voting_record_query = f"""
-        select *
-        from Congress.votes_by_member
-    """
-    
-    query_job = client.query(voting_record_query)
+def get_update_date():
+    update_date_query = "SELECT CURRENT_DATE('America/Los_Angeles') as update_date"
+
+    query_job = client.query(update_date_query)
     results = query_job.result().to_dataframe()
-    
+     
     return results
 
-voting_results = query_voting_records()
+@st.cache_data(ttl=86400) # Cache for 24 hours
+def query_voting_records(path):
+    df = pd.read_parquet(path)
+    
+    df['title_linked'] = df.apply(
+                lambda row: f'<a href="{row["url"]}" target="_blank">{row["title"]}</a>', axis=1
+                )
+    return pd.DataFrame(df)
+
+voting_results = query_voting_records('streamlit_data/votes_by_member.parquet')
 
 def vote_cnt_by_member(x):
     return (x != 'not_voting').sum()
 
 def calculate_votes_w_party(results, chamber, policy_area=None):
     if policy_area:
-        df = results[(results.policy_area == policy_area) & (results.chamber == chamber)]
+        df = results[(results.
+        policy_area == policy_area) & (results.chamber == chamber)]
     else:
         df = results[results.chamber == chamber]
     
-    grouped_df = grouped_df = df.groupby(['bioguideID', 'name', 'partyName']).agg({
+    grouped_df = df.groupby(['bioguideID', 'name', 'partyName']).agg({
     'voted_with_party_majority':['sum'],
+    'voted_with_dem_majority':['sum'],
+    'voted_with_rep_majority':['sum'],
     'member_vote':[vote_cnt_by_member]
     })
     
-    percentage_df = grouped_df['voted_with_party_majority']['sum'] / grouped_df['member_vote']['vote_cnt_by_member']
-    percentage_df.rename("% of Votes with Party Majority", inplace=True)
-    percentage_df = pd.DataFrame(percentage_df).reset_index()
+    percentage_df = pd.DataFrame({"% of Votes with Party Majority" : grouped_df['voted_with_party_majority']['sum'] / grouped_df['member_vote']['vote_cnt_by_member'],
+                                  "% of Votes with Dem Majority" : grouped_df['voted_with_dem_majority']['sum'] / grouped_df['member_vote']['vote_cnt_by_member'],
+                                  "% of Votes with Rep Majority" : grouped_df['voted_with_rep_majority']['sum'] / grouped_df['member_vote']['vote_cnt_by_member']
+                                  })
+    percentage_df.reset_index(inplace=True)
 
-    # percentage_df['partyName'] = pd.Categorical(percentage_df['partyName'], 
-    #                                             categories=['Democratic', 'Republican', 'Independent'], 
-    #                                             ordered=True)
-    
-    # percentage_df = percentage_df.sort_values('partyName')
-    
+    # percentage_df.rename("% of Votes with Party Majority", inplace=True)
+    # percentage_df = pd.DataFrame(percentage_df).reset_index()
+
     return percentage_df
 
 
 def plot_voting_records(results, bioguideID, chamber, policy_area=None):
-    votes_with_party_all = calculate_votes_w_party(results=results, chamber=chamber, policy_area=policy_area)
+    id_cols = ['bioguideID', 'name', 'partyName']
 
-    # Format percentages
-    votes_with_party_all['% of Votes with Party Majority'] = votes_with_party_all['% of Votes with Party Majority'].apply(lambda x: f"{x:.2%}")
+    # Set the columns to be used for plotting
+    df_cols = ['% of Votes with Dem Majority', '% of Votes with Rep Majority']
+    
+    votes_with_party_all = calculate_votes_w_party(results=results, chamber=chamber, policy_area=policy_area)
     
     if policy_area:
         vote_count = results[(results.policy_area == policy_area) & (results.bioguideID == bioguideID)].shape[0]
@@ -156,52 +167,72 @@ def plot_voting_records(results, bioguideID, chamber, policy_area=None):
     
     highlight_point = votes_with_party_all[votes_with_party_all['bioguideID'] == bioguideID]
     rep_name = highlight_point.iloc[0]['name']
-    party_maj_votes = float(highlight_point.iloc[0]['% of Votes with Party Majority'][:-1])/100
+    dem_majority_votes = highlight_point.iloc[0]['% of Votes with Dem Majority']
+    rep_majority_votes = highlight_point.iloc[0]['% of Votes with Rep Majority']
+
+    highlight_points = {
+        'x': rep_majority_votes,
+        'y': dem_majority_votes,
+        'party': highlight_point.iloc[0]['partyName'],
+        'name': rep_name
+    }
 
     color_mapping = {
-    'Democratic': 'blue',
-    'Republican': 'red',
-    'Independent': 'orange',
-}
+        'Democratic': 'blue',
+        'Republican': 'red',
+        'Independent': 'orange',
+    }
 
-    # Create a strip (scatter) plot
-    fig = px.strip(votes_with_party_all[votes_with_party_all['bioguideID'] != bioguideID], # Member will be plotted via highlight_point below
-                   y='partyName', 
-                   x='% of Votes with Party Majority', 
-                   color='partyName',
-                   color_discrete_map=color_mapping, 
-                   labels={'name':'Name', 'partyName': 'Party'},
-                   hover_data={'name': True, 'partyName': True, '% of Votes with Party Majority':True},
-                   orientation='h',  # Set orientation to horizontal (default is vertical)
-                   stripmode='overlay')  # Overlay points when they overlap
+    plot_df = votes_with_party_all[(votes_with_party_all['bioguideID'] != bioguideID)]
+    
+    # Create a scatter plot
+    fig = px.scatter(plot_df, 
+                     x='% of Votes with Rep Majority', 
+                     y='% of Votes with Dem Majority', 
+                     color='partyName',
+                     color_discrete_map=color_mapping, 
+                     labels={'name':'Name', 'partyName': 'Party'},
+                     hover_data={
+                         'name': True, 
+                         'partyName': True, 
+                         '% of Votes with Rep Majority': ':.0%', 
+                         '% of Votes with Dem Majority': ':.0%'
+                     })
 
-    if not highlight_point.empty:
-        fig.add_trace(go.Scatter(
-            y=[highlight_point.iloc[0]['partyName']],  # Ensure y is a list or array-like
-            x=[highlight_point.iloc[0]['% of Votes with Party Majority']],  # Ensure x is a list or array-like
-            mode='markers',
-            name=f"{highlight_point.iloc[0]['name']}",
-            text=f"Name: {rep_name}<br>% of Votes with Party Majority: {party_maj_votes: .0%}",
-            hoverinfo='text',
-            marker=dict(color='#9467bd', size=15, symbol='star')  # Highlighted point style
-        ))
+    fig.add_trace(go.Scatter(
+        x=[highlight_points['x']], 
+        y=[highlight_points['y']],  
+        mode='markers',
+        name=f"{highlight_points['name']}",
+        customdata=[[highlight_points['name']]],  # Add name to customdata
+        text=[f"{highlight_points['name']}"],  # Add name to text
+        hovertemplate='<b>%{customdata[0]}</b><br>' +
+                      '%{y:.0%} of Votes with Dem Majority<br>' +
+                      '%{x:.0%} of Votes with Rep Majority<br>' +
+                      '<extra></extra>',
+        marker=dict(color='#9467bd', size=15, symbol='star')  
+    ))
 
     fig.update_layout(
         title=dict(
-            text=f"{rep_title} {rep_name.split(',')[0]} votes with their party in {party_maj_votes:.0%} of votes"
-                 f"{' related to ' + policy_area if policy_area else ''}"
+            text=f"{rep_title} {rep_name.split(',')[0]} votes with Democrats {dem_majority_votes:.0%} of the time and Republicans {rep_majority_votes:.0%} of the time"
+                 f"{' on bills related to ' + policy_area if policy_area else ''}"
                  f" (n = {vote_count} votes)",
             x=0.5,  
             xanchor='center',
             yanchor='top',  
             font=dict(size=14)  
-    ),
-        yaxis_title='Party',
-        xaxis_title='% of Votes with Party Majority',
-        legend_title='Party'
+        ),
+        yaxis_title='% of Votes with Dem Majority',
+        xaxis_title='% of Votes with Rep Majority',
+        legend_title='Party',
+        height=450,
+        width=850,
+        margin=dict(l=50, r=50, t=50, b=50),  # Adjust margins for better spacing
+        xaxis_tickformat='.0%',  # Format x-axis as percentage
+        yaxis_tickformat='.0%'   # Format y-axis as percentage
     )
 
-    # fig.show()
     return fig
 
 
@@ -226,19 +257,12 @@ def query_members(selected_option):
     results = query_job.result().to_dataframe()
     return results['name'].tolist()
 
-@st.cache_data
-def query_sponsored_bills():
-    sponsored_bills_query = f"""
-        select *
-        from Congress.vw_sponsored_bills_by_member
-    """
-    
-    query_job = client.query(sponsored_bills_query)
-    results = query_job.result().to_dataframe()
-    
-    return results
+@st.cache_data(ttl=86400) # Cache for 24 hours
+def query_sponsored_bills(path):
+    df = pd.read_parquet(path)
+    return df
 
-sponsored_bills = query_sponsored_bills()
+sponsored_bills = query_sponsored_bills('streamlit_data/sponsored_bills_by_member.parquet')
 
 @st.cache_data
 def query_term_data():
@@ -286,7 +310,7 @@ with st.sidebar:
 
     st.title('Congress Member Dashboard')
 
-    selected_method = st.selectbox('Select a method:', ['Look up my Representative', 'Search Representative by Name'],
+    selected_method = st.selectbox('Select a method:', ['Search Representative by State, Zip Code', 'Search Representative by Name'],
                                 index=None)
     # Initialize geo and last_name to None
     geo                   = None
@@ -313,7 +337,7 @@ with st.sidebar:
 
 
     
-    if selected_method == 'Look up my Representative':
+    if selected_method == 'Search Representative by State, Zip Code':
 
         chambers = ['Senate', 'House of Representatives']
         selected_chamber = st.selectbox('Select a chamber of Congress:', 
@@ -408,7 +432,6 @@ with col[0]:
             if policy_area_selection:
                 policy_area = policy_area_selection.split(' | ')[0]
             
-            # voting_records = query_voting_records(chamber=chamber)
             fig = plot_voting_records(results=voting_results, 
                                       bioguideID=bioguideID, 
                                       chamber=chamber,
@@ -416,6 +439,87 @@ with col[0]:
                                       )
             st.plotly_chart(fig, use_container_width=False)
 
+
+            # Display table of recent votes
+            display_cols = [
+                'vote_date', 'title', 'url', 'roll_call_number', 'policy_area', 'member_vote', 'dem_majority_vote', 'rep_majority_vote', 'result']
+            
+            #PSEUDOCODE -  IF party == 'Democra
+            vote_match_condition = \
+                "params.data.col != params.data.col"
+            
+
+            cellRenderer = JsCode("""
+                                class UrlCellRenderer {
+                                init(params) {
+                                    this.eGui = document.createElement('a');
+                                    this.eGui.innerText = params.value;
+                                    this.eGui.setAttribute('href', params.data.url);
+                                    this.eGui.setAttribute('style', "text-decoration:none");
+                                    this.eGui.setAttribute('target', "_blank");
+                                }
+                                getGui() {
+                                    return this.eGui;
+                                }
+                                }
+                            """)
+
+                                
+            
+            formatter = {
+            'title': ('Title (Click for more info)', {'width': 250, 'wrapText': True, 'autoHeight': True, 'cellRenderer':cellRenderer}),
+            # 'url': ('Link', {'cellRenderer':cellRenderer}),
+            'member_vote': ('Member Vote', {'width': 115, 'autoHeight': True}),
+            'dem_majority_vote': ('Dem Maj Vote', {'width': 115, 'autoHeight': True}),
+            'rep_majority_vote': ('Rep Maj Vote', {'width': 115, 'autoHeight': True}),
+            'result': ('Result', {'width': 125}),
+            'policy_area': ('Policy Area', {'width': 150}),
+            'roll_call_number': ('Roll Call Vote', {'width': 110})
+             }
+
+
+            if policy_area_selection:
+                voting_results_table_data = voting_results[(voting_results['bioguideID'] == bioguideID) & (voting_results['policy_area'] == policy_area)][display_cols]
+            else:
+                voting_results_table_data = voting_results[(voting_results['bioguideID'] == bioguideID)][display_cols]
+
+            voting_results_table_data.set_index('vote_date', inplace=True)
+
+            voting_results_table_data = voting_results_table_data[voting_results_table_data['url'].isna() == False]
+            # voting_results_table_data.columns = [' '.join(word.capitalize() for word in col.split('_')) for col in voting_results_table_data.columns]
+
+            voting_results_table_data = voting_results_table_data.sort_index(ascending = False).head(25)
+
+
+            # st.table(voting_results_table_data)
+            data = draw_grid(
+                voting_results_table_data,
+                formatter=formatter,
+                # fit_columns=True,
+                selection='single', 
+                max_height=300,
+                grid_options={'domLayout':'normal',
+                              'enableCellTextSelection':True}
+            )
+
+
+            # # Create an empty GridOptionsBuilder
+            # gb = GridOptionsBuilder.from_dataframe(pd.DataFrame())
+
+            # # Configure columns according to the formatter
+            # for col, options in formatter.items():
+            #     gb.configure_column(col, **options)
+
+            # # Set row data
+            # gb.configure_grid_options(rowData=voting_results_table_data.to_dict('records'))
+
+            # # Build grid options
+            # gridOptions = gb.build()
+
+            # # Display the AgGrid table
+            # AgGrid(voting_results_table_data, gridOptions=gridOptions)
+            
+            
             if policy_area_selection:
                 sponsored_bills_table_data = sponsored_bills[(sponsored_bills['bioguideID'] == bioguideID) & (sponsored_bills['policy_area'] == policy_area)]
             else:
@@ -427,7 +531,7 @@ with col[0]:
                 st.text('No sponsored legislation found for this member.')
             else:
                 st.text('Recent Sponsored Legislation')
-                st.table(sponsored_bills_table_data.sort_values('introducedDate').head(25))
+                st.table(sponsored_bills_table_data.sort_values('introducedDate', ascending = False).head(25))
 
             # terms_df = query_term_data(bioguideID)
             # fig_terms = plot_terms(dict(terms_df))

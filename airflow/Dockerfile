@@ -18,4 +18,5 @@ RUN apt-get update && \
     apt-get install -y apt-transport-https && \
     apt-get install -y ca-certificates && \
     apt-get install -y software-properties-common && \
+    mkdir -p /usr/app && \
     rm -rf /var/lib/apt/lists/*

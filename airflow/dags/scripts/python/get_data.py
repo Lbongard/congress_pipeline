@@ -81,11 +81,13 @@ def get_votes_for_saved_bills(local_folder_path, save_folder):
     for root, dirs, files in os.walk(local_folder_path):
         for file in files:
             if file.endswith('.json'):
-                local_file_path = os.path.join(root, file)
-                get_votes(bill_json=local_file_path, save_folder=save_folder)
+                local_file_path=os.path.join(root, file)
+                save_subfolder = os.path.relpath(root, local_folder_path)
+                save_location = os.path.join(save_folder, save_subfolder)
+                get_votes(bill_json=local_file_path, save_location=save_location)
 
 
-def get_votes(bill_json, save_folder):
+def get_votes(bill_json, save_location):
     
     votes_list = []
     
@@ -137,12 +139,13 @@ def get_votes(bill_json, save_folder):
                     
     batch_json_str = "\n".join([json.dumps(obj) for obj in votes_list])
 
-    save_dir = os.path.join(save_folder, bill_type)
+    # save_dir = os.path.join(save_location, bill_type)
     
-    if not os.path.exists(save_dir):
-        os.makedirs(save_dir)
+    if not os.path.exists(save_location):
+        os.makedirs(save_location)
 
-    file_name = f'{save_dir}/votes_{os.path.basename(bill_json)}'
+    logging.info(f'Saving votes_{os.path.basename(bill_json)} to {save_location}')
+    file_name = f'{save_location}/votes_{os.path.basename(bill_json)}'
     
     with open(file_name, "w") as outfile:
         outfile.write(batch_json_str)
@@ -286,8 +289,13 @@ def get_vote_metadata(data, chamber, bill_type, bill_number):
         vote_date = data['rollcall-vote']['vote-metadata']['action-date']
         date_obj = datetime.strptime(vote_date, '%d-%b-%Y')
         formatted_vote_date = date_obj.strftime('%Y-%m-%d')
+        congress = data['rollcall-vote']['vote-metadata']['congress']
+        session = data['rollcall-vote']['vote-metadata']['session']
+        
         
         return {'date': formatted_vote_date,
+                'congress': congress,
+                'session': session,
                 'bill_type': bill_type,
                 'bill_number': bill_number,
                 'chamber': 'House',
@@ -305,8 +313,13 @@ def get_vote_metadata(data, chamber, bill_type, bill_number):
         vote_date = vote_date.replace(': ', ':')
         date_obj = datetime.strptime(vote_date, '%B %d, %Y, %I:%M %p')
         formatted_vote_date = date_obj.strftime('%Y-%m-%d')
+        congress = data['roll_call_vote']['congress']
+        session = data['roll_call_vote']['session']
+        
         
         return {'date': formatted_vote_date,
+                'congress': congress,
+                'session': session,
                 'bill_type': bill_type,
                 'bill_number': bill_number,
                 'chamber': 'Senate',

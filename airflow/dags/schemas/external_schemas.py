@@ -67,13 +67,20 @@ bill_status_ddl = f"""CREATE OR REPLACE EXTERNAL TABLE Congress.bill_status_exte
 OPTIONS (
   format = 'JSON',
   uris = [
-    'gs://{BUCKET_NAME}/bill_status/hconres/*.json',
-    'gs://{BUCKET_NAME}/bill_status/hjres/*.json',
-    'gs://{BUCKET_NAME}/bill_status/hr/*.json',
-    'gs://{BUCKET_NAME}/bill_status/hres/*.json',
-    'gs://{BUCKET_NAME}/bill_status/s/*.json',
-    'gs://{BUCKET_NAME}/bill_status/sjres/*.json',
-    'gs://{BUCKET_NAME}/bill_status/sres/*.json'
+    'gs://{BUCKET_NAME}/bill_status/117/hconres/*.json',
+    'gs://{BUCKET_NAME}/bill_status/117/hjres/*.json',
+    'gs://{BUCKET_NAME}/bill_status/117/hr/*.json',
+    'gs://{BUCKET_NAME}/bill_status/117/hres/*.json',
+    'gs://{BUCKET_NAME}/bill_status/117/s/*.json',
+    'gs://{BUCKET_NAME}/bill_status/117/sjres/*.json',
+    'gs://{BUCKET_NAME}/bill_status/117/sres/*.json',
+    'gs://{BUCKET_NAME}/bill_status/118/hconres/*.json',
+    'gs://{BUCKET_NAME}/bill_status/118/hjres/*.json',
+    'gs://{BUCKET_NAME}/bill_status/118/hr/*.json',
+    'gs://{BUCKET_NAME}/bill_status/118/hres/*.json',
+    'gs://{BUCKET_NAME}/bill_status/118/s/*.json',
+    'gs://{BUCKET_NAME}/bill_status/118/sjres/*.json',
+    'gs://{BUCKET_NAME}/bill_status/118/sres/*.json'
   ]);
 
 """
@@ -81,6 +88,8 @@ OPTIONS (
 vote_ddl = f"""CREATE OR REPLACE EXTERNAL TABLE Congress.votes_external_table (
   vote STRUCT<
     date DATE,
+    congress INTEGER,
+    session STRING,
     bill_type STRING,
     bill_number STRING,
     chamber STRING,
@@ -104,13 +113,21 @@ vote_ddl = f"""CREATE OR REPLACE EXTERNAL TABLE Congress.votes_external_table (
 )
 OPTIONS (
   format = "JSON",
-  uris = ['gs://{BUCKET_NAME}/votes/HCONRES/*.json',
-    'gs://{BUCKET_NAME}/votes/HJRES/*.json',
-    'gs://{BUCKET_NAME}/votes/HR/*.json',
-    'gs://{BUCKET_NAME}/votes/HRES/*.json',
-    'gs://{BUCKET_NAME}/votes/S/*.json',
-    'gs://{BUCKET_NAME}/votes/SJRES/*.json',
-    'gs://{BUCKET_NAME}/votes/SRES/*.json']
+  uris = ['gs://{BUCKET_NAME}/votes/117/hconres/*.json',
+    'gs://{BUCKET_NAME}/votes/117/hjres/*.json',
+    'gs://{BUCKET_NAME}/votes/117/hr/*.json',
+    'gs://{BUCKET_NAME}/votes/117/hres/*.json',
+    'gs://{BUCKET_NAME}/votes/117/s/*.json',
+    'gs://{BUCKET_NAME}/votes/117/sjres/*.json',
+    'gs://{BUCKET_NAME}/votes/117/sres/*.json',
+    'gs://{BUCKET_NAME}/votes/118/sconres/*.json',
+    'gs://{BUCKET_NAME}/votes/118/hjres/*.json',
+    'gs://{BUCKET_NAME}/votes/118/hr/*.json',
+    'gs://{BUCKET_NAME}/votes/118/hres/*.json',
+    'gs://{BUCKET_NAME}/votes/118/s/*.json',
+    'gs://{BUCKET_NAME}/votes/118/sjres/*.json',
+    'gs://{BUCKET_NAME}/votes/118/sres/*.json'
+    ]
 )"""
 
 member_ddl = f"""CREATE OR REPLACE EXTERNAL TABLE Congress.members_external_table (

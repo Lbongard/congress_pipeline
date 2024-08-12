@@ -12,9 +12,9 @@ from datetime import datetime
 #     return newline_json
 
 def convert_folder_xml_to_newline_json(folder):
-    
-    for subfolder in os.listdir(folder):
-        subfolder_path = os.path.join(folder, subfolder)
+    for x in os.walk(folder):
+        subdir = x[0]
+        subfolder_path = os.path.join(folder, subdir)
         if os.path.isdir(subfolder_path):
             files = os.listdir(subfolder_path)
 
@@ -47,7 +47,7 @@ def convert_folder_xml_to_newline_json(folder):
                 batch_json_str = "\n".join([json.dumps(obj) for obj in batch])
 
                 # Output the batch to a new file
-                output_file = f'{subfolder_path}/{subfolder}bill_status_{batch_count}.json'
+                output_file = f'{subfolder_path}/bill_status_{batch_count}.json'
                 with open(output_file, 'w') as f:
                     f.write(batch_json_str)
                 
@@ -107,11 +107,11 @@ def enforce_schema(json_data):
                 "item": [sponsor_dict(sponsor) for sponsor in ensure_list(get_item_if_exists(json_data.get("bill", {}).get("sponsors", {})))]
             },
             "cosponsors": {
-                "count": json_data.get("bill", {}).get("cosponsors", {}).get("count"),
+                "count": safe_get(json_data.get("bill", {}), "cosponsors", default={}).get("count", 0),
                 "item": [cosponsor_dict(cosponsor) for cosponsor in ensure_list(get_item_if_exists(json_data.get("bill", {}).get("cosponsors", {})))]
             },
             "policyArea": {
-                "name": json_data.get("bill", {}).get("policyArea", {}).get("name")
+                "name": safe_get(json_data.get("bill", {}), "policyArea", default={}).get("name")
             },
             "subjects": {
                 "legislativeSubjects": {
@@ -218,3 +218,7 @@ def get_item_if_exists(input_data):
         return input_data.get("item", [])
     else:
         return []
+    
+def safe_get(d, key, default=None):
+    ### Returns specified value if get method returns None ###
+    return d.get(key, default) if d.get(key, default) else default

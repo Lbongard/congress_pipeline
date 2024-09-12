@@ -6,6 +6,8 @@
 select  
         {{ dbt_utils.generate_surrogate_key(['bill_type', 'bill_number'])}} as bill_key,
         roll_call_number,
+        congress,
+        session,
         replace(chamber, 'House', 'House of Representatives') chamber,
         concat(bill_type,bill_number) bill_name,
         id as bioguideID,
@@ -20,6 +22,8 @@ UNION all
 select  
         {{ dbt_utils.generate_surrogate_key(['bill_type', 'bill_number'])}} as bill_key,
         roll_call_number,
+        congress,
+        session,
         chamber,
         concat(bill_type,bill_number) bill_name,
         null as bioguideID,

@@ -21,7 +21,7 @@ PINLEFT = {"pinned": "left"}
 def draw_grid(
         df,
         formatter: dict = None,
-        selection="single",
+        selection="multiple",
         use_checkbox=False,
         fit_columns=False,
         theme="streamlit",
@@ -73,5 +73,42 @@ def highlight(color, condition):
                 }}
             }}
         }};
+    """
+    return JsCode(code)
+
+
+def highlight_mult_colors(primary_color, secondary_color, condition):
+    code = f"""
+        function(params) {{
+            var primaryColor = "{primary_color}";
+            var secondaryColor = "{secondary_color}";
+            if ({condition}) {{
+                return {{
+                    'backgroundColor': primaryColor
+                }};
+            }} else {{
+                return {{
+                    'backgroundColor': secondaryColor
+                }};
+            }}
+        }}
+    """
+    return JsCode(code)
+
+
+# following added by Reid Bongard to account for specific highlighting conditions
+def highlight_mult_condition(primary_color, secondary_color, condition, secondary_condition):
+    code = f"""
+        function(params) {{
+            var primaryColor = "{primary_color}";
+            var secondaryColor = "{secondary_color}";
+            if ({condition}) {{
+                if ({secondary_condition}) {{
+                    return {{'backgroundColor': primaryColor}};
+                }} else {{
+                    return {{'backgroundColor': secondaryColor}};
+                }}
+            }}
+        }}
     """
     return JsCode(code)

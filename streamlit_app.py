@@ -13,7 +13,7 @@ import plotly.graph_objs as go
 import pandas as pd
 import numpy as np
 from st_aggrid import AgGrid, GridOptionsBuilder, JsCode
-from agstyler.agstyler import PINLEFT, PRECISION_TWO, draw_grid
+from agstyler.agstyler import PINLEFT, PRECISION_TWO, draw_grid, highlight_mult_colors
 
 config_path = os.path.abspath(os.getenv('TF_VAR_google_credentials'))
 
@@ -32,8 +32,11 @@ st.set_page_config(
     layout="wide",
     initial_sidebar_state="expanded")
 
+
+tab1, tab2, tab3 = st.tabs(["Overall Voting Record", "Recent Votes", "Sponsored Bills"])
+
 # Define columns
-col = st.columns((6, 2))
+# col = st.columns((6, 2))
 
 
 ##### Functions for Querying Selection Options #####
@@ -303,14 +306,29 @@ def query_policy_areas():
 
 policy_areas = query_policy_areas()
 
+def display_term_summary(additional_data_df, terms_df, mem_name, bioguideID):
+    imageURL = additional_data_df.iloc[0]['imageURL']
+    st.image(imageURL,
+            caption=mem_name)        
+    
+    st.text('Years Served')
+    terms_table_data = terms_df[terms_df.bioguideID == bioguideID][['Start Year', 'End Year']]
+    st.table(terms_table_data)
+
+
 
 
 ###### Start Streamlit Page ######
 with st.sidebar:
 
-    st.title('Congress Member Dashboard')
+    st.title('Congress Member Info App')
 
-    selected_method = st.selectbox('Select a method:', ['Search Representative by State, Zip Code', 'Search Representative by Name'],
+    chambers = ['Senate', 'House of Representatives']
+    selected_chamber = st.selectbox('Select a chamber of Congress:', 
+                                    chambers, 
+                                    index=None)
+
+    selected_method = st.selectbox('Select a search method:', ['Search Member by State, Zip Code', 'Search Member by Name'],
                                 index=None)
     # Initialize geo and last_name to None
     geo                   = None
@@ -337,12 +355,7 @@ with st.sidebar:
 
 
     
-    if selected_method == 'Search Representative by State, Zip Code':
-
-        chambers = ['Senate', 'House of Representatives']
-        selected_chamber = st.selectbox('Select a chamber of Congress:', 
-                                        chambers, 
-                                        index=None)
+    if selected_method == 'Search Member by State, Zip Code':
 
         # Step 1: Enter zip code or representative
         if selected_chamber == 'House of Representatives':
@@ -362,11 +375,7 @@ with st.sidebar:
                 st.stop()
     
     
-    if selected_method == 'Search Representative by Name':
-        chambers = ['Senate', 'House of Representatives']
-        selected_chamber = st.selectbox('Select a chamber of Congress:', 
-                                        chambers, 
-                                        index=None)
+    if selected_method == 'Search Member by Name':
 
         first_name = st.text_input("Enter your representative's first name (Optional)")
         last_name = st.text_input("Enter your representative's last name:")
@@ -396,33 +405,32 @@ with st.sidebar:
                                     options,
                                     index=None)
         
-    
-
-with col[0]:
-        
     if selected_option:
-        with st.spinner('Loading Data'):
-            rep_name = selected_option.split(' | ')[0]
-                
+            rep_name = selected_option.split(' | ')[0] 
             try:
                 additional_data_df = query_by_name(rep_name)
             except Exception as e:
                 st.write('An error occurred.')
-
+            
             chamber = additional_data_df.iloc[0]['most_recent_chamber']
             bioguideID = additional_data_df.iloc[0]['bioguideID']
+            partyName = additional_data_df.iloc[0]['partyName']
 
+with tab1:
+    col = st.columns((6, 2))
+    with col[0]:       
+        if selected_option:
             policy_areas = voting_results\
                                     [(voting_results.bioguideID == bioguideID) & (voting_results.policy_area.isna() == False)]\
                                     ['policy_area'].\
-                                     value_counts().sort_index()
+                                    value_counts().sort_index()
             
             formatted_policy_list = [f"{item} | (n={count})" for item, count in policy_areas.items()]
 
             policy_area_selection = st.selectbox("Optional - Filter results by bill subject", 
-                                           formatted_policy_list,
-                                           index=None,
-                                           key='policy_area_selection')
+                                        formatted_policy_list,
+                                        index=None,
+                                        key='policy_area_selection')
             
             def reset_selection():
                 st.session_state.policy_area_selection = None
@@ -433,20 +441,55 @@ with col[0]:
                 policy_area = policy_area_selection.split(' | ')[0]
             
             fig = plot_voting_records(results=voting_results, 
-                                      bioguideID=bioguideID, 
-                                      chamber=chamber,
-                                      policy_area=policy_area
-                                      )
+                                    bioguideID=bioguideID, 
+                                    chamber=chamber,
+                                    policy_area=policy_area
+                                    )
             st.plotly_chart(fig, use_container_width=False)
 
 
             # Display table of recent votes
             display_cols = [
-                'vote_date', 'title', 'url', 'roll_call_number', 'policy_area', 'member_vote', 'dem_majority_vote', 'rep_majority_vote', 'result']
+                'vote_date', 'title', 'url', 'roll_call_number', 'policy_area', 'member_vote', 'dem_majority_vote', 'rep_majority_vote', 'result', 'partyName']
             
-            #PSEUDOCODE -  IF party == 'Democra
-            vote_match_condition = \
-                "params.data.col != params.data.col"
+            # Account for IF THEN LOGIC
+
+            
+            dem_vote_match_condition = "params.data.member_vote === params.data.dem_majority_vote"
+            rep_vote_match_condition = "params.data.member_vote === params.data.rep_majority_vote"
+            
+            if partyName == 'Democratic':
+                
+                dem_cell_style = \
+                highlight_mult_colors(primary_color="#abf7b1", # Light Green
+                                    secondary_color="#fcccbb", # Light Red
+                                    condition=dem_vote_match_condition
+                                        )
+                mem_cell_style = dem_cell_style # Replicating formatting for member vote
+                rep_cell_style = None # Do not format Rep vote cell
+
+            elif partyName == 'Republican':
+
+                rep_cell_style = \
+                highlight_mult_colors(primary_color="#abf7b1", # Light Green
+                                    secondary_color="#fcccbb", # Light Red
+                                    condition=rep_vote_match_condition
+                                        )
+                mem_cell_style = rep_cell_style # Replicating formatting for member vote
+                dem_cell_style = None
+
+            else:
+                mem_cell_style = None
+                dem_cell_style = \
+                highlight_mult_colors(primary_color="#abf7b1", # Light Green
+                                    secondary_color="#fcccbb", # Light Red
+                                    condition=dem_vote_match_condition
+                                        )
+                rep_cell_style = \
+                highlight_mult_colors(primary_color="#abf7b1", # Light Green
+                                    secondary_color="#fcccbb", # Light Red
+                                    condition=rep_vote_match_condition
+                                        )       
             
 
             cellRenderer = JsCode("""
@@ -469,13 +512,13 @@ with col[0]:
             formatter = {
             'title': ('Title (Click for more info)', {'width': 250, 'wrapText': True, 'autoHeight': True, 'cellRenderer':cellRenderer}),
             # 'url': ('Link', {'cellRenderer':cellRenderer}),
-            'member_vote': ('Member Vote', {'width': 115, 'autoHeight': True}),
-            'dem_majority_vote': ('Dem Maj Vote', {'width': 115, 'autoHeight': True}),
-            'rep_majority_vote': ('Rep Maj Vote', {'width': 115, 'autoHeight': True}),
+            'member_vote': ('Member Vote', {'width': 115, 'autoHeight': True, 'cellStyle':mem_cell_style}),
+            'dem_majority_vote': ('Dem Maj Vote', {'width': 115, 'autoHeight': True, 'cellStyle':dem_cell_style}),
+            'rep_majority_vote': ('Rep Maj Vote', {'width': 115, 'autoHeight': True, 'cellStyle':rep_cell_style}),
             'result': ('Result', {'width': 125}),
             'policy_area': ('Policy Area', {'width': 150}),
             'roll_call_number': ('Roll Call Vote', {'width': 110})
-             }
+            }
 
 
             if policy_area_selection:
@@ -491,7 +534,7 @@ with col[0]:
             voting_results_table_data = voting_results_table_data.sort_index(ascending = False).head(25)
 
 
-            # st.table(voting_results_table_data)
+            st.title('Recent Voting Results')
             data = draw_grid(
                 voting_results_table_data,
                 formatter=formatter,
@@ -499,7 +542,7 @@ with col[0]:
                 selection='single', 
                 max_height=300,
                 grid_options={'domLayout':'normal',
-                              'enableCellTextSelection':True}
+                            'enableCellTextSelection':True}
             )
 
 
@@ -540,17 +583,27 @@ with col[0]:
 
 
 
-with col[1]:
-    if additional_data_df is not None:
+    with col[1]:
+        if additional_data_df is not None:
 
-        # Add Image
-        imageURL = additional_data_df.iloc[0]['imageURL']
-        st.image(imageURL,
-                caption=selected_option)        
-        
-        st.text('Years Served')
-        terms_table_data = terms_df[terms_df.bioguideID == bioguideID][['Start Year', 'End Year']]
-        st.table(terms_table_data)
+            display_term_summary(additional_data_df=additional_data_df, 
+                                 terms_df=terms_df, 
+                                 mem_name=selected_option, 
+                                 bioguideID=bioguideID)
+
+            # # Add Image
+            # imageURL = additional_data_df.iloc[0]['imageURL']
+            # st.image(imageURL,
+            #         caption=selected_option)        
+            
+            # st.text('Years Served')
+            # terms_table_data = terms_df[terms_df.bioguideID == bioguideID][['Start Year', 'End Year']]
+            # st.table(terms_table_data)
+
+with tab2:
+    col = st.columns((6, 2))
+    with col[0]:
+        st.title('Placeholder')
         
 
     

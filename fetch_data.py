@@ -31,12 +31,17 @@ def save_bq_table_to_gcs(bucket_name, project, dataset_id, table_id, filename):
     dataset_ref = bigquery.DatasetReference(project, dataset_id)
     table_ref = dataset_ref.table(table_id)
 
+    extract_job_config = bigquery.ExtractJobConfig(
+        destination_format=bigquery.DestinationFormat.PARQUET,  # Set format to PARQUET
+        compression=bigquery.Compression.SNAPPY               
+    )
+
     extract_job = client.extract_table(
         table_ref,
         destination_uri,
-        # Location must match that of the source table.
         location="US",
-    )  # API request
+        job_config=extract_job_config
+    )  
     extract_job.result()  # Waits for job to complete.
 
     print(
@@ -86,4 +91,4 @@ if __name__ == "__main__":
                             project=project,
                             dataset_id=dataset_id,
                             table_id=table,
-                            filename=f"{table}.csv")
+                            filename=f"{table}.parquet")

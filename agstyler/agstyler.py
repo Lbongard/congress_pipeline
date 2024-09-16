@@ -112,3 +112,19 @@ def highlight_mult_condition(primary_color, secondary_color, condition, secondar
         }}
     """
     return JsCode(code)
+
+# following added by Reid Bongard to link text to a url in a table
+cellRenderer = JsCode("""
+                                class UrlCellRenderer {
+                                init(params) {
+                                    this.eGui = document.createElement('a');
+                                    this.eGui.innerText = params.value;
+                                    this.eGui.setAttribute('href', params.data.url);
+                                    this.eGui.setAttribute('style', "text-decoration:none");
+                                    this.eGui.setAttribute('target', "_blank");
+                                }
+                                getGui() {
+                                    return this.eGui;
+                                }
+                                }
+                            """)

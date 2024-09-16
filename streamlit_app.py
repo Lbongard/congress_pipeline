@@ -13,9 +13,13 @@ import plotly.graph_objs as go
 import pandas as pd
 import numpy as np
 from st_aggrid import AgGrid, GridOptionsBuilder, JsCode
-from agstyler.agstyler import PINLEFT, PRECISION_TWO, draw_grid, highlight_mult_colors
+from agstyler.agstyler import PINLEFT, PRECISION_TWO, draw_grid, highlight_mult_colors, cellRenderer
+from pyarrow import parquet
+import gcsfs
 
 config_path = os.path.abspath(os.getenv('TF_VAR_google_credentials'))
+
+bucket_name = os.getenv("streamlit_data_bucket_name")
 
 with open(config_path, 'r') as config_file:
     config = json.load(config_file)
@@ -31,6 +35,9 @@ st.set_page_config(
     page_title="US Congress Dashboard",
     layout="wide",
     initial_sidebar_state="expanded")
+
+# Set os.environ for download from gcs bucket
+os.environ["GOOGLE_APPLICATION_CREDENTIALS"] = os.getenv('TF_VAR_google_credentials')
 
 
 tab1, tab2, tab3 = st.tabs(["Overall Voting Record", "Recent Votes", "Sponsored Bills"])
@@ -110,24 +117,41 @@ def get_update_date():
      
     return results
 
+
 @st.cache_data(ttl=86400) # Cache for 24 hours
-def query_voting_records(path):
-    df = pd.read_parquet(path)
-    
-    df['title_linked'] = df.apply(
+def read_parquet_from_gcs(gcs_uri):
+    # Load the parquet files into a pandas DataFrame
+    df = pd.read_parquet(gcs_uri, engine='pyarrow', storage_options={"token": None})
+    return df
+
+
+voting_results_uri = f"gs://{bucket_name}/votes_by_member.parquet"
+voting_results = read_parquet_from_gcs(voting_results_uri)
+voting_results['title_linked'] = voting_results.apply(
                 lambda row: f'<a href="{row["url"]}" target="_blank">{row["title"]}</a>', axis=1
                 )
-    return pd.DataFrame(df)
 
-voting_results = query_voting_records('streamlit_data/votes_by_member.parquet')
+sponsored_bills_uri = f"gs://{bucket_name}/sponsored_bills_by_member.parquet"
+sponsored_bills = read_parquet_from_gcs(sponsored_bills_uri)
+
+
+# @st.cache_data(ttl=86400) # Cache for 24 hours
+# def query_voting_records(path):
+#     df = pd.read_parquet(path)
+    
+#     df['title_linked'] = df.apply(
+#                 lambda row: f'<a href="{row["url"]}" target="_blank">{row["title"]}</a>', axis=1
+#                 )
+#     return pd.DataFrame(df)
+
+# voting_results = query_voting_records('streamlit_data/votes_by_member.parquet')
 
 def vote_cnt_by_member(x):
     return (x != 'not_voting').sum()
 
 def calculate_votes_w_party(results, chamber, policy_area=None):
     if policy_area:
-        df = results[(results.
-        policy_area == policy_area) & (results.chamber == chamber)]
+        df = results[(results.policy_area == policy_area) & (results.chamber == chamber)]
     else:
         df = results[results.chamber == chamber]
     
@@ -260,12 +284,12 @@ def query_members(selected_option):
     results = query_job.result().to_dataframe()
     return results['name'].tolist()
 
-@st.cache_data(ttl=86400) # Cache for 24 hours
-def query_sponsored_bills(path):
-    df = pd.read_parquet(path)
-    return df
+# @st.cache_data(ttl=86400) # Cache for 24 hours
+# def query_sponsored_bills(path):
+#     df = pd.read_parquet(path)
+#     return df
 
-sponsored_bills = query_sponsored_bills('streamlit_data/sponsored_bills_by_member.parquet')
+# sponsored_bills = query_sponsored_bills('streamlit_data/sponsored_bills_by_member.parquet')
 
 @st.cache_data
 def query_term_data():
@@ -337,7 +361,10 @@ with st.sidebar:
     selected_option       = None
     additional_data_df    = None
     policy_area           = None
-    policy_area_selection = None
+    policy_area_selection_voting_record = None
+    policy_area_selection_indiv_votes = None
+    indiv_vote_display_options = None
+    bill_keyword_indiv_votes = None
 
     st.markdown("---")
 
@@ -415,30 +442,30 @@ with st.sidebar:
             chamber = additional_data_df.iloc[0]['most_recent_chamber']
             bioguideID = additional_data_df.iloc[0]['bioguideID']
             partyName = additional_data_df.iloc[0]['partyName']
+            policy_areas = voting_results\
+                                    [(voting_results.bioguideID == bioguideID) & (voting_results.policy_area.isna() == False)]\
+                                    ['policy_area'].\
+                                    value_counts().sort_index()
 
 with tab1:
     col = st.columns((6, 2))
     with col[0]:       
         if selected_option:
-            policy_areas = voting_results\
-                                    [(voting_results.bioguideID == bioguideID) & (voting_results.policy_area.isna() == False)]\
-                                    ['policy_area'].\
-                                    value_counts().sort_index()
             
             formatted_policy_list = [f"{item} | (n={count})" for item, count in policy_areas.items()]
 
-            policy_area_selection = st.selectbox("Optional - Filter results by bill subject", 
+            policy_area_selection_voting_record = st.selectbox("Optional - Filter results by bill subject", 
                                         formatted_policy_list,
                                         index=None,
-                                        key='policy_area_selection')
+                                        key='policy_area_selection_voting_record')
             
             def reset_selection():
-                st.session_state.policy_area_selection = None
+                st.session_state.policy_area_selection_voting_record = None
 
-            st.button("Clear Policy Area Selection", on_click=reset_selection)
+            # st.button("Clear Policy Area Selection", on_click=reset_selection)
             
-            if policy_area_selection:
-                policy_area = policy_area_selection.split(' | ')[0]
+            if policy_area_selection_voting_record:
+                policy_area = policy_area_selection_voting_record.split(' | ')[0]
             
             fig = plot_voting_records(results=voting_results, 
                                     bioguideID=bioguideID, 
@@ -446,8 +473,61 @@ with tab1:
                                     policy_area=policy_area
                                     )
             st.plotly_chart(fig, use_container_width=False)
+            
 
 
+
+    with col[1]:
+        if additional_data_df is not None:
+
+            display_term_summary(additional_data_df=additional_data_df, 
+                                 terms_df=terms_df, 
+                                 mem_name=selected_option, 
+                                 bioguideID=bioguideID)
+
+            # # Add Image
+            # imageURL = additional_data_df.iloc[0]['imageURL']
+            # st.image(imageURL,
+            #         caption=selected_option)        
+            
+            # st.text('Years Served')
+            # terms_table_data = terms_df[terms_df.bioguideID == bioguideID][['Start Year', 'End Year']]
+            # st.table(terms_table_data)
+
+with tab2:
+    col = st.columns((6, 2))
+    with col[0]:
+        if selected_option:
+            
+            indiv_vote_display_options = st.radio("Options:", ['See Recent Votes', 'Search Votes by Bill Keyword'])
+
+            if indiv_vote_display_options == 'Search Votes by Bill Keyword':
+                bill_keyword_indiv_votes = st.text_input("Enter a Bill Keyword:")
+                keyword_filter = voting_results['title'].str.lower().str.contains(bill_keyword_indiv_votes.lower())
+            else:
+                bill_keyword_indiv_votes = None
+                keyword_filter = True
+
+            policy_area_selection_indiv_votes = st.selectbox("Optional - Filter results by bill subject", 
+                            formatted_policy_list,
+                            index=None,
+                            key='policy_area_selection_indiv_votes')
+            
+            if policy_area_selection_indiv_votes:
+                policy_area = policy_area_selection_indiv_votes.split(' | ')[0]
+                policy_area_filter = voting_results['policy_area'] == policy_area
+            else:
+                policy_area_filter = True
+            
+            formatted_policy_list = [f"{item} | (n={count})" for item, count in policy_areas.items()]
+
+
+                
+            # def reset_selection():
+            #     st.session_state.policy_area_selection_recent_votes = None
+
+            # st.button("Clear Policy Area Selection", on_click=reset_selection)
+                
             # Display table of recent votes
             display_cols = [
                 'vote_date', 'title', 'url', 'roll_call_number', 'policy_area', 'member_vote', 'dem_majority_vote', 'rep_majority_vote', 'result', 'partyName']
@@ -489,25 +569,7 @@ with tab1:
                 highlight_mult_colors(primary_color="#abf7b1", # Light Green
                                     secondary_color="#fcccbb", # Light Red
                                     condition=rep_vote_match_condition
-                                        )       
-            
-
-            cellRenderer = JsCode("""
-                                class UrlCellRenderer {
-                                init(params) {
-                                    this.eGui = document.createElement('a');
-                                    this.eGui.innerText = params.value;
-                                    this.eGui.setAttribute('href', params.data.url);
-                                    this.eGui.setAttribute('style', "text-decoration:none");
-                                    this.eGui.setAttribute('target', "_blank");
-                                }
-                                getGui() {
-                                    return this.eGui;
-                                }
-                                }
-                            """)
-
-                                
+                                        )                  
             
             formatter = {
             'title': ('Title (Click for more info)', {'width': 250, 'wrapText': True, 'autoHeight': True, 'cellRenderer':cellRenderer}),
@@ -519,53 +581,47 @@ with tab1:
             'policy_area': ('Policy Area', {'width': 150}),
             'roll_call_number': ('Roll Call Vote', {'width': 110})
             }
-
-
-            if policy_area_selection:
-                voting_results_table_data = voting_results[(voting_results['bioguideID'] == bioguideID) & (voting_results['policy_area'] == policy_area)][display_cols]
-            else:
-                voting_results_table_data = voting_results[(voting_results['bioguideID'] == bioguideID)][display_cols]
-
-            voting_results_table_data.set_index('vote_date', inplace=True)
-
-            voting_results_table_data = voting_results_table_data[voting_results_table_data['url'].isna() == False]
-            # voting_results_table_data.columns = [' '.join(word.capitalize() for word in col.split('_')) for col in voting_results_table_data.columns]
-
-            voting_results_table_data = voting_results_table_data.sort_index(ascending = False).head(25)
-
+            
+            voting_results_table_data = voting_results[(voting_results['bioguideID'] == bioguideID) & \
+                                                       (keyword_filter) & \
+                                                       (policy_area_filter) & \
+                                                       (voting_results['url'].isna() == False)]\
+                                        [display_cols].\
+                                        set_index('vote_date').\
+                                        sort_index(ascending = False)\
+                                        # [display_cols]
 
             st.title('Recent Voting Results')
-            data = draw_grid(
-                voting_results_table_data,
-                formatter=formatter,
-                # fit_columns=True,
-                selection='single', 
-                max_height=300,
-                grid_options={'domLayout':'normal',
-                            'enableCellTextSelection':True}
-            )
+            if voting_results_table_data.empty:
+                st.text("No Votes to Display")
+            else:
+                data = draw_grid(
+                    voting_results_table_data,
+                    formatter=formatter,
+                    # fit_columns=True,
+                    selection='single', 
+                    max_height=300,
+                    grid_options={'domLayout':'normal',
+                                'enableCellTextSelection':True}
+                )
 
 
-            # # Create an empty GridOptionsBuilder
-            # gb = GridOptionsBuilder.from_dataframe(pd.DataFrame())
 
-            # # Configure columns according to the formatter
-            # for col, options in formatter.items():
-            #     gb.configure_column(col, **options)
-
-            # # Set row data
-            # gb.configure_grid_options(rowData=voting_results_table_data.to_dict('records'))
-
-            # # Build grid options
-            # gridOptions = gb.build()
-
-            # # Display the AgGrid table
-            # AgGrid(voting_results_table_data, gridOptions=gridOptions)
-            
-            
-            if policy_area_selection:
+    with col[1]:
+        if additional_data_df is not None:
+            display_term_summary(additional_data_df=additional_data_df, 
+                                 terms_df=terms_df, 
+                                 mem_name=selected_option, 
+                                 bioguideID=bioguideID)
+        
+with tab2:
+    col = st.columns((6, 2))
+    with col[0]:
+        if selected_option:
+            if policy_area_selection_voting_record:
                 sponsored_bills_table_data = sponsored_bills[(sponsored_bills['bioguideID'] == bioguideID) & (sponsored_bills['policy_area'] == policy_area)]
             else:
+                policy_area = None
                 sponsored_bills_table_data = sponsored_bills[sponsored_bills['bioguideID'] == bioguideID]
             
             # sponsored_bills_table_data = sponsored_bills_table_data[['title']]
@@ -580,30 +636,3 @@ with tab1:
             # fig_terms = plot_terms(dict(terms_df))
 
             # st.plotly_chart(fig_terms, use_container_width=False)
-
-
-
-    with col[1]:
-        if additional_data_df is not None:
-
-            display_term_summary(additional_data_df=additional_data_df, 
-                                 terms_df=terms_df, 
-                                 mem_name=selected_option, 
-                                 bioguideID=bioguideID)
-
-            # # Add Image
-            # imageURL = additional_data_df.iloc[0]['imageURL']
-            # st.image(imageURL,
-            #         caption=selected_option)        
-            
-            # st.text('Years Served')
-            # terms_table_data = terms_df[terms_df.bioguideID == bioguideID][['Start Year', 'End Year']]
-            # st.table(terms_table_data)
-
-with tab2:
-    col = st.columns((6, 2))
-    with col[0]:
-        st.title('Placeholder')
-        
-
-    

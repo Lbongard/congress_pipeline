@@ -14,6 +14,7 @@ SELECT sponsors.bioguideID
       ,sponsor_type
       ,bill_name
       ,title
+      ,url
       ,policy_area
       ,introducedDate
 FROM {{ref('dim_sponsors')}} sponsors join {{ref('dim_bills')}} bills on (sponsors.bill_key = bills.bill_key)

@@ -133,6 +133,7 @@ voting_results['title_linked'] = voting_results.apply(
 
 sponsored_bills_uri = f"gs://{bucket_name}/sponsored_bills_by_member.parquet"
 sponsored_bills = read_parquet_from_gcs(sponsored_bills_uri)
+sponsored_bills['introducedDate'] = pd.to_datetime(sponsored_bills['introducedDate']).dt.strftime('%Y-%m-%d')
 
 
 # @st.cache_data(ttl=86400) # Cache for 24 hours
@@ -332,8 +333,9 @@ policy_areas = query_policy_areas()
 
 def display_term_summary(additional_data_df, terms_df, mem_name, bioguideID):
     imageURL = additional_data_df.iloc[0]['imageURL']
-    st.image(imageURL,
-            caption=mem_name)        
+    if imageURL:
+            st.image(imageURL,
+                     caption=mem_name)        
     
     st.text('Years Served')
     terms_table_data = terms_df[terms_df.bioguideID == bioguideID][['Start Year', 'End Year']]
@@ -345,7 +347,7 @@ def display_term_summary(additional_data_df, terms_df, mem_name, bioguideID):
 ###### Start Streamlit Page ######
 with st.sidebar:
 
-    st.title('Congress Member Info App')
+    st.title('Congressional Member Info Data Tool')
 
     chambers = ['Senate', 'House of Representatives']
     selected_chamber = st.selectbox('Select a chamber of Congress:', 
@@ -360,11 +362,16 @@ with st.sidebar:
     options_df            = None
     selected_option       = None
     additional_data_df    = None
-    policy_area           = None
+    policy_area_voting_record = None
+    policy_area_indiv_votes = None
+    policy_area_sponsored_bills = None
     policy_area_selection_voting_record = None
     policy_area_selection_indiv_votes = None
+    policy_area_selection_sponsored_bills = None
     indiv_vote_display_options = None
     bill_keyword_indiv_votes = None
+    sponsored_bills_display_options = None
+    sponsored_bill_keyword = None
 
     st.markdown("---")
 
@@ -442,20 +449,25 @@ with st.sidebar:
             chamber = additional_data_df.iloc[0]['most_recent_chamber']
             bioguideID = additional_data_df.iloc[0]['bioguideID']
             partyName = additional_data_df.iloc[0]['partyName']
-            policy_areas = voting_results\
-                                    [(voting_results.bioguideID == bioguideID) & (voting_results.policy_area.isna() == False)]\
-                                    ['policy_area'].\
-                                    value_counts().sort_index()
+            policy_areas_voting_record = voting_results\
+                                        [(voting_results.bioguideID == bioguideID) & (voting_results.policy_area.isna() == False)]\
+                                        ['policy_area'].\
+                                        value_counts().sort_index()
+            policy_areas_sponsored_bills = sponsored_bills\
+                                           [(sponsored_bills.bioguideID == bioguideID) & (sponsored_bills.policy_area.isna() == False)]\
+                                           ['policy_area'].\
+                                           value_counts().sort_index()
+            
 
 with tab1:
     col = st.columns((6, 2))
     with col[0]:       
         if selected_option:
             
-            formatted_policy_list = [f"{item} | (n={count})" for item, count in policy_areas.items()]
+            formatted_policy_list_votes = [f"{item} | (n={count})" for item, count in policy_areas_voting_record.items()]
 
             policy_area_selection_voting_record = st.selectbox("Optional - Filter results by bill subject", 
-                                        formatted_policy_list,
+                                        formatted_policy_list_votes,
                                         index=None,
                                         key='policy_area_selection_voting_record')
             
@@ -465,12 +477,12 @@ with tab1:
             # st.button("Clear Policy Area Selection", on_click=reset_selection)
             
             if policy_area_selection_voting_record:
-                policy_area = policy_area_selection_voting_record.split(' | ')[0]
+                policy_area_voting_record = policy_area_selection_voting_record.split(' | ')[0]
             
             fig = plot_voting_records(results=voting_results, 
                                     bioguideID=bioguideID, 
                                     chamber=chamber,
-                                    policy_area=policy_area
+                                    policy_area=policy_area_voting_record
                                     )
             st.plotly_chart(fig, use_container_width=False)
             
@@ -498,28 +510,27 @@ with tab2:
     col = st.columns((6, 2))
     with col[0]:
         if selected_option:
-            
             indiv_vote_display_options = st.radio("Options:", ['See Recent Votes', 'Search Votes by Bill Keyword'])
 
             if indiv_vote_display_options == 'Search Votes by Bill Keyword':
                 bill_keyword_indiv_votes = st.text_input("Enter a Bill Keyword:")
-                keyword_filter = voting_results['title'].str.lower().str.contains(bill_keyword_indiv_votes.lower())
+                keyword_filter_indiv_votes = voting_results['title'].str.lower().str.contains(bill_keyword_indiv_votes.lower())
             else:
                 bill_keyword_indiv_votes = None
-                keyword_filter = True
+                keyword_filter_indiv_votes = True
 
             policy_area_selection_indiv_votes = st.selectbox("Optional - Filter results by bill subject", 
-                            formatted_policy_list,
+                            formatted_policy_list_votes,
                             index=None,
                             key='policy_area_selection_indiv_votes')
             
             if policy_area_selection_indiv_votes:
-                policy_area = policy_area_selection_indiv_votes.split(' | ')[0]
-                policy_area_filter = voting_results['policy_area'] == policy_area
+                policy_area_selection_indiv_votes = policy_area_selection_indiv_votes.split(' | ')[0]
+                policy_area_filter_indiv_votes = voting_results['policy_area'] == policy_area_selection_indiv_votes
             else:
-                policy_area_filter = True
+                policy_area_filter_indiv_votes = True
             
-            formatted_policy_list = [f"{item} | (n={count})" for item, count in policy_areas.items()]
+            # formatted_policy_list = [f"{item} | (n={count})" for item, count in policy_areas.items()]
 
 
                 
@@ -529,49 +540,78 @@ with tab2:
             # st.button("Clear Policy Area Selection", on_click=reset_selection)
                 
             # Display table of recent votes
-            display_cols = [
+            display_cols_indiv_votes = [
                 'vote_date', 'title', 'url', 'roll_call_number', 'policy_area', 'member_vote', 'dem_majority_vote', 'rep_majority_vote', 'result', 'partyName']
             
             # Account for IF THEN LOGIC
 
             
+            not_voting_condition     = "params.data.member_vote === 'not_voting' || params.data.member_vote === 'abstain'"
             dem_vote_match_condition = "params.data.member_vote === params.data.dem_majority_vote"
             rep_vote_match_condition = "params.data.member_vote === params.data.rep_majority_vote"
             
+
             if partyName == 'Democratic':
                 
                 dem_cell_style = \
-                highlight_mult_colors(primary_color="#abf7b1", # Light Green
-                                    secondary_color="#fcccbb", # Light Red
-                                    condition=dem_vote_match_condition
-                                        )
+                highlight_mult_colors(primary_condition=not_voting_condition, 
+                                      primary_color=None,
+                                      secondary_condition=dem_vote_match_condition, 
+                                      secondary_color="#abf7b1", # Light Green
+                                      final_color="#fcccbb" # Light Red
+                                     )
+                 
+                
+                # highlight_mult_colors(primary_color="#abf7b1", # Light Green
+                #                     secondary_color="#fcccbb", # Light Red
+                #                     condition=dem_vote_match_condition
+                #                         )
                 mem_cell_style = dem_cell_style # Replicating formatting for member vote
                 rep_cell_style = None # Do not format Rep vote cell
 
             elif partyName == 'Republican':
 
                 rep_cell_style = \
-                highlight_mult_colors(primary_color="#abf7b1", # Light Green
-                                    secondary_color="#fcccbb", # Light Red
-                                    condition=rep_vote_match_condition
-                                        )
+                highlight_mult_colors(primary_condition=not_voting_condition, 
+                                      primary_color=None,
+                                      secondary_condition=rep_vote_match_condition, 
+                                      secondary_color="#abf7b1", # Light Green
+                                      final_color="#fcccbb" # Light Red
+                                     )
+                
+                # highlight_mult_colors(primary_color="#abf7b1", # Light Green
+                #                     secondary_color="#fcccbb", # Light Red
+                #                     condition=rep_vote_match_condition
+                #                         )
                 mem_cell_style = rep_cell_style # Replicating formatting for member vote
                 dem_cell_style = None
 
             else:
                 mem_cell_style = None
                 dem_cell_style = \
-                highlight_mult_colors(primary_color="#abf7b1", # Light Green
-                                    secondary_color="#fcccbb", # Light Red
-                                    condition=dem_vote_match_condition
-                                        )
+                highlight_mult_colors(primary_condition=not_voting_condition, 
+                                      primary_color=None,
+                                      secondary_condition=dem_vote_match_condition, 
+                                      secondary_color="#abf7b1", # Light Green
+                                      final_color="#fcccbb" # Light Red
+                                     )
+                # highlight_mult_colors(primary_color="#abf7b1", # Light Green
+                #                     secondary_color="#fcccbb", # Light Red
+                #                     condition=dem_vote_match_condition
+                #                         )
                 rep_cell_style = \
-                highlight_mult_colors(primary_color="#abf7b1", # Light Green
-                                    secondary_color="#fcccbb", # Light Red
-                                    condition=rep_vote_match_condition
-                                        )                  
+                highlight_mult_colors(primary_condition=not_voting_condition, 
+                                      primary_color=None,
+                                      secondary_condition=rep_vote_match_condition, 
+                                      secondary_color="#abf7b1", # Light Green
+                                      final_color="#fcccbb" # Light Red
+                                     )
+                # highlight_mult_colors(primary_color="#abf7b1", # Light Green
+                #                     secondary_color="#fcccbb", # Light Red
+                #                     condition=rep_vote_match_condition
+                #                         )                  
             
-            formatter = {
+            formatter_indiv_votes = {
             'title': ('Title (Click for more info)', {'width': 250, 'wrapText': True, 'autoHeight': True, 'cellRenderer':cellRenderer}),
             # 'url': ('Link', {'cellRenderer':cellRenderer}),
             'member_vote': ('Member Vote', {'width': 115, 'autoHeight': True, 'cellStyle':mem_cell_style}),
@@ -579,17 +619,19 @@ with tab2:
             'rep_majority_vote': ('Rep Maj Vote', {'width': 115, 'autoHeight': True, 'cellStyle':rep_cell_style}),
             'result': ('Result', {'width': 125}),
             'policy_area': ('Policy Area', {'width': 150}),
-            'roll_call_number': ('Roll Call Vote', {'width': 110})
+            'roll_call_number': ('Roll Call Vote #', {'width': 110})
             }
             
             voting_results_table_data = voting_results[(voting_results['bioguideID'] == bioguideID) & \
-                                                       (keyword_filter) & \
-                                                       (policy_area_filter) & \
+                                                       (keyword_filter_indiv_votes) & \
+                                                       (policy_area_filter_indiv_votes) & \
                                                        (voting_results['url'].isna() == False)]\
-                                        [display_cols].\
+                                        [display_cols_indiv_votes].\
                                         set_index('vote_date').\
-                                        sort_index(ascending = False)\
-                                        # [display_cols]
+                                        sort_index(ascending = False)
+            
+            if indiv_vote_display_options == 'See Recent Votes':
+                voting_results_table_data = voting_results_table_data.head(25)
 
             st.title('Recent Voting Results')
             if voting_results_table_data.empty:
@@ -597,15 +639,13 @@ with tab2:
             else:
                 data = draw_grid(
                     voting_results_table_data,
-                    formatter=formatter,
+                    formatter=formatter_indiv_votes,
                     # fit_columns=True,
                     selection='single', 
                     max_height=300,
                     grid_options={'domLayout':'normal',
                                 'enableCellTextSelection':True}
                 )
-
-
 
     with col[1]:
         if additional_data_df is not None:
@@ -614,23 +654,79 @@ with tab2:
                                  mem_name=selected_option, 
                                  bioguideID=bioguideID)
         
-with tab2:
+with tab3:
     col = st.columns((6, 2))
     with col[0]:
         if selected_option:
-            if policy_area_selection_voting_record:
-                sponsored_bills_table_data = sponsored_bills[(sponsored_bills['bioguideID'] == bioguideID) & (sponsored_bills['policy_area'] == policy_area)]
+            sponsored_bills_display_options = st.radio("Options:", ['See Recent Sponsored Bills', 'Search Sponsored Bills by Keyword'])
+
+            formatted_policy_list_votes = [f"{item} | (n={count})" for item, count in policy_areas_sponsored_bills.items()]
+
+            policy_area_selection_sponsored_bills = st.selectbox("Optional - Filter results by bill subject", 
+                                                                 formatted_policy_list_votes,
+                                                                 index=None,
+                                                                 key='policy_area_selection_sponsored_bills')
+            
+            if policy_area_selection_sponsored_bills:
+                policy_area_selection_sponsored_bills = policy_area_selection_sponsored_bills.split(' | ')[0]
+                policy_area_filter_sponsored_bills = sponsored_bills['policy_area'] == policy_area_selection_sponsored_bills
             else:
-                policy_area = None
-                sponsored_bills_table_data = sponsored_bills[sponsored_bills['bioguideID'] == bioguideID]
+                policy_area_filter_sponsored_bills = True
+            
+            if sponsored_bills_display_options == 'Search Sponsored Bills by Keyword':
+                sponsored_bill_keyword = st.text_input("Enter a Bill Keyword:")
+                keyword_filter_sponsored_bills = sponsored_bills['title'].str.lower().str.contains(sponsored_bill_keyword.lower())
+            else:
+                sponsored_bill_keyword = None
+                keyword_filter_sponsored_bills = True
+
+            display_cols_sponsored_bills = ['title', 'url', 'sponsor_type', 'policy_area', 'introducedDate']
+            
+            sponsored_bills_table_data = sponsored_bills[(sponsored_bills['bioguideID'] == bioguideID) & \
+                                                       (keyword_filter_sponsored_bills) & \
+                                                       (policy_area_filter_sponsored_bills) & \
+                                                       (sponsored_bills['url'].isna() == False)]\
+                                                        [display_cols_sponsored_bills].\
+                                                        sort_values('introducedDate', ascending=False)
+                                                        # set_index('introducedDate').\
+                                                        # sort_index(ascending = False)
+            
+
+            formatter_sponsored_bills = {
+            'title': ('Title (Click for more info)', {'width': 350, 'wrapText': True, 'autoHeight': True, 'cellRenderer':cellRenderer}),
+            # 'url': ('Link', {'cellRenderer':cellRenderer}),
+            'sponsor_type': ('Sponsor Type', {'width': 125}),
+            'policy_area': ('Policy Area', {'width': 200}),
+            'introducedDate': ('Date Introduced', {'width': 150, 'autoHeight': True}),
+            }
+
             
             # sponsored_bills_table_data = sponsored_bills_table_data[['title']]
+
+            if sponsored_bills_display_options == 'See Recent Sponsored Bills':
+                sponsored_bills_table_data = sponsored_bills_table_data.head(25)
 
             if sponsored_bills_table_data.empty:
                 st.text('No sponsored legislation found for this member.')
             else:
                 st.text('Recent Sponsored Legislation')
-                st.table(sponsored_bills_table_data.sort_values('introducedDate', ascending = False).head(25))
+                data = draw_grid(
+                    sponsored_bills_table_data,
+                    formatter=formatter_sponsored_bills,
+                    # fit_columns=True,
+                    selection='single', 
+                    max_height=300,
+                    grid_options={'domLayout':'normal',
+                                'enableCellTextSelection':True}
+
+                )
+    with col[1]:
+        if additional_data_df is not None:
+            display_term_summary(additional_data_df=additional_data_df, 
+                                 terms_df=terms_df, 
+                                 mem_name=selected_option, 
+                                 bioguideID=bioguideID)
+
 
             # terms_df = query_term_data(bioguideID)
             # fig_terms = plot_terms(dict(terms_df))

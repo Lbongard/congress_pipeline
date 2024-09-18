@@ -77,18 +77,42 @@ def highlight(color, condition):
     return JsCode(code)
 
 
-def highlight_mult_colors(primary_color, secondary_color, condition):
+# def highlight_mult_colors(primary_color, secondary_color, condition):
+#     code = f"""
+#         function(params) {{
+#             var primaryColor = "{primary_color}";
+#             var secondaryColor = "{secondary_color}";
+#             if ({condition}) {{
+#                 return {{
+#                     'backgroundColor': primaryColor
+#                 }};
+#             }} else {{
+#                 return {{
+#                     'backgroundColor': secondaryColor
+#                 }};
+#             }}
+#         }}
+#     """
+#     return JsCode(code)
+
+# following added by Reid Bongard to account for specific highlighting conditions
+def highlight_mult_colors(primary_condition, primary_color, secondary_condition, secondary_color, final_color):
     code = f"""
         function(params) {{
             var primaryColor = "{primary_color}";
             var secondaryColor = "{secondary_color}";
-            if ({condition}) {{
+            var finalColor = "{final_color}";
+            if ({primary_condition}) {{
                 return {{
                     'backgroundColor': primaryColor
                 }};
-            }} else {{
+            }} else if ({secondary_condition}) {{
                 return {{
                     'backgroundColor': secondaryColor
+                }};
+            }} else {{
+                return {{
+                    'backgroundColor': finalColor
                 }};
             }}
         }}
@@ -96,22 +120,58 @@ def highlight_mult_colors(primary_color, secondary_color, condition):
     return JsCode(code)
 
 
+
 # following added by Reid Bongard to account for specific highlighting conditions
-def highlight_mult_condition(primary_color, secondary_color, condition, secondary_condition):
-    code = f"""
+# def highlight_mult_condition(primary_color, secondary_color, condition, secondary_condition):
+#     code = f"""
+#         function(params) {{
+#             var primaryColor = "{primary_color}";
+#             var secondaryColor = "{secondary_color}";
+#             if ({condition}) {{
+#                 if ({secondary_condition}) {{
+#                     return {{'backgroundColor': primaryColor}};
+#                 }} else {{
+#                     return {{'backgroundColor': secondaryColor}};
+#                 }}
+#             }}
+#         }}
+#     """
+#     return JsCode(code)
+
+def highlight_mult_condition(conditions_colors, fallback_color):
+    """
+    conditions_colors: A list of tuples where each tuple contains a condition (str) and corresponding color (str).
+    Example: [("params.data.vote === 'not_voting'", "red"), ("params.data.vote === 'abstain'", "yellow")]
+
+    fallback_color: The background color to use if none of the conditions are met.
+    """
+    code = """
         function(params) {{
-            var primaryColor = "{primary_color}";
-            var secondaryColor = "{secondary_color}";
+            """
+    # Define color variables
+    for num, (condition, color) in enumerate(conditions_colors):
+        code += f"""
+            var Color{num} = "{color}";
+        """
+    
+    # Add conditions to check each color
+    for num, (condition, _) in enumerate(conditions_colors):
+        code += f"""
             if ({condition}) {{
-                if ({secondary_condition}) {{
-                    return {{'backgroundColor': primaryColor}};
-                }} else {{
-                    return {{'backgroundColor': secondaryColor}};
-                }}
+                return {{'backgroundColor': Color{num}}};
+            }}
+        """
+    
+    # Add the fallback color in the else block
+    code += f"""
+            else {{
+                return {{'backgroundColor': '{fallback_color}'}};
             }}
         }}
     """
     return JsCode(code)
+
+
 
 # following added by Reid Bongard to link text to a url in a table
 cellRenderer = JsCode("""

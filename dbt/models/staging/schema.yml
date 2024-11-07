@@ -2,11 +2,12 @@ version: 2
 sources:
   - name: staging
     database: "{{ env_var('DBT_GCP_PROJECT') }}"
-    schema: Congress
+    schema: Congress_Stg
 
     tables:
-      - name: members
-      - name: bill_status
-      - name: votes
-      - name: senate_ids
+      - name: bills_External
+      - name: house_votes_External
+      - name: members_External
+      - name: senate_ids_External
+      - name: senate_votes_External
 

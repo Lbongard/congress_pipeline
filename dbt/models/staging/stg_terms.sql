@@ -1,12 +1,10 @@
 with source as(
-    select * from {{source('staging', 'members')}}
+    select * from {{source('staging', 'members_External')}}
 )
 
-select s.bioguideID,
-       item.startYear term_start_year,
-       item.endYear term_end_year,
-       item.chamber
-from source s, 
-     UNNEST(terms.item) as item
-
-
+select bioguideId
+       ,terms_list.* EXCEPT(startYear, endYear)
+       ,terms_list.startYear term_start_year
+       ,terms_list.endYear term_end_year
+from source
+,UNNEST(terms) terms_list

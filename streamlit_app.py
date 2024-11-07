@@ -349,14 +349,25 @@ with st.sidebar:
 
     st.title('Congressional Member Info Data Tool')
 
+    congress_sessions = [ "116th Congress (2019-2020)",
+                          "117th Congress (2021-2022)",
+                          "118th Congress (2023-2024)"]
+    
+    congress_session = st.selectbox('Select a Congressional Session:',
+                                    congress_sessions,
+                                    index=2
+                                    )
+    
     chambers = ['Senate', 'House of Representatives']
     selected_chamber = st.selectbox('Select a chamber of Congress:', 
                                     chambers, 
                                     index=None)
 
-    selected_method = st.selectbox('Select a search method:', ['Search Member by State, Zip Code', 'Search Member by Name'],
-                                index=None)
+    if selected_chamber:
+        selected_method = st.selectbox('Select a search method:', ['Search Member by State, Zip Code', 'Search Member by Name'],
+                                       index=None)
     # Initialize geo and last_name to None
+    selected_method       = None
     geo                   = None
     last_name             = None
     options_df            = None
@@ -387,7 +398,7 @@ with st.sidebar:
         "Virginia", "Washington", "West Virginia", "Wisconsin", "Wyoming"
     ]
 
-
+    
     
     if selected_method == 'Search Member by State, Zip Code':
 

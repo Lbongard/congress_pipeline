@@ -57,9 +57,9 @@
 with members_staged as(
 
   select distinct * except(depiction)
-  from {{ref("stg_members")}}),
+  from {{ref("stg_members")}})
 
-senate_ids as(
+,senate_ids as(
   -- overrides used to fill in incorrect / missing data in list from senate website
   select distinct ids.first_name,
                   ids.last_name,
@@ -73,20 +73,20 @@ senate_ids as(
 still_serving as(
     select * 
            ,row_number() over(partition by bioguideID, chamber order by term_start_year desc) row_num
-           ,1 as currently_serving
     from {{ref("stg_terms")}}
-    where term_end_year IS NULL
+    where bioguideId in (SELECT bioguideID 
+                         FROM {{ref("stg_members")}}
+                         WHERE currentMember = True)
 ),
 
 no_longer_serving as(
-  select *
+  select * 
          ,row_number() over(partition by bioguideID order by term_end_year desc) row_num
-         ,0 as currently_serving
   from {{ref("stg_terms")}}
   where bioguideID not in (select bioguideID from still_serving)
 ),
 
-current_chamber as(
+most_recent_chamber_cte as(
   select *
   from still_serving
   where row_num = 1
@@ -100,8 +100,9 @@ current_chamber as(
 
 SELECT mems.* 
        ,chmbr.chamber most_recent_chamber
-       ,chmbr.currently_serving currently_serving
        , senate_ids.lisid
 FROM members_staged mems 
-      left join current_chamber chmbr on (mems.bioguideID = chmbr.bioguideID)
+      left join most_recent_chamber_cte chmbr on (mems.bioguideID = chmbr.bioguideID)
       left join senate_ids on (mems.bioguideID = senate_ids.bioguideID)
+
+

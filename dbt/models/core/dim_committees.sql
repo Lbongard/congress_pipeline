@@ -6,10 +6,14 @@
 
 with 
 source as(
-    select * from {{ref("stg_bills")}}
+     select *
+    from {{ref("stg_bills")}}
 )
 
-select  distinct bill_key
-        ,item.*
-        from source,
-        UNNEST(committees.item) item
+SELECT 
+        DISTINCT 
+            JSON_EXTRACT_SCALAR(committee, '$.chamber') chamber
+            ,JSON_EXTRACT_SCALAR(committee, '$.name') name
+            ,JSON_EXTRACT_SCALAR(committee, '$.systemCode') systemCode
+FROM source,
+UNNEST(JSON_EXTRACT_ARRAY(committees, '$.item')) AS committee

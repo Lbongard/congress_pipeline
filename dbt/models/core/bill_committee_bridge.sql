@@ -6,14 +6,14 @@
 
 with 
 source as(
-    select bills.bill_key
-           ,bills.bill_name
-           ,committees.name
-           ,committees.chamber
-    from {{ref("dim_bills")}} bills join {{ref("dim_committees")}} committees
-        on (bills.bill_key = committees.bill_key)
-
+     select *
+    from {{ref("stg_bills")}}
 )
 
-select *
-from source
+SELECT distinct 
+            bill_key
+            ,JSON_EXTRACT_SCALAR(committee, '$.chamber') chamber
+            ,JSON_EXTRACT_SCALAR(committee, '$.name') name
+            ,JSON_EXTRACT_SCALAR(committee, '$.systemCode') systemCode
+FROM source,
+UNNEST(JSON_EXTRACT_ARRAY(committees, '$.item')) AS committee

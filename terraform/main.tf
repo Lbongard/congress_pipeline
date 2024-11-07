@@ -37,4 +37,16 @@ resource "google_bigquery_dataset" "dataset" {
   delete_contents_on_destroy = true
 }
 
+resource "google_bigquery_dataset" "dataset_stg" {
+  dataset_id = "Congress_Stg"
+  location   = "US"
+  delete_contents_on_destroy = true
+}
+
+resource "google_bigquery_dataset" "dataset_target" {
+  dataset_id = "Congress_Target"
+  location   = "US"
+  delete_contents_on_destroy = true
+}
+
 

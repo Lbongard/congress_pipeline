@@ -63,14 +63,15 @@ votes_by_party as(
 
 select distinct 
        -- Add bill key in DBT
-       svc.vote_number roll_call_number,
+       CAST(svc.vote_number AS INT) roll_call_number,
        svc.bill_key,
-       FORMAT_DATE('%Y-%m-%d', PARSE_DATETIME('%B %d, %Y, %I:%M %p', svc.vote_date)) vote_date,
+       FORMAT_DATE('%Y-%m-%d', PARSE_DATETIME('%B %d, %Y, %I:%M %p', svc.vote_date)) as vote_date,
        CAST(svc.congress AS INT) congress, 
        CAST(svc.session AS INT) session,
        svc.bill_type,
        svc.chamber,
        svc.bill_name,
+       question,
        svc.vote_result result,
        COALESCE(CAST(svc.count.yeas AS INT), 0) yea_totals,
        COALESCE(CAST(svc.count.nays AS INT), 0) nay_totals,

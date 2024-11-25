@@ -47,6 +47,7 @@ with source as(
 -- from source
 
 SELECT distinct bill_key
+      ,concat(type, number) bill_name
       ,number
       ,type
       ,title
@@ -77,5 +78,6 @@ SELECT distinct bill_key
             )as url
         ,JSON_VALUE(policyArea, '$.name') policyArea
         ,updateDateIncludingText
+        ,CAST(introducedDate AS DATE) introducedDate 
 
 FROM source

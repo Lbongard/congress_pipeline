@@ -56,7 +56,7 @@
 
 with members_staged as(
 
-  select distinct * except(depiction)
+  select *
   from {{ref("stg_members")}})
 
 ,senate_ids as(
@@ -72,7 +72,7 @@ with members_staged as(
 
 still_serving as(
     select * 
-           ,row_number() over(partition by bioguideID, chamber order by term_start_year desc) row_num
+           ,row_number() over(partition by bioguideID order by term_start_year desc) row_num
     from {{ref("stg_terms")}}
     where bioguideId in (SELECT bioguideID 
                          FROM {{ref("stg_members")}}
@@ -96,13 +96,33 @@ most_recent_chamber_cte as(
   select *
   from no_longer_serving
   where row_num = 1
+),
+
+most_recent_party_cte as(
+  SELECT distinct 
+          bioguideID
+         ,partyGrouped
+  FROM {{ref("dim_party_history")}}
+  QUALIFY ROW_NUMBER() OVER(PARTITION BY bioguideID ORDER BY startYear DESC) = 1
+
 )
 
-SELECT mems.* 
-       ,chmbr.chamber most_recent_chamber
-       , senate_ids.lisid
+SELECT DISTINCT
+       mems.bioguideID
+       ,mems.firstName
+       ,mems.lastName
+       ,mems.invertedOrderName
+       ,mems.state
+       ,mems.depiction.imageURL
+       ,mems.birthYear
+       ,mems.deathYear
+       ,chmbr.chamber mostRecentChamber
+       ,mems.currentMember
+       ,senate_ids.lisid
+       ,parties.partyGrouped mostRecentParty
 FROM members_staged mems 
       left join most_recent_chamber_cte chmbr on (mems.bioguideID = chmbr.bioguideID)
       left join senate_ids on (mems.bioguideID = senate_ids.bioguideID)
+      left join most_recent_party_cte parties on (mems.bioguideID = parties.bioguideID)
 
 

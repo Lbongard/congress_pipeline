@@ -81,7 +81,7 @@ if __name__ == "__main__":
    
    bucket_name = os.getenv("streamlit_data_bucket_name")
    project = os.getenv("TF_VAR_gcp_project")
-   dataset_id = "Congress"
+   dataset_id = "Congress_Target"
 
    delete_bucket_contents(bucket_name=bucket_name)
    tables_to_export = ["sponsored_bills_by_member", "votes_by_member"]

@@ -49,59 +49,87 @@ tab1, tab2, tab3 = st.tabs(["Overall Voting Record", "Recent Votes", "Sponsored 
 ##### Functions for Querying Selection Options #####
 
 
-def query_options_by_geo(chamber, geo):
+def query_options_by_geo(chamber, geo, congress):
+
+
+    # with distinct_members_cte as(
+    #             select distinct  mems.invertedOrderName 
+    #                             ,mems.state 
+    #                             ,mems.bioguideID
+    #                             ,mems.imageURL
+    #                             ,mems.mostRecentParty
+    #             from `Congress_Target.dim_members` mems 
+    #                 LEFT JOIN `Congress_Target.dim_terms` terms on (mems.bioguideID = terms.bioguideID AND terms.Congress = 118)
+    #                 JOIN `Congress_Target.dim_congressional_districts` dists
+    #             on (COALESCE(terms.district, 0) = dists.congressional_district and (terms.stateName = dists.state))
+    #             where mems.mostRecentChamber = 'House of Representatives'
+    #                   AND dists.zip_code = 92117
+    #                   AND mems.bioguideID in (SELECT distinct bioguideID from `Congress_Target.fact_roll_call_vote`)
+    #             order by mems.state ASC
+    #             )
+
+    #             select concat(invertedOrderName, " | ", LEFT(mostRecentParty, 1), " - ", state) concat_name
+    #             from distinct_members_cte
     
     if chamber == 'Senate':
         geo_filter = f"mems.state = '{geo}'"
         dist_join_condition = ''
-        votes_filter = 'mems.lisid in (SELECT distinct lisid from `Congress.fact_roll_call_vote`)'
+        votes_filter = 'mems.lisid in (SELECT distinct lisid from `Congress_Target.fact_roll_call_vote`)'
     elif chamber == 'House of Representatives':
         geo_filter = f'dists.zip_code = {geo}'
-        dist_join_condition = '(COALESCE(mems.district, 0) = dists.congressional_district) and'
-        votes_filter = 'mems.bioguideID in (SELECT distinct bioguideID from `Congress.fact_roll_call_vote`)'
+        dist_join_condition = '(COALESCE(terms.district, 0) = dists.congressional_district) and'
+        votes_filter = 'mems.bioguideID in (SELECT distinct bioguideID from `Congress_Target.fact_roll_call_vote`)'
 
     query = f"""
                 with distinct_members_cte as(
-                select distinct  mems.name 
+                select distinct  mems.invertedOrderName 
                                 ,mems.state 
                                 ,mems.bioguideID
                                 ,mems.imageURL
-                                ,mems.partyName
-                from `Congress.dim_members` mems join `Congress.dim_congressional_districts` dists
+                                ,mems.mostRecentParty
+                from `Congress_Target.dim_members` mems 
+                    LEFT JOIN `Congress_Target.dim_terms` terms on (mems.bioguideID = terms.bioguideID)
+                    JOIN `Congress_Target.dim_congressional_districts` dists
                 on {dist_join_condition} (mems.state = dists.state)
-                where mems.most_recent_chamber = '{chamber}' 
+                where mems.mostRecentChamber = '{chamber}' 
                       AND {geo_filter}
                       AND {votes_filter}
+                      AND terms.Congress = {congress}
                 order by mems.state ASC)
 
-                select concat(name, " | ", partyName, " - ", state) concat_name
+                select concat(invertedOrderName, " | ", LEFT(mostRecentParty, 1), " - ", state) concat_name
                 from distinct_members_cte
     """
     query_job = client.query(query)
     results = query_job.result().to_dataframe()
     return results
 
-def query_options_by_name(chamber, search_name):
+def query_options_by_name(chamber, search_name, congress):
+    
+    search_name_lower = search_name.lower()
     
     if chamber == 'Senate':
-        votes_filter = 'mems.lisid in (SELECT distinct lisid from `Congress.fact_roll_call_vote`)'
+        votes_filter = 'mems.lisid in (SELECT distinct lisid from `Congress_Target.fact_roll_call_vote`)'
     elif chamber == 'House of Representatives':
-        votes_filter = 'mems.bioguideID in (SELECT distinct bioguideID from `Congress.fact_roll_call_vote`)'
+        votes_filter = 'mems.bioguideID in (SELECT distinct bioguideID from `Congress_Target.fact_roll_call_vote`)'
 
     query = f"""
-                with distinct_members_cte as(
-                select distinct  name 
+               with distinct_members_cte as(
+                select distinct  invertedOrderName 
                                 ,state 
-                                ,bioguideID
+                                ,mems.bioguideID
                                 ,imageURL
-                                ,partyName
-                from `Congress.dim_members` mems 
-                where mems.most_recent_chamber = '{chamber}' 
-                      AND name LIKE '%{search_name}%'
+                                ,mostRecentParty
+                                ,terms.congress
+                from `Congress_Target.dim_members` mems 
+                     LEFT JOIN `Congress_Target.dim_terms` terms on (mems.bioguideID = terms.bioguideID)
+                      where mems.mostRecentChamber = '{chamber}'
+                      AND lower(lastName) LIKE '%{search_name_lower}%'
                       AND {votes_filter}
+                      AND terms.Congress = {congress}
                 order by mems.state ASC)
 
-                select concat(name, " | ", partyName, " - ", state) concat_name
+                select concat(invertedOrderName, " | ", LEFT(mostRecentParty, 1), " - ", state) concat_name
                 from distinct_members_cte
     """
     query_job = client.query(query)
@@ -152,7 +180,7 @@ def vote_cnt_by_member(x):
 
 def calculate_votes_w_party(results, chamber, policy_area=None):
     if policy_area:
-        df = results[(results.policy_area == policy_area) & (results.chamber == chamber)]
+        df = results[(results.policyArea == policy_area) & (results.chamber == chamber)]
     else:
         df = results[results.chamber == chamber]
     
@@ -184,7 +212,7 @@ def plot_voting_records(results, bioguideID, chamber, policy_area=None):
     votes_with_party_all = calculate_votes_w_party(results=results, chamber=chamber, policy_area=policy_area)
     
     if policy_area:
-        vote_count = results[(results.policy_area == policy_area) & (results.bioguideID == bioguideID)].shape[0]
+        vote_count = results[(results.policyArea == policy_area) & (results.bioguideID == bioguideID)].shape[0]
     else:
         vote_count = results[(results.bioguideID == bioguideID)].shape[0]
 
@@ -243,7 +271,7 @@ def plot_voting_records(results, bioguideID, chamber, policy_area=None):
 
     fig.update_layout(
         title=dict(
-            text=f"{rep_title} {rep_name.split(',')[0]} votes with Democrats {dem_majority_votes:.0%} of the time and Republicans {rep_majority_votes:.0%} of the time"
+            text=f"{rep_title} {rep_name.split(',')[0]}'s vote align with the Democratic majority {dem_majority_votes:.0%} of the time <br>and the Republican majority {rep_majority_votes:.0%} of the time"
                  f"{' on bills related to ' + policy_area if policy_area else ''}"
                  f" (n = {vote_count} votes)",
             x=0.5,  
@@ -267,8 +295,8 @@ def plot_voting_records(results, bioguideID, chamber, policy_area=None):
 def query_by_name(selected_option):
     query = f"""
     SELECT *
-    FROM `Congress.dim_members`
-    WHERE name = '{selected_option}'
+    FROM `Congress_Target.dim_members`
+    WHERE invertedOrderName = '{selected_option}'
     """
     query_job = client.query(query)
     results = query_job.result().to_dataframe()
@@ -278,7 +306,7 @@ def query_by_name(selected_option):
 def query_members(selected_option):
     query = f"""
     SELECT distinct name
-    FROM `Congress.dim_members`
+    FROM `Congress_Target.dim_members`
     WHERE name LIKE '%{selected_option}%'
     """
     query_job = client.query(query)
@@ -296,11 +324,11 @@ def query_members(selected_option):
 def query_term_data():
 
     query = f"""
-    SELECT chamber,
+    SELECT distinct chamber,
            term_start_year, 
            term_end_year,
            bioguideID
-    FROM `Congress.dim_terms`
+    FROM `Congress_Target.vw_terms_condensed`
     order by term_start_year
     """
     
@@ -320,9 +348,9 @@ terms_df = query_term_data()
 @st.cache_data
 def query_policy_areas():
     query = f"""
-    SELECT distinct policy_area
-    FROM `Congress.dim_bills`
-    WHERE bill_key in (SELECT bill_key FROM `Congress.fact_roll_call_vote`)
+    SELECT distinct policyArea
+    FROM `Congress_Target.dim_bills`
+    WHERE bill_key in (SELECT bill_key FROM `Congress_Target.fact_roll_call_vote`)
     """
     query_job = client.query(query)
     results = query_job.result().to_dataframe()
@@ -347,25 +375,6 @@ def display_term_summary(additional_data_df, terms_df, mem_name, bioguideID):
 ###### Start Streamlit Page ######
 with st.sidebar:
 
-    st.title('Congressional Member Info Data Tool')
-
-    congress_sessions = [ "116th Congress (2019-2020)",
-                          "117th Congress (2021-2022)",
-                          "118th Congress (2023-2024)"]
-    
-    congress_session = st.selectbox('Select a Congressional Session:',
-                                    congress_sessions,
-                                    index=2
-                                    )
-    
-    chambers = ['Senate', 'House of Representatives']
-    selected_chamber = st.selectbox('Select a chamber of Congress:', 
-                                    chambers, 
-                                    index=None)
-
-    if selected_chamber:
-        selected_method = st.selectbox('Select a search method:', ['Search Member by State, Zip Code', 'Search Member by Name'],
-                                       index=None)
     # Initialize geo and last_name to None
     selected_method       = None
     geo                   = None
@@ -383,6 +392,27 @@ with st.sidebar:
     bill_keyword_indiv_votes = None
     sponsored_bills_display_options = None
     sponsored_bill_keyword = None
+
+    st.title('Congressional Member Info Data Tool')
+
+    congress_sessions = [ "116th Congress (2019-2020)",
+                          "117th Congress (2021-2022)",
+                          "118th Congress (2023-2024)"]
+    
+    congress_session_selection = st.selectbox('Select a Congressional Session:',
+                                    congress_sessions,
+                                    index=2
+                                    )
+    congress_session = int(congress_session_selection[:3])
+    
+    chambers = ['Senate', 'House of Representatives']
+    selected_chamber = st.selectbox('Select a chamber of Congress:', 
+                                    chambers, 
+                                    index=None)
+
+    if selected_chamber:
+        selected_method = st.selectbox('Select a search method:', ['Search Member by State, Zip Code', 'Search Member by Name'],
+                                       index=None)
 
     st.markdown("---")
 
@@ -414,22 +444,21 @@ with st.sidebar:
     
         if geo:
             try:
-                options_df = query_options_by_geo(chamber=selected_chamber, geo=geo)
+                options_df = query_options_by_geo(chamber=selected_chamber, geo=geo, congress=congress_session)
             except Exception as e:
                 st.write('An error occurred. Please ensure that your entry is valid.')
+                st.error(e)
                 st.stop()
     
     
     if selected_method == 'Search Member by Name':
 
-        first_name = st.text_input("Enter your representative's first name (Optional)")
         last_name = st.text_input("Enter your representative's last name:")
 
         if last_name:
-            search_name = last_name + ", " + first_name
         
             try:
-                options_df = query_options_by_name(chamber=selected_chamber, search_name=search_name)
+                options_df = query_options_by_name(chamber=selected_chamber, search_name=last_name, congress=congress_session)
             except Exception as e:
                 st.write('An error occurred. Please ensure that your entry is valid.')
                 st.stop()
@@ -457,16 +486,16 @@ with st.sidebar:
             except Exception as e:
                 st.write('An error occurred.')
             
-            chamber = additional_data_df.iloc[0]['most_recent_chamber']
+            chamber = additional_data_df.iloc[0]['mostRecentChamber']
             bioguideID = additional_data_df.iloc[0]['bioguideID']
-            partyName = additional_data_df.iloc[0]['partyName']
+            partyName = additional_data_df.iloc[0]['mostRecentParty']
             policy_areas_voting_record = voting_results\
-                                        [(voting_results.bioguideID == bioguideID) & (voting_results.policy_area.isna() == False)]\
-                                        ['policy_area'].\
+                                        [(voting_results.bioguideID == bioguideID) & (voting_results.policyArea.isna() == False)]\
+                                        ['policyArea'].\
                                         value_counts().sort_index()
             policy_areas_sponsored_bills = sponsored_bills\
-                                           [(sponsored_bills.bioguideID == bioguideID) & (sponsored_bills.policy_area.isna() == False)]\
-                                           ['policy_area'].\
+                                           [(sponsored_bills.bioguideID == bioguideID) & (sponsored_bills.policyArea.isna() == False)]\
+                                           ['policyArea'].\
                                            value_counts().sort_index()
             
 
@@ -537,9 +566,12 @@ with tab2:
             
             if policy_area_selection_indiv_votes:
                 policy_area_selection_indiv_votes = policy_area_selection_indiv_votes.split(' | ')[0]
-                policy_area_filter_indiv_votes = voting_results['policy_area'] == policy_area_selection_indiv_votes
+                policy_area_filter_indiv_votes = voting_results['policyArea'] == policy_area_selection_indiv_votes
             else:
                 policy_area_filter_indiv_votes = True
+
+
+
             
             # formatted_policy_list = [f"{item} | (n={count})" for item, count in policy_areas.items()]
 
@@ -552,7 +584,7 @@ with tab2:
                 
             # Display table of recent votes
             display_cols_indiv_votes = [
-                'vote_date', 'title', 'url', 'roll_call_number', 'policy_area', 'member_vote', 'dem_majority_vote', 'rep_majority_vote', 'result', 'partyName']
+                'vote_date', 'question', 'title', 'url', 'roll_call_number', 'policyArea', 'member_vote', 'dem_majority_vote', 'rep_majority_vote', 'result', 'partyName']
             
             # Account for IF THEN LOGIC
 
@@ -569,7 +601,8 @@ with tab2:
                                       primary_color=None,
                                       secondary_condition=dem_vote_match_condition, 
                                       secondary_color="#abf7b1", # Light Green
-                                      final_color="#fcccbb" # Light Red
+                                      final_color="#fcccbb", # Light Red
+                                      font_size=12
                                      )
                  
                 
@@ -587,7 +620,8 @@ with tab2:
                                       primary_color=None,
                                       secondary_condition=rep_vote_match_condition, 
                                       secondary_color="#abf7b1", # Light Green
-                                      final_color="#fcccbb" # Light Red
+                                      final_color="#fcccbb", # Light Red
+                                      font_size=12
                                      )
                 
                 # highlight_mult_colors(primary_color="#abf7b1", # Light Green
@@ -604,7 +638,8 @@ with tab2:
                                       primary_color=None,
                                       secondary_condition=dem_vote_match_condition, 
                                       secondary_color="#abf7b1", # Light Green
-                                      final_color="#fcccbb" # Light Red
+                                      final_color="#fcccbb", # Light Red
+                                      font_size=12
                                      )
                 # highlight_mult_colors(primary_color="#abf7b1", # Light Green
                 #                     secondary_color="#fcccbb", # Light Red
@@ -615,7 +650,8 @@ with tab2:
                                       primary_color=None,
                                       secondary_condition=rep_vote_match_condition, 
                                       secondary_color="#abf7b1", # Light Green
-                                      final_color="#fcccbb" # Light Red
+                                      final_color="#fcccbb", # Light Red
+                                      font_size=12
                                      )
                 # highlight_mult_colors(primary_color="#abf7b1", # Light Green
                 #                     secondary_color="#fcccbb", # Light Red
@@ -623,14 +659,15 @@ with tab2:
                 #                         )                  
             
             formatter_indiv_votes = {
-            'title': ('Title (Click for more info)', {'width': 250, 'wrapText': True, 'autoHeight': True, 'cellRenderer':cellRenderer}),
+            'title': ('Title (Click for more info)', {'width': 200, 'wrapText': True, 'autoHeight': True, 'cellRenderer':cellRenderer, 'cellStyle': {'font-size': '12px'}}),
+            'question': ('Question', {'width': 125,'wrapText': True, 'autoHeight': True, 'cellStyle': {'font-size': '12px'}}),
             # 'url': ('Link', {'cellRenderer':cellRenderer}),
             'member_vote': ('Member Vote', {'width': 115, 'autoHeight': True, 'cellStyle':mem_cell_style}),
             'dem_majority_vote': ('Dem Maj Vote', {'width': 115, 'autoHeight': True, 'cellStyle':dem_cell_style}),
             'rep_majority_vote': ('Rep Maj Vote', {'width': 115, 'autoHeight': True, 'cellStyle':rep_cell_style}),
-            'result': ('Result', {'width': 125}),
-            'policy_area': ('Policy Area', {'width': 150}),
-            'roll_call_number': ('Roll Call Vote #', {'width': 110})
+            'result': ('Result', {'width': 125, 'cellStyle': {'font-size': '12px'}}),
+            # 'policyArea': ('Policy Area', {'width': 150}),
+            'roll_call_number': ('Vote #', {'width': 110, 'cellStyle': {'font-size': '12px'}})
             }
             
             voting_results_table_data = voting_results[(voting_results['bioguideID'] == bioguideID) & \
@@ -641,22 +678,83 @@ with tab2:
                                         set_index('vote_date').\
                                         sort_index(ascending = False)
             
-            if indiv_vote_display_options == 'See Recent Votes':
-                voting_results_table_data = voting_results_table_data.head(25)
 
-            st.title('Recent Voting Results')
-            if voting_results_table_data.empty:
-                st.text("No Votes to Display")
-            else:
-                data = draw_grid(
-                    voting_results_table_data,
-                    formatter=formatter_indiv_votes,
-                    # fit_columns=True,
-                    selection='single', 
-                    max_height=300,
-                    grid_options={'domLayout':'normal',
-                                'enableCellTextSelection':True}
+            #### PAGINATION LOGIC STARTS HERE
+
+            # Code adapted from Carlos Serrano: https://medium.com/streamlit/paginating-dataframes-with-streamlit-2da29b080920
+
+            st.markdown("---")
+            
+            
+            page_selection_menu = st.columns((4, 1, 1))
+
+            with page_selection_menu[0]:
+                st.markdown("<h3><b>Recent Voting Results</b> ✅</h3>", unsafe_allow_html=True)
+            with page_selection_menu[2]:
+                batch_size = st.selectbox("Page Size", options=[25, 50, 100], key='voting_results_size')
+            with page_selection_menu[1]:
+                total_pages = (
+                    int(len(voting_results_table_data) / batch_size) if int(len(voting_results_table_data) / batch_size) > 0 else 1
                 )
+                current_page = st.number_input(
+                    "Page", min_value=1, max_value=total_pages, step=1, key='voting_results_page'
+                )
+           
+            pagination_voting_results = st.container()
+
+            bottom_menu = st.columns((4, 1, 1))
+
+            # with bottom_menu[2]:
+            #     batch_size = st.selectbox("Page Size", options=[25, 50, 100], key='voting_results_size')
+            # with bottom_menu[1]:
+            #     total_pages = (
+            #         int(len(voting_results_table_data) / batch_size) if int(len(voting_results_table_data) / batch_size) > 0 else 1
+            #     )
+                # current_page = st.number_input(
+                #     "Page", min_value=1, max_value=total_pages, step=1, key='voting_results_page'
+                # )
+            with bottom_menu[0]:
+                st.markdown(f"Page **{current_page}** of **{total_pages}** ")
+
+
+            #### Display Logic Continues Here
+            with pagination_voting_results:
+                # if indiv_vote_display_options == 'See Recent Votes':
+                voting_results_table_data = voting_results_table_data.iloc[(current_page-1)*batch_size:(current_page-1)*batch_size+(batch_size+1), :]
+
+                if voting_results_table_data.empty:
+                    st.text("No Votes to Display")
+                else:
+                    data = draw_grid(
+                        voting_results_table_data,
+                        formatter=formatter_indiv_votes,
+                        # fit_columns=True,
+                        selection='single', 
+                        # max_height=300,
+                        # auto_height=True,
+                        wrap_text=True,
+                        grid_options={'domLayout':'normal',
+                                    'enableCellTextSelection':True}
+                        # ,css= {
+                        #         ".ag-cell": {
+                        #             "max-height": "120px",  # Set maximum height for 4 rows
+                        #             "overflow": "hidden",  # Hide overflowing text
+                        #             "text-overflow": "ellipsis",  # Add ellipsis for hidden text
+                        #             "white-space": "normal",  # Enable wrapping
+                        #             "display": "-webkit-box",  # For multi-line ellipsis
+                        #             "-webkit-line-clamp": "2",  # Limit to 2 lines
+                        #             "-webkit-box-orient": "vertical",  # Required for line clamp
+                        #                     }
+                        # }
+                    )
+
+                    st.markdown("""
+                                <style>
+                                .ag-theme-streamlit {
+                                    padding-bottom: 20px;  /* Extra space for bottom content */
+                                }
+                                </style>
+                            """, unsafe_allow_html=True)
 
     with col[1]:
         if additional_data_df is not None:
@@ -680,7 +778,7 @@ with tab3:
             
             if policy_area_selection_sponsored_bills:
                 policy_area_selection_sponsored_bills = policy_area_selection_sponsored_bills.split(' | ')[0]
-                policy_area_filter_sponsored_bills = sponsored_bills['policy_area'] == policy_area_selection_sponsored_bills
+                policy_area_filter_sponsored_bills = sponsored_bills['policyArea'] == policy_area_selection_sponsored_bills
             else:
                 policy_area_filter_sponsored_bills = True
             
@@ -691,7 +789,7 @@ with tab3:
                 sponsored_bill_keyword = None
                 keyword_filter_sponsored_bills = True
 
-            display_cols_sponsored_bills = ['title', 'url', 'sponsor_type', 'policy_area', 'introducedDate']
+            display_cols_sponsored_bills = ['title', 'url', 'sponsor_type', 'policyArea', 'introducedDate']
             
             sponsored_bills_table_data = sponsored_bills[(sponsored_bills['bioguideID'] == bioguideID) & \
                                                        (keyword_filter_sponsored_bills) & \
@@ -707,30 +805,50 @@ with tab3:
             'title': ('Title (Click for more info)', {'width': 350, 'wrapText': True, 'autoHeight': True, 'cellRenderer':cellRenderer}),
             # 'url': ('Link', {'cellRenderer':cellRenderer}),
             'sponsor_type': ('Sponsor Type', {'width': 125}),
-            'policy_area': ('Policy Area', {'width': 200}),
+            'policyArea': ('Policy Area', {'width': 200}),
             'introducedDate': ('Date Introduced', {'width': 150, 'autoHeight': True}),
             }
 
+            ### Create Pagination Options
+            pagination_sponsored_bills = st.container()
             
-            # sponsored_bills_table_data = sponsored_bills_table_data[['title']]
+            bottom_menu = st.columns((4, 1, 1))
 
-            if sponsored_bills_display_options == 'See Recent Sponsored Bills':
-                sponsored_bills_table_data = sponsored_bills_table_data.head(25)
-
-            if sponsored_bills_table_data.empty:
-                st.text('No sponsored legislation found for this member.')
-            else:
-                st.text('Recent Sponsored Legislation')
-                data = draw_grid(
-                    sponsored_bills_table_data,
-                    formatter=formatter_sponsored_bills,
-                    # fit_columns=True,
-                    selection='single', 
-                    max_height=300,
-                    grid_options={'domLayout':'normal',
-                                'enableCellTextSelection':True}
-
+            with bottom_menu[2]:
+                batch_size_sponsored_bills = st.selectbox("Page Size", options=[25, 50, 100], key='sponsored_bills_batch')
+            with bottom_menu[1]:
+                total_pages_sponsored_bills = (
+                    int(len(sponsored_bills_table_data) / batch_size_sponsored_bills) if int(len(sponsored_bills_table_data) / batch_size_sponsored_bills) > 0 else 1
                 )
+                current_page_sponsored_bills = st.number_input(
+                    "Page", min_value=1, max_value=total_pages, step=1, key='sponsored_bills_page'
+                )
+            with bottom_menu[0]:
+                st.markdown(f"Page **{current_page_sponsored_bills}** of **{total_pages_sponsored_bills}** ")
+
+
+
+            # sponsored_bills_table_data = sponsored_bills_table_data[['title']]
+            with pagination_sponsored_bills:
+                if sponsored_bills_display_options == 'See Recent Sponsored Bills':
+                    sponsored_bills_table_data = sponsored_bills_table_data.iloc[current_page_sponsored_bills:current_page_sponsored_bills+total_pages_sponsored_bills,:]
+                if sponsored_bills_table_data.empty:
+                    st.text('No sponsored legislation found for this member.')
+                else:
+                    st.text('Recent Sponsored Legislation')
+                    data = draw_grid(
+                        sponsored_bills_table_data,
+                        formatter=formatter_sponsored_bills,
+                        # fit_columns=True,
+                        selection='single', 
+                        # max_height=300,
+                        wrap_text=True,
+                        # auto_height=True,
+                        grid_options={'domLayout':'normal',
+                                    'enableCellTextSelection':True,
+                                     "getRowHeight": "function(params) { return Math.max(32, params.data.row_height || 32); }"}
+
+                    )
     with col[1]:
         if additional_data_df is not None:
             display_term_summary(additional_data_df=additional_data_df, 

@@ -5,7 +5,7 @@ from st_aggrid import AgGrid
 from st_aggrid.grid_options_builder import GridOptionsBuilder
 from st_aggrid.shared import GridUpdateMode, JsCode
 
-MAX_TABLE_HEIGHT = 500
+MAX_TABLE_HEIGHT = 300
 
 
 def get_numeric_style_with_precision(precision: int) -> dict:
@@ -26,12 +26,24 @@ def draw_grid(
         fit_columns=False,
         theme="streamlit",
         max_height: int = MAX_TABLE_HEIGHT,
+        max_width_pct: float = 0.8,
         wrap_text: bool = False,
         auto_height: bool = False,
         grid_options: dict = None,
         key=None,
-        css: dict = None
+        css: dict = None,
+        max_row_height=120
 ):
+    # Truncate text for relevant columns
+    def truncate_text(text, max_length=100):
+        if len(str(text)) > max_length:
+            return str(text)[:max_length] + "..."
+        return text
+
+    # Apply truncation to columns
+    for column in df.columns:
+        if df[column].dtype == "object":  # Apply to string columns
+            df[column] = df[column].apply(truncate_text)
 
     gb = GridOptionsBuilder()
     gb.configure_default_column(
@@ -50,13 +62,53 @@ def draw_grid(
 
     gb.configure_selection(selection_mode=selection, use_checkbox=use_checkbox)
 
+    # Ensure CSS enables truncation and scrolling
+    if not css:
+        css = {
+            ".ag-cell": {
+                "max-height": f"{max_row_height}px",  # Set maximum height
+                "overflow": "hidden",  # Hide overflowing text
+                "text-overflow": "ellipsis",  # Add ellipsis
+                "word-break":"normal", # Natural word breaking
+                "overflow-wrap": "break-word",  # Prevent splitting words
+                "white-space": "normal",  # Enable wrapping
+                "display": "-webkit-box",  # Multi-line truncation
+                "-webkit-line-clamp": "2",  # Limit to 2 lines
+                "-webkit-box-orient": "vertical",  # Required for line clamp
+            },
+            "#gridToolBar": {
+            "padding-bottom": "0px !important",
+            },
+            ".ag-body-viewport": {
+                "overflow-y": "auto",  # Enable vertical scrolling
+                "overflow-x": "auto",  # Enable horizontal scrolling
+                "max-height": f"{max_height-20}px",      # Ensure it matches the grid height
+                # "max-width": "800px",  # Max width as a percentage of the container
+                "padding-bottom": "25px",  # Extra space to prevent clipping
+                
+                # "max-height": f"{max_height}px"  # Limit table height
+            },
+        ".ag-root": {
+            # "max-width": f"800px",  # Limit table width
+            "width": "100%",  # Ensure the table fits within the container
+            "height": f"{max_height}px",  # Set consistent height
+        },
+        ".ag-root-wrapper": {
+            "overflow": "hidden",  # Prevent AG Grid's internal scrollbars
+        },
+        ".ag-theme-streamlit": {
+            "margin-bottom": "20px",   # Ensure space around the table
+            }
+        }
+
     return AgGrid(
         df,
         gridOptions=gb.build(),
         update_mode=GridUpdateMode.SELECTION_CHANGED | GridUpdateMode.VALUE_CHANGED,
         allow_unsafe_jscode=True,
         fit_columns_on_grid_load=fit_columns,
-        height=min(max_height, (1 + len(df.index)) * 29),
+        # height=min(max_height, (1 + len(df.index)) * 32 + 200),
+        height=300,
         theme=theme,
         key=key,
         custom_css=css
@@ -96,7 +148,7 @@ def highlight(color, condition):
 #     return JsCode(code)
 
 # following added by Reid Bongard to account for specific highlighting conditions
-def highlight_mult_colors(primary_condition, primary_color, secondary_condition, secondary_color, final_color):
+def highlight_mult_colors(primary_condition, primary_color, secondary_condition, secondary_color, final_color, font_size):
     code = f"""
         function(params) {{
             var primaryColor = "{primary_color}";
@@ -104,15 +156,18 @@ def highlight_mult_colors(primary_condition, primary_color, secondary_condition,
             var finalColor = "{final_color}";
             if ({primary_condition}) {{
                 return {{
-                    'backgroundColor': primaryColor
+                    'backgroundColor': primaryColor,
+                    'fontSize': '{font_size}px'
                 }};
             }} else if ({secondary_condition}) {{
                 return {{
-                    'backgroundColor': secondaryColor
+                    'backgroundColor': secondaryColor,
+                    'fontSize': '{font_size}px'
                 }};
             }} else {{
                 return {{
-                    'backgroundColor': finalColor
+                    'backgroundColor': finalColor,
+                    'fontSize': '{font_size}px'
                 }};
             }}
         }}

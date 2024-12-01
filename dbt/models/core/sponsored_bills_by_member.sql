@@ -1,6 +1,6 @@
 {{
     config(
-        materialized='table'
+        materialized='view'
         ,partition_by={
             "field": "introducedDate",
             "data_type": "date",

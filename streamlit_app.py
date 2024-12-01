@@ -49,7 +49,7 @@ tab1, tab2, tab3 = st.tabs(["Overall Voting Record", "Recent Votes", "Sponsored 
 ##### Functions for Querying Selection Options #####
 
 
-def query_options_by_geo(chamber, geo, congress):
+def query_options_by_geo(chamber, zip_code, congress):
 
 
     # with distinct_members_cte as(
@@ -72,11 +72,9 @@ def query_options_by_geo(chamber, geo, congress):
     #             from distinct_members_cte
     
     if chamber == 'Senate':
-        geo_filter = f"mems.state = '{geo}'"
-        dist_join_condition = ''
+        dist_join_condition = '(terms.stateName = dists.state) and'
         votes_filter = 'mems.lisid in (SELECT distinct lisid from `Congress_Target.fact_roll_call_vote`)'
     elif chamber == 'House of Representatives':
-        geo_filter = f'dists.zip_code = {geo}'
         dist_join_condition = '(COALESCE(terms.district, 0) = dists.congressional_district) and'
         votes_filter = 'mems.bioguideID in (SELECT distinct bioguideID from `Congress_Target.fact_roll_call_vote`)'
 
@@ -92,7 +90,7 @@ def query_options_by_geo(chamber, geo, congress):
                     JOIN `Congress_Target.dim_congressional_districts` dists
                 on {dist_join_condition} (mems.state = dists.state)
                 where mems.mostRecentChamber = '{chamber}' 
-                      AND {geo_filter}
+                      AND dists.zip_code = {zip_code}
                       AND {votes_filter}
                       AND terms.Congress = {congress}
                 order by mems.state ASC)
@@ -176,7 +174,7 @@ sponsored_bills['introducedDate'] = pd.to_datetime(sponsored_bills['introducedDa
 # voting_results = query_voting_records('streamlit_data/votes_by_member.parquet')
 
 def vote_cnt_by_member(x):
-    return (x != 'not_voting').sum()
+    return (x != 'Not Voting').sum()
 
 def calculate_votes_w_party(results, chamber, policy_area=None):
     if policy_area:
@@ -411,7 +409,7 @@ with st.sidebar:
                                     index=None)
 
     if selected_chamber:
-        selected_method = st.selectbox('Select a search method:', ['Search Member by State, Zip Code', 'Search Member by Name'],
+        selected_method = st.selectbox('Select a search method:', ['Search Member by Zip Code', 'Search Member by Name'],
                                        index=None)
 
     st.markdown("---")
@@ -430,21 +428,23 @@ with st.sidebar:
 
     
     
-    if selected_method == 'Search Member by State, Zip Code':
+    if selected_method == 'Search Member by Zip Code':
 
         # Step 1: Enter zip code or representative
-        if selected_chamber == 'House of Representatives':
-            geo = st.text_input('Enter your zip code:')
-        elif selected_chamber == 'Senate':
-            geo = st.selectbox('Select your state:', 
-                            states,
-                            index=None)
-        else:
-            pass
+        
+        zip_code = st.text_input('Enter your zip code:')
+        # if selected_chamber == 'House of Representatives':
+        #     geo = st.text_input('Enter your zip code:')
+        # elif selected_chamber == 'Senate':
+        #     geo = st.selectbox('Select your state:', 
+        #                     states,
+        #                     index=None)
+        # else:
+        #     pass
     
-        if geo:
+        if zip_code:
             try:
-                options_df = query_options_by_geo(chamber=selected_chamber, geo=geo, congress=congress_session)
+                options_df = query_options_by_geo(chamber=selected_chamber, zip_code=zip_code, congress=congress_session)
             except Exception as e:
                 st.write('An error occurred. Please ensure that your entry is valid.')
                 st.error(e)
@@ -524,7 +524,7 @@ with tab1:
                                     chamber=chamber,
                                     policy_area=policy_area_voting_record
                                     )
-            st.plotly_chart(fig, use_container_width=False)
+            st.plotly_chart(fig, use_container_width=False, config = {'displayModeBar': False})
             
 
 
@@ -589,82 +589,98 @@ with tab2:
             # Account for IF THEN LOGIC
 
             
-            not_voting_condition     = "params.data.member_vote === 'not_voting' || params.data.member_vote === 'abstain'"
-            dem_vote_match_condition = "params.data.member_vote === params.data.dem_majority_vote"
-            rep_vote_match_condition = "params.data.member_vote === params.data.rep_majority_vote"
+            # not_voting_condition     = "params.data.member_vote === 'not_voting' || params.data.member_vote === 'abstain'"
+            # dem_vote_match_condition = "params.data.member_vote === params.data.dem_majority_vote"
+            # rep_vote_match_condition = "params.data.member_vote === params.data.rep_majority_vote"
             
 
-            if partyName == 'Democratic':
+            # if partyName == 'Democratic':
                 
-                dem_cell_style = \
-                highlight_mult_colors(primary_condition=not_voting_condition, 
-                                      primary_color=None,
-                                      secondary_condition=dem_vote_match_condition, 
-                                      secondary_color="#abf7b1", # Light Green
-                                      final_color="#fcccbb", # Light Red
-                                      font_size=12
-                                     )
+            #     dem_cell_style = \
+            #     highlight_mult_colors(primary_condition=not_voting_condition, 
+            #                           primary_color=None,
+            #                           secondary_condition=dem_vote_match_condition, 
+            #                           secondary_color="#abf7b1", # Light Green
+            #                           final_color="#fcccbb", # Light Red
+            #                           font_size=12
+            #                          )
                  
                 
-                # highlight_mult_colors(primary_color="#abf7b1", # Light Green
-                #                     secondary_color="#fcccbb", # Light Red
-                #                     condition=dem_vote_match_condition
-                #                         )
-                mem_cell_style = dem_cell_style # Replicating formatting for member vote
-                rep_cell_style = None # Do not format Rep vote cell
+            #     # highlight_mult_colors(primary_color="#abf7b1", # Light Green
+            #     #                     secondary_color="#fcccbb", # Light Red
+            #     #                     condition=dem_vote_match_condition
+            #     #                         )
+            #     mem_cell_style = dem_cell_style # Replicating formatting for member vote
+            #     rep_cell_style = None # Do not format Rep vote cell
 
-            elif partyName == 'Republican':
+            # elif partyName == 'Republican':
 
-                rep_cell_style = \
-                highlight_mult_colors(primary_condition=not_voting_condition, 
-                                      primary_color=None,
-                                      secondary_condition=rep_vote_match_condition, 
-                                      secondary_color="#abf7b1", # Light Green
-                                      final_color="#fcccbb", # Light Red
-                                      font_size=12
-                                     )
+            #     rep_cell_style = \
+            #     highlight_mult_colors(primary_condition=not_voting_condition, 
+            #                           primary_color=None,
+            #                           secondary_condition=rep_vote_match_condition, 
+            #                           secondary_color="#abf7b1", # Light Green
+            #                           final_color="#fcccbb", # Light Red
+            #                           font_size=12
+            #                          )
                 
-                # highlight_mult_colors(primary_color="#abf7b1", # Light Green
-                #                     secondary_color="#fcccbb", # Light Red
-                #                     condition=rep_vote_match_condition
-                #                         )
-                mem_cell_style = rep_cell_style # Replicating formatting for member vote
-                dem_cell_style = None
+            #     # highlight_mult_colors(primary_color="#abf7b1", # Light Green
+            #     #                     secondary_color="#fcccbb", # Light Red
+            #     #                     condition=rep_vote_match_condition
+            #     #                         )
+            #     mem_cell_style = rep_cell_style # Replicating formatting for member vote
+            #     dem_cell_style = None
 
-            else:
-                mem_cell_style = None
-                dem_cell_style = \
-                highlight_mult_colors(primary_condition=not_voting_condition, 
-                                      primary_color=None,
-                                      secondary_condition=dem_vote_match_condition, 
-                                      secondary_color="#abf7b1", # Light Green
-                                      final_color="#fcccbb", # Light Red
-                                      font_size=12
-                                     )
-                # highlight_mult_colors(primary_color="#abf7b1", # Light Green
-                #                     secondary_color="#fcccbb", # Light Red
-                #                     condition=dem_vote_match_condition
-                #                         )
-                rep_cell_style = \
-                highlight_mult_colors(primary_condition=not_voting_condition, 
-                                      primary_color=None,
-                                      secondary_condition=rep_vote_match_condition, 
-                                      secondary_color="#abf7b1", # Light Green
-                                      final_color="#fcccbb", # Light Red
-                                      font_size=12
-                                     )
+            # else:
+            #     mem_cell_style = None
+            #     dem_cell_style = \
+            #     highlight_mult_colors(primary_condition=not_voting_condition, 
+            #                           primary_color=None,
+            #                           secondary_condition=dem_vote_match_condition, 
+            #                           secondary_color="#abf7b1", # Light Green
+            #                           final_color="#fcccbb", # Light Red
+            #                           font_size=12
+            #                          )
+            #     # highlight_mult_colors(primary_color="#abf7b1", # Light Green
+            #     #                     secondary_color="#fcccbb", # Light Red
+            #     #                     condition=dem_vote_match_condition
+            #     #                         )
+            #     rep_cell_style = \
+            #     highlight_mult_colors(primary_condition=not_voting_condition, 
+            #                           primary_color=None,
+            #                           secondary_condition=rep_vote_match_condition, 
+            #                           secondary_color="#abf7b1", # Light Green
+            #                           final_color="#fcccbb", # Light Red
+            #                           font_size=12
+            #                          )
                 # highlight_mult_colors(primary_color="#abf7b1", # Light Green
                 #                     secondary_color="#fcccbb", # Light Red
                 #                     condition=rep_vote_match_condition
-                #                         )                  
+                #     
+                #                     )                  
+
+            vote_cell_styles = {}
+
+            for col in ['member_vote', 'dem_majority_vote', 'rep_majority_vote']:
+                 yea_aye_condition     =  f"params.data.{col} === 'yea/aye'"
+                 nay_no_condition      =  f"params.data.{col} === 'nay/no'"
+
+                 vote_cell_styles[col] = \
+                 highlight_mult_colors(primary_condition=yea_aye_condition,
+                                       primary_color="#abf7b1", # Light Green
+                                       secondary_condition=nay_no_condition,
+                                       secondary_color="#fcccbb", # Light Red
+                                       final_color=None,
+                                       font_size=12
+                                      )
             
             formatter_indiv_votes = {
             'title': ('Title (Click for more info)', {'width': 200, 'wrapText': True, 'autoHeight': True, 'cellRenderer':cellRenderer, 'cellStyle': {'font-size': '12px'}}),
             'question': ('Question', {'width': 125,'wrapText': True, 'autoHeight': True, 'cellStyle': {'font-size': '12px'}}),
             # 'url': ('Link', {'cellRenderer':cellRenderer}),
-            'member_vote': ('Member Vote', {'width': 115, 'autoHeight': True, 'cellStyle':mem_cell_style}),
-            'dem_majority_vote': ('Dem Maj Vote', {'width': 115, 'autoHeight': True, 'cellStyle':dem_cell_style}),
-            'rep_majority_vote': ('Rep Maj Vote', {'width': 115, 'autoHeight': True, 'cellStyle':rep_cell_style}),
+            'member_vote': ('Member Vote', {'width': 115, 'autoHeight': True, 'cellStyle':vote_cell_styles['member_vote']}),
+            'dem_majority_vote': ('Dem Maj Vote', {'width': 115, 'autoHeight': True, 'cellStyle':vote_cell_styles['dem_majority_vote']}),
+            'rep_majority_vote': ('Rep Maj Vote', {'width': 115, 'autoHeight': True, 'cellStyle':vote_cell_styles['rep_majority_vote']}),
             'result': ('Result', {'width': 125, 'cellStyle': {'font-size': '12px'}}),
             # 'policyArea': ('Policy Area', {'width': 150}),
             'roll_call_number': ('Vote #', {'width': 110, 'cellStyle': {'font-size': '12px'}})
@@ -672,8 +688,7 @@ with tab2:
             
             voting_results_table_data = voting_results[(voting_results['bioguideID'] == bioguideID) & \
                                                        (keyword_filter_indiv_votes) & \
-                                                       (policy_area_filter_indiv_votes) & \
-                                                       (voting_results['url'].isna() == False)]\
+                                                       (policy_area_filter_indiv_votes)]\
                                         [display_cols_indiv_votes].\
                                         set_index('vote_date').\
                                         sort_index(ascending = False)
@@ -686,41 +701,32 @@ with tab2:
             st.markdown("---")
             
             
-            page_selection_menu = st.columns((4, 1, 1))
+            page_selection_menu_votes = st.columns((4, 1, 1))
 
-            with page_selection_menu[0]:
+            with page_selection_menu_votes[0]:
                 st.markdown("<h3><b>Recent Voting Results</b> ✅</h3>", unsafe_allow_html=True)
-            with page_selection_menu[2]:
-                batch_size = st.selectbox("Page Size", options=[25, 50, 100], key='voting_results_size')
-            with page_selection_menu[1]:
-                total_pages = (
-                    int(len(voting_results_table_data) / batch_size) if int(len(voting_results_table_data) / batch_size) > 0 else 1
+            with page_selection_menu_votes[2]:
+                batch_size_votes = st.selectbox("Page Size", options=[25, 50, 100], key='voting_results_size')
+            with page_selection_menu_votes[1]:
+                total_pages_votes = (
+                    int(len(voting_results_table_data) / batch_size_votes) if int(len(voting_results_table_data) / batch_size_votes) > 0 else 1
                 )
-                current_page = st.number_input(
-                    "Page", min_value=1, max_value=total_pages, step=1, key='voting_results_page'
+                current_page_votes = st.number_input(
+                    "Page", min_value=1, max_value=total_pages_votes, step=1, key='voting_results_page'
                 )
            
             pagination_voting_results = st.container()
 
-            bottom_menu = st.columns((4, 1, 1))
+            bottom_menu_votes = st.columns((4, 1, 1))
 
-            # with bottom_menu[2]:
-            #     batch_size = st.selectbox("Page Size", options=[25, 50, 100], key='voting_results_size')
-            # with bottom_menu[1]:
-            #     total_pages = (
-            #         int(len(voting_results_table_data) / batch_size) if int(len(voting_results_table_data) / batch_size) > 0 else 1
-            #     )
-                # current_page = st.number_input(
-                #     "Page", min_value=1, max_value=total_pages, step=1, key='voting_results_page'
-                # )
-            with bottom_menu[0]:
-                st.markdown(f"Page **{current_page}** of **{total_pages}** ")
+            with bottom_menu_votes[0]:
+                st.markdown(f"Page **{current_page_votes}** of **{total_pages_votes}** ")
 
 
             #### Display Logic Continues Here
             with pagination_voting_results:
                 # if indiv_vote_display_options == 'See Recent Votes':
-                voting_results_table_data = voting_results_table_data.iloc[(current_page-1)*batch_size:(current_page-1)*batch_size+(batch_size+1), :]
+                voting_results_table_data = voting_results_table_data.iloc[(current_page_votes-1)*batch_size_votes:(current_page_votes-1)*batch_size_votes+(batch_size_votes+1), :]
 
                 if voting_results_table_data.empty:
                     st.text("No Votes to Display")
@@ -778,7 +784,7 @@ with tab3:
             
             if policy_area_selection_sponsored_bills:
                 policy_area_selection_sponsored_bills = policy_area_selection_sponsored_bills.split(' | ')[0]
-                policy_area_filter_sponsored_bills = sponsored_bills['policyArea'] == policy_area_selection_sponsored_bills
+                policy_area_filter_sponsored_bills = (sponsored_bills['policyArea'] == policy_area_selection_sponsored_bills)
             else:
                 policy_area_filter_sponsored_bills = True
             
@@ -793,8 +799,7 @@ with tab3:
             
             sponsored_bills_table_data = sponsored_bills[(sponsored_bills['bioguideID'] == bioguideID) & \
                                                        (keyword_filter_sponsored_bills) & \
-                                                       (policy_area_filter_sponsored_bills) & \
-                                                       (sponsored_bills['url'].isna() == False)]\
+                                                       (policy_area_filter_sponsored_bills)]\
                                                         [display_cols_sponsored_bills].\
                                                         sort_values('introducedDate', ascending=False)
                                                         # set_index('introducedDate').\
@@ -808,34 +813,43 @@ with tab3:
             'policyArea': ('Policy Area', {'width': 200}),
             'introducedDate': ('Date Introduced', {'width': 150, 'autoHeight': True}),
             }
-
-            ### Create Pagination Options
-            pagination_sponsored_bills = st.container()
             
-            bottom_menu = st.columns((4, 1, 1))
+            #### Pagination logic starts here
+            st.markdown("---")
+            
+            
+            page_selection_menu_bills = st.columns((4, 1, 1))
 
-            with bottom_menu[2]:
-                batch_size_sponsored_bills = st.selectbox("Page Size", options=[25, 50, 100], key='sponsored_bills_batch')
-            with bottom_menu[1]:
-                total_pages_sponsored_bills = (
-                    int(len(sponsored_bills_table_data) / batch_size_sponsored_bills) if int(len(sponsored_bills_table_data) / batch_size_sponsored_bills) > 0 else 1
+            with page_selection_menu_bills[0]:
+                st.markdown("<h3><b>Recent Sponsored Legislation</b> ✍️ </h3>", unsafe_allow_html=True)
+            with page_selection_menu_bills[2]:
+                batch_size_bills = st.selectbox("Page Size", options=[25, 50, 100], key='sponsored_bills_size')
+            with page_selection_menu_bills[1]:
+                total_pages_bills = (
+                    int(len(sponsored_bills_table_data) / batch_size_bills) if int(len(sponsored_bills_table_data) / batch_size_bills) > 0 else 1
                 )
-                current_page_sponsored_bills = st.number_input(
-                    "Page", min_value=1, max_value=total_pages, step=1, key='sponsored_bills_page'
+                current_page_bills = st.number_input(
+                    "Page", min_value=1, max_value=total_pages_bills, step=1, key='sponsored_bills_page'
                 )
-            with bottom_menu[0]:
-                st.markdown(f"Page **{current_page_sponsored_bills}** of **{total_pages_sponsored_bills}** ")
+           
+            pagination_sponsored_bills = st.container()
 
+            bottom_menu_bills = st.columns((4, 1, 1))
 
+            with bottom_menu_bills[0]:
+                st.markdown(f"Page **{current_page_bills}** of **{total_pages_bills}** ")
+
+        
 
             # sponsored_bills_table_data = sponsored_bills_table_data[['title']]
             with pagination_sponsored_bills:
                 if sponsored_bills_display_options == 'See Recent Sponsored Bills':
-                    sponsored_bills_table_data = sponsored_bills_table_data.iloc[current_page_sponsored_bills:current_page_sponsored_bills+total_pages_sponsored_bills,:]
+                    sponsored_bills_table_data = sponsored_bills_table_data.iloc[(current_page_bills-1)*batch_size_bills:(current_page_bills-1)*batch_size_bills+(batch_size_bills+1),:]
+                    
+
                 if sponsored_bills_table_data.empty:
                     st.text('No sponsored legislation found for this member.')
                 else:
-                    st.text('Recent Sponsored Legislation')
                     data = draw_grid(
                         sponsored_bills_table_data,
                         formatter=formatter_sponsored_bills,

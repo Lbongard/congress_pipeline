@@ -51,9 +51,9 @@ SELECT congress,
        sum(case party when 'Republican' THEN CAST(nay_total AS INT) ELSE 0 END) R_nay_or_no_votes,
        sum(case party when 'Independent' THEN CAST(nay_total AS INT) ELSE 0 END) I_nay_or_no_votes,
 
-       sum(case party when 'Democratic' THEN CAST(present_total AS INT) ELSE 0 END) D_abstain_votes,
-       sum(case party when 'Republican' THEN CAST(present_total AS INT) ELSE 0 END) R_abstain_votes,
-       sum(case party when 'Independent' THEN CAST(present_total AS INT) ELSE 0 END) I_abstain_votes
+       sum(case party when 'Democratic' THEN CAST(present_total AS INT) ELSE 0 END) D_present_votes,
+       sum(case party when 'Republican' THEN CAST(present_total AS INT) ELSE 0 END) R_present_votes,
+       sum(case party when 'Independent' THEN CAST(present_total AS INT) ELSE 0 END) I_present_votes
 FROM vote_totals_unnested
 GROUP BY ALL
 )

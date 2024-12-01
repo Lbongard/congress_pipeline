@@ -69,8 +69,9 @@ SELECT distinct bill_key
             WHEN 'HR' THEN 'house-bill'
             WHEN 'SRES' THEN 'senate-resolution'
             WHEN 'HRES' THEN 'house-resolution'
-            WHEN 'SJES' THEN 'senate-joint-resolution'
-            WHEN 'HJES' THEN 'house-joint-resolution'
+            WHEN 'SJRES' THEN 'senate-joint-resolution'
+            WHEN 'SCONRES' THEN 'senate-concurrent-resolution'
+            WHEN 'HJRES' THEN 'house-joint-resolution'
             WHEN 'HCONRES' THEN 'house-concurrent-resolution'
             END,
             '/',

@@ -5,7 +5,7 @@ from st_aggrid import AgGrid
 from st_aggrid.grid_options_builder import GridOptionsBuilder
 from st_aggrid.shared import GridUpdateMode, JsCode
 
-MAX_TABLE_HEIGHT = 300
+MAX_TABLE_HEIGHT = 500
 
 
 def get_numeric_style_with_precision(precision: int) -> dict:
@@ -108,7 +108,7 @@ def draw_grid(
         allow_unsafe_jscode=True,
         fit_columns_on_grid_load=fit_columns,
         # height=min(max_height, (1 + len(df.index)) * 32 + 200),
-        height=300,
+        height=max_height,
         theme=theme,
         key=key,
         custom_css=css

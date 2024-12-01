@@ -1,6 +1,6 @@
 {{
     config(
-        materialized='table',
+        materialized='view',
         partition_by={
             "field": "vote_date",
             "data_type": "date",
@@ -9,7 +9,24 @@
     )
 }}
 
-WITH joined_data AS (
+
+WITH vote_counts as(
+    SELECT bill_key,
+       roll_call_number,
+       congress,
+       party,
+       vote,
+       count(*) vote_count
+    FROM {{ref('fact_roll_call_vote')}}
+    group by all),
+
+max_vote_counts as(
+    SELECT *
+    FROM vote_counts
+    QUALIFY row_number() over(partition by bill_key, roll_call_number, congress, party order by vote_count desc) = 1
+),
+
+joined_data AS (
             SELECT roll_call.bill_name,
                    COALESCE(mems_house.bioguideID, mems_sen.bioguideID) bioguideID,
                    COALESCE(mems_house.invertedOrderName, mems_sen.invertedOrderName) name,
@@ -18,27 +35,10 @@ WITH joined_data AS (
                    roll_call.vote,
                    roll_call.roll_call_number,
                    roll_call.congress,
-                   CASE 
-                       WHEN GREATEST(D_yea_or_aye_votes, D_nay_or_no_votes, D_abstain_votes) = D_yea_or_aye_votes THEN 'yea/aye'
-                       WHEN GREATEST(D_yea_or_aye_votes, D_nay_or_no_votes, D_abstain_votes) = D_nay_or_no_votes THEN 'nay/no'
-                       WHEN GREATEST(D_yea_or_aye_votes, D_nay_or_no_votes, D_abstain_votes) = D_abstain_votes THEN 'abstain' 
-                   END AS dem_majority_vote,
-                   CASE 
-                       WHEN GREATEST(R_yea_or_aye_votes, R_nay_or_no_votes, R_abstain_votes) = R_yea_or_aye_votes THEN 'yea/aye'
-                       WHEN GREATEST(R_yea_or_aye_votes, R_nay_or_no_votes, R_abstain_votes) = R_nay_or_no_votes THEN 'nay/no'
-                       WHEN GREATEST(R_yea_or_aye_votes, R_nay_or_no_votes, R_abstain_votes) = R_abstain_votes THEN 'abstain' 
-                   END AS rep_majority_vote,
-                   CASE 
-                       WHEN GREATEST(I_yea_or_aye_votes, I_nay_or_no_votes, I_abstain_votes) = I_yea_or_aye_votes THEN 'yea/aye'
-                       WHEN GREATEST(I_yea_or_aye_votes, I_nay_or_no_votes, I_abstain_votes) = I_nay_or_no_votes THEN 'nay/no'
-                       WHEN GREATEST(I_yea_or_aye_votes, I_nay_or_no_votes, I_abstain_votes) = I_abstain_votes THEN 'abstain' 
-                   END AS ind_majority_vote,
-                   CASE 
-                       WHEN vote IN ('Yea', 'Aye') THEN 'yea/aye'
-                       WHEN vote IN ('No', 'Nay') THEN 'nay/no'
-                       WHEN vote ='Present' THEN 'abstain'
-                       WHEN vote = 'Not Voting' THEN 'not_voting'
-                   END AS member_vote,
+                   mvc_d.vote AS dem_majority_vote,
+                   mvc_r.vote AS rep_majority_vote,
+                   mvc_i.vote AS ind_majority_vote,
+                   roll_call.vote AS member_vote,
                    bills.policyArea,
                    bills.title,
                    bills.url,
@@ -55,6 +55,18 @@ WITH joined_data AS (
             LEFT JOIN {{ref('dim_members')}} mems_sen ON (roll_call.lisid = mems_sen.lisid)
             LEFT JOIN {{ref('dim_bills')}} bills on (roll_call.bill_name = bills.bill_name
                                                      AND roll_call.congress = bills.congress)
+            LEFT JOIN max_vote_counts mvc_d on (mvc_d.bill_key = roll_call.bill_key 
+                                                    AND mvc_d.roll_call_number = roll_call.roll_call_number
+                                                    AND mvc_d.congress = roll_call.congress
+                                                    AND mvc_d.party = 'D')
+            LEFT JOIN max_vote_counts mvc_r on (mvc_r.bill_key = roll_call.bill_key 
+                                                    AND mvc_r.roll_call_number = roll_call.roll_call_number
+                                                    AND mvc_r.congress = roll_call.congress
+                                                    AND mvc_r.party = 'R')
+            LEFT JOIN max_vote_counts mvc_i on (mvc_i.bill_key = roll_call.bill_key 
+                                                    AND mvc_i.roll_call_number = roll_call.roll_call_number
+                                                    AND mvc_i.congress = roll_call.congress
+                                                    AND mvc_i.party = 'I')
         )
           SELECT distinct 
                 name,

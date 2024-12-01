@@ -14,24 +14,24 @@ WITH joined_data AS (
                    roll_call.vote,
                    roll_call.roll_call_number,
                    CASE 
-                       WHEN GREATEST(D_yea_or_aye_votes, D_nay_or_no_votes, D_abstain_votes) = D_yea_or_aye_votes THEN 'yea/aye'
-                       WHEN GREATEST(D_yea_or_aye_votes, D_nay_or_no_votes, D_abstain_votes) = D_nay_or_no_votes THEN 'nay/no'
-                       WHEN GREATEST(D_yea_or_aye_votes, D_nay_or_no_votes, D_abstain_votes) = D_abstain_votes THEN 'abstain' 
+                       WHEN GREATEST(D_yea_or_aye_votes, D_nay_or_no_votes, D_present_votes) = D_yea_or_aye_votes THEN 'yea/aye'
+                       WHEN GREATEST(D_yea_or_aye_votes, D_nay_or_no_votes, D_present_votes) = D_nay_or_no_votes THEN 'nay/no'
+                       WHEN GREATEST(D_yea_or_aye_votes, D_nay_or_no_votes, D_present_votes) = D_present_votes THEN 'present' 
                    END AS dem_majority_vote,
                    CASE 
-                       WHEN GREATEST(R_yea_or_aye_votes, R_nay_or_no_votes, R_abstain_votes) = R_yea_or_aye_votes THEN 'yea/aye'
-                       WHEN GREATEST(R_yea_or_aye_votes, R_nay_or_no_votes, R_abstain_votes) = R_nay_or_no_votes THEN 'nay/no'
-                       WHEN GREATEST(R_yea_or_aye_votes, R_nay_or_no_votes, R_abstain_votes) = R_abstain_votes THEN 'abstain' 
+                       WHEN GREATEST(R_yea_or_aye_votes, R_nay_or_no_votes, R_present_votes) = R_yea_or_aye_votes THEN 'yea/aye'
+                       WHEN GREATEST(R_yea_or_aye_votes, R_nay_or_no_votes, R_present_votes) = R_nay_or_no_votes THEN 'nay/no'
+                       WHEN GREATEST(R_yea_or_aye_votes, R_nay_or_no_votes, R_present_votes) = R_present_votes THEN 'present' 
                    END AS rep_majority_vote,
                    CASE 
-                       WHEN GREATEST(I_yea_or_aye_votes, I_nay_or_no_votes, I_abstain_votes) = I_yea_or_aye_votes THEN 'yea/aye'
-                       WHEN GREATEST(I_yea_or_aye_votes, I_nay_or_no_votes, I_abstain_votes) = I_nay_or_no_votes THEN 'nay/no'
-                       WHEN GREATEST(I_yea_or_aye_votes, I_nay_or_no_votes, I_abstain_votes) = I_abstain_votes THEN 'abstain' 
+                       WHEN GREATEST(I_yea_or_aye_votes, I_nay_or_no_votes, I_present_votes) = I_yea_or_aye_votes THEN 'yea/aye'
+                       WHEN GREATEST(I_yea_or_aye_votes, I_nay_or_no_votes, I_present_votes) = I_nay_or_no_votes THEN 'nay/no'
+                       WHEN GREATEST(I_yea_or_aye_votes, I_nay_or_no_votes, I_present_votes) = I_present_votes THEN 'present' 
                    END AS ind_majority_vote,
                    CASE 
                        WHEN vote IN ('Yea', 'Aye') THEN 'yea/aye'
                        WHEN vote IN ('No', 'Nay') THEN 'nay/no'
-                       WHEN vote ='Present' THEN 'abstain'
+                       WHEN vote ='Present' THEN 'present'
                        WHEN vote = 'Not Voting' THEN 'not_voting'
                    END AS member_vote
             FROM {{ref("fact_roll_call_vote")}} roll_call

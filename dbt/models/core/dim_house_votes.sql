@@ -1,6 +1,9 @@
 {{
     config(
-        materialized='view'
+        materialized='incremental',
+        unique_key=['congress', 'bill_key', 'roll_call_number'],
+        incremental_strategy='merge',
+        merge_exclude_columns=['flowDate']
     )
 }}
 
@@ -53,7 +56,9 @@ SELECT congress,
 
        sum(case party when 'Democratic' THEN CAST(present_total AS INT) ELSE 0 END) D_present_votes,
        sum(case party when 'Republican' THEN CAST(present_total AS INT) ELSE 0 END) R_present_votes,
-       sum(case party when 'Independent' THEN CAST(present_total AS INT) ELSE 0 END) I_present_votes
+       sum(case party when 'Independent' THEN CAST(present_total AS INT) ELSE 0 END) I_present_votes,
+
+       current_datetime() as flowDate
 FROM vote_totals_unnested
 GROUP BY ALL
 )

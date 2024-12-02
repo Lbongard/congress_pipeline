@@ -1,6 +1,9 @@
 {{
     config(
-        materialized='view'
+        materialized='incremental',
+        unique_key=['congress', 'bill_key', 'roll_call_number'],
+        incremental_strategy='merge',
+        merge_exclude_columns=['flowDate']
     )
 }}
 
@@ -56,6 +59,8 @@ votes_by_party as(
        sum(case party when 'D' THEN abstain_vote ELSE 0 END) D_abstain_votes,
        sum(case party when 'R' THEN abstain_vote ELSE 0 END) R_abstain_votes,
        sum(case party when 'I' THEN abstain_vote ELSE 0 END) I_abstain_votes,
+
+       current_datetime() as flowDate
 
     from sen_votes_categorized
     group by all

@@ -1,6 +1,9 @@
 {{
     config(
-        materialized='table'
+        materialized='incremental',
+        unique_key=['congress', 'bill_key', 'roll_call_number', 'bioguideID', 'lisid'],
+        incremental_strategy='merge',
+        merge_exclude_columns=['flowDate']
     )
 }}
 
@@ -56,10 +59,10 @@ FROM senate_vote_data_nested,
 UNNEST(member) member
 )
 
-SELECT *
+SELECT *, current_datetime() as flowDate
 FROM house_vote_data
 
 UNION ALL
 
-SELECT *
+SELECT *, current_datetime() as flowDate
 FROM senate_vote_data

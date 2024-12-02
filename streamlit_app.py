@@ -16,6 +16,7 @@ from st_aggrid import AgGrid, GridOptionsBuilder, JsCode
 from agstyler.agstyler import PINLEFT, PRECISION_TWO, draw_grid, highlight_mult_colors, cellRenderer
 from pyarrow import parquet
 import gcsfs
+from datetime import datetime
 
 config_path = os.path.abspath(os.getenv('TF_VAR_google_credentials'))
 
@@ -290,7 +291,7 @@ def plot_voting_records(results, bioguideID, chamber, policy_area=None):
     return fig
 
 
-def query_by_name(selected_option):
+def query_by_name(selected_option, congress):
     query = f"""
     SELECT *
     FROM `Congress_Target.dim_members`
@@ -433,14 +434,6 @@ with st.sidebar:
         # Step 1: Enter zip code or representative
         
         zip_code = st.text_input('Enter your zip code:')
-        # if selected_chamber == 'House of Representatives':
-        #     geo = st.text_input('Enter your zip code:')
-        # elif selected_chamber == 'Senate':
-        #     geo = st.selectbox('Select your state:', 
-        #                     states,
-        #                     index=None)
-        # else:
-        #     pass
     
         if zip_code:
             try:
@@ -662,8 +655,8 @@ with tab2:
             vote_cell_styles = {}
 
             for col in ['member_vote', 'dem_majority_vote', 'rep_majority_vote']:
-                 yea_aye_condition     =  f"params.data.{col} === 'yea/aye'"
-                 nay_no_condition      =  f"params.data.{col} === 'nay/no'"
+                 yea_aye_condition     =  f"params.data.{col} === 'Yea' || params.data.{col} === 'Aye'"
+                 nay_no_condition      =  f"params.data.{col} === 'Nay' || params.data.{col} === 'Nay'"
 
                  vote_cell_styles[col] = \
                  highlight_mult_colors(primary_condition=yea_aye_condition,

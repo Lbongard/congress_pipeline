@@ -50,7 +50,10 @@
 
 {{
     config(
-        materialized='table'
+        materialized='incremental',
+        unique_key='bioguideID',
+        incremental_strategy='merge',
+        merge_exclude_columns=['flowDate']
     )
 }}
 
@@ -120,6 +123,8 @@ SELECT DISTINCT
        ,mems.currentMember
        ,senate_ids.lisid
        ,parties.partyGrouped mostRecentParty
+       ,updateDate
+       ,current_datetime() as flowDate
 FROM members_staged mems 
       left join most_recent_chamber_cte chmbr on (mems.bioguideID = chmbr.bioguideID)
       left join senate_ids on (mems.bioguideID = senate_ids.bioguideID)

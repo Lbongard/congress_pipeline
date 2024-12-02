@@ -1,8 +1,12 @@
 {{
     config(
-        materialized='table'
+        materialized='incremental',
+        unique_key=['bill_key'],
+        incremental_strategy='merge',
+        merge_exclude_columns=['flowDate']
     )
 }}
+
 with source as(
     select *
     from {{ref("stg_bills")}}
@@ -80,5 +84,6 @@ SELECT distinct bill_key
         ,JSON_VALUE(policyArea, '$.name') policyArea
         ,updateDateIncludingText
         ,CAST(introducedDate AS DATE) introducedDate 
+        ,current_datetime() as flowDate
 
 FROM source

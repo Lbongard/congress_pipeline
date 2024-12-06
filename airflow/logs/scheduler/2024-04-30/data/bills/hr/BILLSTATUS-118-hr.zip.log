@@ -1,5 +1,0 @@
-[2024-04-30T03:09:21.530+0000] {processor.py:161} INFO - Started process (PID=36) to work on /opt/airflow/dags/data/bills/hr/BILLSTATUS-118-hr.zip
-[2024-04-30T03:09:21.532+0000] {processor.py:830} INFO - Processing file /opt/airflow/dags/data/bills/hr/BILLSTATUS-118-hr.zip for tasks to queue
-[2024-04-30T03:09:21.536+0000] {logging_mixin.py:188} INFO - [2024-04-30T03:09:21.536+0000] {dagbag.py:540} INFO - Filling up the DagBag from /opt/airflow/dags/data/bills/hr/BILLSTATUS-118-hr.zip
-[2024-04-30T03:09:21.620+0000] {processor.py:842} WARNING - No viable dags retrieved from /opt/airflow/dags/data/bills/hr/BILLSTATUS-118-hr.zip
-[2024-04-30T03:09:21.645+0000] {processor.py:183} INFO - Processing /opt/airflow/dags/data/bills/hr/BILLSTATUS-118-hr.zip took 0.118 seconds

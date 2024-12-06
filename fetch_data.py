@@ -110,37 +110,33 @@ def save_data(df, file_path):
 
 if __name__ == "__main__":
     
-    # bills_by_member_query = """
-    #                         SELECT *
-    #                         FROM Congress.vw_sponsored_bills_by_member
-    #                         """
-    # bills_by_member_df = fetch_data_from_bigquery(bills_by_member_query, date_cols=['introducedDate'])
-    # save_data(bills_by_member_df, "streamlit_data/sponsored_bills_by_member.parquet")
+    bucket_name = os.getenv("streamlit_data_bucket_name")
+    project_id = os.getenv("TF_VAR_gcp_project")
+    dataset_id = "Congress_Target"
+    temp_dataset_id = "Congress_Streamlit"
 
-    # votes_by_member_query = """SELECT *
-    #                             FROM Congress.votes_by_member"""
-    # votes_by_member_df = fetch_data_from_bigquery(votes_by_member_query, date_cols=['vote_date'])
-    # save_data(votes_by_member_df, "streamlit_data/votes_by_member.parquet")
-   
-   bucket_name = os.getenv("streamlit_data_bucket_name")
-   project_id = os.getenv("TF_VAR_gcp_project")
-   dataset_id = "Congress_Target"
-   temp_dataset_id = "Congress_Streamlit"
-
-   delete_bucket_contents(bucket_name=bucket_name)
-   create_dataset_if_not_exists(project_id=project_id, dataset_id=temp_dataset_id, location="US")
-   tables_to_export = ["sponsored_bills_by_member", "votes_by_member"]
-
-
-
-   for view in tables_to_export:
-    create_temp_table(project_id=project_id,
-                      temp_dataset_id=temp_dataset_id,
-                      orig_dataset_id=dataset_id,
-                      view_ref=view)
+    delete_bucket_contents(bucket_name=bucket_name)
+    create_dataset_if_not_exists(project_id=project_id, dataset_id=temp_dataset_id, location="US")
+    views_to_export = ["vw_votes_by_member", "vw_sponsored_bills_by_member", "vw_voting_members", "vw_terms_condensed"]
     
-    save_bq_table_to_gcs(bucket_name=bucket_name,
+    for view in views_to_export:
+        create_temp_table(project_id=project_id,
+                        temp_dataset_id=temp_dataset_id,
+                        orig_dataset_id=dataset_id,
+                        view_ref=view)
+    
+        save_bq_table_to_gcs(bucket_name=bucket_name,
                             project_id=project_id,
                             dataset_id=temp_dataset_id,
                             table_id=view,
                             filename=f"{view}.parquet")
+    
+    # Save dim_members and dim_congressional_districts as-is
+    tables_to_export = ['dim_members', 'dim_congressional_districts']   
+
+    for table in tables_to_export:
+        save_bq_table_to_gcs(bucket_name=bucket_name,
+                                project_id=project_id,
+                                dataset_id=dataset_id,
+                                table_id=table,
+                                filename=f"{table}.parquet")

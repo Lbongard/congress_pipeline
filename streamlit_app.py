@@ -17,6 +17,7 @@ from agstyler.agstyler import PINLEFT, PRECISION_TWO, draw_grid, highlight_mult_
 from pyarrow import parquet
 import gcsfs
 from datetime import datetime
+import pytz
 
 config_path = os.path.abspath(os.getenv('TF_VAR_google_credentials'))
 
@@ -43,136 +44,42 @@ os.environ["GOOGLE_APPLICATION_CREDENTIALS"] = os.getenv('TF_VAR_google_credenti
 
 tab1, tab2, tab3 = st.tabs(["Overall Voting Record", "Recent Votes", "Sponsored Bills"])
 
-# Define columns
-# col = st.columns((6, 2))
 
-
-##### Functions for Querying Selection Options #####
-
-
-def query_options_by_geo(chamber, zip_code, congress):
-
-
-    # with distinct_members_cte as(
-    #             select distinct  mems.invertedOrderName 
-    #                             ,mems.state 
-    #                             ,mems.bioguideID
-    #                             ,mems.imageURL
-    #                             ,mems.mostRecentParty
-    #             from `Congress_Target.dim_members` mems 
-    #                 LEFT JOIN `Congress_Target.dim_terms` terms on (mems.bioguideID = terms.bioguideID AND terms.Congress = 118)
-    #                 JOIN `Congress_Target.dim_congressional_districts` dists
-    #             on (COALESCE(terms.district, 0) = dists.congressional_district and (terms.stateName = dists.state))
-    #             where mems.mostRecentChamber = 'House of Representatives'
-    #                   AND dists.zip_code = 92117
-    #                   AND mems.bioguideID in (SELECT distinct bioguideID from `Congress_Target.fact_roll_call_vote`)
-    #             order by mems.state ASC
-    #             )
-
-    #             select concat(invertedOrderName, " | ", LEFT(mostRecentParty, 1), " - ", state) concat_name
-    #             from distinct_members_cte
-    
-    if chamber == 'Senate':
-        dist_join_condition = '(terms.stateName = dists.state) and'
-        votes_filter = 'mems.lisid in (SELECT distinct lisid from `Congress_Target.fact_roll_call_vote`)'
-    elif chamber == 'House of Representatives':
-        dist_join_condition = '(COALESCE(terms.district, 0) = dists.congressional_district) and'
-        votes_filter = 'mems.bioguideID in (SELECT distinct bioguideID from `Congress_Target.fact_roll_call_vote`)'
-
-    query = f"""
-                with distinct_members_cte as(
-                select distinct  mems.invertedOrderName 
-                                ,mems.state 
-                                ,mems.bioguideID
-                                ,mems.imageURL
-                                ,mems.mostRecentParty
-                from `Congress_Target.dim_members` mems 
-                    LEFT JOIN `Congress_Target.dim_terms` terms on (mems.bioguideID = terms.bioguideID)
-                    JOIN `Congress_Target.dim_congressional_districts` dists
-                on {dist_join_condition} (mems.state = dists.state)
-                where mems.mostRecentChamber = '{chamber}' 
-                      AND dists.zip_code = {zip_code}
-                      AND {votes_filter}
-                      AND terms.Congress = {congress}
-                order by mems.state ASC)
-
-                select concat(invertedOrderName, " | ", LEFT(mostRecentParty, 1), " - ", state) concat_name
-                from distinct_members_cte
-    """
-    query_job = client.query(query)
-    results = query_job.result().to_dataframe()
-    return results
-
-def query_options_by_name(chamber, search_name, congress):
-    
-    search_name_lower = search_name.lower()
-    
-    if chamber == 'Senate':
-        votes_filter = 'mems.lisid in (SELECT distinct lisid from `Congress_Target.fact_roll_call_vote`)'
-    elif chamber == 'House of Representatives':
-        votes_filter = 'mems.bioguideID in (SELECT distinct bioguideID from `Congress_Target.fact_roll_call_vote`)'
-
-    query = f"""
-               with distinct_members_cte as(
-                select distinct  invertedOrderName 
-                                ,state 
-                                ,mems.bioguideID
-                                ,imageURL
-                                ,mostRecentParty
-                                ,terms.congress
-                from `Congress_Target.dim_members` mems 
-                     LEFT JOIN `Congress_Target.dim_terms` terms on (mems.bioguideID = terms.bioguideID)
-                      where mems.mostRecentChamber = '{chamber}'
-                      AND lower(lastName) LIKE '%{search_name_lower}%'
-                      AND {votes_filter}
-                      AND terms.Congress = {congress}
-                order by mems.state ASC)
-
-                select concat(invertedOrderName, " | ", LEFT(mostRecentParty, 1), " - ", state) concat_name
-                from distinct_members_cte
-    """
-    query_job = client.query(query)
-    results = query_job.result().to_dataframe()
-    return results
-
-@st.cache_data
-def get_update_date():
-    update_date_query = "SELECT CURRENT_DATE('America/Los_Angeles') as update_date"
-
-    query_job = client.query(update_date_query)
-    results = query_job.result().to_dataframe()
-     
-    return results
-
+# Define the PST timezone for displaying last updated datetime
+pst = pytz.timezone("America/Los_Angeles")
 
 @st.cache_data(ttl=86400) # Cache for 24 hours
 def read_parquet_from_gcs(gcs_uri):
     # Load the parquet files into a pandas DataFrame
     df = pd.read_parquet(gcs_uri, engine='pyarrow', storage_options={"token": None})
-    return df
+    last_updated_utc = datetime.now(pytz.utc)
+    last_updated_pst = last_updated_utc.astimezone(pst).strftime("%Y-%m-%d %H:%M:%S")
+    return df, last_updated_pst
 
 
-voting_results_uri = f"gs://{bucket_name}/votes_by_member.parquet"
-voting_results = read_parquet_from_gcs(voting_results_uri)
+voting_results, _ = read_parquet_from_gcs(f"gs://{bucket_name}/vw_votes_by_member.parquet")
+member_options, _ = read_parquet_from_gcs(f"gs://{bucket_name}/vw_voting_members.parquet")
+dim_members, _ = read_parquet_from_gcs(f"gs://{bucket_name}/dim_members.parquet")
+sponsored_bills, _ = read_parquet_from_gcs(f"gs://{bucket_name}/vw_sponsored_bills_by_member.parquet")
+terms_df, _ = read_parquet_from_gcs(f"gs://{bucket_name}/vw_terms_condensed.parquet")
+dim_congressional_districts, last_updated = read_parquet_from_gcs(f"gs://{bucket_name}/dim_congressional_districts.parquet")
+
+## Post Processing on imported dataframes
+
+# Applying formatting to link title to bill in table
 voting_results['title_linked'] = voting_results.apply(
                 lambda row: f'<a href="{row["url"]}" target="_blank">{row["title"]}</a>', axis=1
                 )
-
-sponsored_bills_uri = f"gs://{bucket_name}/sponsored_bills_by_member.parquet"
-sponsored_bills = read_parquet_from_gcs(sponsored_bills_uri)
 sponsored_bills['introducedDate'] = pd.to_datetime(sponsored_bills['introducedDate']).dt.strftime('%Y-%m-%d')
 
+terms_df['term_end_year'] = terms_df['term_end_year'].astype(object).fillna('-')
+terms_df.set_index('chamber', inplace=True)
+terms_df.rename({'term_start_year': 'Start Year',
+                'term_end_year': 'End Year'},
+                axis=1,
+                inplace=True)
 
-# @st.cache_data(ttl=86400) # Cache for 24 hours
-# def query_voting_records(path):
-#     df = pd.read_parquet(path)
-    
-#     df['title_linked'] = df.apply(
-#                 lambda row: f'<a href="{row["url"]}" target="_blank">{row["title"]}</a>', axis=1
-#                 )
-#     return pd.DataFrame(df)
 
-# voting_results = query_voting_records('streamlit_data/votes_by_member.parquet')
 
 def vote_cnt_by_member(x):
     return (x != 'Not Voting').sum()
@@ -290,74 +197,6 @@ def plot_voting_records(results, bioguideID, chamber, policy_area=None):
 
     return fig
 
-
-def query_by_name(selected_option, congress):
-    query = f"""
-    SELECT *
-    FROM `Congress_Target.dim_members`
-    WHERE invertedOrderName = '{selected_option}'
-    """
-    query_job = client.query(query)
-    results = query_job.result().to_dataframe()
-    return results
-
-
-def query_members(selected_option):
-    query = f"""
-    SELECT distinct name
-    FROM `Congress_Target.dim_members`
-    WHERE name LIKE '%{selected_option}%'
-    """
-    query_job = client.query(query)
-    results = query_job.result().to_dataframe()
-    return results['name'].tolist()
-
-# @st.cache_data(ttl=86400) # Cache for 24 hours
-# def query_sponsored_bills(path):
-#     df = pd.read_parquet(path)
-#     return df
-
-# sponsored_bills = query_sponsored_bills('streamlit_data/sponsored_bills_by_member.parquet')
-
-@st.cache_data
-def query_term_data():
-
-    query = f"""
-    SELECT distinct chamber,
-           term_start_year, 
-           term_end_year,
-           bioguideID
-    FROM `Congress_Target.vw_terms_condensed`
-    order by term_start_year
-    """
-    
-    query_job = client.query(query)
-    results = query_job.result().to_dataframe()
-
-    results['term_end_year'] = results['term_end_year'].astype(object).fillna('-')
-    results.set_index('chamber', inplace=True)
-    results.rename({'term_start_year': 'Start Year',
-                    'term_end_year': 'End Year'},
-                    axis=1,
-                    inplace=True)
-    return results
-
-terms_df = query_term_data()
-
-@st.cache_data
-def query_policy_areas():
-    query = f"""
-    SELECT distinct policyArea
-    FROM `Congress_Target.dim_bills`
-    WHERE bill_key in (SELECT bill_key FROM `Congress_Target.fact_roll_call_vote`)
-    """
-    query_job = client.query(query)
-    results = query_job.result().to_dataframe()
-    return results
-
-
-policy_areas = query_policy_areas()
-
 def display_term_summary(additional_data_df, terms_df, mem_name, bioguideID):
     imageURL = additional_data_df.iloc[0]['imageURL']
     if imageURL:
@@ -369,11 +208,9 @@ def display_term_summary(additional_data_df, terms_df, mem_name, bioguideID):
     st.table(terms_table_data)
 
 
-
-
 ###### Start Streamlit Page ######
 with st.sidebar:
-
+    
     # Initialize geo and last_name to None
     selected_method       = None
     geo                   = None
@@ -437,11 +274,31 @@ with st.sidebar:
     
         if zip_code:
             try:
-                options_df = query_options_by_geo(chamber=selected_chamber, zip_code=zip_code, congress=congress_session)
+                # options_df = query_options_by_geo(chamber=selected_chamber, zip_code=zip_code, congress=congress_session)
+                district_states = dim_congressional_districts[dim_congressional_districts['zip_code'] == int(zip_code)]['state'].values
+
+                if selected_chamber == 'House of Representatives':
+                    congressional_districts = dim_congressional_districts[dim_congressional_districts['zip_code'] == int(zip_code)]['congressional_district'].values
+                    district_states = dim_congressional_districts[dim_congressional_districts['zip_code'] == int(zip_code)]['state'].values
+                    options_df = member_options[
+                                                (member_options['chamber'] == selected_chamber) & \
+                                                # NA filled with 0 because states with only 1 congressional district have value of NA in this view
+                                                (member_options['congressional_district'].fillna(0).isin(congressional_districts)) & \
+                                                (member_options['stateName'].isin(district_states)) & \
+                                                (member_options['congress'] == congress_session)
+                                                ]
+                elif selected_chamber == 'Senate':
+                    options_df = member_options[
+                                                (member_options['chamber'] == selected_chamber) & \
+                                                (member_options['stateName'].isin(district_states)) & \
+                                                (member_options['congress'] == congress_session)
+                                                ]
             except Exception as e:
                 st.write('An error occurred. Please ensure that your entry is valid.')
                 st.error(e)
                 st.stop()
+            if options_df.empty:
+                st.write('No representative found for this entry. Please ensure that your entry is valid.')
     
     
     if selected_method == 'Search Member by Name':
@@ -451,7 +308,11 @@ with st.sidebar:
         if last_name:
         
             try:
-                options_df = query_options_by_name(chamber=selected_chamber, search_name=last_name, congress=congress_session)
+                options_df = member_options[
+                                                (member_options['chamber'] == selected_chamber) & \
+                                                (member_options['lastName'] == last_name) & \
+                                                (member_options['congress'] == congress_session)
+                                                ]
             except Exception as e:
                 st.write('An error occurred. Please ensure that your entry is valid.')
                 st.stop()
@@ -471,11 +332,23 @@ with st.sidebar:
         selected_option = st.selectbox('Select a representative:', 
                                     options,
                                     index=None)
-        
     if selected_option:
+            # st.write('Collapse sidebar for full view after selecting member.')
+            st.markdown("""
+                        <style>
+                        .small-font {
+                            font-size:12px !important;
+                            font-style: italic;
+                        }
+                        </style>
+                        """, unsafe_allow_html=True)
+
+            st.markdown('<div class="small-font">Collapse sidebar for full view after selecting member.</div>', unsafe_allow_html=True)
+            st.write("")
             rep_name = selected_option.split(' | ')[0] 
             try:
-                additional_data_df = query_by_name(rep_name)
+                # additional_data_df = query_by_name(rep_name)
+                additional_data_df = dim_members[dim_members['invertedOrderName'] == rep_name]
             except Exception as e:
                 st.write('An error occurred.')
             
@@ -490,11 +363,19 @@ with st.sidebar:
                                            [(sponsored_bills.bioguideID == bioguideID) & (sponsored_bills.policyArea.isna() == False)]\
                                            ['policyArea'].\
                                            value_counts().sort_index()
+    
+    
+    
+
+    st.markdown(f"***Data last updated {last_updated} PST***")
+    st.markdown("**Find the full project [here](https://github.com/Lbongard/congress_pipeline)**")
+    
+    
             
 
 with tab1:
-    col = st.columns((6, 2))
-    with col[0]:       
+    tab1_col = st.columns((6.25, 1.75))
+    with tab1_col[0]:       
         if selected_option:
             
             formatted_policy_list_votes = [f"{item} | (n={count})" for item, count in policy_areas_voting_record.items()]
@@ -522,7 +403,7 @@ with tab1:
 
 
 
-    with col[1]:
+    with tab1_col[1]:
         if additional_data_df is not None:
 
             display_term_summary(additional_data_df=additional_data_df, 
@@ -530,18 +411,10 @@ with tab1:
                                  mem_name=selected_option, 
                                  bioguideID=bioguideID)
 
-            # # Add Image
-            # imageURL = additional_data_df.iloc[0]['imageURL']
-            # st.image(imageURL,
-            #         caption=selected_option)        
-            
-            # st.text('Years Served')
-            # terms_table_data = terms_df[terms_df.bioguideID == bioguideID][['Start Year', 'End Year']]
-            # st.table(terms_table_data)
-
 with tab2:
-    col = st.columns((6, 2))
-    with col[0]:
+    tab2_col = st.columns((6.25, 1.75))
+    
+    with tab2_col[0]:
         if selected_option:
             indiv_vote_display_options = st.radio("Options:", ['See Recent Votes', 'Search Votes by Bill Keyword'])
 
@@ -563,100 +436,18 @@ with tab2:
             else:
                 policy_area_filter_indiv_votes = True
 
-
-
-            
-            # formatted_policy_list = [f"{item} | (n={count})" for item, count in policy_areas.items()]
-
-
-                
-            # def reset_selection():
-            #     st.session_state.policy_area_selection_recent_votes = None
-
-            # st.button("Clear Policy Area Selection", on_click=reset_selection)
                 
             # Display table of recent votes
             display_cols_indiv_votes = [
-                'vote_date', 'question', 'title', 'url', 'roll_call_number', 'policyArea', 'member_vote', 'dem_majority_vote', 'rep_majority_vote', 'result', 'partyName']
-            
-            # Account for IF THEN LOGIC
-
-            
-            # not_voting_condition     = "params.data.member_vote === 'not_voting' || params.data.member_vote === 'abstain'"
-            # dem_vote_match_condition = "params.data.member_vote === params.data.dem_majority_vote"
-            # rep_vote_match_condition = "params.data.member_vote === params.data.rep_majority_vote"
-            
-
-            # if partyName == 'Democratic':
-                
-            #     dem_cell_style = \
-            #     highlight_mult_colors(primary_condition=not_voting_condition, 
-            #                           primary_color=None,
-            #                           secondary_condition=dem_vote_match_condition, 
-            #                           secondary_color="#abf7b1", # Light Green
-            #                           final_color="#fcccbb", # Light Red
-            #                           font_size=12
-            #                          )
-                 
-                
-            #     # highlight_mult_colors(primary_color="#abf7b1", # Light Green
-            #     #                     secondary_color="#fcccbb", # Light Red
-            #     #                     condition=dem_vote_match_condition
-            #     #                         )
-            #     mem_cell_style = dem_cell_style # Replicating formatting for member vote
-            #     rep_cell_style = None # Do not format Rep vote cell
-
-            # elif partyName == 'Republican':
-
-            #     rep_cell_style = \
-            #     highlight_mult_colors(primary_condition=not_voting_condition, 
-            #                           primary_color=None,
-            #                           secondary_condition=rep_vote_match_condition, 
-            #                           secondary_color="#abf7b1", # Light Green
-            #                           final_color="#fcccbb", # Light Red
-            #                           font_size=12
-            #                          )
-                
-            #     # highlight_mult_colors(primary_color="#abf7b1", # Light Green
-            #     #                     secondary_color="#fcccbb", # Light Red
-            #     #                     condition=rep_vote_match_condition
-            #     #                         )
-            #     mem_cell_style = rep_cell_style # Replicating formatting for member vote
-            #     dem_cell_style = None
-
-            # else:
-            #     mem_cell_style = None
-            #     dem_cell_style = \
-            #     highlight_mult_colors(primary_condition=not_voting_condition, 
-            #                           primary_color=None,
-            #                           secondary_condition=dem_vote_match_condition, 
-            #                           secondary_color="#abf7b1", # Light Green
-            #                           final_color="#fcccbb", # Light Red
-            #                           font_size=12
-            #                          )
-            #     # highlight_mult_colors(primary_color="#abf7b1", # Light Green
-            #     #                     secondary_color="#fcccbb", # Light Red
-            #     #                     condition=dem_vote_match_condition
-            #     #                         )
-            #     rep_cell_style = \
-            #     highlight_mult_colors(primary_condition=not_voting_condition, 
-            #                           primary_color=None,
-            #                           secondary_condition=rep_vote_match_condition, 
-            #                           secondary_color="#abf7b1", # Light Green
-            #                           final_color="#fcccbb", # Light Red
-            #                           font_size=12
-            #                          )
-                # highlight_mult_colors(primary_color="#abf7b1", # Light Green
-                #                     secondary_color="#fcccbb", # Light Red
-                #                     condition=rep_vote_match_condition
-                #     
-                #                     )                  
+                'vote_date', 'question', 'title', 'url', 'roll_call_number', 'policyArea', 'member_vote', 'dem_majority_vote', 'rep_majority_vote', 'result', 'partyName'
+                ]
+                       
 
             vote_cell_styles = {}
 
             for col in ['member_vote', 'dem_majority_vote', 'rep_majority_vote']:
                  yea_aye_condition     =  f"params.data.{col} === 'Yea' || params.data.{col} === 'Aye'"
-                 nay_no_condition      =  f"params.data.{col} === 'Nay' || params.data.{col} === 'Nay'"
+                 nay_no_condition      =  f"params.data.{col} === 'Nay' || params.data.{col} === 'No'"
 
                  vote_cell_styles[col] = \
                  highlight_mult_colors(primary_condition=yea_aye_condition,
@@ -727,24 +518,10 @@ with tab2:
                     data = draw_grid(
                         voting_results_table_data,
                         formatter=formatter_indiv_votes,
-                        # fit_columns=True,
                         selection='single', 
-                        # max_height=300,
-                        # auto_height=True,
                         wrap_text=True,
                         grid_options={'domLayout':'normal',
                                     'enableCellTextSelection':True}
-                        # ,css= {
-                        #         ".ag-cell": {
-                        #             "max-height": "120px",  # Set maximum height for 4 rows
-                        #             "overflow": "hidden",  # Hide overflowing text
-                        #             "text-overflow": "ellipsis",  # Add ellipsis for hidden text
-                        #             "white-space": "normal",  # Enable wrapping
-                        #             "display": "-webkit-box",  # For multi-line ellipsis
-                        #             "-webkit-line-clamp": "2",  # Limit to 2 lines
-                        #             "-webkit-box-orient": "vertical",  # Required for line clamp
-                        #                     }
-                        # }
                     )
 
                     st.markdown("""
@@ -755,7 +532,7 @@ with tab2:
                                 </style>
                             """, unsafe_allow_html=True)
 
-    with col[1]:
+    with tab2_col[1]:
         if additional_data_df is not None:
             display_term_summary(additional_data_df=additional_data_df, 
                                  terms_df=terms_df, 
@@ -763,8 +540,8 @@ with tab2:
                                  bioguideID=bioguideID)
         
 with tab3:
-    col = st.columns((6, 2))
-    with col[0]:
+    tab3_col = st.columns((6.25, 1.75))
+    with tab3_col[0]:
         if selected_option:
             sponsored_bills_display_options = st.radio("Options:", ['See Recent Sponsored Bills', 'Search Sponsored Bills by Keyword'])
 
@@ -794,17 +571,18 @@ with tab3:
                                                        (keyword_filter_sponsored_bills) & \
                                                        (policy_area_filter_sponsored_bills)]\
                                                         [display_cols_sponsored_bills].\
-                                                        sort_values('introducedDate', ascending=False)
+                                                        sort_values('introducedDate', ascending=False).\
+                                                        fillna({'policyArea':'-'})
                                                         # set_index('introducedDate').\
                                                         # sort_index(ascending = False)
             
 
             formatter_sponsored_bills = {
-            'title': ('Title (Click for more info)', {'width': 350, 'wrapText': True, 'autoHeight': True, 'cellRenderer':cellRenderer}),
+            'title': ('Title (Click for more info)', {'width': 250, 'wrapText': True, 'autoHeight': True, 'cellRenderer':cellRenderer, 'cellStyle': {'font-size': '12px'}}),
             # 'url': ('Link', {'cellRenderer':cellRenderer}),
-            'sponsor_type': ('Sponsor Type', {'width': 125}),
-            'policyArea': ('Policy Area', {'width': 200}),
-            'introducedDate': ('Date Introduced', {'width': 150, 'autoHeight': True}),
+            'sponsor_type': ('Sponsor Type', {'width': 200, 'cellStyle': {'font-size': '12px'}}),
+            'policyArea': ('Policy Area', {'width': 200, 'cellStyle': {'font-size': '12px'}}),
+            'introducedDate': ('Date Introduced', {'width': 150, 'cellStyle': {'font-size': '12px'}, 'autoHeight': True}),
             }
             
             #### Pagination logic starts here
@@ -856,15 +634,10 @@ with tab3:
                                      "getRowHeight": "function(params) { return Math.max(32, params.data.row_height || 32); }"}
 
                     )
-    with col[1]:
+    with tab3_col[1]:
         if additional_data_df is not None:
             display_term_summary(additional_data_df=additional_data_df, 
                                  terms_df=terms_df, 
                                  mem_name=selected_option, 
                                  bioguideID=bioguideID)
 
-
-            # terms_df = query_term_data(bioguideID)
-            # fig_terms = plot_terms(dict(terms_df))
-
-            # st.plotly_chart(fig_terms, use_container_width=False)

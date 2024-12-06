@@ -115,7 +115,6 @@ SELECT DISTINCT
        ,mems.firstName
        ,mems.lastName
        ,mems.invertedOrderName
-       ,mems.state
        ,mems.depiction.imageURL
        ,mems.birthYear
        ,mems.deathYear

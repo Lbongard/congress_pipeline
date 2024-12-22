@@ -59,6 +59,6 @@ source as(
 -- --   ,UNNEST(committee_item.activities.item) AS activity_item
 -- )
 
-SELECT *
-      , {{ dbt_utils.generate_surrogate_key(['type', 'number'])}} as bill_key,
+SELECT  *
+      , {{ dbt_utils.generate_surrogate_key(['type', 'number', 'congress'])}} as bill_key,
 FROM source

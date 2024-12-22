@@ -8,11 +8,12 @@
 }}
 with members_staged as(
 
-  select distinct * except(depiction)
+  select * except(depiction)
   from {{ref("stg_members")}})
 
 
-SELECT bioguideID
+SELECT distinct 
+        bioguideID
        ,party.partyName
        ,party.startYear
        ,party.endYear

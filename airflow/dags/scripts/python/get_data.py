@@ -21,10 +21,15 @@ import shutil
 from datetime import datetime
 
 
-def convert_folder_xml_to_newline_json(folder, project_id, dataset_id, table_id, default_date='2015-01-01', filter_files=True):
+def convert_folder_xml_to_newline_json(folder, project_id, dataset_id, table_id, default_date='2015-01-01T00:00:00Z', filter_files=True):
     
     # Get max updated date from BigQuery for filtering API results for incremental load
-    filter_date = get_max_updated_date(project_id, dataset_id, table_id, default_date=default_date)
+    filter_date = get_max_updated_date(project_id=project_id, 
+                                        dataset_id=dataset_id, 
+                                        table_id=table_id, 
+                                        default_date=default_date, 
+                                        date_field='updateDateIncludingText')
+                                                    
 
     # Loop through downloaded xml files
     for x in os.walk(folder):
@@ -46,7 +51,8 @@ def convert_folder_xml_to_newline_json(folder, project_id, dataset_id, table_id,
                             # # only keep needed fields
                             # json_object_parsed = enforce_schema(json_data=json_object['billStatus'])
                             # json_objects.append(json_object_parsed)
-                            if json_object['billStatus']['bill']['updateDateIncludingText'] > filter_date:
+                            bill_update_date = datetime.strptime(json_object['billStatus']['bill']['updateDateIncludingText'], '%Y-%m-%dT%H:%M:%SZ')
+                            if bill_update_date > filter_date:
                                 bill_object = json_object['billStatus']['bill']
                                 bill_object_conformed = ensure_item_is_list(bill_object)
                                 json_objects.append(bill_object_conformed)
@@ -86,14 +92,19 @@ def convert_folder_xml_to_newline_json(folder, project_id, dataset_id, table_id,
 
 
 
-def get_votes_for_saved_bills(local_folder_path, bucket_name, start_date_task, project_id, dataset_id, table_id, default_date='2015-01-01', **kwargs):
+def get_votes_for_saved_bills(local_folder_path, bucket_name, project_id, dataset_id, table_id, default_date='2015-01-01', **kwargs):
 
     # Get run date to name subfolder in gcs for this run
     ti = kwargs['ti']
     run_date = ti.execution_date.date()
 
     # Get max updated date from BigQuery for filtering API results for incremental load
-    filter_date = get_max_updated_date(project_id, dataset_id, table_id, default_date=default_date)\
+    filter_date = get_max_updated_date(project_id=project_id, 
+                                       dataset_id=dataset_id, 
+                                       table_id=table_id, 
+                                       default_date=default_date, 
+                                       date_field='vote_date', 
+                                       format='%Y-%m-%d')
 
     for root, dirs, files in os.walk(local_folder_path):
 
@@ -149,7 +160,9 @@ def get_votes(bill_json, filter_date):
             recorded_votes = [action.get('recordedVotes', {}).get('recordedVote',{}) for action in bill_actions]
             
             # Filter for new votes based on date of last vote in existing data
-            recorded_votes_incremental = list(filter(lambda x: x.get('date', '1900-01-01') > filter_date, recorded_votes))
+            recorded_votes_incremental = list( \
+                                                filter(lambda x: datetime.strptime(x.get('date', '1900-01-01T00:00:00Z'), '%Y-%m-%dT%H:%M:%SZ') > filter_date, 
+                                                       recorded_votes))
 
             # return recorded_votes
             for vote in recorded_votes_incremental:
@@ -206,7 +219,7 @@ def get_votes(bill_json, filter_date):
 
 def get_members(params, project_id, dataset_id, table_id, bucket_name, **kwargs):
 
-    max_updated_date = get_max_updated_date(project_id, dataset_id, table_id)
+    max_updated_date = get_max_updated_date(project_id=project_id, dataset_id=dataset_id, table_id=table_id, date_field='updateDate')
 
     # Get run date to name subfolder in gcs for this run
     ti = kwargs['ti']
@@ -224,7 +237,7 @@ def get_members(params, project_id, dataset_id, table_id, bucket_name, **kwargs)
 
         for member in members_list:
             
-            if member['updateDate'] > max_updated_date:
+            if datetime.strptime(member['updateDate'], '%Y-%m-%dT%H:%M:%SZ') > max_updated_date:
                 bioguideID = member['bioguideId']
                 terms_all = member['terms']
                 
@@ -558,14 +571,14 @@ def upload_to_gcs_from_string(object, bucket_name, destination_blob_name):
     logging.info(f'File {destination_blob_name} uploaded to {bucket_name}.')
 
 
-def get_max_updated_date(project_id, dataset_id, table_id, default_date='2015-01-01'):
+def get_max_updated_date(date_field, project_id, dataset_id, table_id, default_date='2015-01-01T00:00:00Z', format='%Y-%m-%dT%H:%M:%SZ'):
 
     client = bigquery.Client()
 
     # Query to get the max updated_date
     query = f"""
     SELECT MAX(
-                COALESCE(updated_date, {default_date})
+                COALESCE({date_field}, '{default_date}')
                     ) AS max_updated_date
     FROM `{project_id}.{dataset_id}.{table_id}`
     """
@@ -580,9 +593,9 @@ def get_max_updated_date(project_id, dataset_id, table_id, default_date='2015-01
         
         # If there is no data in the table, return default date
         if max_updated_date is None:
-            return default_date
+            return datetime.strptime(default_date, format)
         else:
-            return max_updated_date.strftime('%Y-%m-%d')
+            return datetime.strptime(max_updated_date, format)
     
     except Exception as e:
         # If the table doesn't exist or any error occurs, return default date

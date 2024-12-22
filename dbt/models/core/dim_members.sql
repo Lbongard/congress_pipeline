@@ -110,8 +110,7 @@ most_recent_party_cte as(
 
 )
 
-SELECT DISTINCT
-       mems.bioguideID
+SELECT mems.bioguideID
        ,mems.firstName
        ,mems.lastName
        ,mems.invertedOrderName
@@ -128,5 +127,5 @@ FROM members_staged mems
       left join most_recent_chamber_cte chmbr on (mems.bioguideID = chmbr.bioguideID)
       left join senate_ids on (mems.bioguideID = senate_ids.bioguideID)
       left join most_recent_party_cte parties on (mems.bioguideID = parties.bioguideID)
-
+QUALIFY ROW_NUMBER() OVER(PARTITION BY bioguideID ORDER BY updateDate DESC) = 1
 

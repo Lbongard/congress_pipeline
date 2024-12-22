@@ -12,7 +12,8 @@ source as(
     select * from {{ref("stg_bills")}}
 )
 
-SELECT bill_key,
+SELECT distinct
+       bill_key,
        JSON_EXTRACT_SCALAR(leg_subjects, '$.name') subject,
        current_datetime() as updateDatetime
 FROM Congress_Stg.stg_bills,

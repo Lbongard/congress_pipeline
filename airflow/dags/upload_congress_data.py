@@ -108,7 +108,7 @@ convert_to_json = PythonOperator(
     op_kwargs={'folder':'/opt/airflow/dags/data/bills',
                'filter_files':True,
                'project_id':PROJECT_ID,
-               'dataset_id':'Congress_Stg',
+               'dataset_id':'Congress_Target',
                'table_id':'dim_bills'
                }
 )
@@ -122,7 +122,7 @@ get_votes_from_bills = PythonOperator(
                'save_folder':'/opt/airflow/dags/data/votes',
                'bucket_name':BUCKET_NAME,
                'project_id':PROJECT_ID,
-               'dataset_id':'Congress_Stg',
+               'dataset_id':'Congress_Target',
                'table_id':'dim_votes'},
     provide_context=True
 )
@@ -151,7 +151,7 @@ get_members_data = PythonOperator(
     python_callable=get_members,
     op_kwargs= {'params':params_members,
                 'project_id':PROJECT_ID,
-                'dataset_id':'Congress_Stg',
+                'dataset_id':'Congress_Target',
                 'table_id':'dim_members',
                 'bucket_name':BUCKET_NAME},
     dag=dag
@@ -163,6 +163,12 @@ get_senate_id_data = PythonOperator(
      op_kwargs={'save_folder':'senate_ids', 
                 'bucket_name':BUCKET_NAME},
      dag=dag
+)
+
+dbt_run = BashOperator(
+    task_id='dbt_run',
+    bash_command='cd /usr/app/dbt && dbt deps && dbt seed && dbt run',
+    dag=dag,
 )
 
 
@@ -192,124 +198,12 @@ for data_type in DATA_TYPES.keys():
     elif data_type in ['members', 'senate_ids']:
            get_senate_id_data >> delete_external_table >> create_external_table
 
+    create_external_table >> dbt_run
+
+
 
 start >> get_bills >> convert_to_json >> get_votes_from_bills >> upload_bills_to_gcs
 start >> get_members_data >> get_senate_id_data
-
-
-
-# def format_end_date(**kwargs):
-#     execution_date = kwargs['execution_date']
-#     end_date = execution_date.strftime('%Y-%m-%dT00:00:00Z')
-
-#     logging.info("Formatted execution date: %s", end_date)
-#     return end_date
-
-# params_members = {
-#     'limit': 250,
-#     'offset': 0,
-#     # Beginning of 118th Congress
-#     'start_date': MEMBERS_START_DATE,
-#     "end_date":"{{ task_instance.xcom_pull(task_ids='format_execution_date_task') }}",
-#     'api_key': CONGRESS_API_KEY
-# }
-
-# format_date_task = PythonOperator(
-#     task_id='format_execution_date_task',
-#     python_callable=format_end_date,
-#     provide_context=True,
-#     dag=dag
-# )
-
-
-# get_senate_id_data = PythonOperator(
-#     task_id = 'get_senate_id_data',
-#     python_callable=get_senate_ids,
-#     op_kwargs= {'save_folder':'/opt/airflow/dags/data/senate_ids'},
-#     dag=dag
-# )
-
-# dbt_run = BashOperator(
-#     task_id='dbt_run',
-#     bash_command='cd /usr/app/dbt && dbt deps && dbt seed && dbt run',
-#     dag=dag,
-# )
-
-
-# for data_type in DATA_TYPES.keys():
-
-#     upload_to_gcs = PythonOperator(
-    # task_id = f'upload_{data_type}_to_gcs',
-    # python_callable=upload_folder_to_gcs,
-    # op_kwargs={'local_folder_path':DATA_TYPES[data_type]['local_folder_path'], 
-    #            'bucket_name':BUCKET_NAME, 
-    #            'destination_folder':f'{data_type}'}
-# )
-    
-#     bigquery_external_table_task = BigQueryInsertJobOperator(
-#             task_id=f"bq_create_{data_type}_external_table_task",
-#             configuration={
-#                 "query": {
-#                     "query": DATA_TYPES[data_type]['table_struct'],
-#                     "useLegacySql": False,
-#                 }
-#             },
-#             dag=dag  
-#         )
-    
-#     partition_col = DATA_TYPES[data_type]['partition_col']
-
-#     if data_type in ('bill_status', 'votes', 'members'):
-    
-#         new_partition_col = partition_col.split('.')[-1] + '_formatted'
-        
-#         CREATE_BQ_TBL_QUERY = (
-#             f"DROP TABLE IF EXISTS {BIGQUERY_DATASET}.{data_type}; \
-#             CREATE TABLE {BIGQUERY_DATASET}.{data_type} \
-#             PARTITION BY {new_partition_col} \
-#             AS \
-#             SELECT *, DATE({partition_col}) {new_partition_col} \
-#             FROM {BIGQUERY_DATASET}.{data_type}_external_table;"
-#         )
-    
-#     else:
-#         CREATE_BQ_TBL_QUERY = (
-#             f"DROP TABLE IF EXISTS {BIGQUERY_DATASET}.{data_type}; \
-#             CREATE TABLE {BIGQUERY_DATASET}.{data_type} \
-#             AS \
-#             SELECT * \
-#             FROM {BIGQUERY_DATASET}.{data_type}_external_table;"
-#         )
-
-#     bq_create_partitioned_table_job = BigQueryInsertJobOperator(
-#         task_id=f"bq_create_{BIGQUERY_DATASET}_{data_type}_partitioned_table_task",
-#         configuration={
-#             "query": {
-#                 "query": CREATE_BQ_TBL_QUERY,
-#                 "useLegacySql": False,
-#             }
-#         },
-#         dag=dag  
-#     )
-    
-    # upload_to_gcs >> bigquery_external_table_task >> bq_create_partitioned_table_job >> dbt_run
-
-    # if data_type == 'bill_status':
-    #     convert_to_json >> upload_to_gcs
-    # elif data_type == 'votes':
-    #     get_votes_from_bills >> upload_to_gcs
-    # elif data_type == 'members':
-    #     get_members_data >> upload_to_gcs
-    #     convert_to_json >> upload_to_gcs
-    # elif data_type == 'senate_ids':
-    #     get_senate_id_data >> upload_to_gcs
-
-# get_bills >> convert_to_json >> upload_to_gcs >> bigquery_external_table_task >> bq_create_partitioned_table_job
-
-# convert_to_json >> get_votes_from_bills
-
-# format_date_task >> get_members_data
-
 
 
 

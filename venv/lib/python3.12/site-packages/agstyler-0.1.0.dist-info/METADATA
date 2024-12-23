@@ -1,0 +1,6 @@
+Metadata-Version: 2.1
+Name: agstyler
+Version: 0.1.0
+Summary: Formats grids in Streamlit apps
+Author: Reid Bongard; (Modified from package created by Nikolai Riabykh)
+Requires-Dist: streamlit-aggrid

@@ -8,7 +8,6 @@ import os
 import json
 import altair as alt
 import plotly.express as px
-from streamlit_searchbox import st_searchbox
 import plotly.graph_objs as go
 import pandas as pd
 import numpy as np

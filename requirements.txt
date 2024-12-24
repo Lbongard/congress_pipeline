@@ -96,3 +96,4 @@ urllib3==1.26.18
 zipp==3.18.1
 zope.interface==6.4.post2
 -e ./agstyler
+google-cloud-secret-manager==2.22.0

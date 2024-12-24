@@ -3,6 +3,7 @@
 import streamlit as st
 from google.oauth2 import service_account
 from google.cloud import bigquery, storage
+from google.cloud import secretmanager
 import pandas_gbq
 import os
 import json
@@ -14,22 +15,37 @@ import numpy as np
 from st_aggrid import AgGrid, GridOptionsBuilder, JsCode
 from agstyler.agstyler import PINLEFT, PRECISION_TWO, draw_grid, highlight_mult_colors, cellRenderer
 from pyarrow import parquet
-# import gcsfs
 from datetime import datetime
 import pytz
 
-config_path = os.path.abspath(os.getenv('TF_VAR_google_credentials'))
+
+PROJECT_ID = os.path.abspath(os.getenv('TF_VAR_gcp_project'))
+
+# Function to access secret from Secret Manager
+def get_secret(project_id, secret_name):
+    client = secretmanager.SecretManagerServiceClient()
+    name = f"projects/{project_id}/secrets/{secret_name}/versions/latest"
+    response = client.access_secret_version(name=name)
+    secret = response.payload.data.decode("UTF-8")
+    return json.loads(secret)
+
+
+
+# Check if the app is running locally or on Cloud Run
+if os.getenv("LOCAL_RUN"):  # Local environment
+    config_path = os.path.abspath(os.getenv('TF_VAR_google_credentials'))
+    credentials = service_account.Credentials.from_service_account_info(st.secrets["gcp_service_account"])
+
+else:  # Cloud Run environment
+    # Retrieve service account credentials from Secret Manager in Cloud Run
+    service_account_info = get_secret(PROJECT_ID, "gcp_service_account_credentials")
+    credentials = service_account.Credentials.from_service_account_info(service_account_info)
+
+# Create API client using the service account
+
+client = bigquery.Client(credentials=credentials)
 
 bucket_name = os.getenv("streamlit_data_bucket_name")
-
-with open(config_path, 'r') as config_file:
-    config = json.load(config_file)
-
-# Create API client.
-credentials = service_account.Credentials.from_service_account_info(
-    st.secrets["gcp_service_account"]
-)
-client = bigquery.Client(credentials=credentials)
 
 # Set Page Config
 st.set_page_config(

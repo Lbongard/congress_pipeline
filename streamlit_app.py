@@ -35,10 +35,12 @@ def get_secret(project_id, secret_name):
 if os.getenv("LOCAL_RUN"):  # Local environment
     config_path = os.path.abspath(os.getenv('TF_VAR_google_credentials'))
     credentials = service_account.Credentials.from_service_account_info(st.secrets["gcp_service_account"])
+    os.environ["GOOGLE_APPLICATION_CREDENTIALS"] = os.getenv('TF_VAR_google_credentials')
 
 else:  # Cloud Run environment
     # Retrieve service account credentials from Secret Manager in Cloud Run
-    service_account_info = get_secret(PROJECT_ID, "gcp_service_account_credentials")
+    creds_secret_name = os.getenv('gcp_service_account_credentials')
+    service_account_info = get_secret(project_id=PROJECT_ID, secret_name=creds_secret_name)
     credentials = service_account.Credentials.from_service_account_info(service_account_info)
 
 # Create API client using the service account
@@ -54,7 +56,7 @@ st.set_page_config(
     initial_sidebar_state="expanded")
 
 # Set os.environ for download from gcs bucket
-os.environ["GOOGLE_APPLICATION_CREDENTIALS"] = os.getenv('TF_VAR_google_credentials')
+
 
 
 tab1, tab2, tab3 = st.tabs(["Overall Voting Record", "Recent Votes", "Sponsored Bills"])

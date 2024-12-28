@@ -22,9 +22,9 @@ import pytz
 PROJECT_ID = os.path.abspath(os.getenv('TF_VAR_gcp_project'))
 
 # Function to access secret from Secret Manager
-def get_secret(project_id, secret_name):
+def get_secret(project_num, secret_name):
     client = secretmanager.SecretManagerServiceClient()
-    name = f"projects/{project_id}/secrets/{secret_name}/versions/latest"
+    name = f"projects/{project_num}/secrets/{secret_name}/versions/latest"
     response = client.access_secret_version(name=name)
     secret = response.payload.data.decode("UTF-8")
     return json.loads(secret)
@@ -39,8 +39,9 @@ if os.getenv("LOCAL_RUN"):  # Local environment
 
 else:  # Cloud Run environment
     # Retrieve service account credentials from Secret Manager in Cloud Run
+    project_num = os.get_env('project_num')
     creds_secret_name = os.getenv('gcp_service_account_credentials')
-    service_account_info = get_secret(project_id=PROJECT_ID, secret_name=creds_secret_name)
+    service_account_info = get_secret(project_id=project_num, secret_name=creds_secret_name)
     credentials = service_account.Credentials.from_service_account_info(service_account_info)
 
 # Create API client using the service account

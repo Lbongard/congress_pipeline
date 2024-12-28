@@ -39,7 +39,7 @@ if os.getenv("LOCAL_RUN"):  # Local environment
 
 else:  # Cloud Run environment
     # Retrieve service account credentials from Secret Manager in Cloud Run
-    project_num = os.get_env('project_num')
+    project_num = os.getenv('project_num')
     creds_secret_name = os.getenv('gcp_service_account_credentials')
     service_account_info = get_secret(project_id=project_num, secret_name=creds_secret_name)
     credentials = service_account.Credentials.from_service_account_info(service_account_info)

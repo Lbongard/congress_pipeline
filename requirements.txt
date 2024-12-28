@@ -97,3 +97,4 @@ zipp==3.18.1
 zope.interface==6.4.post2
 -e ./agstyler
 google-cloud-secret-manager==2.22.0
+fsspec==2024.12.0

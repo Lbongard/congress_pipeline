@@ -56,7 +56,8 @@ else:  # Cloud Run environment
 
 # Create API client using the service account
 
-client = bigquery.Client(credentials=credentials)
+# client = bigquery.Client(credentials=credentials)
+client = bigquery.Client()
 
 bucket_name = os.getenv("streamlit_data_bucket_name")
 

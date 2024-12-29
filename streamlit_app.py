@@ -18,6 +18,7 @@ from pyarrow import parquet
 from datetime import datetime
 import pytz
 import gcsfs
+import base64
 
 
 PROJECT_ID = os.path.abspath(os.getenv('TF_VAR_gcp_project'))
@@ -45,7 +46,8 @@ else:  # Cloud Run environment
     # service_account_info = get_secret(project_num=project_num, secret_name=creds_secret_name)
     # credentials = service_account.Credentials.from_service_account_info(service_account_info)
 
-    credentials_json = st.secrets["gcp"]["credentials_json"]
+    encoded_credentials = st.secrets["gcp"]["credentials_json"]
+    credentials_json = base64.b64decode(encoded_credentials)
 
     with open("gcp_credentials.json", "wb") as f:
         f.write(credentials_json)

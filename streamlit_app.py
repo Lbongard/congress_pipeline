@@ -17,6 +17,7 @@ from agstyler.agstyler import PINLEFT, PRECISION_TWO, draw_grid, highlight_mult_
 from pyarrow import parquet
 from datetime import datetime
 import pytz
+import gcsfs
 
 
 PROJECT_ID = os.path.abspath(os.getenv('TF_VAR_gcp_project'))

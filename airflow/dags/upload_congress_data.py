@@ -1,20 +1,18 @@
-import json
 from datetime import datetime, timedelta
 
 from airflow.operators.dummy import DummyOperator
-# from airflow.models import TaskInstance
 from airflow.operators.bash import BashOperator
 from airflow.operators.python import PythonOperator
-from airflow.providers.google.cloud.transfers.gcs_to_bigquery import GCSToBigQueryOperator
 from airflow.providers.google.cloud.operators.bigquery import BigQueryCreateExternalTableOperator, BigQueryDeleteTableOperator
 from airflow import DAG
 from airflow.utils.dates import days_ago
 
-from scripts.python.get_data import *
-# from scripts.python.xmlConvert import convert_folder_xml_to_newline_json
+from scripts.python.utils import *
+from scripts.python.xmlConvert import *
+from scripts.python.get_votes import *
+from scripts.python.get_members import *
 from schemas.external_schemas import house_votes_schema, senate_votes_schema, bill_schema, member_schema, senate_id_schema
 
-from dotenv import load_dotenv
 import os
 import logging
 
@@ -24,12 +22,11 @@ PROJECT_ID = os.environ.get("GCP_PROJECT_ID")
 BUCKET_NAME = os.environ.get("GCP_GCS_BUCKET")
 print(f"Bucket Name: {BUCKET_NAME}")
 
-# with open('dags/schemas/house_votes_schema.txt', 'r') as file:
-#     members_schema = json.load(file)
-
 CONGRESS_API_KEY = os.environ.get("CONGRESS_API_KEY")
 
-BIGQUERY_DATASET= 'Congress'
+BIGQUERY_DATASET= 'Congress_Target'
+
+# Importing defined schemas to use when creating BigQuery external tables
 DATA_TYPES = {'bills'  : bill_schema,
               'house_votes'  : house_votes_schema,
               'senate_votes' : senate_votes_schema,
@@ -37,6 +34,38 @@ DATA_TYPES = {'bills'  : bill_schema,
               'senate_ids': senate_id_schema
               }
               
+# Define congresses for which to fetch data
+congress_numbers = ['116', '117', '118']
+
+# Define bill types to download
+bill_types = ['sres', 'hr', 'hconres', 'hjres', 'hres', 's', 'sjres', 'sconres']
+
+# Parameters for members API call
+MEMBERS_START_DATE = "2019-01-01T00:00:00Z" # Start of 116th Congress
+MEMBERS_END_DATE = datetime.utcnow().strftime("%Y-%m-%dT%H:%M:%SZ")
+params_members = {
+    'limit': 250,
+    'offset': 0,
+    'start_date': MEMBERS_START_DATE,
+    "end_date":MEMBERS_END_DATE,
+    'api_key': CONGRESS_API_KEY,
+    'end_year_limit': 2015
+}
+
+BASE_URL = 'https://www.govinfo.gov/bulkdata/BILLSTATUS/'
+
+# Dynamically create bash command that will be used to download bulk bill statuses
+bash_command = ' && '.join([
+    f'rm -rf /opt/airflow/dags/data/bills/{congress_number}/{bill_type} \
+    && mkdir -p /opt/airflow/dags/data/bills/{congress_number}/{bill_type} \
+    && wget -P /opt/airflow/dags/data/bills/{congress_number}/{bill_type} "{BASE_URL}{congress_number}/{bill_type}/BILLSTATUS-{congress_number}-{bill_type}.zip" \
+    && unzip /opt/airflow/dags/data/bills/{congress_number}/{bill_type}/BILLSTATUS-{congress_number}-{bill_type} -d /opt/airflow/dags/data/bills/{congress_number}/{bill_type} \
+    && rm /opt/airflow/dags/data/bills/{congress_number}/{bill_type}/BILLSTATUS-{congress_number}-{bill_type}.zip \
+    || echo "Failed to download or unzip /opt/airflow/dags/data/bills/{congress_number}/{bill_type}"' \
+    for congress_number in congress_numbers for bill_type in bill_types
+])
+
+
 # DAG definition
 default_args = {
     "owner": "airflow",
@@ -50,45 +79,12 @@ default_args = {
     "retry_delay": timedelta(minutes=1),
 }
 
-
-
 dag = DAG(
     "upload_congress_data",
     default_args=default_args,
     schedule_interval="@once",
     max_active_runs=1,
 )
-
-congress_numbers = [
-                    # '116', '117', 
-                    '118']
-
-bill_types = ['sres', 'hr', 'hconres', 'hjres', 'hres', 's', 'sjres', 'sconres']
-MEMBERS_START_DATE = "2019-01-01T00:00:00Z" # Start of 116th Congress
-
-files_to_download = [
-    ['sres', ''],
-    ['hr', 'https://www.govinfo.gov/bulkdata/BILLSTATUS/118/hr/BILLSTATUS-118-hr.zip'],
-    ['hconres', 'https://www.govinfo.gov/bulkdata/BILLSTATUS/118/hconres/BILLSTATUS-118-hconres.zip'],
-    ['hjres', 'https://www.govinfo.gov/bulkdata/BILLSTATUS/118/hjres/BILLSTATUS-118-hjres.zip'],
-    ['hres', 'https://www.govinfo.gov/bulkdata/BILLSTATUS/118/hres/BILLSTATUS-118-hres.zip'],
-    ['s', 'https://www.govinfo.gov/bulkdata/BILLSTATUS/118/s/BILLSTATUS-118-s.zip'],
-    ['sjres', 'https://www.govinfo.gov/bulkdata/BILLSTATUS/118/sjres/BILLSTATUS-118-sjres.zip'],
-    ['sconres', 'https://www.govinfo.gov/bulkdata/BILLSTATUS/118/sconres/BILLSTATUS-118-sconres.zip']
-]
-
-BASE_URL = 'https://www.govinfo.gov/bulkdata/BILLSTATUS/'
-
-bash_command = ' && '.join([
-    f'rm -rf /opt/airflow/dags/data/bills/{congress_number}/{bill_type} \
-    && mkdir -p /opt/airflow/dags/data/bills/{congress_number}/{bill_type} \
-    && wget -P /opt/airflow/dags/data/bills/{congress_number}/{bill_type} "{BASE_URL}{congress_number}/{bill_type}/BILLSTATUS-{congress_number}-{bill_type}.zip" \
-    && unzip /opt/airflow/dags/data/bills/{congress_number}/{bill_type}/BILLSTATUS-{congress_number}-{bill_type} -d /opt/airflow/dags/data/bills/{congress_number}/{bill_type} \
-    && rm /opt/airflow/dags/data/bills/{congress_number}/{bill_type}/BILLSTATUS-{congress_number}-{bill_type}.zip \
-    || echo "Failed to download or unzip /opt/airflow/dags/data/bills/{congress_number}/{bill_type}"' \
-    for congress_number in congress_numbers for bill_type in bill_types
-])
-
 
 start = DummyOperator(
     task_id='start_dummy',
@@ -108,11 +104,10 @@ convert_to_json = PythonOperator(
     op_kwargs={'folder':'/opt/airflow/dags/data/bills',
                'filter_files':True,
                'project_id':PROJECT_ID,
-               'dataset_id':'Congress_Target',
+               'dataset_id':BIGQUERY_DATASET,
                'table_id':'dim_bills'
                }
 )
-
 
 get_votes_from_bills = PythonOperator(
     task_id = 'get_votes_from_downloaded_bills',
@@ -122,7 +117,7 @@ get_votes_from_bills = PythonOperator(
                'save_folder':'/opt/airflow/dags/data/votes',
                'bucket_name':BUCKET_NAME,
                'project_id':PROJECT_ID,
-               'dataset_id':'Congress_Target',
+               'dataset_id':BIGQUERY_DATASET,
                'table_id':'dim_votes'},
     provide_context=True
 )
@@ -136,22 +131,14 @@ upload_bills_to_gcs = PythonOperator(
                'run_date_subfolder':True,
                'remove_local':True}
 )
-params_members = {
-    'limit': 250,
-    'offset': 0,
-    # Beginning of 118th Congress
-    'start_date': "2019-01-01T00:00:00Z",
-    "end_date":"2024-09-22T00:00:00Z",
-    'api_key': CONGRESS_API_KEY,
-    'end_year_limit': 2015
-}
+
 
 get_members_data = PythonOperator(
     task_id = 'get_members_data',
     python_callable=get_members,
     op_kwargs= {'params':params_members,
                 'project_id':PROJECT_ID,
-                'dataset_id':'Congress_Target',
+                'dataset_id':BIGQUERY_DATASET,
                 'table_id':'dim_members',
                 'bucket_name':BUCKET_NAME},
     dag=dag

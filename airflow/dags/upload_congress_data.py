@@ -35,13 +35,13 @@ DATA_TYPES = {'bills'  : bill_schema,
               }
               
 # Define congresses for which to fetch data
-congress_numbers = ['116', '117', '118']
+congress_numbers = ['118', '119']
 
 # Define bill types to download
 bill_types = ['sres', 'hr', 'hconres', 'hjres', 'hres', 's', 'sjres', 'sconres']
 
 # Parameters for members API call
-MEMBERS_START_DATE = "2019-01-01T00:00:00Z" # Start of 116th Congress
+MEMBERS_START_DATE = "2023-01-01T00:00:00Z" # Start of 118th Congress
 MEMBERS_END_DATE = datetime.utcnow().strftime("%Y-%m-%dT%H:%M:%SZ")
 params_members = {
     'limit': 250,
@@ -52,9 +52,8 @@ params_members = {
     'end_year_limit': 2015
 }
 
-BASE_URL = 'https://www.govinfo.gov/bulkdata/BILLSTATUS/'
-
 # Dynamically create bash command that will be used to download bulk bill statuses
+BASE_URL = 'https://www.govinfo.gov/bulkdata/BILLSTATUS/'
 bash_command = ' && '.join([
     f'rm -rf /opt/airflow/dags/data/bills/{congress_number}/{bill_type} \
     && mkdir -p /opt/airflow/dags/data/bills/{congress_number}/{bill_type} \

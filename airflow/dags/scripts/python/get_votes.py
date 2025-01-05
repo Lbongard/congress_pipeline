@@ -93,7 +93,7 @@ def get_votes_from_bill(bill_json, filter_date):
             json_content = json.loads(line)
             bill = dict(json_content)
 
-            bill_number = bill['number']
+            bill_number = bill.get('number', bill.get('billNumber', None))
             bill_type = bill['type']
             logging.info(f"Opened bill {bill_type} {bill_number}")
 

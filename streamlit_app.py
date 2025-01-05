@@ -240,7 +240,8 @@ def display_term_summary(additional_data_df, terms_df, mem_name, bioguideID):
 ###### Start Streamlit Page ######
 with st.sidebar:
     
-    # Initialize geo and last_name to None
+    # Initialize selection options to None
+    congress_session      = None
     selected_method       = None
     geo                   = None
     last_name             = None
@@ -260,15 +261,18 @@ with st.sidebar:
 
     st.title('Congressional Member Info Data Tool')
 
-    congress_sessions = [ "116th Congress (2019-2020)",
-                          "117th Congress (2021-2022)",
-                          "118th Congress (2023-2024)"]
+    congress_sessions = ["118th Congress (2023-2024)",
+                         "119th Congress (2025-2026)"]
     
-    congress_session_selection = st.selectbox('Select a Congressional Session:',
+    congress_session_selection = st.selectbox('Optional - Select a Congressional Session:',
                                     congress_sessions,
-                                    index=2
+                                    index=None
                                     )
-    congress_session = int(congress_session_selection[:3])
+    if congress_session_selection:
+        congress_session = int(congress_session_selection[:3])
+        member_options = member_options[member_options['congress'] == congress_session]
+        voting_results = voting_results[voting_results['congress'] == congress_session]
+        sponsored_bills = sponsored_bills[sponsored_bills['congress'] == congress_session]
     
     chambers = ['Senate', 'House of Representatives']
     selected_chamber = st.selectbox('Select a chamber of Congress:', 
@@ -292,8 +296,6 @@ with st.sidebar:
         "South Carolina", "South Dakota", "Tennessee", "Texas", "Utah", "Vermont",
         "Virginia", "Washington", "West Virginia", "Wisconsin", "Wyoming"
     ]
-
-    
     
     if selected_method == 'Search Member by Zip Code':
 
@@ -302,8 +304,7 @@ with st.sidebar:
         zip_code = st.text_input('Enter your zip code:')
     
         if zip_code:
-            try:
-                # options_df = query_options_by_geo(chamber=selected_chamber, zip_code=zip_code, congress=congress_session)
+            try:                
                 district_states = dim_congressional_districts[dim_congressional_districts['zip_code'] == int(zip_code)]['state'].values
 
                 if selected_chamber == 'House of Representatives':
@@ -313,15 +314,15 @@ with st.sidebar:
                                                 (member_options['chamber'] == selected_chamber) & \
                                                 # NA filled with 0 because states with only 1 congressional district have value of NA in this view
                                                 (member_options['congressional_district'].fillna(0).isin(congressional_districts)) & \
-                                                (member_options['stateName'].isin(district_states)) & \
-                                                (member_options['congress'] == congress_session)
+                                                (member_options['stateName'].isin(district_states))
                                                 ]
+                    
                 elif selected_chamber == 'Senate':
                     options_df = member_options[
                                                 (member_options['chamber'] == selected_chamber) & \
-                                                (member_options['stateName'].isin(district_states)) & \
-                                                (member_options['congress'] == congress_session)
+                                                (member_options['stateName'].isin(district_states))
                                                 ]
+
             except Exception as e:
                 st.write('An error occurred. Please ensure that your entry is valid.')
                 st.error(e)
@@ -339,8 +340,7 @@ with st.sidebar:
             try:
                 options_df = member_options[
                                                 (member_options['chamber'] == selected_chamber) & \
-                                                (member_options['lastName'] == last_name) & \
-                                                (member_options['congress'] == congress_session)
+                                                (member_options['lastName'] == last_name)
                                                 ]
             except Exception as e:
                 st.write('An error occurred. Please ensure that your entry is valid.')
@@ -348,16 +348,10 @@ with st.sidebar:
             
             if options_df.empty:
                 st.write('No representative found for this entry. Please ensure that your entry is valid.')
-
-        # try:
-        #     options_df = query_options_by_geo(chamber=selected_chamber, geo=geo)
-        # except Exception as e:
-        #     st.write('An error occurred. Please ensure that your entry is valid.')
-        #     st.stop()
     
     
     if options_df is not None:
-        options = options_df['concat_name'].tolist()
+        options = options_df['concat_name'].unique().tolist()
         selected_option = st.selectbox('Select a representative:', 
                                     options,
                                     index=None)
@@ -495,6 +489,7 @@ with tab2:
             'dem_majority_vote': ('Dem Maj Vote', {'width': 115, 'autoHeight': True, 'cellStyle':vote_cell_styles['dem_majority_vote']}),
             'rep_majority_vote': ('Rep Maj Vote', {'width': 115, 'autoHeight': True, 'cellStyle':vote_cell_styles['rep_majority_vote']}),
             'result': ('Result', {'width': 125, 'cellStyle': {'font-size': '12px'}}),
+            'vote_date': ('Vote Date', {'width': 125, 'cellStyle': {'font-size': '12px'}, 'valueFormatter':"(new Date(value)).toISOString().split('T')[0]"}),
             # 'policyArea': ('Policy Area', {'width': 150}),
             'roll_call_number': ('Vote #', {'width': 110, 'cellStyle': {'font-size': '12px'}})
             }
@@ -503,8 +498,7 @@ with tab2:
                                                        (keyword_filter_indiv_votes) & \
                                                        (policy_area_filter_indiv_votes)]\
                                         [display_cols_indiv_votes].\
-                                        set_index('vote_date').\
-                                        sort_index(ascending = False)
+                                        sort_values('vote_date')
             
 
             #### PAGINATION LOGIC STARTS HERE

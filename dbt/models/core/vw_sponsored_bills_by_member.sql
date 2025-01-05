@@ -13,6 +13,7 @@ SELECT sponsors.bioguideID
       ,mems.invertedOrderName name
       ,sponsor_type
       ,bill_name
+      ,bills.congress congress
       ,title
       ,url
       ,policyArea

@@ -50,7 +50,7 @@ def upload_folder_to_gcs(local_folder_path, bucket_name, destination_folder, run
 
             try:
                 blob.upload_from_filename(local_file_path)
-                print(f"Uploaded {local_file_path} to gs://{bucket_name}/{gcs_blob_name}")
+                logging.info(f"Uploaded {local_file_path} to gs://{bucket_name}/{gcs_blob_name}")
                 if remove_local:
                     os.remove(local_file_path)
             except Exception as e:

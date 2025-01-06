@@ -268,11 +268,17 @@ with st.sidebar:
                                     congress_sessions,
                                     index=None
                                     )
+    # Limit datasets to selected congress session or any session in congress_sessions list
     if congress_session_selection:
         congress_session = int(congress_session_selection[:3])
         member_options = member_options[member_options['congress'] == congress_session]
         voting_results = voting_results[voting_results['congress'] == congress_session]
         sponsored_bills = sponsored_bills[sponsored_bills['congress'] == congress_session]
+    else:
+        congress_sessions_int = [int(session[:3]) for session in congress_sessions]
+        member_options = member_options[member_options['congress'].isin(congress_sessions_int)]
+        voting_results = voting_results[voting_results['congress'].isin(congress_sessions_int)]
+        sponsored_bills = sponsored_bills[sponsored_bills['congress'].isin(congress_sessions_int)]
     
     chambers = ['Senate', 'House of Representatives']
     selected_chamber = st.selectbox('Select a chamber of Congress:', 

@@ -101,7 +101,8 @@ voting_results['title_linked'] = voting_results.apply(
                 )
 sponsored_bills['introducedDate'] = pd.to_datetime(sponsored_bills['introducedDate']).dt.strftime('%Y-%m-%d')
 
-terms_df['term_end_year'] = terms_df['term_end_year'].astype(object).fillna('-')
+terms_df['term_end_year'] = terms_df['term_end_year'].apply(lambda x: int(round(x)) if pd.notnull(x) else '-')
+# terms_df['term_end_year'] = terms_df['term_end_year'].astype(object).fillna('-')
 terms_df.set_index('chamber', inplace=True)
 terms_df.rename({'term_start_year': 'Start Year',
                 'term_end_year': 'End Year'},
@@ -234,8 +235,6 @@ def display_term_summary(additional_data_df, terms_df, mem_name, bioguideID):
     
     st.text('Years Served')
     terms_table_data = terms_df[terms_df.bioguideID == bioguideID][['Start Year', 'End Year']]
-    for col in terms_table_data.columns:
-        terms_table_data[col] = terms_table_data[col].apply(lambda x: int(round(x)))
     st.table(terms_table_data)
 
 

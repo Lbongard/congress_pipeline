@@ -234,6 +234,8 @@ def display_term_summary(additional_data_df, terms_df, mem_name, bioguideID):
     
     st.text('Years Served')
     terms_table_data = terms_df[terms_df.bioguideID == bioguideID][['Start Year', 'End Year']]
+    for col in terms_table_data.columns:
+        terms_table_data[col] = terms_table_data[col].apply(lambda x: int(round(x)))
     st.table(terms_table_data)
 
 
@@ -261,8 +263,8 @@ with st.sidebar:
 
     st.title('Congressional Member Info Data Tool')
 
-    congress_sessions = ["118th Congress (2023-2024)",
-                         "119th Congress (2025-2026)"]
+    congress_sessions = ["118th Congress (2023-2025)",
+                         "119th Congress (2025-2027)"]
     
     congress_session_selection = st.selectbox('Optional - Select a Congressional Session:',
                                     congress_sessions,

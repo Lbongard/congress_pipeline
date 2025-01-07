@@ -103,7 +103,7 @@ def get_votes_from_bill(bill_json, filter_date):
             
             # Filter for new votes based on date of last vote in existing data
             recorded_votes_incremental = list( \
-                                                filter(lambda x: datetime.strptime(x.get('date', '1900-01-01T00:00:00Z'), '%Y-%m-%dT%H:%M:%SZ') > filter_date, 
+                                                filter(lambda x: datetime.strptime(x.get('date', '1900-01-01T00:00:00Z'), '%Y-%m-%dT%H:%M:%SZ') >= filter_date, 
                                                        recorded_votes))
 
             # return recorded_votes

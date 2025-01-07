@@ -43,7 +43,7 @@ def get_members(params, project_id, dataset_id, table_id, bucket_name, **kwargs)
 
         for member in members_list:
             
-            if datetime.strptime(member['updateDate'], '%Y-%m-%dT%H:%M:%SZ') > max_updated_date:
+            if datetime.strptime(member['updateDate'], '%Y-%m-%dT%H:%M:%SZ') >= max_updated_date:
                 bioguideID = member['bioguideId']
                 terms_all = member['terms']
                 

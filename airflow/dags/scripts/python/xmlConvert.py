@@ -52,7 +52,7 @@ def convert_folder_xml_to_newline_json(folder, project_id, dataset_id, table_id,
                             else: # Some bills don't have UpdateDateIncludingText field
                                 bill_update_date = datetime.strptime(json_object['billStatus']['bill']['updateDate'], '%Y-%m-%dT%H:%M:%SZ')
 
-                            if bill_update_date > filter_date:
+                            if bill_update_date >= filter_date:
                                 bill_object = json_object['billStatus']['bill']
                                 bill_object_conformed = ensure_item_is_list(bill_object)
                                 json_objects.append(bill_object_conformed)

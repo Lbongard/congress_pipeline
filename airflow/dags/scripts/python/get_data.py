@@ -52,7 +52,7 @@ def convert_folder_xml_to_newline_json(folder, project_id, dataset_id, table_id,
                             # json_object_parsed = enforce_schema(json_data=json_object['billStatus'])
                             # json_objects.append(json_object_parsed)
                             bill_update_date = datetime.strptime(json_object['billStatus']['bill']['updateDateIncludingText'], '%Y-%m-%dT%H:%M:%SZ')
-                            if bill_update_date > filter_date:
+                            if bill_update_date >= filter_date:
                                 bill_object = json_object['billStatus']['bill']
                                 bill_object_conformed = ensure_item_is_list(bill_object)
                                 json_objects.append(bill_object_conformed)
@@ -161,7 +161,7 @@ def get_votes(bill_json, filter_date):
             
             # Filter for new votes based on date of last vote in existing data
             recorded_votes_incremental = list( \
-                                                filter(lambda x: datetime.strptime(x.get('date', '1900-01-01T00:00:00Z'), '%Y-%m-%dT%H:%M:%SZ') > filter_date, 
+                                                filter(lambda x: datetime.strptime(x.get('date', '1900-01-01T00:00:00Z'), '%Y-%m-%dT%H:%M:%SZ') >= filter_date, 
                                                        recorded_votes))
 
             # return recorded_votes
@@ -237,7 +237,7 @@ def get_members(params, project_id, dataset_id, table_id, bucket_name, **kwargs)
 
         for member in members_list:
             
-            if datetime.strptime(member['updateDate'], '%Y-%m-%dT%H:%M:%SZ') > max_updated_date:
+            if datetime.strptime(member['updateDate'], '%Y-%m-%dT%H:%M:%SZ') >= max_updated_date:
                 bioguideID = member['bioguideId']
                 terms_all = member['terms']
                 

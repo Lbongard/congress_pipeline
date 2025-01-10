@@ -6,7 +6,7 @@ While Congress originates and votes on various types of bills each year, this pr
 This project was created for the [Data Talks Club Data Engineering Zoomcamp](https://github.com/DataTalksClub/data-engineering-zoomcamp/tree/main). See the 'Future Improvements' section for planned improvements to the pipeline.
 
 # Project Architecture
-![Screenshot 2024-04-16 at 9 49 40 PM](https://github.com/Lbongard/congress_pipeline/assets/62773555/47d3ce6b-bb5b-49be-9808-293cc566fcf9)
+![Screenshot 2024-04-16 at 9 49 40 PM](https://github.com/Lbongard/congress_pipeline/images/Architecture_Diagram.gif)
 
 # Data
 Information on the API and bulk data download used in this project can be found [here](https://www.congress.gov/help/using-data-offsite) and [here](https://www.govinfo.gov/bulkdata)

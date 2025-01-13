@@ -8,9 +8,9 @@
 }}
 
 with stg_terms as(
-    SELECT distinct *,
-                    current_datetime() as flowDate
-    FROM {{ref("stg_terms")}}
+    SELECT *, current_date() as flowDate
+FROM {{ref("stg_terms")}}
+QUALIFY ROW_NUMBER() OVER(PARTITION BY bioguideId, term_start_year, chamber ORDER BY COALESCE(term_end_year, 9999) desc) = 1
 )
 
 select * 

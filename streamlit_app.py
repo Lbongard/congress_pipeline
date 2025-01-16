@@ -505,7 +505,7 @@ with tab2:
                                                        (keyword_filter_indiv_votes) & \
                                                        (policy_area_filter_indiv_votes)]\
                                         [display_cols_indiv_votes].\
-                                        sort_values('vote_date')
+                                        sort_values('vote_date', ascending=False)
             
 
             #### PAGINATION LOGIC STARTS HERE

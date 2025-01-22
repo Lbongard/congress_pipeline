@@ -46,13 +46,15 @@ else:  # Cloud Run environment
     # service_account_info = get_secret(project_num=project_num, secret_name=creds_secret_name)
     # credentials = service_account.Credentials.from_service_account_info(service_account_info)
 
-    encoded_credentials = st.secrets["gcp"]["credentials_json"]
-    credentials_json = base64.b64decode(encoded_credentials)
+    # encoded_credentials = st.secrets["gcp"]["credentials_json"]
+    # credentials_json = base64.b64decode(encoded_credentials)
 
-    with open("gcp_credentials.json", "wb") as f:
-        f.write(credentials_json)
+    # with open("gcp_credentials.json", "wb") as f:
+    #     f.write(credentials_json)
 
-    os.environ["GOOGLE_APPLICATION_CREDENTIALS"] = "gcp_credentials.json"
+    gcp_credentials = json.loads(os.getenv("GCP_CREDENTIALS_JSON", "{}"))
+
+    os.environ["GOOGLE_APPLICATION_CREDENTIALS"] = gcp_credentials
 
 # Create API client using the service account
 

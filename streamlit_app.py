@@ -39,7 +39,7 @@ if os.getenv("LOCAL_RUN"):  # Local environment
     credentials = service_account.Credentials.from_service_account_info(st.secrets["gcp_service_account"])
     os.environ["GOOGLE_APPLICATION_CREDENTIALS"] = os.getenv('TF_VAR_google_credentials')
 
-else:  # Cloud Run environment
+# else:  # Cloud Run environment
     # Retrieve service account credentials from Secret Manager in Cloud Run
     # project_num = os.getenv('project_num')
     # creds_secret_name = os.getenv('gcp_service_account_credentials')
@@ -52,9 +52,9 @@ else:  # Cloud Run environment
     # with open("gcp_credentials.json", "wb") as f:
     #     f.write(credentials_json)
 
-    gcp_credentials = json.loads(os.getenv("GCP_CREDENTIALS_JSON", "{}"))
+    # gcp_credentials = json.loads(os.getenv("GCP_CREDENTIALS_JSON", "{}"))
 
-    os.environ["GOOGLE_APPLICATION_CREDENTIALS"] = gcp_credentials
+    # os.environ["GOOGLE_APPLICATION_CREDENTIALS"] = gcp_credentials
 
 # Create API client using the service account
 

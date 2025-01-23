@@ -150,9 +150,11 @@ def plot_voting_records(results, bioguideID, chamber, policy_area=None):
     votes_with_party_all = calculate_votes_w_party(results=results, chamber=chamber, policy_area=policy_area)
     
     if policy_area:
-        vote_count = results[(results.policyArea == policy_area) & (results.bioguideID == bioguideID)].shape[0]
+        vote_count = results[(results.policyArea == policy_area) & \
+                             (results.bioguideID == bioguideID) & \
+                             (results.chamber == chamber)].shape[0]
     else:
-        vote_count = results[(results.bioguideID == bioguideID)].shape[0]
+        vote_count = results[(results.bioguideID == bioguideID) & (results.chamber == chamber)].shape[0]
 
     if chamber == 'House of Representatives':
         rep_title = 'Rep.'
@@ -384,7 +386,7 @@ with st.sidebar:
             except Exception as e:
                 st.write('An error occurred.')
             
-            chamber = additional_data_df.iloc[0]['mostRecentChamber']
+            chamber = selected_chamber
             bioguideID = additional_data_df.iloc[0]['bioguideID']
             partyName = additional_data_df.iloc[0]['mostRecentParty']
             policy_areas_voting_record = voting_results\

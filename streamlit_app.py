@@ -21,44 +21,9 @@ import gcsfs
 import base64
 
 
-PROJECT_ID = os.path.abspath(os.getenv('TF_VAR_gcp_project'))
+PROJECT_ID = os.getenv('TF_VAR_gcp_project')
+DATASET_ID = 'Congress_Target'
 
-# Function to access secret from Secret Manager
-def get_secret(project_num, secret_name):
-    client = secretmanager.SecretManagerServiceClient()
-    name = f"projects/{project_num}/secrets/{secret_name}/versions/latest"
-    response = client.access_secret_version(name=name)
-    secret = response.payload.data.decode("UTF-8")
-    return json.loads(secret)
-
-
-
-# Check if the app is running locally or on Cloud Run
-if os.getenv("LOCAL_RUN"):  # Local environment
-    config_path = os.path.abspath(os.getenv('TF_VAR_google_credentials'))
-    credentials = service_account.Credentials.from_service_account_info(st.secrets["gcp_service_account"])
-    os.environ["GOOGLE_APPLICATION_CREDENTIALS"] = os.getenv('TF_VAR_google_credentials')
-
-# else:  # Cloud Run environment
-    # Retrieve service account credentials from Secret Manager in Cloud Run
-    # project_num = os.getenv('project_num')
-    # creds_secret_name = os.getenv('gcp_service_account_credentials')
-    # service_account_info = get_secret(project_num=project_num, secret_name=creds_secret_name)
-    # credentials = service_account.Credentials.from_service_account_info(service_account_info)
-
-    # encoded_credentials = st.secrets["gcp"]["credentials_json"]
-    # credentials_json = base64.b64decode(encoded_credentials)
-
-    # with open("gcp_credentials.json", "wb") as f:
-    #     f.write(credentials_json)
-
-    # gcp_credentials = json.loads(os.getenv("GCP_CREDENTIALS_JSON", "{}"))
-
-    # os.environ["GOOGLE_APPLICATION_CREDENTIALS"] = gcp_credentials
-
-# Create API client using the service account
-
-# client = bigquery.Client(credentials=credentials)
 client = bigquery.Client()
 
 bucket_name = os.getenv("streamlit_data_bucket_name")
@@ -68,10 +33,6 @@ st.set_page_config(
     page_title="US Congress Dashboard",
     layout="wide",
     initial_sidebar_state="expanded")
-
-# Set os.environ for download from gcs bucket
-
-
 
 tab1, tab2, tab3 = st.tabs(["Overall Voting Record", "Recent Votes", "Sponsored Bills"])
 
@@ -86,7 +47,6 @@ def read_parquet_from_gcs(gcs_uri):
     last_updated_utc = datetime.now(pytz.utc)
     last_updated_pst = last_updated_utc.astimezone(pst).strftime("%Y-%m-%d %H:%M:%S")
     return df, last_updated_pst
-
 
 voting_results, _ = read_parquet_from_gcs(f"gs://{bucket_name}/vw_votes_by_member.parquet")
 member_options, _ = read_parquet_from_gcs(f"gs://{bucket_name}/vw_voting_members.parquet")

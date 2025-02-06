@@ -8,3 +8,5 @@ terraform/.terraform
 set_env.sh
 Plotly.ipynb
 Testing.ipynb
+run_airflow.py
+start-vm-function/

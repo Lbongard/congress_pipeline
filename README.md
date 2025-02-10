@@ -1,5 +1,5 @@
 # Project Objective
-This project creates a data pipline using US congressional data from GovInfo.gov and Congress.gov. 
+This project creates a data pipline using US congressional data from GovInfo.gov and Congress.gov. The link to the streamlit web app can be found [here](https://congress-pipeline-4347055658.us-central1.run.app/).
 
 This project seeks to create a pipeline and web tool that allows users to analyze congressional legislation and voting data by member. The pipeline defines a dimensional model by creating a fact (roll call vote) table and multiple dimension tables which contain information on members, vote metadata and congressional committees. The data used is for the previous (118th) and current (119th) US Congresses.
 

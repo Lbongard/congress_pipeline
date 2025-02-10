@@ -1,12 +1,12 @@
 # Project Objective
 This project creates a data pipline using US congressional data from GovInfo.gov and Congress.gov. 
 
-While Congress originates and votes on various types of bills each year, this project seeks to create greater clarity around the types of bills that Congress addresses on a yearly basis. The pipeline defines a dimensional model by creating a fact (roll call vote) table and multiple dimension tables which contain information on members, vote metadata and congressional committees. The data used is for the current (118th) US Congress.
+This project seeks to create a pipeline and web tool that allows users to analyze congressional legislation and voting data by member. The pipeline defines a dimensional model by creating a fact (roll call vote) table and multiple dimension tables which contain information on members, vote metadata and congressional committees. The data used is for the previous (118th) and current (119th) US Congresses.
 
-This project was created for the [Data Talks Club Data Engineering Zoomcamp](https://github.com/DataTalksClub/data-engineering-zoomcamp/tree/main). See the 'Future Improvements' section for planned improvements to the pipeline.
+This project was otiginally created for the [Data Talks Club Data Engineering Zoomcamp](https://github.com/DataTalksClub/data-engineering-zoomcamp/tree/main). See the 'Future Improvements' section for planned improvements to the pipeline.
 
 # Project Architecture
-![Screenshot 2024-04-16 at 9 49 40 PM](https://github.com/Lbongard/congress_pipeline/images/Architecture_Diagram.gif)
+![Architecture Diagram](assets/architecture_diagram.gif)
 
 # Data
 Information on the API and bulk data download used in this project can be found [here](https://www.congress.gov/help/using-data-offsite) and [here](https://www.govinfo.gov/bulkdata)

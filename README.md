@@ -1,15 +1,32 @@
 # Project Objective
-This project creates a data pipline using US congressional data from GovInfo.gov and Congress.gov. The link to the streamlit web app can be found [here](https://congress-pipeline-4347055658.us-central1.run.app/).
+In this project, I created a pipeline and web tool that allows users to analyze congressional legislation and voting data by member. The data is sourced from GovInfo.gov and Congress.gov. The link to the streamlit web app can be found [here](https://congress-pipeline-4347055658.us-central1.run.app/).
 
-This project seeks to create a pipeline and web tool that allows users to analyze congressional legislation and voting data by member. The pipeline defines a dimensional model by creating a fact (roll call vote) table and multiple dimension tables which contain information on members, vote metadata and congressional committees. The data used is for the previous (118th) and current (119th) US Congresses.
+The pipeline defines a dimensional model by creating a fact (roll call vote) table and multiple dimension tables which contain information on members, vote metadata and congressional committees. The data used is for the previous (118th) and current (119th) US Congresses.
 
-This project was otiginally created for the [Data Talks Club Data Engineering Zoomcamp](https://github.com/DataTalksClub/data-engineering-zoomcamp/tree/main). See the 'Future Improvements' section for planned improvements to the pipeline.
+This project was otiginally created for the [Data Talks Club Data Engineering Zoomcamp](https://github.com/DataTalksClub/data-engineering-zoomcamp/tree/main).
+
+# Data
+Information on the API and bulk data download used in this project can be found [here](https://www.congress.gov/help/using-data-offsite) and [here](https://www.govinfo.gov/bulkdata)
 
 # Project Architecture
 ![Architecture Diagram](assets/architecture_diagram.gif)
 
-# Data
-Information on the API and bulk data download used in this project can be found [here](https://www.congress.gov/help/using-data-offsite) and [here](https://www.govinfo.gov/bulkdata)
+## Extraction
+Data is incrementally extracted by filtering data more recent than the latest 'update' date in the target warehouse.
+
+**Bills**
+* Bills are downloaded from GovInfo bulk data website
+
+**Votes**
+* Roll call votes are extracted by parsing bill jsons
+* Roll call vote XMLs are downloaded using roll call vote urls
+
+**Members**
+* Member data is downloaded from the Congress API
+
+## Storage and Transformation
+* Raw extracted files are uploaded to GCS buckets 
+* Files are loaded into staging tables and parsed into final fact/dim tables using DBT
 
 # Prerequisites
 In order to replicate this project, ensure the following list of programs is installed on your computer:
@@ -65,26 +82,10 @@ terraform init
 terraform plan
 terraform apply
 ```
-6. **Switch back to the root directory and run airflow.** The following make command will build the docker container and start running the pipeline. After a few minutes, you can check the status of the pipeline by going to localhost:8080 in your browser. Ensure that the pipeline has started. Grab some coffee while it runs.
+6. **Switch back to the root directory and run airflow.** The following make command will build the docker container and start running the pipeline. After a few minutes, you can check the status of the pipeline by going to localhost:8080 in your browser. Ensure that the pipeline has started.
 ```
 make airflow-up
 ```
-**Unpaused and running DAG:**
-![image](https://github.com/Lbongard/congress_pipeline/assets/62773555/b3a5961b-3c35-46b0-bd1d-e8b16aab08a7)
-
-**Completed DAG:**
-
-![image](https://github.com/Lbongard/congress_pipeline/assets/62773555/328ba252-a442-46f3-8c4c-f6e65615bed1)
-
-
-7. **Navigate to the dbt directory, and run the following**. This will build the final dimension and fact tables.
-
-```
-dbt deps
-dbt seed
-dbt run
-```
-Note: This data model contains a list of congressional districts by zip code published by Open Source Activism. You can find the dataset and list of caveats here: https://github.com/OpenSourceActivismTech/us-zipcodes-congress
 
 8. **Once done, make sure that you destroy the google cloud storage bucket and BigQuery Dataset.** Navigate to the terraform directory and run the following:
 ```
@@ -92,15 +93,5 @@ terraform destroy
 ```
 
 # Dashboard
-Using this data, it is possible to create a dashboard in Looker by selecting the BigQuery dataset as a source. See the example I created [here](https://lookerstudio.google.com/reporting/134e8ca6-c712-42f5-8cbb-7ee197ced7ec)
-
-![Screenshot 2024-04-16 at 10 26 43 PM](https://github.com/Lbongard/congress_pipeline/assets/62773555/564ce1c3-882c-4a21-aefe-630b12169e94)
-
-
-# Future Improvements
-Future improvements may involve the following:
-* Adding more data / refined charts to Looker dashboard (e.g., more insights into members / voting history, 'closest' votes, etc.)
-* Improving performance of pipeline by collating files into fewer, larger files and uploading to GCS
-* Improving the dimensional model by adding more data / adjusting current relationships
-* Adding CI/CD jobs
+In addition to the pipeline, I've created a [streamlit app](https://congress-pipeline-4347055658.us-central1.run.app/) to allow users to interact with the data. The instance of the data pipeline which feeds the app is hosted on a Google Cloud VM and runs every weeknight. The Streamlit app runs on a Google Cloud Run instance.
 

@@ -10,3 +10,6 @@ Plotly.ipynb
 Testing.ipynb
 run_airflow.py
 start-vm-function/
+**/.devcontainer/
+**/.ipynb_checkpoints/
+**/.DS_Store

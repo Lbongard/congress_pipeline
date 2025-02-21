@@ -13,3 +13,4 @@ start-vm-function/
 **/.devcontainer/
 **/.ipynb_checkpoints/
 **/.DS_Store
+/venv/

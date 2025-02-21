@@ -14,3 +14,5 @@ start-vm-function/
 **/.ipynb_checkpoints/
 **/.DS_Store
 /venv/
+logs/
+streamlit_data/

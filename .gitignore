@@ -16,3 +16,5 @@ start-vm-function/
 /venv/
 logs/
 streamlit_data/
+terraform/terraform.tfstate
+terraform/terraform.tfstate.backup

@@ -1,6 +1,0 @@
-setup.py
-agstyler.egg-info/PKG-INFO
-agstyler.egg-info/SOURCES.txt
-agstyler.egg-info/dependency_links.txt
-agstyler.egg-info/requires.txt
-agstyler.egg-info/top_level.txt

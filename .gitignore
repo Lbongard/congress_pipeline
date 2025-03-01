@@ -18,3 +18,5 @@ logs/
 streamlit_data/
 terraform/terraform.tfstate
 terraform/terraform.tfstate.backup
+agstyler/__pycache__ 
+agstyler/agstyler.egg-info

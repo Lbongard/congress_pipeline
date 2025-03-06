@@ -20,3 +20,8 @@ terraform/terraform.tfstate
 terraform/terraform.tfstate.backup
 agstyler/__pycache__ 
 agstyler/agstyler.egg-info
+/airflow/dags/__pycache__
+/airflow/dags/schemas/__pycache__
+/airflow/dags/scripts/python/__pycache__
+/airflow/dags/scripts/python/.ipynb_checkpoints/__pycache__
+/venv/lib/python3.12/site-packages/pyflakes/test/__pycache__

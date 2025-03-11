@@ -5,6 +5,8 @@ The pipeline defines a dimensional model by creating a fact (roll call vote) tab
 
 This project was originally created for the [Data Talks Club Data Engineering Zoomcamp](https://github.com/DataTalksClub/data-engineering-zoomcamp/tree/main).
 
+As a next step, I plan to add instructions on recreating this project locally using Terraform and Google Cloud.
+
 # Data
 Information on the API and bulk data download used in this project can be found [here](https://www.congress.gov/help/using-data-offsite) and [here](https://www.govinfo.gov/bulkdata)
 

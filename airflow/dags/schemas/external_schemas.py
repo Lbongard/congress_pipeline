@@ -174,7 +174,8 @@ bill_schema = [{"name": "number", "type": "STRING", "mode": "NULLABLE"},
     {"name": "cboCostEstimates", "type": "JSON", "mode": "NULLABLE"},
     {"name": "laws", "type": "JSON", "mode": "NULLABLE"},
     {"name": "amendments", "type": "JSON", "mode": "NULLABLE"},
-    {"name": "cdata", "type": "JSON", "mode": "NULLABLE"}]
+    {"name": "cdata", "type": "JSON", "mode": "NULLABLE"},
+    {"name": "notes", "type": "JSON", "mode": "NULLABLE"}]
 
 # bill_schema = [[{'name': 'number', 'type': 'STRING', 'mode': 'NULLABLE'},
 #  {'name': 'updateDate', 'type': 'STRING', 'mode': 'NULLABLE'},

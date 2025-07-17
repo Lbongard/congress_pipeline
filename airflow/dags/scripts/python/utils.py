@@ -127,7 +127,7 @@ def get_max_updated_date(date_field, project_id, dataset_id, table_id, default_d
     except Exception as e:
         # If the table doesn't exist or any error occurs, return default date
         logging.info(f"Error querying max updated_date: {e}")
-        return default_date
+        return datetime.strptime(default_date, format)
     
 
 def remove_gcs_folder_if_exists(bucket_name, folder_path):

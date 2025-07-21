@@ -112,7 +112,7 @@ if __name__ == "__main__":
     
     bucket_name = os.getenv("streamlit_data_bucket_name")
     project_id = os.getenv("TF_VAR_gcp_project")
-    dataset_id = "Congress_Target"
+    dataset_id = "Congress"
     temp_dataset_id = "Congress_Streamlit"
 
     delete_bucket_contents(bucket_name=bucket_name)

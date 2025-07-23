@@ -361,7 +361,7 @@ with st.sidebar:
     
     
 
-    st.markdown(f"***Data updated every weeknight***")
+    st.markdown(f"***Data updated every Monday***")
     st.markdown("**Find the full project [here](https://github.com/Lbongard/congress_pipeline)**")
     
     

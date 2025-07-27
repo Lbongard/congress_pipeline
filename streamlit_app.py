@@ -55,10 +55,6 @@ sponsored_bills, _ = read_parquet_from_gcs(f"gs://{bucket_name}/vw_sponsored_bil
 terms_df, _ = read_parquet_from_gcs(f"gs://{bucket_name}/vw_terms_condensed.parquet")
 dim_congressional_districts, last_updated = read_parquet_from_gcs(f"gs://{bucket_name}/dim_congressional_districts.parquet")
 
-# Turn DFs into dictionaries for quick access"""
-voting_by_congress = {c: df for c, df in voting_results.groupby("congress")}
-bills_by_congress = {c: df for c, df in sponsored_bills.groupby("congress")}
-members_by_congress = {c: df for c, df in member_options.groupby("congress")}
 
 ## Post Processing on imported dataframes
 
@@ -76,6 +72,24 @@ terms_df.rename({'term_start_year': 'Start Year',
                 axis=1,
                 inplace=True)
 
+# Setting indices for faster querying
+voting_results = voting_results.set_index('congress')
+member_options = member_options.set_index('congress')
+sponsored_bills = sponsored_bills.set_index('congress')
+
+# Turn DFs into dictionaries for quick access"""
+# @st.cache_data(ttl=86400)
+# def build_grouped_lookups(voting_results, sponsored_bills, member_options, dim_members, dim_congressional_districts):
+#     voting_by_congress = {c: df for c, df in voting_results.groupby("congress")}
+#     bills_by_congress = {c: df for c, df in sponsored_bills.groupby("congress")}
+#     members_by_congress = {c: df for c, df in member_options.groupby("congress")}
+#     members_by_invertedName = {name: df for name, df in dim_members.groupby("invertedOrderName")}
+#     districts_by_zip = {z: df for z, df in dim_congressional_districts.groupby("zip_code")}
+#     return voting_by_congress, bills_by_congress, members_by_congress, members_by_invertedName, districts_by_zip
+
+# voting_by_congress, bills_by_congress, members_by_congress, members_by_invertedName, districts_by_zip = build_grouped_lookups(
+#     voting_results, sponsored_bills, member_options, dim_members, dim_congressional_districts
+# )
 
 
 def vote_cnt_by_member(x):
@@ -240,23 +254,29 @@ with st.sidebar:
                                     )
     # Limit datasets to selected congress session or any session in congress_sessions list
     if congress_session_selection:
-        # congress_session = int(congress_session_selection[:3])
+        congress_session = int(congress_session_selection[:3])
+        member_options = member_options.loc[congress_session]
+        voting_results = voting_results.loc[congress_session]
+        sponsored_bills = sponsored_bills.loc[congress_session]
         # member_options = member_options[member_options['congress'] == congress_session]
         # voting_results = voting_results[voting_results['congress'] == congress_session]
         # sponsored_bills = sponsored_bills[sponsored_bills['congress'] == congress_session]
-        congress_session = int(congress_session_selection[:3])
-        voting_results = voting_by_congress.get(congress_session, pd.DataFrame())
-        sponsored_bills = bills_by_congress.get(congress_session, pd.DataFrame())
-        member_options = members_by_congress.get(congress_session, pd.DataFrame())
+        # congress_session = int(congress_session_selection[:3])
+        # voting_results = voting_by_congress.get(congress_session, pd.DataFrame())
+        # sponsored_bills = bills_by_congress.get(congress_session, pd.DataFrame())
+        # member_options = members_by_congress.get(congress_session, pd.DataFrame())
     else:
-        # congress_sessions_int = [int(session[:3]) for session in congress_sessions]
+        congress_sessions_int = [int(session[:3]) for session in congress_sessions]
+        member_options = member_options.loc[congress_sessions_int]
+        voting_results = voting_results.loc[congress_sessions_int]
+        sponsored_bills = sponsored_bills.loc[congress_sessions_int]
         # member_options = member_options[member_options['congress'].isin(congress_sessions_int)]
         # voting_results = voting_results[voting_results['congress'].isin(congress_sessions_int)]
         # sponsored_bills = sponsored_bills[sponsored_bills['congress'].isin(congress_sessions_int)]
-        selected_sessions = [int(s[:3]) for s in congress_sessions]
-        voting_results = pd.concat([voting_by_congress[c] for c in selected_sessions])
-        sponsored_bills = pd.concat([bills_by_congress[c] for c in selected_sessions])
-        member_options = pd.concat([members_by_congress[c] for c in selected_sessions])
+        # selected_sessions = [int(s[:3]) for s in congress_sessions]
+        # voting_results = pd.concat([voting_by_congress[c] for c in selected_sessions])
+        # sponsored_bills = pd.concat([bills_by_congress[c] for c in selected_sessions])
+        # member_options = pd.concat([members_by_congress[c] for c in selected_sessions])
     
     chambers = ['Senate', 'House of Representatives']
     selected_chamber = st.selectbox('Select a chamber of Congress:', 

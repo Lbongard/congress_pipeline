@@ -3,7 +3,7 @@
 import streamlit as st
 from google.oauth2 import service_account
 from google.cloud import bigquery, storage
-# from google.cloud import secretmanager
+from google.cloud import secretmanager
 import pandas_gbq
 import os
 import json
@@ -12,7 +12,7 @@ import plotly.express as px
 import plotly.graph_objs as go
 import pandas as pd
 import numpy as np
-# from st_aggrid import AgGrid, GridOptionsBuilder, JsCode
+from st_aggrid import AgGrid, GridOptionsBuilder, JsCode
 from agstyler.agstyler import PINLEFT, PRECISION_TWO, draw_grid, highlight_mult_colors, cellRenderer
 from pyarrow import parquet
 from datetime import datetime
@@ -324,7 +324,7 @@ with st.sidebar:
             try:
                 options_df = member_options[
                                                 (member_options['chamber'] == selected_chamber) & \
-                                                (member_options['lastName'] == last_name)
+                                                (member_options['lastName'].str.contains(last_name, case=False))
                                                 ]
             except Exception as e:
                 st.write('An error occurred. Please ensure that your entry is valid.')

@@ -30,5 +30,5 @@ Data is incrementally extracted by filtering data more recent than the latest 'u
 * Files are loaded into staging tables and parsed into final fact/dim tables using DBT
 
 # Dashboard
-In addition to the pipeline, I've created a [streamlit app](https://congress-pipeline-4347055658.us-central1.run.app/) to allow users to interact with the data. The instance of the data pipeline which feeds the app is hosted on a Google Cloud VM and runs every weeknight. The Streamlit app runs on a Google Cloud Run instance.
+In addition to the pipeline, I've created a [streamlit app](https://congress-pipeline-4347055658.us-central1.run.app/) to allow users to interact with the data. The instance of the data pipeline which feeds the app is hosted on a Google Cloud VM and runs weekly. The Streamlit app runs on a Google Cloud Run instance.
 
